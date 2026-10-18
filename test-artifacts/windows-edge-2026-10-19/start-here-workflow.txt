@@ -1,0 +1,106 @@
+{
+  "status": "passed",
+  "started_at": "2026-10-18T22:02:54.439841+00:00",
+  "platform": "Windows-11-10.0.26100-SP0",
+  "executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+  "sandbox_enabled": true,
+  "checks": [
+    "Separate installed Edge instance launched with chromium_sandbox=True; no --no-sandbox switch",
+    "Built-in demo: 4 compared, 4 prices, 6 priority, 4 unpaired, 15 findings; incomplete verdict",
+    "START_HERE step 4: demo HTML downloaded and opened locally; 15 findings and coverage readable",
+    "Clear files after demo removes names, file selections, results, findings, coverage, verdict and errors; compare disabled",
+    "Exact START_HERE sample pair selected from disk; 30% and overwrite enabled; matches all demo counts",
+    "Clear files after selected samples removes loaded file names and report DOM; compare disabled",
+    "Newly downloaded HTML opened through file:// after app tab closed; all 15 rows, metadata, before/after prices and limitations readable; no scripts",
+    "All nine linked synthetic scenarios selected through browser file inputs; compared/price counts match samples/scenarios/README.md",
+    "No app/report HTTP(S) requests or JavaScript page errors observed"
+  ],
+  "http_requests": [],
+  "page_errors": [],
+  "browser_version": "155.0.4283.45",
+  "app_url": "file:///<repository>/dist/index.html",
+  "demo_metrics": {
+    "compared_variants": "4",
+    "price_changes": "4",
+    "priority_findings": "6",
+    "unpaired_update_rows": "4",
+    "all_findings": "15"
+  },
+  "sample_metrics": {
+    "compared_variants": "4",
+    "price_changes": "4",
+    "priority_findings": "6",
+    "unpaired_update_rows": "4",
+    "all_findings": "15"
+  },
+  "downloaded_report": "<validation-artifacts>\\start-here\\csv-change-guard-report.html",
+  "downloaded_bytes": 8230,
+  "opened_report_url": "file:///<validation-artifacts>/start-here/csv-change-guard-report.html",
+  "report_rows": 15,
+  "scenario_metrics": {
+    "catalog.csv": {
+      "compared_variants": "6",
+      "price_changes": "0",
+      "priority_findings": "0",
+      "unpaired_update_rows": "0",
+      "all_findings": "2"
+    },
+    "partial-prices.csv": {
+      "compared_variants": "2",
+      "price_changes": "2",
+      "priority_findings": "1",
+      "unpaired_update_rows": "0",
+      "all_findings": "8"
+    },
+    "explicit-clears.csv": {
+      "compared_variants": "6",
+      "price_changes": "0",
+      "priority_findings": "3",
+      "unpaired_update_rows": "0",
+      "all_findings": "5"
+    },
+    "reordered.csv": {
+      "compared_variants": "6",
+      "price_changes": "0",
+      "priority_findings": "0",
+      "unpaired_update_rows": "0",
+      "all_findings": "2"
+    },
+    "changed-identifiers.csv": {
+      "compared_variants": "3",
+      "price_changes": "0",
+      "priority_findings": "0",
+      "unpaired_update_rows": "3",
+      "all_findings": "8"
+    },
+    "invalid-identifiers.csv": {
+      "compared_variants": "2",
+      "price_changes": "0",
+      "priority_findings": "4",
+      "unpaired_update_rows": "4",
+      "all_findings": "12"
+    },
+    "duplicate-identifiers.csv": {
+      "compared_variants": "5",
+      "price_changes": "0",
+      "priority_findings": "1",
+      "unpaired_update_rows": "2",
+      "all_findings": "3"
+    },
+    "mixed-header-prices.csv": {
+      "compared_variants": "6",
+      "price_changes": "1",
+      "priority_findings": "1",
+      "unpaired_update_rows": "0",
+      "all_findings": "4"
+    },
+    "unusual-prices.csv": {
+      "compared_variants": "6",
+      "price_changes": "5",
+      "priority_findings": "9",
+      "unpaired_update_rows": "0",
+      "all_findings": "11"
+    }
+  },
+  "finished_at": "2026-10-18T22:03:00.277073+00:00"
+}

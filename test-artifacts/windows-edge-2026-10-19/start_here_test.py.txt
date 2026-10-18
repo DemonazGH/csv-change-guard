@@ -1,0 +1,173 @@
+import json
+import platform
+import traceback
+from datetime import datetime, timezone
+from pathlib import Path
+from playwright.sync_api import sync_playwright, expect
+
+ROOT = Path(r'<repository>')
+OUT = Path(__file__).resolve().parent / 'start-here'
+CHROME = r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+OUT.mkdir(parents=True, exist_ok=False)
+result = {'status': 'running', 'started_at': datetime.now(timezone.utc).isoformat(),
+          'platform': platform.platform(), 'executable': CHROME,
+          'sandbox_enabled': True, 'checks': [], 'http_requests': [], 'page_errors': []}
+
+def metrics(page):
+    return {key: page.locator('#' + selector).inner_text() for key, selector in {
+        'compared_variants': 'metric-compared', 'price_changes': 'metric-prices',
+        'priority_findings': 'metric-priority', 'unpaired_update_rows': 'metric-unpaired',
+        'all_findings': 'count-all'}.items()}
+
+def verify_metrics(page):
+    expect(page.locator('#results')).to_be_visible()
+    assert metrics(page) == {'compared_variants': '4', 'price_changes': '4',
+                             'priority_findings': '6', 'unpaired_update_rows': '4', 'all_findings': '15'}
+    assert 'Incomplete comparison' in page.locator('#verdict').inner_text()
+
+def clear_and_verify(page, screenshot):
+    page.get_by_role('button', name='Clear files', exact=True).click()
+    expect(page.locator('#results')).to_be_hidden()
+    expect(page.locator('#compare')).to_be_disabled()
+    expect(page.locator('#error')).to_be_hidden()
+    for selector in ['findings', 'coverage-body', 'verdict', 'error']:
+        assert page.locator('#' + selector).inner_html() == ''
+    for side in ['current', 'update']:
+        assert page.locator('#' + side + '-file').input_value() == ''
+        assert page.locator('#' + side + '-file').evaluate('(input) => input.files.length') == 0
+        assert page.locator('#' + side + '-name').inner_text() == 'Choose a CSV file'
+        assert 'loaded' not in page.locator('#' + side + '-card').get_attribute('class').split()
+    body = page.locator('body').inner_text()
+    for filename in ['demo-current-catalog.csv', 'demo-proposed-update.csv', 'current-catalog.csv', 'proposed-update.csv']:
+        assert filename not in body
+    page.locator('#workspace').scroll_into_view_if_needed()
+    page.screenshot(path=str(OUT / screenshot))
+
+try:
+    with sync_playwright() as p:
+        browser = p.chromium.launch(executable_path=CHROME, headless=True, chromium_sandbox=True,
+                                    args=['--enable-automation'])
+        try:
+            result['browser_version'] = browser.version
+            session = browser.new_browser_cdp_session()
+            args = session.send('Browser.getBrowserCommandLine')['arguments']
+            result['browser_command_line'] = args
+            assert '--no-sandbox' not in args
+            result['checks'].append('Separate installed Edge instance launched with chromium_sandbox=True; no --no-sandbox switch')
+            context = browser.new_context(viewport={'width': 1440, 'height': 1100}, accept_downloads=True)
+            def watch(page):
+                page.on('pageerror', lambda error: result['page_errors'].append(str(error)))
+                page.on('request', lambda request: result['http_requests'].append(request.url)
+                        if request.url.startswith(('http://', 'https://')) else None)
+            context.on('page', watch)
+            page = context.new_page()
+            page.goto((ROOT / 'dist/index.html').as_uri(), wait_until='load')
+            result['app_url'] = page.url
+            page.get_by_role('button', name='Try the built-in demo').click()
+            verify_metrics(page)
+            result['demo_metrics'] = metrics(page)
+            page.locator('#results').scroll_into_view_if_needed()
+            page.screenshot(path=str(OUT / 'demo-results.png'))
+            result['checks'].append('Built-in demo: 4 compared, 4 prices, 6 priority, 4 unpaired, 15 findings; incomplete verdict')
+            with page.expect_download() as demo_download_info:
+                page.get_by_role('button', name='Save HTML report', exact=True).click()
+            demo_download = demo_download_info.value
+            demo_report = OUT / 'demo-downloaded-report.html'
+            demo_download.save_as(demo_report)
+            assert demo_download.failure() is None
+            demo_report_page = context.new_page()
+            demo_report_page.goto(demo_report.as_uri(), wait_until='load')
+            assert demo_report_page.title() == 'CSV Change Guard — Report'
+            assert demo_report_page.locator('tbody tr').count() == 15
+            assert '4 compared variants' in demo_report_page.locator('body').inner_text()
+            assert 'Coverage and limitations' in demo_report_page.locator('body').inner_text()
+            assert demo_report_page.locator('script').count() == 0
+            demo_report_page.screenshot(path=str(OUT / 'demo-downloaded-report-open.png'))
+            demo_report_page.close()
+            result['checks'].append('START_HERE step 4: demo HTML downloaded and opened locally; 15 findings and coverage readable')
+            clear_and_verify(page, 'cleared-after-demo.png')
+            result['checks'].append('Clear files after demo removes names, file selections, results, findings, coverage, verdict and errors; compare disabled')
+            page.locator('#current-file').set_input_files(str(ROOT / 'samples/current-catalog.csv'))
+            page.locator('#update-file').set_input_files(str(ROOT / 'samples/proposed-update.csv'))
+            expect(page.locator('#compare')).to_be_enabled()
+            assert page.locator('#current-name').inner_text() == 'current-catalog.csv'
+            assert page.locator('#update-name').inner_text() == 'proposed-update.csv'
+            assert page.locator('#threshold').input_value() == '30'
+            assert page.locator('#overwrite').input_value() == 'true'
+            page.locator('#workspace').scroll_into_view_if_needed()
+            page.screenshot(path=str(OUT / 'samples-selected.png'))
+            page.get_by_role('button', name='Compare files', exact=False).click()
+            verify_metrics(page)
+            result['sample_metrics'] = metrics(page)
+            page.locator('#results').scroll_into_view_if_needed()
+            page.screenshot(path=str(OUT / 'sample-results.png'))
+            result['checks'].append('Exact START_HERE sample pair selected from disk; 30% and overwrite enabled; matches all demo counts')
+            with page.expect_download() as download_info:
+                page.get_by_role('button', name='Save HTML report', exact=True).click()
+            download = download_info.value
+            assert download.suggested_filename == 'csv-change-guard-report.html'
+            report_path = OUT / download.suggested_filename
+            download.save_as(report_path)
+            assert download.failure() is None
+            result['downloaded_report'] = str(report_path)
+            result['downloaded_bytes'] = report_path.stat().st_size
+            clear_and_verify(page, 'cleared-after-samples.png')
+            result['checks'].append('Clear files after selected samples removes loaded file names and report DOM; compare disabled')
+            page.close()
+            report_page = context.new_page()
+            report_page.goto(report_path.as_uri(), wait_until='load')
+            assert report_page.title() == 'CSV Change Guard — Report'
+            expect(report_page.locator('h1')).to_contain_text('Incomplete comparison')
+            expect(report_page.get_by_role('heading', name='Findings (15)', exact=True)).to_be_visible()
+            assert report_page.locator('tbody tr').count() == 15
+            assert report_page.locator('script').count() == 0
+            body = report_page.locator('body').inner_text()
+            for value in ['current-catalog.csv', 'proposed-update.csv', '4 compared variants',
+                          '4 price changes', '1 blocking findings', '5 high-priority findings',
+                          'Coverage and limitations', 'This is not a Shopify import approval.',
+                          'LAMP-001', '59.00', '5.90', 'Change: -90%']:
+                assert value in body, value
+            result['opened_report_url'] = report_page.url
+            result['report_rows'] = report_page.locator('tbody tr').count()
+            report_page.screenshot(path=str(OUT / 'downloaded-report-open.png'))
+            report_page.screenshot(path=str(OUT / 'downloaded-report-full.png'), full_page=True)
+            result['checks'].append('Newly downloaded HTML opened through file:// after app tab closed; all 15 rows, metadata, before/after prices and limitations readable; no scripts')
+            report_page.close()
+            scenario_page = context.new_page()
+            scenario_page.goto((ROOT / 'dist/index.html').as_uri(), wait_until='load')
+            result['scenario_metrics'] = {}
+            scenarios = [('catalog.csv', 6, 0), ('partial-prices.csv', 2, 2),
+                         ('explicit-clears.csv', 6, 0), ('reordered.csv', 6, 0),
+                         ('changed-identifiers.csv', 3, 0), ('invalid-identifiers.csv', 2, 0),
+                         ('duplicate-identifiers.csv', 5, 0), ('mixed-header-prices.csv', 6, 1),
+                         ('unusual-prices.csv', 6, 5)]
+            for filename, compared, prices in scenarios:
+                scenario_page.locator('#reset').click()
+                scenario_page.locator('#current-file').set_input_files(str(ROOT / 'samples/scenarios/catalog.csv'))
+                scenario_page.locator('#update-file').set_input_files(str(ROOT / 'samples/scenarios' / filename))
+                expect(scenario_page.locator('#compare')).to_be_enabled()
+                assert scenario_page.locator('#threshold').input_value() == '30'
+                assert scenario_page.locator('#overwrite').input_value() == 'true'
+                scenario_page.locator('#compare').click()
+                expect(scenario_page.locator('#results')).to_be_visible()
+                expect(scenario_page.locator('#metric-compared')).to_have_text(str(compared))
+                expect(scenario_page.locator('#metric-prices')).to_have_text(str(prices))
+                assert scenario_page.locator('#error').is_hidden()
+                result['scenario_metrics'][filename] = metrics(scenario_page)
+                scenario_page.locator('#results').scroll_into_view_if_needed()
+                scenario_page.screenshot(path=str(OUT / ('scenario-' + filename + '.png')))
+            result['checks'].append('All nine linked synthetic scenarios selected through browser file inputs; compared/price counts match samples/scenarios/README.md')
+            assert result['http_requests'] == [], result['http_requests']
+            assert result['page_errors'] == [], result['page_errors']
+            result['checks'].append('No app/report HTTP(S) requests or JavaScript page errors observed')
+            result['status'] = 'passed'
+        finally:
+            browser.close()
+except Exception:
+    result['status'] = 'failed'
+    result['error'] = traceback.format_exc()
+finally:
+    result['finished_at'] = datetime.now(timezone.utc).isoformat()
+    (OUT / 'workflow-results.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
+    print(json.dumps({k: v for k, v in result.items() if k != 'browser_command_line'}, indent=2))
+raise SystemExit(0 if result['status'] == 'passed' else 1)

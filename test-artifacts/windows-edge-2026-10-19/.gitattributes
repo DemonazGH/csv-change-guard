@@ -1,0 +1,4 @@
+# Preserve published evidence hashes across Git checkout line endings.
+* -text
+# CSV downloads intentionally use CRLF record separators.
+*.csv whitespace=cr-at-eol

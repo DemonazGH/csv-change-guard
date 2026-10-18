@@ -5,6 +5,10 @@ This page preserves the unchanged-checkout run. A later
 fixes, 106 engine/scenario tests and 15 browser groups per navigation route,
 plus official-sample results and new Windows screenshots.
 
+The later [Windows/Edge validation](EDGE_VALIDATION.md) on 19 October 2026
+records separate passing automated synthetic checks on Edge 155.0.4283.45.
+The remaining-validation section below describes this historical Chrome run.
+
 On **18 October 2026, 23:16:06–23:16:28 Europe/Warsaw (UTC+02:00)**, the
 unchanged Git checkout at commit
 [`99ca694`](https://github.com/DemonazGH/csv-change-guard/commit/99ca694a23dff180642a7a3c84d2765450a41a3a)

@@ -98,3 +98,7 @@ The [later compatibility run](SHOPIFY_SAMPLE_VALIDATION.md) passes 106 Node test
 and 15 browser groups in each Windows launch mode. The additional browser group
 uses independently constructed synthetic data, so CI remains offline with
 respect to Shopify and does not require the official CSV or store credentials.
+
+Separate [Windows/Edge evidence](EDGE_VALIDATION.md) on 19 October 2026 records
+15 groups in both file and localhost modes with sandboxing enabled, plus the
+synthetic START_HERE workflow. Edge is not added to the hosted CI matrix.

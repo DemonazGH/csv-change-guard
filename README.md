@@ -80,6 +80,10 @@ samples/             Synthetic inputs and sample reports
 
 ## Develop and test
 
+GitHub Actions runs the engine tests, verifies the committed standalone build,
+and checks the browser workflow on pushes to `main` and pull requests. See
+[CI commands and diagnostics](docs/CI.md) for the runner configuration and artifacts.
+
 ```powershell
 npm test
 npm run build

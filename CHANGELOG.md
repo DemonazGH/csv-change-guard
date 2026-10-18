@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add GitHub Actions checks for engine tests, generated-build freshness, and
+  sandboxed Chromium smoke tests, with failure artifacts and server cleanup.
 - Import the complete v0.1.0 prototype into the cloud repository.
 - Fix rounded percentage thresholds that could create or miss price alerts;
   add six regression tests for exact boundaries and small thresholds.

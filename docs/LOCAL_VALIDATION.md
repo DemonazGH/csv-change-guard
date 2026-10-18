@@ -109,10 +109,16 @@ clearing, downloaded reports, and nine linked scenarios passed; see
 [SCENARIO_VALIDATION.md](SCENARIO_VALIDATION.md) retains the cloud scenario record.
 Automated [Windows/Edge validation](EDGE_VALIDATION.md) on 19 October 2026 also
 passed 15 browser groups per route, the synthetic START_HERE workflow and nine
-scenarios, with sandboxing enabled. Manual Windows Explorer/file-dialog
-interaction, owner usability review, other browser versions, real merchant
-comparisons, and controlled development-store import round trips remain separate
-checks. Each requires its own observed result.
+scenarios, with sandboxing enabled.
+
+The separate [guided manual owner record](MANUAL_OWNER_VALIDATION.md) on
+19 October 2026 transcribes owner confirmations of Chrome/Edge Explorer launch,
+Windows file selection, demo/sample comparison, clearing, and independently
+readable HTML reports. Four additional scenarios passed manually in Chrome,
+not Edge. This is guided owner feedback, not a rerun of automated evidence.
+Separate manual legacy/current-header selection, the remaining scenario matrix,
+other browser versions, real merchant comparisons and controlled development-store
+import round trips remain open. Each requires its own recorded outcome.
 
 The earlier cloud attempt to retrieve Shopify's official sample returned HTTP
 403. A later Windows retrieval on 18 October 2026 succeeded and reproduced two

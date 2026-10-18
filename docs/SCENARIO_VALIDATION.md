@@ -1,8 +1,12 @@
 # Catalog workflow validation
 
-Executed on 18 October 2026 using synthetic data only. The suite now passes
+This historical run on 18 October 2026 used synthetic data only and passed
 **80 engine tests, 12 catalog scenario tests, and 14 grouped browser checks**.
 These checks exercise the documented comparison subset, not Shopify imports.
+
+The later [official-sample compatibility run](SHOPIFY_SAMPLE_VALIDATION.md)
+passes 106 engine/scenario tests and 15 browser groups per route with sandboxing
+enabled on Windows. The results below retain their original scope and runtime.
 
 A later [Windows/Chrome run](WINDOWS_VALIDATION.md) at commit `99ca694` passed
 the same 92 engine/scenario tests and 14 browser groups through both direct-file

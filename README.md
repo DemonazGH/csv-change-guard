@@ -7,7 +7,8 @@ reporting and file-selection regressions. See [the current validation report](do
 and [cloud setup instructions](docs/CLOUD_DEVELOPMENT.md) for executed checks and
 environment limitations. [Windows/Chrome validation](docs/WINDOWS_VALIDATION.md)
 records fresh sandboxed file and localhost checks, the owner smoke workflow,
-and screenshots. The [initial baseline](docs/BASELINE_REVIEW.md) and
+and screenshots. [Official sample compatibility](docs/SHOPIFY_SAMPLE_VALIDATION.md)
+records the later compatibility fixes and Windows rerun. The [initial baseline](docs/BASELINE_REVIEW.md) and
 uploaded handoff artifacts remain historical evidence.
 
 A read-only review tool for two Shopify product CSV files: a current catalog and a proposed update. It compares a defined subset of fields using exact identifiers. It does not connect to a store, execute imports, charge customers, or guarantee import safety.
@@ -51,6 +52,13 @@ No `npm install` is required: the application, build script, server, and engine 
 ## Supported scope and deliberate limits
 
 Both files must contain a recognized **handle**, **Title**, and **SKU** column. Non-empty SKUs are a prototype requirement, not a universal Shopify requirement. Complete supported variant data should include Option1 name/value. Both files must represent the same store and currency; currency is not inferred.
+
+Blank Option1/2/3 names on later variant rows use the clear first product row's
+name for that handle within the same input file. Values are never inherited,
+omitted columns remain unassessed, and populated names are not overwritten.
+The official template spelling `Active` is equivalent to `active`; other status
+capitalization or surrounding whitespace is not silently normalized. Genuine
+status changes retain original text in findings and exports.
 
 This prototype accepts up to **5,000 data records and 10 MiB per file**, with at most 200 columns. These are prototype limits, not Shopify's platform limits.
 
@@ -124,12 +132,15 @@ silently replaced by another mode. Fresh artifacts go into ignored
 Sandboxing is enabled by default. The cloud container's documented opt-out and
 blocked direct-file navigation are explained in [cloud development](docs/CLOUD_DEVELOPMENT.md).
 
-Current verification passed **92 engine and scenario tests and 14 grouped browser
-checks over localhost**. See [the validation report](docs/SCENARIO_VALIDATION.md)
-for scope and results. A separate [Windows/Chrome run](docs/WINDOWS_VALIDATION.md)
-passed all 92 engine/scenario tests and all 14 browser groups through both
-`file://` and localhost navigation with sandboxing enabled. It also verified the
-`START_HERE.txt` functional workflow and all nine linked synthetic scenarios.
+Current verification passed **106 engine/scenario tests and 15 grouped browser
+checks in each of file and localhost modes** on Windows/Chrome with sandboxing
+enabled. The unchanged official sample compared 16 variants with zero changes
+or blocking/high findings and four coverage warnings. See
+[official sample validation](docs/SHOPIFY_SAMPLE_VALIDATION.md) for evidence.
+The `START_HERE.txt` workflow and nine linked synthetic scenarios also passed.
+Earlier [scenario validation](docs/SCENARIO_VALIDATION.md) and
+[Windows/Chrome evidence](docs/WINDOWS_VALIDATION.md) retain their original
+92-test/14-group results and tested source versions.
 The uploaded historical run had 66 engine tests and 11 in-memory browser checks.
 Manual Windows double-click launch, public HTTPS deployment, and Shopify import
 round trips remain manual release checks.

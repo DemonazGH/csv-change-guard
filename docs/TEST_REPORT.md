@@ -7,6 +7,8 @@ fresh sandboxed Windows/Chrome results at commit `99ca694` (92 engine/scenario
 tests, 14 browser groups in each of file and localhost modes, owner smoke checks
 and screenshots), see [WINDOWS_VALIDATION.md](WINDOWS_VALIDATION.md). The original
 11 in-memory browser checks below are not the Windows run.
+The subsequent [official-sample compatibility validation](SHOPIFY_SAMPLE_VALIDATION.md)
+adds focused regressions and records the current 106-test/15-group Windows run.
 
 ## Engine tests
 

@@ -77,6 +77,18 @@
   const keyOf = r => JSON.stringify([r.handle, r.sku]);
   const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
   const nonblank = s => typeof s === 'string' && s.trim() !== '';
+  // The official template uses Active as well as documented lowercase active.
+  // Keep raw cells for reports; do not assume arbitrary casing or trim values.
+  const equivalent = (k, a, b) => a === b || (k === 'status' &&
+    (a === 'Active' ? 'active' : a) === (b === 'Active' ? 'active' : b));
+
+  function fieldValue(file, row, key) {
+    if (row[key] !== '' || !/^option[123]Name$/.test(key)) return row[key];
+    const product = file.products.get(row.handle);
+    // Only an explicit empty continuation name inherits from this file's first
+    // product row. Never fill option values, missing columns, or unclear rows.
+    return product && row !== product.row && nonblank(product.row[key]) ? product.row[key] : row[key];
+  }
 
   /** Strict comma-delimited CSV parser. Quoted commas/newlines and escaped quotes are supported. */
   function parseCSV(input, name = 'CSV') {
@@ -184,7 +196,7 @@
       } else {
         const ambiguous = new Set();
         for (const later of rows.slice(1)) for (const k of PRODUCT) {
-          if (nonblank(later[k]) && later[k] !== first[k]) {
+          if (nonblank(later[k]) && !equivalent(k, later[k], first[k])) {
             if (!ambiguous.has(k)) issue('PRODUCT_FIELD_CONFLICT', 'blocking', later, label(k), 'Conflicting product-level values within this handle. This field is excluded from product-level comparison.');
             ambiguous.add(k);
           }
@@ -263,19 +275,21 @@
       if (money(r.price) !== null && money(r.compareAt) !== null && money(r.compareAt) > 0n && money(r.compareAt) <= money(r.price)) add('COMPARE_AT_NOT_HIGHER', 'warning', null, r, 'Compare-at price', r.price, r.compareAt, 'Compare-at price is not higher than the selling price. Review whether a discount display is intended.');
       for (let n = 1; n <= 3; n++) {
         const nk = `option${n}Name`, vk = `option${n}Value`;
-        if (nonblank(r[nk]) !== nonblank(r[vk])) add('OPTION_PAIR_INCOMPLETE', 'high', null, r, `Option${n}`, r[nk] || '', r[vk] || '', 'Option name and value are not both populated. The prototype does not infer the missing value.');
+        const name = fieldValue(update, r, nk);
+        if (nonblank(name) !== nonblank(r[vk])) add('OPTION_PAIR_INCOMPLETE', 'high', null, r, `Option${n}`, name || '', r[vk] || '', 'Option name and value are not both populated. Blank continuation names use the first product row for this handle; missing option values are not inferred.');
       }
     }
     for (const [handle, p] of update.products) {
       const r = p.row;
       if (!settings.overwrite && current.groups.has(handle)) continue;
-      if (own(update.map, 'status') && !['active', 'draft', 'archived'].includes(r.status)) add('INVALID_STATUS', 'blocking', null, r, 'Status', '', r.status, 'When the Status column is present, use active, draft, or archived on the product row.');
+      if (own(update.map, 'status') && !['active', 'Active', 'draft', 'archived'].includes(r.status)) add('INVALID_STATUS', 'blocking', null, r, 'Status', '', r.status, 'When the Status column is present, this prototype recognizes active, draft, or archived on the product row, plus Active as used in Shopify\'s official sample. Other spellings need review.');
       if (own(update.map, 'published') && !['true', 'false', 'TRUE', 'FALSE'].includes(r.published)) add('PUBLICATION_REVIEW', 'warning', null, r, label('published'), '', r.published, 'Publication value is blank or not a recognized boolean. Review the import default.');
     }
 
     function diffField(k, a, b) {
-      if (!own(current.map, k) || !own(update.map, k) || a[k] === b[k]) return;
-      const before = a[k], after = b[k];
+      if (!own(current.map, k) || !own(update.map, k)) return;
+      const before = fieldValue(current, a, k), after = fieldValue(update, b, k);
+      if (equivalent(k, before, after)) return;
       let severity = 'info', code = 'VALUE_CHANGED', message = 'Value differs between the supplied files. Review whether the change is intentional.', pct = null;
       if (k === 'price') {
         const av = money(before), bv = money(after);
@@ -341,6 +355,8 @@
         'Exact, case-sensitive handle + SKU matches only. Shopify does not use this tool’s matching key as an import contract.',
         'Missing or duplicate keys are not guessed; unchanged keys are needed to compare variant values.',
         'Product fields are read from the first record for each handle. Conflicting repeated product fields are excluded.',
+        'Blank continuation option names use the first product row for that handle in each file; option values are never inferred. Option-name findings show these effective names.',
+        'Status active and the official sample spelling Active are equivalent. Other status capitalization is not established by this rule set.',
         'Images, inventory, shipping, tax, markets, metafields and unrecognized columns are not assessed.',
         'Omitted rows are not labelled as deletions. Missing columns are distinguished from blank cells; dependencies and defaults still require review.',
         'Assumes both inputs represent the same store, currency and comparable snapshot. Currency is not inferred.',

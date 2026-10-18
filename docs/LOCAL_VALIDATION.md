@@ -111,8 +111,11 @@ Manual Windows Explorer/file-dialog interaction, owner usability review, Edge,
 real merchant comparisons, and controlled development-store import round trips
 remain separate checks. Each requires its own observed result.
 
-On 18 October 2026, an attempt to retrieve the official sample linked from
-Shopify's product CSV help page was blocked by the cloud environment's network
-allowlist (HTTP 403). No official sample was obtained or tested, and the existing
-platform references were not reverified during this task. Included sample files
-are our synthetic fixtures, not Shopify's official sample.
+The earlier cloud attempt to retrieve Shopify's official sample returned HTTP
+403. A later Windows retrieval on 18 October 2026 succeeded and reproduced two
+template compatibility gaps: `Active` status and blank continuation option names.
+The focused fixes and regression tests now pass, including actual official-sample
+selection and report reopening in sandboxed Chrome through both launch routes.
+See [SHOPIFY_SAMPLE_VALIDATION.md](SHOPIFY_SAMPLE_VALIDATION.md) for the source,
+hash, before/after results and screenshots. Included `samples/` files remain
+independently constructed synthetic fixtures; the public CSV is not committed.

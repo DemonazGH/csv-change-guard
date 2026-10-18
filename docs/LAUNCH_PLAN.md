@@ -12,12 +12,14 @@ Validate a self-service product whose ordinary customer cycle can be automated. 
 - [x] Working browser prototype with synthetic examples.
 - [x] Deterministic comparison, incomplete-match diagnostics and exportable reports.
 - [x] Search, filters, responsive layout and no runtime third-party dependencies.
-- [x] 92 engine/scenario tests and 14 grouped browser checks; see [current evidence](SCENARIO_VALIDATION.md).
+- [x] 106 engine/scenario tests and 15 grouped browser checks in both Windows/Chrome launch modes, with sandboxing enabled; see [current evidence](SHOPIFY_SAMPLE_VALIDATION.md).
+- [x] Official public sample compared with itself after focused compatibility fixes; coverage limitations remain explicit.
 - [x] Source package, build command, optional local server, and known limitations.
 - [x] [Owner validation instructions](LOCAL_VALIDATION.md) and a blank results sheet.
 
-Representative merchant files are not available yet. Owner-machine and real-data
-checks below remain open; synthetic test results do not complete those gates.
+Representative merchant files are not available yet. Automated owner-machine
+checks and the official public sample are verified; the human usability and
+real-data checks below remain open. Automation does not complete those gates.
 
 ## Gate 1 — Owner smoke test
 

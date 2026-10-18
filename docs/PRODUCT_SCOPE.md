@@ -17,11 +17,19 @@ Do not claim “100% safe”, “all errors detected”, “Shopify-certified”
 3. Identifiers remain case-sensitive. Invalid surrounding whitespace is reported, not silently repaired.
 4. Missing/duplicate SKUs are excluded; the report shows incomplete comparison.
 5. Product fields are read from the first row for each handle. Conflicting populated continuation values exclude the affected product field.
+   Blank Option1/2/3 names on continuation variants use the clear first product
+   row's name within the same handle and input file. Values are never inherited;
+   omitted columns, whitespace names, populated names and unclear first rows
+   are not filled or repaired. Findings show effective option names.
 6. Images and image-only continuation records are outside variant comparison.
 7. Only columns present in both files are compared. Explicit blanks differ from missing columns. Omitted columns can still participate in platform dependencies/defaults; preservation is not guaranteed.
 8. Omitted rows are not deletion instructions.
 9. Monetary threshold arithmetic is deterministic and exact within the supported decimal range. AI makes no matching or pricing decisions.
 10. Overwrite-disabled mode does not compare changes for handles already present in the baseline. Live-store existence is unknown.
+11. Exactly `Active`, as used in Shopify's official template, is equivalent to
+    `active` in status validation, comparison and repeated product fields. Other
+    capitalization or whitespace is not normalized. Genuine changes retain the
+    raw status text in findings and exports.
 
 ## Finding levels
 

@@ -1,0 +1,3 @@
+warning: in the working copy of 'dist/index.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/engine.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tests/engine.test.cjs', LF will be replaced by CRLF the next time Git touches it

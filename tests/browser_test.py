@@ -19,7 +19,7 @@ from uuid import uuid4
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'dist/index.html'
-EXPECTED_CHECKS = 14
+EXPECTED_CHECKS = 15
 
 
 def parse_args():
@@ -185,6 +185,39 @@ def check_clear_rejected_filename(page):
     assert page.locator('#compare').is_disabled()
 
 
+def check_sample_compatibility(page):
+    # Independently constructed synthetic data; no network/template dependency.
+    header = 'URL handle,Title,Status,Option1 name,Option1 value,SKU,Price\n'
+    current = header + 'sample-shirt,Sample shirt,Active,Size,S,COMPAT-S,10.00\n' + 'sample-shirt,,,Size,M,COMPAT-M,10.00\n'
+    update = header + 'sample-shirt,Sample shirt,active,Size,S,COMPAT-S,10.00\n' + 'sample-shirt,,,,M,COMPAT-M,10.00\n'
+    page.locator('#reset').click()
+    page.locator('#overwrite').select_option('true')
+    page.locator('#threshold').fill('30')
+    for selector, name, text in [('current-file', 'compat-current.csv', current),
+                                 ('update-file', 'compat-update.csv', update)]:
+        page.locator('#' + selector).set_input_files({
+            'name': name, 'mimeType': 'text/csv', 'buffer': text.encode('utf-8')})
+    page.wait_for_function("!document.getElementById('compare').disabled")
+    page.locator('#compare').click()
+    page.locator('#results').wait_for(state='visible')
+    assert page.locator('#metric-compared').inner_text() == '2'
+    assert page.locator('#metric-prices').inner_text() == '0'
+    assert page.locator('#metric-priority').inner_text() == '0'
+    assert page.locator('#metric-unpaired').inner_text() == '0'
+    assert page.locator('#count-all').inner_text() == '0'
+
+    page.locator('#update-file').set_input_files({
+        'name': 'compat-changed.csv', 'mimeType': 'text/csv',
+        'buffer': update.replace(',M,COMPAT-M,', ',L,COMPAT-M,').encode('utf-8')})
+    page.wait_for_function("!document.getElementById('compare').disabled")
+    page.locator('#compare').click()
+    page.locator('#results').wait_for(state='visible')
+    assert page.locator('#metric-priority').inner_text() == '1'
+    assert page.locator('#count-all').inner_text() == '1'
+    assert 'option changed' in page.locator('#findings').inner_text()
+    assert 'COMPAT-M' in page.locator('#findings').inner_text()
+
+
 def run_checks(page, out, checks, requests, errors, source_html, mode):
     # Preserve the eleven original groups, including real input and download events.
     OUT = out
@@ -271,6 +304,9 @@ def run_checks(page, out, checks, requests, errors, source_html, mode):
 
     check_pending_settings_change(page)
     checks.append('threshold and overwrite changes cancel pending comparisons without replacing newer settings')
+
+    check_sample_compatibility(page)
+    checks.append('Active status alias and sparse continuation option names avoid false alerts while real option changes remain high priority')
 
     page.locator('#demo').click()
     page.locator('#results').wait_for(state='visible')

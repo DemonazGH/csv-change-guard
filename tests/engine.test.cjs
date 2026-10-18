@@ -106,6 +106,86 @@ test('unsupported columns are explicitly listed', () => {const r=run(undefined,u
 test('missing option dependency is flagged', () => {const hs=H.filter(h=>!h.startsWith('Option1'));const r=run(undefined,undefined,{},hs);assert.ok(has(r,'MISSING_OPTION_DEPENDENCY'));});
 test('orphan option name/value flagged', () => assert.ok(has(run(undefined,[row({'Option1 Value':''})]),'OPTION_PAIR_INCOMPLETE')));
 test('option value changes are high-priority', () => {const r=run(undefined,[row({'Option1 Value':'XL'})]);assert.equal(r.findings.find(f=>f.code==='OPTION_CHANGED').severity,'high');});
+test('blank continuation option names equal repeated names for all three options and header aliases', () => {
+ const headers=[...H,'Option2 Name','Option2 Value','Option3 Name','Option3 Value'];
+ const first=row({'Option2 Name':'Color','Option2 Value':'Blue','Option3 Name':'Material','Option3 Value':'Cotton'});
+ const later={...first,'Title':'','Body (HTML)':'','Vendor':'','Variant SKU':'SKU-2','Option1 Value':'M'};
+ const repeated=[first,later];
+ const sparse=[first,{...later,'Option1 Name':'','Option2 Name':'','Option3 Name':''}];
+ const modern=text=>text.replaceAll(' Name"',' name"').replaceAll(' Value"',' value"');
+ for(const [a,b] of [[csv(repeated,headers),modern(csv(sparse,headers))],[modern(csv(sparse,headers)),csv(repeated,headers)],[csv(sparse,headers),csv(sparse,headers)]]) {
+  const r=G.compare(a,b);
+  assert.equal(r.stats.comparedVariants,2);
+  assert.deepEqual(r.findings,[]);
+ }
+});
+test('option name inheritance stays within each handle and file even with interleaved image rows', () => {
+ const headers=[...H,'Image Src'];
+ const a=[row(),row({'Handle':'pants','Title':'Pants','Option1 Name':'Color'}),{'Handle':'shirt','Image Src':'https://example.invalid/image.jpg'},row({'Title':'','Variant SKU':'SKU-2','Option1 Name':'','Option1 Value':'M'})];
+ const b=a.map(r=>({...r}));b[0]['Option1 Name']='Fit';
+ const r=run(a,b,{},headers);
+ assert.equal(r.stats.comparedVariants,3);
+ assert.equal(r.stats.updateImageRows,1);
+ assert.equal(has(r,'OPTION_PAIR_INCOMPLETE'),false);
+ assert.deepEqual(r.changes.map(f=>[f.handle,f.sku,f.before,f.after,f.currentRecord,f.updateRecord]),[
+  ['shirt','SKU-1','Size','Fit',2,2],['shirt','SKU-2','Size','Fit',5,5]
+ ]);
+});
+test('reordered sparse variants retain exact identity and first product row option names', () => {
+ const a=[row(),row({'Title':'','Body (HTML)':'','Vendor':'','Variant SKU':'SKU-2','Option1 Name':'','Option1 Value':'M'})];
+ const b=[row({'Variant SKU':'SKU-2','Option1 Value':'M'}),row({'Title':'','Body (HTML)':'','Vendor':'','Option1 Name':''})];
+ const r=run(a,b);
+ assert.equal(r.stats.comparedVariants,2);
+ assert.deepEqual(r.findings,[]);
+});
+test('changed continuation option values remain high priority with inherited names', () => {
+ const a=[row(),row({'Title':'','Variant SKU':'SKU-2','Option1 Name':'','Option1 Value':'M'})];
+ const b=a.map(r=>({...r}));b[1]['Option1 Value']='L';
+ const r=run(a,b);
+ assert.equal(has(r,'OPTION_PAIR_INCOMPLETE'),false);
+ assert.deepEqual(r.changes.map(f=>[f.code,f.severity,f.sku,f.before,f.after]),[['OPTION_CHANGED','high','SKU-2','M','L']]);
+});
+test('explicit continuation option names are not replaced by the first row name', () => {
+ const a=[row(),row({'Title':'','Variant SKU':'SKU-2','Option1 Name':'','Option1 Value':'M'})];
+ const b=a.map(r=>({...r}));b[1]['Option1 Name']='Fit';
+ const r=run(a,b);
+ assert.deepEqual(r.changes.map(f=>[f.canonicalField,f.sku,f.before,f.after]),[['option1Name','SKU-2','Size','Fit']]);
+});
+test('a missing first-row option name is not filled from a later row, another handle, or baseline', () => {
+ const a=[row(),row({'Title':'','Variant SKU':'SKU-2','Option1 Value':'M'})];
+ const b=[row({'Handle':'pants','Title':'Pants'}),row({'Option1 Name':''}),row({'Title':'','Variant SKU':'SKU-2','Option1 Value':'M'}),row({'Title':'','Variant SKU':'SKU-3','Option1 Name':'','Option1 Value':'L'})];
+ const r=run(a,b);
+ assert.deepEqual(r.findings.filter(f=>f.code==='OPTION_PAIR_INCOMPLETE').map(f=>f.updateRecord),[3,5]);
+ assert.ok(r.changes.some(f=>f.canonicalField==='option1Name' && f.sku==='SKU-1' && f.after===''));
+});
+test('blank continuation option values stay missing even when the name is inherited', () => {
+ const a=[row(),row({'Title':'','Variant SKU':'SKU-2','Option1 Name':'','Option1 Value':'M'})];
+ const b=a.map(r=>({...r}));b[1]['Option1 Value']='';
+ const r=run(a,b);
+ assert.deepEqual(r.findings.filter(f=>f.code==='OPTION_PAIR_INCOMPLETE').map(f=>[f.updateRecord,f.before,f.after]),[[3,'Size','']]);
+ assert.deepEqual(r.changes.map(f=>[f.canonicalField,f.before,f.after]),[['option1Value','M','']]);
+});
+test('whitespace-only continuation names are not silently inherited or repaired', () => {
+ const a=[row(),row({'Title':'','Variant SKU':'SKU-2','Option1 Name':'','Option1 Value':'M'})];
+ const b=a.map(r=>({...r}));b[1]['Option1 Name']=' ';
+ const r=run(a,b);
+ assert.ok(has(r,'OPTION_PAIR_INCOMPLETE'));
+ assert.deepEqual(r.changes.map(f=>[f.canonicalField,f.before,f.after]),[['option1Name','Size',' ']]);
+});
+test('omitted name columns stay omitted and do not inherit baseline names', () => {
+ const rows=[row(),row({'Title':'','Variant SKU':'SKU-2','Option1 Name':'','Option1 Value':'M'})];
+ const r=G.compare(csv(rows),csv(rows,H.filter(h=>h!=='Option1 Name')));
+ assert.ok(has(r,'MISSING_OPTION_DEPENDENCY'));
+ assert.ok(has(r,'OMITTED_COLUMNS'));
+ assert.equal(r.findings.filter(f=>f.code==='OPTION_PAIR_INCOMPLETE').length,2);
+ assert.deepEqual(r.changes,[]);
+});
+test('unclear first product rows do not supply inherited option names', () => {
+ const rows=[row({'Title':''}),row({'Title':'','Variant SKU':'SKU-2','Option1 Name':'','Option1 Value':'M'})];
+ const r=run(rows,rows);
+ assert.ok(has(r,'PRODUCT_ROW_UNCLEAR'));
+ assert.deepEqual(r.findings.filter(f=>f.code==='OPTION_PAIR_INCOMPLETE').map(f=>f.updateRecord),[3]);
+});
 test('absent baseline row is not labelled deletion', () => {const a=[row(),row({'Handle':'pants','Title':'Pants','Variant SKU':'SKU-2'})];const r=run(a,[row()]);const f=r.findings.find(f=>f.code==='CURRENT_ROW_NOT_IN_UPDATE');assert.match(f.message,/not a deletion/);});
 test('changed SKU is not paired by row order', () => {const r=run(undefined,[row({'Variant SKU':'NEW','Variant Price':'99'})]);assert.equal(r.stats.priceChanges,0);assert.ok(has(r,'UPDATE_ROW_UNMATCHED'));});
 test('disabled overwrite suppresses existing product changes', () => {const r=run(undefined,[row({'Variant Price':'100','Body (HTML)':''})],{overwrite:false});assert.equal(r.stats.comparedVariants,0);assert.equal(r.changes.length,0);assert.equal(r.stats.ignoredExistingUpdateRows,1);});
@@ -185,6 +265,36 @@ test('invalid comparison price is flagged', () => assert.ok(has(run(undefined,[r
 test('discount comparison inconsistency is flagged', () => assert.ok(has(run(undefined,[row({'Compare-at price':'8.00'})],{},[...H,'Compare-at price']),'COMPARE_AT_NOT_HIGHER')));
 test('invalid product status is flagged', () => assert.ok(has(run(undefined,[row({'Status':'BAD'})],{},[...H,'Status']),'INVALID_STATUS')));
 test('visibility changes are warned', () => {const a=[row({'Status':'active'})],b=[row({'Status':'draft'})];assert.ok(has(run(a,b,{},[...H,'Status']),'VISIBILITY_CHANGED'));});
+test('official-sample Active status equals documented active without visibility alerts', () => {
+ for(const [before,after] of [['Active','Active'],['Active','active'],['active','Active']]) {
+  const r=run([row({'Status':before})],[row({'Status':after})],{},[...H,'Status']);
+  assert.deepEqual(r.findings,[]);
+ }
+});
+test('equivalent Active status on continuation rows is not a product conflict', () => {
+ const a=[row({'Status':'Active'}),row({'Title':'','Status':'active','Variant SKU':'SKU-2','Option1 Value':'M'})];
+ const b=a.map(r=>({...r}));b[0].Status='active';b[1].Status='Active';
+ assert.deepEqual(run(a,b,{},[...H,'Status']).findings,[]);
+ b[1].Status='draft';
+ assert.ok(has(run(a,b,{},[...H,'Status']),'PRODUCT_FIELD_CONFLICT'));
+});
+test('real status changes retain original capitalization in findings and exports', () => {
+ const r=run([row({'Status':'Active'})],[row({'Status':'draft'})],{},[...H,'Status']);
+ assert.equal(has(r,'INVALID_STATUS'),false);
+ assert.deepEqual(r.changes.map(f=>[f.code,f.before,f.after]),[['VISIBILITY_CHANGED','Active','draft']]);
+ assert.equal(JSON.parse(JSON.stringify(r)).changes[0].before,'Active');
+ assert.ok(G.reportHTML(r).includes('Active'));
+ assert.ok(G.findingsCSV(r).includes('"Active"'));
+});
+test('blank, spaced, and unsupported status spellings remain flagged', () => {
+ for(const status of ['', ' Active', 'Active ', 'ACTIVE', 'aCtIvE', 'Draft', 'ARCHIVED', 'BAD']) {
+  assert.ok(has(run(undefined,[row({'Status':status})],{},[...H,'Status']),'INVALID_STATUS'),status);
+ }
+ for(const status of ['active','draft','archived']) {
+  const rows=[row({'Status':status})];
+  assert.deepEqual(run(rows,rows,{},[...H,'Status']).findings,[]);
+ }
+});
 test('invalid thresholds rejected', () => {for(const threshold of [-1,Infinity,NaN,10001]) assert.throws(()=>run(undefined,undefined,{threshold}),/threshold/);});
 test('string overwrite option rejected', () => assert.throws(()=>run(undefined,undefined,{overwrite:'false'}),/true or false/));
 test('HTML report escapes untrusted data', () => {const r=run(undefined,[row({'Body (HTML)':'<script>alert(1)</script>'})]);const html=G.reportHTML(r);assert.ok(!html.includes('<script>'));assert.ok(html.includes('&lt;script&gt;'));});

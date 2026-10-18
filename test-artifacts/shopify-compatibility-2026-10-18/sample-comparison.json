@@ -1,0 +1,54 @@
+{
+  "before": {
+    "stats": {
+      "currentVariants": 16,
+      "updateVariants": 16,
+      "currentImageRows": 0,
+      "updateImageRows": 0,
+      "matchedVariants": 16,
+      "comparedVariants": 16,
+      "priceChanges": 0,
+      "unpairedUpdateRows": 0,
+      "currentRowsNotCompared": 0,
+      "ignoredExistingUpdateRows": 0,
+      "invalidRecords": 0
+    },
+    "counts": {
+      "blocking": 2,
+      "high": 24,
+      "warning": 4,
+      "info": 0
+    },
+    "finding_codes": {
+      "IMAGES_NOT_ASSESSED": 2,
+      "INVALID_STATUS": 2,
+      "OPTION_PAIR_INCOMPLETE": 24,
+      "UNCHECKED_COLUMNS": 2
+    }
+  },
+  "after": {
+    "stats": {
+      "currentVariants": 16,
+      "updateVariants": 16,
+      "currentImageRows": 0,
+      "updateImageRows": 0,
+      "matchedVariants": 16,
+      "comparedVariants": 16,
+      "priceChanges": 0,
+      "unpairedUpdateRows": 0,
+      "currentRowsNotCompared": 0,
+      "ignoredExistingUpdateRows": 0,
+      "invalidRecords": 0
+    },
+    "counts": {
+      "blocking": 0,
+      "high": 0,
+      "warning": 4,
+      "info": 0
+    },
+    "finding_codes": {
+      "IMAGES_NOT_ASSESSED": 2,
+      "UNCHECKED_COLUMNS": 2
+    }
+  }
+}

@@ -1,0 +1,66 @@
+import argparse
+from datetime import datetime, timezone
+import hashlib
+import json
+from pathlib import Path
+from playwright.sync_api import sync_playwright, expect
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--url', required=True)
+parser.add_argument('--sample', type=Path, required=True)
+parser.add_argument('--out', type=Path, required=True)
+args = parser.parse_args()
+args.out.mkdir(parents=True, exist_ok=False)
+result = {'started_at': datetime.now(timezone.utc).isoformat(), 'target': args.url,
+          'sandbox_enabled': True, 'sample_sha256': hashlib.sha256(args.sample.read_bytes()).hexdigest(),
+          'http_requests': [], 'page_errors': [], 'status': 'running'}
+try:
+    with sync_playwright() as p:
+        browser = p.chromium.launch(executable_path=r'C:\Program Files\Google\Chrome\Application\chrome.exe',
+                                     headless=True, chromium_sandbox=True, args=['--enable-automation'])
+        try:
+            result['chrome'] = browser.version
+            result['arguments'] = browser.new_browser_cdp_session().send('Browser.getBrowserCommandLine')['arguments']
+            assert '--no-sandbox' not in result['arguments']
+            context = browser.new_context(viewport={'width':1440,'height':1100},accept_downloads=True)
+            context.on('request', lambda request: result['http_requests'].append(request.url)
+                       if request.url.startswith(('http://','https://')) else None)
+            context.on('page', lambda page: page.on('pageerror', lambda error: result['page_errors'].append(str(error))))
+            page = context.new_page()
+            page.goto(args.url, wait_until='load')
+            page.locator('#current-file').set_input_files(str(args.sample))
+            page.locator('#update-file').set_input_files(str(args.sample))
+            expect(page.locator('#compare')).to_be_enabled()
+            page.locator('#compare').click()
+            expect(page.locator('#results')).to_be_visible()
+            result['metrics'] = {key:page.locator('#'+key).inner_text() for key in
+                ['metric-compared','metric-prices','metric-priority','metric-unpaired','count-all','count-blocking','count-high','count-warning','count-info']}
+            assert result['metrics'] == {'metric-compared':'16','metric-prices':'0','metric-priority':'0',
+                'metric-unpaired':'0','count-all':'4','count-blocking':'0','count-high':'0','count-warning':'4','count-info':'0'}
+            page.locator('#results').scroll_into_view_if_needed()
+            page.screenshot(path=str(args.out/'official-sample-results.png'))
+            with page.expect_download() as info:
+                page.locator('#export-html').click()
+            report = args.out/'official-sample-report.html'
+            info.value.save_as(report)
+            assert info.value.failure() is None
+            page.close()
+            report_page = context.new_page()
+            report_page.goto(report.as_uri(), wait_until='load')
+            assert report_page.locator('tbody tr').count() == 4
+            assert report_page.locator('script').count() == 0
+            assert '16 compared variants' in report_page.locator('body').inner_text()
+            report_page.screenshot(path=str(args.out/'official-sample-report-open.png'),full_page=True)
+            assert result['page_errors'] == []
+            assert result['http_requests'] == ([] if args.url.startswith('file:') else [args.url])
+            result['status'] = 'passed'
+        finally:
+            browser.close()
+except Exception as error:
+    result['status']='failed'
+    result['error']=str(error)
+finally:
+    result['finished_at']=datetime.now(timezone.utc).isoformat()
+    (args.out/'result.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps({key:value for key,value in result.items() if key!='arguments'},indent=2))
+raise SystemExit(0 if result['status']=='passed' else 1)

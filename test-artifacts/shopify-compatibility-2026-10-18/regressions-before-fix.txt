@@ -1,0 +1,524 @@
+
+> csv-change-guard@0.1.0 test
+> node --test tests/engine.test.cjs tests/scenarios.test.cjs
+
+✔ unchanged supported data has no findings (6.0068ms)
+✔ ordinary price changes have an informational verdict (1.5383ms)
+✔ partial updates and omitted columns retain an informational coverage verdict (6.9734ms)
+✔ quoted commas, escaped quotes and multiline fields parse (0.1485ms)
+✔ UTF-8 BOM and no final newline are supported (0.2189ms)
+✔ blank records are counted and skipped (0.1838ms)
+✔ unclosed quote is rejected (0.5521ms)
+✔ quote in unquoted field is rejected (0.163ms)
+✔ junk after a closing quote is rejected (0.2843ms)
+✔ wrong row length is rejected (0.4016ms)
+✔ empty data is rejected (0.2924ms)
+✔ empty file is rejected (0.1471ms)
+✔ semicolon delimiter is rejected (0.1244ms)
+✔ duplicate column names are rejected (0.2307ms)
+✔ empty header is rejected (0.1537ms)
+✔ spaced header is rejected rather than normalized (0.1116ms)
+✔ NUL content / likely UTF-16 rejected (0.1071ms)
+✔ row limit enforced (2.5194ms)
+✔ column limit enforced (0.2674ms)
+✔ byte limit enforced (16.9453ms)
+✔ new and legacy headers map to the same semantics (0.7397ms)
+✔ ambiguous aliases are rejected (0.4732ms)
+✔ missing SKU header is an explicit prototype limitation (0.6591ms)
+✔ case-sensitive SKU matching does not guess (0.5533ms)
+✔ same SKU in different handles is permitted (0.5282ms)
+✔ missing SKU is excluded (0.2992ms)
+✔ surrounding SKU whitespace is not silently trimmed (0.1725ms)
+✔ invalid handle is excluded (1.249ms)
+✔ unpaired update rows include invalid handles and count missing SKUs once (0.4803ms)
+✔ invalid baseline handles do not increase unpaired update rows (0.3585ms)
+✔ disabled overwrite cannot assume invalid update handles are existing products (0.2572ms)
+✔ duplicate update keys are not arbitrarily matched (0.327ms)
+✔ duplicate baseline keys are not arbitrarily matched (0.1983ms)
+✔ product continuation blanks are not mistaken for clearing (0.2006ms)
+✔ product changes are reported once per handle (0.2734ms)
+✔ conflicting product-level continuation value is excluded (0.3403ms)
+✔ image-only rows do not create missing-SKU errors (0.481ms)
+✔ missing first product title blocks product-level comparison (0.179ms)
+✔ omitted description column is not a blanked description (0.1639ms)
+✔ missing baseline columns are visible in coverage (0.3069ms)
+✔ unsupported columns are explicitly listed (0.2456ms)
+✔ missing option dependency is flagged (0.1896ms)
+✔ orphan option name/value flagged (0.1746ms)
+✔ option value changes are high-priority (0.1533ms)
+✖ blank continuation option names equal repeated names for all three options and header aliases (3.0987ms)
+✖ option name inheritance stays within each handle and file even with interleaved image rows (0.8248ms)
+✖ reordered sparse variants retain exact identity and first product row option names (0.9315ms)
+✖ changed continuation option values remain high priority with inherited names (0.4826ms)
+✖ explicit continuation option names are not replaced by the first row name (0.4901ms)
+✔ a missing first-row option name is not filled from a later row, another handle, or baseline (0.9041ms)
+✖ blank continuation option values stay missing even when the name is inherited (0.5769ms)
+✖ whitespace-only continuation names are not silently inherited or repaired (0.4179ms)
+✔ omitted name columns stay omitted and do not inherit baseline names (0.4732ms)
+✔ unclear first product rows do not supply inherited option names (0.2816ms)
+✔ absent baseline row is not labelled deletion (0.4044ms)
+✔ changed SKU is not paired by row order (0.1649ms)
+✔ disabled overwrite suppresses existing product changes (0.1446ms)
+✔ disabled overwrite does not call changed SKU an addition (0.1347ms)
+✔ disabled overwrite still identifies unknown handles (0.177ms)
+✔ price movements above threshold are high (0.2418ms)
+✔ threshold boundary uses exact decimal arithmetic (0.2576ms)
+✔ fractional thresholds are not rounded down into false alerts (0.2003ms)
+✔ fractional increase thresholds distinguish below, equal and above (0.5538ms)
+✔ fractional decrease thresholds use the same inclusive boundary (0.4433ms)
+✔ tiny exponent thresholds remain exact with large supported prices (0.6694ms)
+✔ the smallest positive numeric threshold remains supported (0.3392ms)
+✔ zero and maximum thresholds preserve inclusive price comparisons (0.4916ms)
+✔ price decreases count against absolute threshold (0.8973ms)
+✔ the largest supported price ratio preserves the exact displayed percentage (0.5241ms)
+✔ large fractional percentages preserve exact truncation in reports (0.1642ms)
+✔ ordinary percentage values remain numeric and truncate toward zero (0.7883ms)
+✔ equivalent monetary formatting is not a price change (0.1888ms)
+✔ positive price to zero is high priority (0.1406ms)
+✔ price from zero has no invented percentage (0.2448ms)
+✔ negative, currency, scientific and locale prices rejected (0.3749ms)
+✔ blank prices are explicitly flagged (0.2642ms)
+✔ unchanged invalid update price is still flagged (0.2343ms)
+✔ invalid comparison price is flagged (0.2588ms)
+✔ discount comparison inconsistency is flagged (0.2047ms)
+✔ invalid product status is flagged (0.2692ms)
+✔ visibility changes are warned (0.2019ms)
+✖ official-sample Active status equals documented active without visibility alerts (0.5744ms)
+✖ equivalent Active status on continuation rows is not a product conflict (0.8531ms)
+✔ real status changes retain original capitalization in findings and exports (0.5359ms)
+✔ blank, spaced, and unsupported status spellings remain flagged (1.8083ms)
+✔ invalid thresholds rejected (0.3019ms)
+✔ string overwrite option rejected (0.1215ms)
+✔ HTML report escapes untrusted data (0.2304ms)
+✔ CSV report neutralizes formula-like cells (0.1802ms)
+✔ JSON report preserves original values (0.2653ms)
+✔ record numbers stay logical for multiline values (0.2129ms)
+✔ baseline and update arguments remain unchanged (0.1687ms)
+✔ supplied demo has stable expected findings (2.0132ms)
+✔ 5000 matching records complete within prototype scope (80.9936ms)
+✔ catalog round trip retains multilingual multiline descriptions and excludes image-only rows (12.1252ms)
+✔ partial price updates distinguish omitted columns and absent variants from explicit clearing (6.209ms)
+✔ explicit product and compare-at blanks report only intended clearing, once per product field (1.5307ms)
+✔ reordered products and variants preserve exact matching when product fields move to the first row (1.6233ms)
+✔ changed handles and SKUs stay unpaired even when positions and other values resemble baseline rows (1.1945ms)
+✔ missing and whitespace identifiers expose excluded records without guessed price changes (1.0414ms)
+✔ duplicate update keys exclude both candidate prices while valid variants remain compared (0.9802ms)
+✔ duplicate baseline keys cannot supply an arbitrary before price (0.6856ms)
+✔ mixed supported header aliases preserve comparison while inventory remains explicitly unassessed (0.8245ms)
+✔ conflicting continuation fields stay unassessed while an independent price change remains visible (1.0075ms)
+✔ mixed locale, currency, exponent and blank prices remain unassessed while genuine zero prices are explicit (0.7486ms)
+✔ 5000-record update keeps exact monetary boundaries and key exclusions with selective changes (95.2793ms)
+ℹ tests 106
+ℹ suites 0
+ℹ pass 97
+ℹ fail 9
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 288.2087
+
+✖ failing tests:
+
+test at tests\engine.test.cjs:109:1
+✖ blank continuation option names equal repeated names for all three options and header aliases (3.0987ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     after: 'M',
+  +     before: '',
+  +     code: 'OPTION_PAIR_INCOMPLETE',
+  +     currentRecord: '',
+  +     field: 'Option1',
+  +     handle: 'shirt',
+  +     id: 'CG-0001',
+  +     message: 'Option name and value are not both populated. The prototype does not infer the missing value.',
+  +     percentChange: null,
+  +     severity: 'high',
+  +     sku: 'SKU-2',
+  +     source: 'update',
+  +     updateRecord: 3
+  +   },
+  +   {
+  +     after: 'Blue',
+  +     before: '',
+  +     code: 'OPTION_PAIR_INCOMPLETE',
+  +     currentRecord: '',
+  +     field: 'Option2',
+  +     handle: 'shirt',
+  +     id: 'CG-0002',
+  +     message: 'Option name and value are not both populated. The prototype does not infer the missing value.',
+  +     percentChange: null,
+  +     severity: 'high',
+  +     sku: 'SKU-2',
+  +     source: 'update',
+  +     updateRecord: 3
+  +   },
+  +   {
+  +     after: 'Cotton',
+  +     before: '',
+  +     code: 'OPTION_PAIR_INCOMPLETE',
+  +     currentRecord: '',
+  +     field: 'Option3',
+  +     handle: 'shirt',
+  +     id: 'CG-0003',
+  +     message: 'Option name and value are not both populated. The prototype does not infer the missing value.',
+  +     percentChange: null,
+  +     severity: 'high',
+  +     sku: 'SKU-2',
+  +     source: 'update',
+  +     updateRecord: 3
+  +   },
+  +   {
+  +     after: '',
+  +     before: 'Size',
+  +     code: 'OPTION_CHANGED',
+  +     currentRecord: 3,
+  +     field: 'Option1 name',
+  +     handle: 'shirt',
+  +     id: 'CG-0004',
+  +     message: 'Option name differs for the same handle + SKU. Review variant structure and import dependencies.',
+  +     percentChange: null,
+  +     severity: 'high',
+  +     sku: 'SKU-2',
+  +     source: 'comparison',
+  +     updateRecord: 3
+  +   },
+  +   {
+  +     after: '',
+  +     before: 'Color',
+  +     code: 'OPTION_CHANGED',
+  +     currentRecord: 3,
+  +     field: 'Option2 name',
+  +     handle: 'shirt',
+  +     id: 'CG-0005',
+  +     message: 'Option name differs for the same handle + SKU. Review variant structure and import dependencies.',
+  +     percentChange: null,
+  +     severity: 'high',
+  +     sku: 'SKU-2',
+  +     source: 'comparison',
+  +     updateRecord: 3
+  +   },
+  +   {
+  +     after: '',
+  +     before: 'Material',
+  +     code: 'OPTION_CHANGED',
+  +     currentRecord: 3,
+  +     field: 'Option3 name',
+  +     handle: 'shirt',
+  +     id: 'CG-0006',
+  +     message: 'Option name differs for the same handle + SKU. Review variant structure and import dependencies.',
+  +     percentChange: null,
+  +     severity: 'high',
+  +     sku: 'SKU-2',
+  +     source: 'comparison',
+  +     updateRecord: 3
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (<repository>\tests\engine.test.cjs:119:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'OPTION_PAIR_INCOMPLETE', severity: 'high', source: 'update', handle: 'shirt', sku: 'SKU-2', field: 'Option1', before: '', after: 'M', currentRecord: '', updateRecord: 3, percentChange: null, message: 'Option name and value are not both populated. The prototype does not infer the missing value.', id: 'CG-0001' }, { code: 'OPTION_PAIR_INCOMPLETE', severity: 'high', source: 'update', handle: 'shirt', sku: 'SKU-2', field: 'Option2', before: '', after: 'Blue', currentRecord: '', updateRecord: 3, percentChange: null, message: 'Option name and value are not both populated. The prototype does not infer the missing value.', id: 'CG-0002' }, { code: 'OPTION_PAIR_INCOMPLETE', severity: 'high', source: 'update', handle: 'shirt', sku: 'SKU-2', field: 'Option3', before: '', after: 'Cotton', currentRecord: '', updateRecord: 3, percentChange: null, message: 'Option name and value are not both populated. The prototype does not infer the missing value.', id: 'CG-0003' }, { code: 'OPTION_CHANGED', severity: 'high', source: 'comparison', handle: 'shirt', sku: 'SKU-2', field: 'Option1 name', before: 'Size', after: '', currentRecord: 3, updateRecord: 3, percentChange: null, message: 'Option name differs for the same handle + SKU. Review variant structure and import dependencies.', id: 'CG-0004' }, { code: 'OPTION_CHANGED', severity: 'high', source: 'comparison', handle: 'shirt', sku: 'SKU-2', field: 'Option2 name', before: 'Color', after: '', currentRecord: 3, updateRecord: 3, percentChange: null, message: 'Option name differs for the same handle + SKU. Review variant structure and import dependencies.', id: 'CG-0005' }, { code: 'OPTION_CHANGED', severity: 'high', source: 'comparison', handle: 'shirt', sku: 'SKU-2', field: 'Option3 name', before: 'Material', after: '', currentRecord: 3, updateRecord: 3, percentChange: null, message: 'Option name differs for the same handle + SKU. Review variant structure and import dependencies.', id: 'CG-0006' } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\engine.test.cjs:122:1
+✖ option name inheritance stays within each handle and file even with interleaved image rows (0.8248ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  true !== false
+
+      at TestContext.<anonymous> (<repository>\tests\engine.test.cjs:129:9)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\engine.test.cjs:134:1
+✖ reordered sparse variants retain exact identity and first product row option names (0.9315ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     after: 'Size',
+  +     before: '',
+  +     code: 'OPTION_CHANGED',
+  +     currentRecord: 3,
+  +     field: 'Option1 name',
+  +     handle: 'shirt',
+  +     id: 'CG-0001',
+  +     message: 'Option name differs for the same handle + SKU. Review variant structure and import dependencies.',
+  +     percentChange: null,
+  +     severity: 'high',
+  +     sku: 'SKU-2',
+  +     source: 'comparison',
+  +     updateRecord: 2
+  +   },
+  +   {
+  +     after: 'S',
+  +     before: '',
+  +     code: 'OPTION_PAIR_INCOMPLETE',
+  +     currentRecord: '',
+  +     field: 'Option1',
+  +     handle: 'shirt',
+  +     id: 'CG-0002',
+  +     message: 'Option name and value are not both populated. The prototype does not infer the missing value.',
+  +     percentChange: null,
+  +     severity: 'high',
+  +     sku: 'SKU-1',
+  +     source: 'update',
+  +     updateRecord: 3
+  +   },
+  +   {
+  +     after: '',
+  +     before: 'Size',
+  +     code: 'OPTION_CHANGED',
+  +     currentRecord: 2,
+  +     field: 'Option1 name',
+  +     handle: 'shirt',
+  +     id: 'CG-0003',
+  +     message: 'Option name differs for the same handle + SKU. Review variant structure and import dependencies.',
+  +     percentChange: null,
+  +     severity: 'high',
+  +     sku: 'SKU-1',
+  +     source: 'comparison',
+  +     updateRecord: 3
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (<repository>\tests\engine.test.cjs:139:9)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'OPTION_CHANGED', severity: 'high', source: 'comparison', handle: 'shirt', sku: 'SKU-2', field: 'Option1 name', before: '', after: 'Size', currentRecord: 3, updateRecord: 2, percentChange: null, message: 'Option name differs for the same handle + SKU. Review variant structure and import dependencies.', id: 'CG-0001' }, { code: 'OPTION_PAIR_INCOMPLETE', severity: 'high', source: 'update', handle: 'shirt', sku: 'SKU-1', field: 'Option1', before: '', after: 'S', currentRecord: '', updateRecord: 3, percentChange: null, message: 'Option name and value are not both populated. The prototype does not infer the missing value.', id: 'CG-0002' }, { code: 'OPTION_CHANGED', severity: 'high', source: 'comparison', handle: 'shirt', sku: 'SKU-1', field: 'Option1 name', before: 'Size', after: '', currentRecord: 2, updateRecord: 3, percentChange: null, message: 'Option name differs for the same handle + SKU. Review variant structure and import dependencies.', id: 'CG-0003' } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\engine.test.cjs:141:1
+✖ changed continuation option values remain high priority with inherited names (0.4826ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  true !== false
+
+      at TestContext.<anonymous> (<repository>\tests\engine.test.cjs:145:9)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests\engine.test.cjs:148:1
+✖ explicit continuation option names are not replaced by the first row name (0.4901ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+      [
+        'option1Name',
+        'SKU-2',
+  +     '',
+  -     'Size',
+        'Fit'
+      ]
+    ]
+
+      at TestContext.<anonymous> (<repository>\tests\engine.test.cjs:152:9)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 'option1Name', 'SKU-2', '', 'Fit' ] ],
+    expected: [ [ 'option1Name', 'SKU-2', 'Size', 'Fit' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\engine.test.cjs:161:1
+✖ blank continuation option values stay missing even when the name is inherited (0.5769ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + []
+  - [
+  -   [
+  -     3,
+  -     'Size',
+  -     ''
+  -   ]
+  - ]
+
+      at TestContext.<anonymous> (<repository>\tests\engine.test.cjs:165:9)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ [ 3, 'Size', '' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\engine.test.cjs:168:1
+✖ whitespace-only continuation names are not silently inherited or repaired (0.4179ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+    [
+      [
+        'option1Name',
+  +     '',
+  -     'Size',
+        ' '
+      ]
+    ]
+
+      at TestContext.<anonymous> (<repository>\tests\engine.test.cjs:173:9)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ [ 'option1Name', '', ' ' ] ],
+    expected: [ [ 'option1Name', 'Size', ' ' ] ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\engine.test.cjs:268:1
+✖ official-sample Active status equals documented active without visibility alerts (0.5744ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     after: 'Active',
+  +     before: '',
+  +     code: 'INVALID_STATUS',
+  +     currentRecord: '',
+  +     field: 'Status',
+  +     handle: 'shirt',
+  +     id: 'CG-0001',
+  +     message: 'When the Status column is present, use active, draft, or archived on the product row.',
+  +     percentChange: null,
+  +     severity: 'blocking',
+  +     sku: 'SKU-1',
+  +     source: 'update',
+  +     updateRecord: 2
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (<repository>\tests\engine.test.cjs:271:10)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'INVALID_STATUS', severity: 'blocking', source: 'update', handle: 'shirt', sku: 'SKU-1', field: 'Status', before: '', after: 'Active', currentRecord: '', updateRecord: 2, percentChange: null, message: 'When the Status column is present, use active, draft, or archived on the product row.', id: 'CG-0001' } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }
+
+test at tests\engine.test.cjs:274:1
+✖ equivalent Active status on continuation rows is not a product conflict (0.8531ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+
+  + [
+  +   {
+  +     after: '',
+  +     before: '',
+  +     code: 'PRODUCT_FIELD_CONFLICT',
+  +     currentRecord: 3,
+  +     field: 'Status',
+  +     handle: 'shirt',
+  +     id: 'CG-0001',
+  +     message: 'Conflicting product-level values within this handle. This field is excluded from product-level comparison.',
+  +     severity: 'blocking',
+  +     sku: 'SKU-2',
+  +     source: 'current',
+  +     updateRecord: ''
+  +   },
+  +   {
+  +     after: '',
+  +     before: '',
+  +     code: 'PRODUCT_FIELD_CONFLICT',
+  +     currentRecord: '',
+  +     field: 'Status',
+  +     handle: 'shirt',
+  +     id: 'CG-0002',
+  +     message: 'Conflicting product-level values within this handle. This field is excluded from product-level comparison.',
+  +     severity: 'blocking',
+  +     sku: 'SKU-2',
+  +     source: 'update',
+  +     updateRecord: 3
+  +   }
+  + ]
+  - []
+
+      at TestContext.<anonymous> (<repository>\tests\engine.test.cjs:277:9)
+      at Test.runInAsyncScope (node:async_hooks:214:14)
+      at Test.run (node:internal/test_runner/test:1106:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+      at Test.postRun (node:internal/test_runner/test:1235:19)
+      at Test.run (node:internal/test_runner/test:1163:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:788:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ { code: 'PRODUCT_FIELD_CONFLICT', severity: 'blocking', source: 'current', handle: 'shirt', sku: 'SKU-2', field: 'Status', before: '', after: '', currentRecord: 3, updateRecord: '', message: 'Conflicting product-level values within this handle. This field is excluded from product-level comparison.', id: 'CG-0001' }, { code: 'PRODUCT_FIELD_CONFLICT', severity: 'blocking', source: 'update', handle: 'shirt', sku: 'SKU-2', field: 'Status', before: '', after: '', currentRecord: '', updateRecord: 3, message: 'Conflicting product-level values within this handle. This field is excluded from product-level comparison.', id: 'CG-0002' } ],
+    expected: [],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

@@ -1,5 +1,10 @@
 # Windows and Chrome validation
 
+This page preserves the unchanged-checkout run. A later
+[compatibility validation](SHOPIFY_SAMPLE_VALIDATION.md) records the two sample
+fixes, 106 engine/scenario tests and 15 browser groups per navigation route,
+plus official-sample results and new Windows screenshots.
+
 On **18 October 2026, 23:16:06–23:16:28 Europe/Warsaw (UTC+02:00)**, the
 unchanged Git checkout at commit
 [`99ca694`](https://github.com/DemonazGH/csv-change-guard/commit/99ca694a23dff180642a7a3c84d2765450a41a3a)

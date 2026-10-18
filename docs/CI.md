@@ -78,3 +78,8 @@ Independent [Windows/Chrome validation](WINDOWS_VALIDATION.md) at commit `99ca69
 passed both file and localhost browser modes with sandboxing enabled. Its
 checked-in evidence and screenshots are a dated local run, not a replacement
 for the Actions result on a later commit. No CI configuration changed for it.
+
+The [later compatibility run](SHOPIFY_SAMPLE_VALIDATION.md) passes 106 Node tests
+and 15 browser groups in each Windows launch mode. The additional browser group
+uses independently constructed synthetic data, so CI remains offline with
+respect to Shopify and does not require the official CSV or store credentials.

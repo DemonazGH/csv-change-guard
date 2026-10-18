@@ -1,0 +1,114 @@
+{
+  "started_at": "2026-10-18T21:32:19.794236+00:00",
+  "base_commit": "efa88c77d3ba2e6b227994fbe5fff7a85c1a9582",
+  "status": "passed",
+  "root": "<repository>",
+  "artifacts": "<validation-artifacts>",
+  "sandbox_enabled": true,
+  "commands": [
+    {
+      "args": [
+        "node",
+        "--version"
+      ],
+      "log": "node-version.txt",
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "-m",
+        "pip",
+        "freeze"
+      ],
+      "log": "python-packages.txt",
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "tests/browser_test.py",
+        "--file",
+        "--artifacts-dir",
+        "<validation-artifacts>\\browser"
+      ],
+      "log": "browser-file.txt",
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "tests/browser_test.py",
+        "--url",
+        "http://127.0.0.1:53377/",
+        "--artifacts-dir",
+        "<validation-artifacts>\\browser"
+      ],
+      "log": "browser-localhost.txt",
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "<codex-task>\\work\\official_sample_browser.py",
+        "--url",
+        "http://127.0.0.1:53377/",
+        "--sample",
+        "<repository>\\.local-test-artifacts\\shopify-compatibility\\product_template.csv",
+        "--out",
+        "<validation-artifacts>\\official-localhost"
+      ],
+      "log": "official-localhost.txt",
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "<codex-task>\\work\\official_sample_browser.py",
+        "--url",
+        "file:///<repository>/dist/index.html",
+        "--sample",
+        "<repository>\\.local-test-artifacts\\shopify-compatibility\\product_template.csv",
+        "--out",
+        "<validation-artifacts>\\official-file"
+      ],
+      "log": "official-file.txt",
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "<validation-artifacts>\\start_here_test.py"
+      ],
+      "log": "start-here-workflow.txt",
+      "exit_code": 0
+    },
+    {
+      "args": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "log": "diff-check.txt",
+      "exit_code": 0
+    }
+  ],
+  "regressions_before": {
+    "total": 106,
+    "passed": 97,
+    "failed": 9,
+    "added": 14
+  },
+  "engine_after": {
+    "total": 106,
+    "passed": 106,
+    "failed": 0
+  },
+  "node": "v24.12.0",
+  "python": "3.14.0",
+  "build_sha256": "9d23ae8398e82d559c8b8e38638927a64f4b54f2b90e7e28f7426b165a5a521e",
+  "canonical_build_sha256": "442fdf33fb9c89d147920090cca7c63d411e30119c744ab2ebb32bcd7c3eb0c1",
+  "engine_sha256": "2b18822cddad3010c15960e4b9e9180f9d0dc0f4e40abe49b7ae420bfab3a642",
+  "server_stopped": true,
+  "finished_at": "2026-10-18T21:32:50.313772+00:00"
+}

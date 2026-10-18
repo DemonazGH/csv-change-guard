@@ -1,0 +1,2 @@
+# Optional development-only browser smoke tests; no product dependencies.
+playwright==1.62.0

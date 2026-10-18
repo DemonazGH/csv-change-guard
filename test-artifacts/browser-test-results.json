@@ -1,0 +1,20 @@
+{
+  "browser": "Chromium",
+  "rendering_mode": "exact standalone HTML via set_content; file/localhost navigation blocked by environment policy",
+  "checks_passed": 11,
+  "checks": [
+    "exact standalone HTML renders in memory; compare disabled before input",
+    "demo computes expected metrics and incomplete-comparison verdict",
+    "severity filter and text search work together",
+    "all three downloads work; exported report is not limited by active filters",
+    "changing settings invalidates stale report and recalculates correctly",
+    "disabled overwrite suppresses existing-handle changes",
+    "real file selection works across legacy and current headers",
+    "unsupported delimiter is rejected and previous comparison is cleared",
+    "invalid UTF-8 rejected in browser file loader",
+    "390px layout fits viewport without page-level horizontal overflow",
+    "no network requests or JavaScript errors observed; build contains no localStorage.setItem calls"
+  ],
+  "page_errors": [],
+  "http_requests": []
+}

@@ -1,0 +1,406 @@
+TAP version 13
+# Subtest: unchanged supported data has no findings
+ok 1 - unchanged supported data has no findings
+  ---
+  duration_ms: 3.862645
+  type: 'test'
+  ...
+# Subtest: quoted commas, escaped quotes and multiline fields parse
+ok 2 - quoted commas, escaped quotes and multiline fields parse
+  ---
+  duration_ms: 0.179871
+  type: 'test'
+  ...
+# Subtest: UTF-8 BOM and no final newline are supported
+ok 3 - UTF-8 BOM and no final newline are supported
+  ---
+  duration_ms: 0.127122
+  type: 'test'
+  ...
+# Subtest: blank records are counted and skipped
+ok 4 - blank records are counted and skipped
+  ---
+  duration_ms: 0.113171
+  type: 'test'
+  ...
+# Subtest: unclosed quote is rejected
+ok 5 - unclosed quote is rejected
+  ---
+  duration_ms: 0.411049
+  type: 'test'
+  ...
+# Subtest: quote in unquoted field is rejected
+ok 6 - quote in unquoted field is rejected
+  ---
+  duration_ms: 0.114002
+  type: 'test'
+  ...
+# Subtest: junk after a closing quote is rejected
+ok 7 - junk after a closing quote is rejected
+  ---
+  duration_ms: 0.144217
+  type: 'test'
+  ...
+# Subtest: wrong row length is rejected
+ok 8 - wrong row length is rejected
+  ---
+  duration_ms: 0.110537
+  type: 'test'
+  ...
+# Subtest: empty data is rejected
+ok 9 - empty data is rejected
+  ---
+  duration_ms: 0.309937
+  type: 'test'
+  ...
+# Subtest: empty file is rejected
+ok 10 - empty file is rejected
+  ---
+  duration_ms: 0.330037
+  type: 'test'
+  ...
+# Subtest: semicolon delimiter is rejected
+ok 11 - semicolon delimiter is rejected
+  ---
+  duration_ms: 0.15942
+  type: 'test'
+  ...
+# Subtest: duplicate column names are rejected
+ok 12 - duplicate column names are rejected
+  ---
+  duration_ms: 0.098879
+  type: 'test'
+  ...
+# Subtest: empty header is rejected
+ok 13 - empty header is rejected
+  ---
+  duration_ms: 0.082724
+  type: 'test'
+  ...
+# Subtest: spaced header is rejected rather than normalized
+ok 14 - spaced header is rejected rather than normalized
+  ---
+  duration_ms: 0.21896
+  type: 'test'
+  ...
+# Subtest: NUL content / likely UTF-16 rejected
+ok 15 - NUL content / likely UTF-16 rejected
+  ---
+  duration_ms: 0.104828
+  type: 'test'
+  ...
+# Subtest: row limit enforced
+ok 16 - row limit enforced
+  ---
+  duration_ms: 2.922911
+  type: 'test'
+  ...
+# Subtest: column limit enforced
+ok 17 - column limit enforced
+  ---
+  duration_ms: 0.220261
+  type: 'test'
+  ...
+# Subtest: byte limit enforced
+ok 18 - byte limit enforced
+  ---
+  duration_ms: 8.98044
+  type: 'test'
+  ...
+# Subtest: new and legacy headers map to the same semantics
+ok 19 - new and legacy headers map to the same semantics
+  ---
+  duration_ms: 0.635737
+  type: 'test'
+  ...
+# Subtest: ambiguous aliases are rejected
+ok 20 - ambiguous aliases are rejected
+  ---
+  duration_ms: 0.263667
+  type: 'test'
+  ...
+# Subtest: missing SKU header is an explicit prototype limitation
+ok 21 - missing SKU header is an explicit prototype limitation
+  ---
+  duration_ms: 0.335395
+  type: 'test'
+  ...
+# Subtest: case-sensitive SKU matching does not guess
+ok 22 - case-sensitive SKU matching does not guess
+  ---
+  duration_ms: 0.443898
+  type: 'test'
+  ...
+# Subtest: same SKU in different handles is permitted
+ok 23 - same SKU in different handles is permitted
+  ---
+  duration_ms: 0.590068
+  type: 'test'
+  ...
+# Subtest: missing SKU is excluded
+ok 24 - missing SKU is excluded
+  ---
+  duration_ms: 0.448265
+  type: 'test'
+  ...
+# Subtest: surrounding SKU whitespace is not silently trimmed
+ok 25 - surrounding SKU whitespace is not silently trimmed
+  ---
+  duration_ms: 0.993997
+  type: 'test'
+  ...
+# Subtest: invalid handle is excluded
+ok 26 - invalid handle is excluded
+  ---
+  duration_ms: 0.218009
+  type: 'test'
+  ...
+# Subtest: duplicate update keys are not arbitrarily matched
+ok 27 - duplicate update keys are not arbitrarily matched
+  ---
+  duration_ms: 0.465521
+  type: 'test'
+  ...
+# Subtest: duplicate baseline keys are not arbitrarily matched
+ok 28 - duplicate baseline keys are not arbitrarily matched
+  ---
+  duration_ms: 0.186541
+  type: 'test'
+  ...
+# Subtest: product continuation blanks are not mistaken for clearing
+ok 29 - product continuation blanks are not mistaken for clearing
+  ---
+  duration_ms: 0.178008
+  type: 'test'
+  ...
+# Subtest: product changes are reported once per handle
+ok 30 - product changes are reported once per handle
+  ---
+  duration_ms: 0.549047
+  type: 'test'
+  ...
+# Subtest: conflicting product-level continuation value is excluded
+ok 31 - conflicting product-level continuation value is excluded
+  ---
+  duration_ms: 0.215475
+  type: 'test'
+  ...
+# Subtest: image-only rows do not create missing-SKU errors
+ok 32 - image-only rows do not create missing-SKU errors
+  ---
+  duration_ms: 6.716382
+  type: 'test'
+  ...
+# Subtest: missing first product title blocks product-level comparison
+ok 33 - missing first product title blocks product-level comparison
+  ---
+  duration_ms: 0.199581
+  type: 'test'
+  ...
+# Subtest: omitted description column is not a blanked description
+ok 34 - omitted description column is not a blanked description
+  ---
+  duration_ms: 0.21276
+  type: 'test'
+  ...
+# Subtest: missing baseline columns are visible in coverage
+ok 35 - missing baseline columns are visible in coverage
+  ---
+  duration_ms: 0.174393
+  type: 'test'
+  ...
+# Subtest: unsupported columns are explicitly listed
+ok 36 - unsupported columns are explicitly listed
+  ---
+  duration_ms: 0.748897
+  type: 'test'
+  ...
+# Subtest: missing option dependency is flagged
+ok 37 - missing option dependency is flagged
+  ---
+  duration_ms: 0.456847
+  type: 'test'
+  ...
+# Subtest: orphan option name/value flagged
+ok 38 - orphan option name/value flagged
+  ---
+  duration_ms: 0.27896
+  type: 'test'
+  ...
+# Subtest: option value changes are high-priority
+ok 39 - option value changes are high-priority
+  ---
+  duration_ms: 0.392071
+  type: 'test'
+  ...
+# Subtest: absent baseline row is not labelled deletion
+ok 40 - absent baseline row is not labelled deletion
+  ---
+  duration_ms: 0.361234
+  type: 'test'
+  ...
+# Subtest: changed SKU is not paired by row order
+ok 41 - changed SKU is not paired by row order
+  ---
+  duration_ms: 0.189085
+  type: 'test'
+  ...
+# Subtest: disabled overwrite suppresses existing product changes
+ok 42 - disabled overwrite suppresses existing product changes
+  ---
+  duration_ms: 0.221273
+  type: 'test'
+  ...
+# Subtest: disabled overwrite does not call changed SKU an addition
+ok 43 - disabled overwrite does not call changed SKU an addition
+  ---
+  duration_ms: 0.280382
+  type: 'test'
+  ...
+# Subtest: disabled overwrite still identifies unknown handles
+ok 44 - disabled overwrite still identifies unknown handles
+  ---
+  duration_ms: 0.199651
+  type: 'test'
+  ...
+# Subtest: price movements above threshold are high
+ok 45 - price movements above threshold are high
+  ---
+  duration_ms: 0.209365
+  type: 'test'
+  ...
+# Subtest: threshold boundary uses exact decimal arithmetic
+ok 46 - threshold boundary uses exact decimal arithmetic
+  ---
+  duration_ms: 0.256236
+  type: 'test'
+  ...
+# Subtest: price decreases count against absolute threshold
+ok 47 - price decreases count against absolute threshold
+  ---
+  duration_ms: 0.228153
+  type: 'test'
+  ...
+# Subtest: equivalent monetary formatting is not a price change
+ok 48 - equivalent monetary formatting is not a price change
+  ---
+  duration_ms: 0.163577
+  type: 'test'
+  ...
+# Subtest: positive price to zero is high priority
+ok 49 - positive price to zero is high priority
+  ---
+  duration_ms: 0.168694
+  type: 'test'
+  ...
+# Subtest: price from zero has no invented percentage
+ok 50 - price from zero has no invented percentage
+  ---
+  duration_ms: 0.174452
+  type: 'test'
+  ...
+# Subtest: negative, currency, scientific and locale prices rejected
+ok 51 - negative, currency, scientific and locale prices rejected
+  ---
+  duration_ms: 1.053947
+  type: 'test'
+  ...
+# Subtest: blank prices are explicitly flagged
+ok 52 - blank prices are explicitly flagged
+  ---
+  duration_ms: 0.15889
+  type: 'test'
+  ...
+# Subtest: unchanged invalid update price is still flagged
+ok 53 - unchanged invalid update price is still flagged
+  ---
+  duration_ms: 0.245069
+  type: 'test'
+  ...
+# Subtest: invalid comparison price is flagged
+ok 54 - invalid comparison price is flagged
+  ---
+  duration_ms: 0.216886
+  type: 'test'
+  ...
+# Subtest: discount comparison inconsistency is flagged
+ok 55 - discount comparison inconsistency is flagged
+  ---
+  duration_ms: 0.16629
+  type: 'test'
+  ...
+# Subtest: invalid product status is flagged
+ok 56 - invalid product status is flagged
+  ---
+  duration_ms: 0.180812
+  type: 'test'
+  ...
+# Subtest: visibility changes are warned
+ok 57 - visibility changes are warned
+  ---
+  duration_ms: 0.160101
+  type: 'test'
+  ...
+# Subtest: invalid thresholds rejected
+ok 58 - invalid thresholds rejected
+  ---
+  duration_ms: 0.224989
+  type: 'test'
+  ...
+# Subtest: string overwrite option rejected
+ok 59 - string overwrite option rejected
+  ---
+  duration_ms: 0.098919
+  type: 'test'
+  ...
+# Subtest: HTML report escapes untrusted data
+ok 60 - HTML report escapes untrusted data
+  ---
+  duration_ms: 0.412281
+  type: 'test'
+  ...
+# Subtest: CSV report neutralizes formula-like cells
+ok 61 - CSV report neutralizes formula-like cells
+  ---
+  duration_ms: 1.256432
+  type: 'test'
+  ...
+# Subtest: JSON report preserves original values
+ok 62 - JSON report preserves original values
+  ---
+  duration_ms: 0.705012
+  type: 'test'
+  ...
+# Subtest: record numbers stay logical for multiline values
+ok 63 - record numbers stay logical for multiline values
+  ---
+  duration_ms: 0.205589
+  type: 'test'
+  ...
+# Subtest: baseline and update arguments remain unchanged
+ok 64 - baseline and update arguments remain unchanged
+  ---
+  duration_ms: 0.262856
+  type: 'test'
+  ...
+# Subtest: supplied demo has stable expected findings
+ok 65 - supplied demo has stable expected findings
+  ---
+  duration_ms: 1.655152
+  type: 'test'
+  ...
+# Subtest: 5000 matching records complete within prototype scope
+ok 66 - 5000 matching records complete within prototype scope
+  ---
+  duration_ms: 113.844753
+  type: 'test'
+  ...
+1..66
+# tests 66
+# suites 0
+# pass 66
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 235.985435

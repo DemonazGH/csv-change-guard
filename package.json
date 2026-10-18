@@ -1,0 +1,15 @@
+{
+  "name": "csv-change-guard",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local, read-only Shopify CSV comparison prototype",
+  "scripts": {
+    "test": "node --test tests/engine.test.cjs",
+    "build": "node build.cjs",
+    "dev": "node server.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}

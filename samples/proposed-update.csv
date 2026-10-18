@@ -1,0 +1,10 @@
+URL handle,Title,Description,Vendor,Type,Tags,Status,Published on online store,Option1 name,Option1 value,SKU,Price,Compare-at price,Product image URL
+navy-tee,Navy cotton tee,,Northline,T-shirt,"summer, cotton",active,true,Size,XS,TEE-S,29.00,35.00,
+navy-tee,,,,,,,,Size,M,TEE-M,20.00,25.00,
+navy-tee,,,,,,,,,,,,,https://example.invalid/tee.jpg
+desk-lamp,Desk lamp,Adjustable reading lamp.,Northline,Lighting,home,draft,true,Title,Default Title,LAMP-001,5.90,,
+canvas-bag,Canvas tote,Heavy cotton tote.,Northline,Bag,travel,active,true,Title,Default Title,BAG-001,0.00,,
+ceramic-mug,Ceramic mug,Hand-finished mug.,Northline,Kitchen,home,active,true,Title,Default Title,MUG-NEW,15.00,,
+notebook,Notebook,Dotted pages.,Northline,Stationery,work,active,true,Title,Default Title,NOTE-001,12.00,,
+notebook,,,,,,,,Title,Default Title,NOTE-001,12.00,,
+steel-bottle,Steel bottle,Reusable bottle.,Northline,Drinkware,travel,active,true,Title,Default Title,BOTTLE-001,24.00,,

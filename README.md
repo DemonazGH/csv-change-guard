@@ -1,0 +1,130 @@
+# CSV Change Guard
+
+**Version 0.1.0 · local working prototype · 18 October 2026**
+
+Cloud development baseline: **72 engine tests and 11 browser checks pass** after
+the threshold precision fix. See [the current verification report](docs/BASELINE_REVIEW.md)
+and [cloud setup instructions](docs/CLOUD_DEVELOPMENT.md) for executed checks and
+environment limitations. Historical handoff artifacts are retained separately.
+
+A read-only review tool for two Shopify product CSV files: a current catalog and a proposed update. It compares a defined subset of fields using exact identifiers. It does not connect to a store, execute imports, charge customers, or guarantee import safety.
+
+## Try it
+
+Open **`dist/index.html`** in a current desktop browser. There is no installation, account, API key, or build requirement to try the provided HTML file.
+
+Click **Try the built-in demo**. The demo uses synthetic data and produces findings immediately. Alternatively, choose the two CSV files in `samples/` and click **Compare files**. Results can be filtered and exported as HTML, CSV, or JSON. Open the exported HTML report in a browser for a standalone, printable view.
+
+Some managed browsers block local HTML files. An optional localhost server is included:
+
+```powershell
+# From the extracted project directory, with Node.js installed:
+npm run dev
+# Open the localhost address printed by the command; Ctrl+C stops the server.
+```
+
+No `npm install` is required: the application, build script, server, and engine tests have no package dependencies.
+
+## What works now
+
+- UTF-8, comma-delimited CSV parsing, including quoted commas, escaped quotes and multiline fields.
+- Explicit aliases for selected current and legacy Shopify product-export headers.
+- Exact, case-sensitive **handle + non-empty SKU** matching. This is the tool's comparison key, NOT a statement that Shopify imports match variants using that key.
+- Price differences, configurable absolute percentage thresholds, zero-price changes, and selected malformed-price checks.
+- Blanked product fields and changes to supported option/visibility fields.
+- Duplicate and missing identifier diagnostics, without guessed matches.
+- Product-level first-row handling; blank continuation cells do not become false erased-description alerts.
+- Detection and exclusion of image-only continuation records; images themselves are not assessed.
+- Separate treatment of absent rows, omitted columns, and explicitly blank cells.
+- Explicit overwrite-enabled/disabled report assumption.
+- Search, severity filters, pagination, and full report exports independent of the current filter.
+- No network calls, analytics, cookies, AI API calls, store writes, or local-storage persistence in this build. Clear files removes the loaded data and report content from application state/DOM; this is not a cryptographic memory-erasure guarantee.
+
+## Supported scope and deliberate limits
+
+Both files must contain a recognized **handle**, **Title**, and **SKU** column. Non-empty SKUs are a prototype requirement, not a universal Shopify requirement. Complete supported variant data should include Option1 name/value. Both files must represent the same store and currency; currency is not inferred.
+
+This prototype accepts up to **5,000 data records and 10 MiB per file**, with at most 200 columns. These are prototype limits, not Shopify's platform limits.
+
+Price comparisons use non-negative dot-decimal values with up to 12 integer digits and 6 decimal places. No currency symbols, locale guessing, negative prices, or scientific notation. Decimal arithmetic is exact for threshold comparisons; displayed percentages are truncated to two decimal places.
+
+Images, inventory, taxes, shipping, market-specific prices, metafields, arbitrary supplier files and unrecognized columns are not compared. It is not a full validator of Shopify's schema, dependencies, defaults, option combinations, encoding requirements, or importer behavior. Missing or duplicated keys make matching incomplete. A changed SKU or handle is not inferred from row order.
+
+**An absent row is not a deletion prediction. A report with no findings is not an import approval.** Make an appropriate backup and test the actual workflow separately before any real import.
+
+## Sample files
+
+| File | Purpose |
+|---|---|
+| `samples/current-catalog.csv` | Synthetic baseline: seven variant candidates plus one image-only row |
+| `samples/proposed-update.csv` | Synthetic risky update: price changes, blank description, option change, duplicate identifier, unmatched records |
+| `samples/unchanged-update.csv` | Identical to the baseline; image-coverage warnings still appear |
+| `samples/legacy-current.csv` | Same baseline data using selected legacy header names |
+| `samples/demo-report.html` | Pre-generated readable demo report |
+| `samples/demo-report.json` | Full structured demo report |
+
+Expected risky-demo results: **4 compared variants, 4 price changes, 6 priority findings (1 blocking + 5 high), 4 unpaired update rows, 15 total findings**. Findings are not a count of unique products; a record may generate more than one finding.
+
+## Project structure
+
+```text
+src/                 Readable HTML, CSS, comparison engine, interface and demo inputs
+ dist/index.html     Built standalone application (no external assets)
+samples/             Synthetic inputs and sample reports
+ tests/              Engine tests and optional browser checks
+ docs/               Scope, validation plan, privacy/security notes and test report
+ build.cjs           Single-file packager
+ server.cjs          Optional localhost-only server
+ package.json        Commands; no dependency installation
+```
+
+## Develop and test
+
+```powershell
+npm test
+npm run build
+npm run dev
+```
+
+Node.js 18 or later is the declared engine minimum; the uploaded baseline used
+Node.js 22.16.0 and the cloud workflow was verified on Node.js 24.19.0. Do not infer
+a complete cross-version test matrix.
+
+The optional browser checks require Python, the pinned Playwright test dependency,
+and Chromium; they are not product runtime dependencies. In a Python virtual
+environment, install `tests/requirements-browser.txt` and provide Chromium via
+`python -m playwright install chromium` or `CHROMIUM_PATH`. Start `npm run dev`
+in one terminal, then run in another:
+
+```powershell
+python tests/browser_test.py
+```
+
+The default verifies actual localhost navigation. `--file` checks the standalone
+file, and `--content` explicitly checks in-memory rendering. Failures are not
+silently replaced by another mode. Fresh artifacts go into ignored
+`.local-test-artifacts/`; `test-artifacts/` holds the original historical run.
+Sandboxing is enabled by default. The cloud container's documented opt-out and
+blocked direct-file navigation are explained in [cloud development](docs/CLOUD_DEVELOPMENT.md).
+
+Current verification passed **72 engine tests and 11 grouped browser checks over
+localhost**, with a separate 11-group in-memory run. The uploaded historical run
+had 66 engine tests and 11 in-memory browser checks. Windows double-click launch,
+public HTTPS deployment, and Shopify import round trips remain manual release checks.
+
+## Before a commercial launch
+
+The application is deliberately unmetered and has no payment boundary. **A client-side “pay to unlock” button would not securely enforce pay-per-report billing when the full engine is already delivered to the browser.** Choose the monetization architecture before adding checkout: a paid downloadable utility/license, or a genuinely server-enforced service with an updated data-handling model.
+
+See `docs/LAUNCH_PLAN.md`. Source repository publication is separate from a product
+launch. No hosting, domain, advertising, payment account, or customer-data
+collection is part of this development setup.
+
+## Rule sources
+
+Selected rules were checked against these primary sources on 18 October 2026. The implementation covers a subset; links are not an endorsement or certification.
+
+1. [Shopify: Importing products with a CSV file](https://help.shopify.com/en/manual/products/import-export/import-products) — overwrite behavior, blanks versus omitted columns, option-value changes, and deletion cautions.
+2. [Shopify: Using CSV files to import and export products](https://help.shopify.com/en/manual/products/import-export/using-csv) — current headers, legacy compatibility, variant dependencies, and product/image continuation records.
+
+Working name only. Name/trademark availability has not been checked. This is an independent prototype, not affiliated with Shopify. No third-party font files or externally sourced visual assets are bundled. No public open-source license has been selected.

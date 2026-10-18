@@ -1,0 +1,10 @@
+node_modules/
+.env
+.env.*
+*.log
+.DS_Store
+__pycache__/
+# Never commit actual merchant data. Put local private fixtures in this directory.
+private-fixtures/
+# Fresh local test runs; test-artifacts/ contains historical handoff evidence.
+.local-test-artifacts/

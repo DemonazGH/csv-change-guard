@@ -1,0 +1,9 @@
+URL handle,Title,Description,Vendor,Type,Tags,Status,Published on online store,Option1 name,Option1 value,SKU,Price,Compare-at price,Product image URL
+navy-tee,Navy cotton tee,"Soft cotton, everyday fit.",Northline,T-shirt,"summer, cotton",active,true,Size,S,TEE-S,20.00,25.00,
+navy-tee,,,,,,,,Size,M,TEE-M,22.00,25.00,
+navy-tee,,,,,,,,,,,,,https://example.invalid/tee.jpg
+desk-lamp,Desk lamp,Adjustable reading lamp.,Northline,Lighting,home,active,true,Title,Default Title,LAMP-001,59.00,,
+canvas-bag,Canvas tote,Heavy cotton tote.,Northline,Bag,travel,active,true,Title,Default Title,BAG-001,30.00,,
+ceramic-mug,Ceramic mug,Hand-finished mug.,Northline,Kitchen,home,active,true,Title,Default Title,MUG-OLD,15.00,,
+notebook,Notebook,Dotted pages.,Northline,Stationery,work,active,true,Title,Default Title,NOTE-001,12.00,,
+wool-scarf,Wool scarf,Warm wool.,Northline,Accessory,winter,active,true,Title,Default Title,SCARF-001,45.00,,

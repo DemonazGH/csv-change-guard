@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src data:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="description" content="A local, read-only prototype for reviewing differences between Shopify product CSV files. No file uploads, store access, or automatic edits.">
+<title>CSV Change Guard — Review before you import</title>
+<style>
+:root{--ink:#172d38;--muted:#61737a;--teal:#076a61;--teal-dark:#04574f;--line:#dce5e3;--paper:#f5f8f6;--white:#fff;--red:#a03a43;--amber:#865615;--navy:#18353e}*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--paper)}button,input,select{font:inherit}button,a,input,select,summary{outline-offset:4px}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.5}a{color:var(--teal)}.topbar{height:88px;padding:0 max(28px,calc((100vw - 1224px)/2));display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid var(--line);gap:22px}.brand{display:flex;gap:12px;text-decoration:none;color:var(--ink);align-items:center;font-weight:750;line-height:1.2;font-size:18px;white-space:nowrap}.brand-mark{height:42px;width:42px;background:var(--teal);color:#fff;border-radius:12px;display:grid;place-items:center;font-size:14px;letter-spacing:-.5px}.version{font-size:9px;letter-spacing:1.8px;font-weight:600;display:block;color:var(--muted);margin-top:5px}.topbar nav{display:flex;gap:26px;align-items:center;font-size:13px}.topbar nav a{color:var(--muted);text-decoration:none}.local-badge{display:flex;align-items:center;gap:7px;color:var(--teal);background:#edf7f1;border:1px solid #d5e8de;border-radius:50px;padding:6px 11px;font-size:12px;white-space:nowrap}.dot{height:6px;width:6px;border-radius:100%;background:var(--teal)}main{max-width:1280px;padding:0 28px;margin:auto}.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:75px;align-items:center;padding:64px 0 54px}.eyebrow{font-size:10px;letter-spacing:1.7px;font-weight:750;color:var(--muted)}h1{font-size:clamp(34px,3.7vw,51px);line-height:1.13;letter-spacing:-1.8px;margin:17px 0 19px;font-weight:750}h1 span{color:var(--teal)}.hero-copy{font-size:16px;line-height:1.7;max-width:570px;color:var(--muted);margin:0}.hero-actions{display:flex;align-items:center;gap:23px;margin-top:28px}.button{border:1px solid transparent;border-radius:8px;padding:11px 18px;font-size:13px;font-weight:650;display:inline-flex;align-items:center;justify-content:center;gap:18px;min-height:43px;text-decoration:none}.button.primary{color:white;background:var(--teal);box-shadow:0 3px 5px #073f3710}.button.primary:not(:disabled):hover{background:var(--teal-dark)}.button.secondary{background:#fff;border-color:#cfdcda;color:var(--ink)}.button.ghost{background:transparent;color:var(--muted)}.button.ghost:hover{background:#e9efec}.button.small{padding:7px 12px;min-height:35px;font-size:12px}.text-link{font-size:13px;font-weight:600;text-underline-offset:4px}.quiet{font-size:11px;color:var(--muted);margin:15px 0 0}.example{border-radius:16px;background:var(--navy);padding:27px 28px 0;color:#eff7f6;box-shadow:0 16px 40px #12312b14;overflow:hidden;transform:rotate(1deg)}.example-top{display:flex;align-items:center;justify-content:space-between;gap:16px}.example .eyebrow{color:#a2bfc2;font-size:9px}.pill{border-radius:5px;padding:4px 7px;font-size:10px;font-weight:700;white-space:nowrap;display:inline-block}.pill.high{background:#fae7e6;color:var(--red)}.pill.blocking{background:#ede6f3;color:#613584}.pill.warning{background:#fff1dc;color:#85571e}.pill.info{background:#eaf0f5;color:#435f78}.example-top .pill{background:#ffffff12;color:#ffcbbe;border:1px solid #ffffff20}.example-product{font-size:17px;font-weight:600;margin:22px 0 9px}.mono{font-family:ui-monospace,Consolas,monospace;font-size:11px}.example-product .mono{display:block;color:#9cb6be;font-weight:400;margin-top:3px}.price-compare{display:flex;align-items:center;gap:23px;font-size:32px;font-variant-numeric:tabular-nums;line-height:1.3}.price-compare>span:first-child{color:#a0b7be;text-decoration:line-through;font-size:28px}.price-compare .arrow{font-size:21px;color:#7a9ba1}.price-compare strong{font-size:42px;font-weight:650;color:#fff}.example-rule{display:flex;gap:14px;align-items:center;border-top:1px solid #ffffff1c;margin-top:18px;padding-top:15px}.example-rule p{font-size:11px;color:#b4cacc;line-height:1.8}.change-pill{color:#ffc1af;background:#ffffff10;padding:7px 8px;border-radius:6px;font-weight:650;font-size:12px}.example-footer{margin:14px -28px 0;background:#00000013;border-top:1px solid #ffffff0b;padding:11px 28px;color:#90adb4;font-size:10px}.workspace{background:white;border:1px solid var(--line);border-radius:14px;padding:29px 30px;box-shadow:0 5px 18px #14332b03}.section-heading{display:flex;align-items:center;justify-content:space-between;gap:20px}h2{font-size:23px;letter-spacing:-.5px;font-weight:700;margin:6px 0 0}.subtle-chip{font-size:11px;color:var(--muted);background:var(--paper);padding:6px 11px;border:1px solid var(--line);border-radius:30px;white-space:nowrap}.file-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}.file-card{border:1.5px dashed #c9d8d3;border-radius:10px;padding:23px 20px;display:flex;gap:15px;position:relative;cursor:pointer;overflow:hidden;transition:.15s}.file-card:hover,.file-card:focus-within{border-color:var(--teal);background:#f7fbf9}.file-card.loaded{border-style:solid;background:#f8fcfa;border-color:#a9cbbd}.file-card input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}.file-step{height:32px;width:32px;flex-shrink:0;border-radius:8px;background:#eaf3ee;color:var(--teal);font-weight:650;display:grid;place-items:center;font-size:12px}.file-card-body{min-width:0;flex:1}.file-card-body>strong{font-size:14px;display:block}.file-card-body>span{font-size:12px;color:var(--muted);display:block;margin:2px 0}.file-card-body .filename{font-size:12px;font-weight:650;color:var(--teal);margin-top:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.file-card-body .file-meta{font-size:10px;margin-top:4px}.settings{display:grid;grid-template-columns:1fr 1fr;gap:25px;background:var(--paper);padding:19px 20px;border:1px solid #e7edeb;border-radius:9px}.settings label{display:block}.setting-title{display:block;font-size:12px;font-weight:600;margin-bottom:8px}.number-wrap{display:inline-flex;background:white;border:1px solid #cfdad7;border-radius:6px;align-items:center;width:106px}.number-wrap input{border:0;min-width:0;width:77px;border-radius:6px;padding:7px 10px;background:transparent;font-size:13px}.number-wrap>span{font-size:12px;color:var(--muted)}select{width:100%;max-width:360px;background:#fff;border:1px solid #cfdad7;border-radius:6px;padding:8px 9px;font-size:12px;color:var(--ink);min-height:37px}.setting-note{display:block;font-size:10px;color:var(--muted);margin-top:6px}.scope-line{font-size:11px;color:var(--muted);line-height:1.8;margin:17px 0}.run-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.run-row #run-state{color:var(--muted);font-size:11px;margin-left:9px}.error{margin-top:16px;padding:14px 17px;color:#8e2834;background:#fff0ef;border:1px solid #e9c8c8;border-radius:7px;font-size:13px}.results-heading{margin-top:43px;margin-bottom:20px}.export-buttons{display:flex;gap:8px;flex-wrap:wrap}.verdict{background:#fdf2e5;border:1px solid #e9d6b9;color:#714b20;padding:15px 19px;border-radius:9px;font-size:13px}.verdict.blocked{background:#f5f0fa;border-color:#dbceeb;color:#54346c}.verdict.neutral{background:#edf3f6;border-color:#d2e0e8;color:#385361}.verdict small{display:block;font-size:11px;margin-top:4px;opacity:.85}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin:19px 0}.metric{background:#fff;border:1px solid var(--line);border-radius:10px;padding:19px 21px}.metric>span{display:block;color:var(--muted);font-size:11px;font-weight:600}.metric>strong{display:block;font-size:33px;line-height:1.5;font-weight:650;letter-spacing:-1px;font-variant-numeric:tabular-nums}.metric.attention strong{color:var(--red)}.metric>small{display:block;font-size:10px;color:var(--muted)}.table-panel{border:1px solid var(--line);background:#fff;border-radius:12px;overflow:hidden}.table-toolbar{display:flex;justify-content:space-between;gap:16px;align-items:center;padding:17px 18px}.filters{display:flex;gap:5px;flex-wrap:wrap}.filter{background:transparent;border:1px solid transparent;padding:6px 9px;color:var(--muted);border-radius:6px;font-size:11px;white-space:nowrap}.filter.active{background:#eaf3ee;color:var(--teal);border-color:#cce0d5;font-weight:650}.filter span{font-size:10px;opacity:.85;margin-left:4px}.table-toolbar input{padding:8px 10px;border:1px solid var(--line);border-radius:6px;font-size:11px;min-width:245px;color:var(--ink)}.table-scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;table-layout:fixed;font-size:11px}thead{background:#f4f7f5}th,td{text-align:left;padding:13px 15px;border-top:1px solid #e6ece9;vertical-align:top;overflow-wrap:anywhere}th{font-size:10px;color:var(--muted);font-weight:650}th:nth-child(1){width:9%}th:nth-child(2){width:16%}th:nth-child(3){width:37%}th:nth-child(4),th:nth-child(5){width:14%}th:nth-child(6){width:10%}td .sku{font-family:ui-monospace,Consolas,monospace;display:block;color:var(--muted);font-size:10px;margin-top:3px}.finding-title{font-weight:650;display:block;margin-bottom:4px}.finding-message{font-size:10px;color:var(--muted);line-height:1.7}.value{white-space:pre-wrap;word-break:break-word;font-size:11px;font-family:ui-monospace,Consolas,monospace}.empty{color:#92a09e;font-style:italic;font-size:10px}.percent{display:block;margin-top:5px;color:var(--red);font-size:10px;font-weight:650}.row-ref{font-size:10px;color:var(--muted);white-space:nowrap}.table-footer{display:flex;justify-content:space-between;align-items:center;padding:10px 17px;border-top:1px solid var(--line);font-size:10px;color:var(--muted)}.coverage{padding:16px 19px;background:#fff;border:1px solid var(--line);border-radius:9px;margin-top:16px;font-size:12px}.coverage summary{cursor:pointer;font-weight:600}.coverage p,.coverage li{font-size:11px;color:var(--muted);line-height:1.8}.coverage ul{padding-left:20px}.coverage details{margin-top:10px}.coverage pre{white-space:pre-wrap;word-break:break-word;font-size:10px}.export-note{font-size:10px;color:var(--muted);line-height:1.8}.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:31px;padding:45px 2px 38px}.info-grid h3{font-size:16px;font-weight:650;margin:12px 0 10px}.info-grid p{font-size:12px;line-height:1.8;color:var(--muted);margin:8px 0}footer{padding:22px 0 29px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;color:var(--muted);font-size:10px}[hidden]{display:none!important}@media(max-width:1000px){.hero{gap:28px}.table-toolbar{flex-direction:column;align-items:stretch}.topbar nav{gap:15px}.metrics{gap:10px}.metric{padding:16px}table{min-width:900px}.results-heading{align-items:flex-start}.export-buttons{justify-content:flex-end}}@media(max-width:700px){.topbar{padding:0 20px;height:76px}.topbar nav a{display:none}.brand{font-size:15px}.local-badge{font-size:10px;padding:5px 8px}.brand-mark{height:35px;width:35px;font-size:11px}main{padding:0 18px}.hero{grid-template-columns:1fr;padding:37px 0;gap:29px}h1{font-size:39px}.hero-copy{font-size:14px}.example{transform:none}.workspace{padding:21px 17px}.section-heading{align-items:flex-start}.subtle-chip{display:none}h2{font-size:21px}.file-grid,.settings{grid-template-columns:1fr;gap:14px}.file-grid{margin:21px 0}.file-card{padding:18px 15px}.settings{padding:16px}.run-row #run-state{display:block;width:100%;margin:5px 0}.metrics{grid-template-columns:1fr 1fr}.metric small{min-height:28px}.results-heading{flex-direction:column}.export-buttons{justify-content:flex-start}.info-grid{grid-template-columns:1fr;gap:24px;padding-top:33px}.table-toolbar{padding:13px 10px}.filter{padding:6px}.table-footer{gap:8px}.hero-actions{gap:16px}.hero-actions .button{padding:11px 13px}.text-link{font-size:12px}footer{flex-direction:column;gap:7px}.price-compare strong{font-size:36px}}
+
+</style>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="#"><span class="brand-mark" aria-hidden="true">CG</span><span>CSV Change Guard<span class="version">PROTOTYPE 0.1</span></span></a><nav><a href="#scope">What it checks</a><a href="#privacy">Privacy</a><span class="local-badge"><span class="dot"></span> Runs locally</span></nav></header>
+<main>
+<section class="hero">
+<div><div class="eyebrow">A SECOND LOOK BEFORE A BULK UPDATE</div><h1>Review the changes.<br><span>Before the import.</span></h1><p class="hero-copy">Compare a current Shopify catalog with a proposed CSV update. Find price jumps, blanked fields, and ambiguous matches—without connecting your store.</p><div class="hero-actions"><button id="demo" class="button primary" type="button">Try the built-in demo <span aria-hidden="true">→</span></button><a class="text-link" href="#workspace">Or choose your files</a></div><p class="quiet">No account. No uploads. No live-store changes.</p></div>
+<aside class="example"><div class="example-top"><span class="eyebrow">EXAMPLE FINDING</span><span class="pill high">High priority</span></div><p class="example-product">Desk lamp <span class="mono">LAMP-001</span></p><div class="price-compare"><span>59.00</span><span class="arrow">→</span><strong>5.90</strong></div><div class="example-rule"><span class="change-pill">−90%</span><p>A price drop above your threshold.<br>Intentional discount—or a misplaced decimal?</p></div><div class="example-footer">Synthetic example. Currency is not inferred.</div></aside>
+</section>
+<section id="workspace" class="workspace" aria-labelledby="workspace-title">
+<div class="section-heading"><div><div class="eyebrow">01 / COMPARE YOUR FILES</div><h2 id="workspace-title">Two files. One clearer picture.</h2></div><span class="subtle-chip">Read-only comparison</span></div>
+<div class="file-grid">
+<label class="file-card" id="current-card" for="current-file"><span class="file-step">A</span><div class="file-card-body"><strong>Current catalog</strong><span>The export you trust as your baseline</span><div id="current-name" class="filename">Choose a CSV file</div><span id="current-meta" class="file-meta">UTF-8 · comma-delimited · up to 10 MiB</span></div><input id="current-file" type="file" accept=".csv,text/csv" aria-label="Choose current catalog CSV"></label>
+<label class="file-card" id="update-card" for="update-file"><span class="file-step">B</span><div class="file-card-body"><strong>Proposed update</strong><span>The file you plan to review before importing</span><div id="update-name" class="filename">Choose a CSV file</div><span id="update-meta" class="file-meta">UTF-8 · comma-delimited · up to 10 MiB</span></div><input id="update-file" type="file" accept=".csv,text/csv" aria-label="Choose proposed update CSV"></label>
+</div>
+<div class="settings"><label for="threshold"><span class="setting-title">Flag price movements of at least</span><span class="number-wrap"><input id="threshold" type="number" min="0" max="10000" step="0.1" value="30"><span>%</span></span><span class="setting-note">Both increases and decreases</span></label><label for="overwrite"><span class="setting-title">Assumed Shopify import setting</span><select id="overwrite"><option value="true">Overwrite matching handles: enabled</option><option value="false">Overwrite matching handles: disabled</option></select><span class="setting-note">This changes the report only, never your store</span></label></div>
+<p class="scope-line"><strong>Exact matches only:</strong> handle + non-empty SKU. Use files from the same store and currency. New and legacy Shopify headers are recognized for the supported fields. Maximum 5,000 data records per file.</p>
+<div class="run-row"><button id="compare" class="button primary" type="button" disabled>Compare files <span aria-hidden="true">→</span></button><button id="reset" class="button ghost" type="button">Clear files</button><span id="run-state" role="status" aria-live="polite">Choose both files or use the demo to begin.</span></div>
+<div id="error" class="error" role="alert" hidden></div>
+</section>
+<section id="results" aria-labelledby="results-title" hidden>
+<div class="section-heading results-heading"><div><div class="eyebrow">02 / YOUR REVIEW REPORT</div><h2 id="results-title">Comparison results</h2></div><div class="export-buttons"><button id="export-html" class="button secondary small" type="button">Save HTML report</button><button id="export-csv" class="button secondary small" type="button">Export findings CSV</button><button id="export-json" class="button ghost small" type="button">JSON</button></div></div>
+<div id="verdict" class="verdict" role="status"></div>
+<div class="metrics"><div class="metric"><span>Compared variants</span><strong id="metric-compared">0</strong><small>Exact handle + SKU pairs</small></div><div class="metric"><span>Price changes</span><strong id="metric-prices">0</strong><small>Within compared variants</small></div><div class="metric attention"><span>Priority findings</span><strong id="metric-priority">0</strong><small>Blocking + high priority</small></div><div class="metric"><span>Unpaired update rows</span><strong id="metric-unpaired">0</strong><small>Excluded or without an exact match</small></div></div>
+<div class="table-panel"><div class="table-toolbar"><div class="filters" aria-label="Filter findings by severity"><button class="filter active" data-filter="all" type="button" aria-pressed="true">All <span id="count-all">0</span></button><button class="filter" data-filter="blocking" type="button" aria-pressed="false">Blocking <span id="count-blocking">0</span></button><button class="filter" data-filter="high" type="button" aria-pressed="false">High <span id="count-high">0</span></button><button class="filter" data-filter="warning" type="button" aria-pressed="false">Warning <span id="count-warning">0</span></button><button class="filter" data-filter="info" type="button" aria-pressed="false">Info <span id="count-info">0</span></button></div><input id="search" type="search" placeholder="Search handle, SKU, or finding…" aria-label="Search findings"></div>
+<div class="table-scroll"><table><thead><tr><th scope="col">Priority</th><th scope="col">Product / SKU</th><th scope="col">Finding</th><th scope="col">Before</th><th scope="col">After</th><th scope="col">Records</th></tr></thead><tbody id="findings"></tbody></table></div><div class="table-footer"><span id="shown"></span><div><button id="previous" class="button ghost small" type="button">Previous</button><button id="next" class="button ghost small" type="button">Next</button></div></div></div>
+<details class="coverage"><summary>Coverage, matching rules, and limitations</summary><div id="coverage-body"></div></details>
+<p class="export-note">Exports include all findings, regardless of filters. Reports may contain sensitive values from your files. CSV formula-like cells are prefixed for safer spreadsheet viewing; JSON preserves original text.</p>
+</section>
+<section id="scope" class="info-grid"><article><div class="eyebrow">WHAT THIS VERSION CHECKS</div><h3>Small scope. Explicit rules.</h3><p>Price movements and zero-price changes; blanked descriptions and other supported product fields; option changes; duplicate keys; unmatched rows; and selected format/dependency checks.</p><p>Uncertain matches are excluded rather than guessed. A missing row is not labelled as a deletion. Blank continuation cells are not treated as new product descriptions.</p></article><article id="privacy"><div class="eyebrow">LOCAL BY DESIGN</div><h3>Your files stay in your browser.</h3><p>No analytics, model APIs, cookies, accounts, or file uploads. The prototype has no network calls or local-storage persistence. Clear the files or close the tab when finished.</p><p>It does not connect to Shopify, make a backup, validate the live store, or perform an import. A clean report is not a guarantee of a safe import.</p></article><article><div class="eyebrow">NOT A FULL IMPORT SIMULATOR</div><h3>Know what is outside the check.</h3><p>Images, inventory, taxes, shipping, metafields, market prices, and unrecognized columns are not compared. SKU-less variants, arbitrary supplier formats, XLSX, and semicolon-delimited files are outside this prototype.</p><p>No payments are enabled. This is a testable product foundation—not a launched commercial service.</p></article></section>
+<footer><span>CSV Change Guard · v0.1.0 · Independent prototype; not affiliated with Shopify.</span><span>Deterministic checks. Human decisions.</span></footer>
+</main>
+<script>
+/* CSV Change Guard 0.1.0 — deterministic, read-only comparison engine.
+   No dependencies, network calls, persistence, or probabilistic matching. */
+(function (root, factory) {
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  else root.ChangeGuard = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+  const VERSION = '0.1.0';
+  const LIMITS = Object.freeze({ bytes: 10 * 1024 * 1024, rows: 5000, columns: 200 });
+  const FIELDS = {
+    handle: ['URL handle', 'Handle'], title: ['Title'],
+    description: ['Description', 'Body (HTML)'], vendor: ['Vendor'], type: ['Type'], tags: ['Tags'],
+    status: ['Status'], published: ['Published on online store', 'Published'],
+    sku: ['SKU', 'Variant SKU'], price: ['Price', 'Variant Price'],
+    compareAt: ['Compare-at price', 'Variant Compare At Price'],
+    option1Name: ['Option1 name', 'Option1 Name'], option1Value: ['Option1 value', 'Option1 Value'],
+    option2Name: ['Option2 name', 'Option2 Name'], option2Value: ['Option2 value', 'Option2 Value'],
+    option3Name: ['Option3 name', 'Option3 Name'], option3Value: ['Option3 value', 'Option3 Value'],
+    image: ['Product image URL', 'Image Src'], imagePosition: ['Image position', 'Image Position'],
+    imageAlt: ['Image alt text', 'Image Alt Text'], variantImage: ['Variant image URL', 'Variant Image']
+  };
+  const PRODUCT = ['title', 'description', 'vendor', 'type', 'tags', 'status', 'published'];
+  const VARIANT = ['sku', 'price', 'compareAt', 'option1Name', 'option1Value', 'option2Name', 'option2Value', 'option3Name', 'option3Value'];
+  const OPTIONS = VARIANT.filter(k => k.startsWith('option'));
+  const IMAGES = ['image', 'imagePosition', 'imageAlt', 'variantImage'];
+  const RANK = { blocking: 0, high: 1, warning: 2, info: 3 };
+  const SOURCES = [
+    'https://help.shopify.com/en/manual/products/import-export/import-products',
+    'https://help.shopify.com/en/manual/products/import-export/using-csv'
+  ];
+  const label = k => FIELDS[k] ? FIELDS[k][0] : k;
+  const keyOf = r => JSON.stringify([r.handle, r.sku]);
+  const own = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+  const nonblank = s => typeof s === 'string' && s.trim() !== '';
+
+  /** Strict comma-delimited CSV parser. Quoted commas/newlines and escaped quotes are supported. */
+  function parseCSV(input, name = 'CSV') {
+    if (typeof input !== 'string') throw new TypeError('CSV input must be text.');
+    if (new TextEncoder().encode(input).length > LIMITS.bytes) throw new Error(`${name}: exceeds the 10 MiB prototype limit.`);
+    let text = input.replace(/^\uFEFF/, '');
+    if (text.includes('\0')) throw new Error(`${name}: NUL characters found. Use a UTF-8 CSV, not an Excel workbook or UTF-16 file.`);
+    const records = [];
+    let values = [], value = '', quoted = false, afterQuote = false, line = 1, startLine = 1, touched = false;
+    function field() {
+      values.push(value); value = ''; afterQuote = false;
+      if (values.length > LIMITS.columns) throw new Error(`${name}: more than ${LIMITS.columns} columns.`);
+    }
+    function record() {
+      field(); records.push({ values, line: startLine, record: records.length + 1 });
+      if (records.length > LIMITS.rows + 1) throw new Error(`${name}: more than ${LIMITS.rows} data records. Split the file for this prototype.`);
+      values = []; touched = false;
+    }
+    for (let i = 0; i < text.length; i++) {
+      const c = text[i];
+      if (quoted) {
+        if (c === '"') {
+          if (text[i + 1] === '"') { value += '"'; i++; }
+          else { quoted = false; afterQuote = true; }
+        } else if (c === '\r' || c === '\n') {
+          if (c === '\r' && text[i + 1] === '\n') i++;
+          value += '\n'; line++;
+        } else value += c;
+        continue;
+      }
+      if (afterQuote && c !== ',' && c !== '\r' && c !== '\n') throw new Error(`${name}: unexpected character after a closing quote at line ${line}.`);
+      if (c === '"') {
+        if (value !== '') throw new Error(`${name}: quote inside an unquoted field at line ${line}.`);
+        quoted = true; touched = true;
+      } else if (c === ',') { field(); touched = true; }
+      else if (c === '\r' || c === '\n') {
+        record(); if (c === '\r' && text[i + 1] === '\n') i++;
+        line++; startLine = line;
+      } else { value += c; touched = true; }
+    }
+    if (quoted) throw new Error(`${name}: unclosed quoted field starting in record ${records.length + 1}.`);
+    if (touched || values.length || value !== '' || afterQuote) record();
+    if (!records.length) throw new Error(`${name}: file is empty.`);
+    const headers = records.shift().values;
+    if (headers.length < 2) throw new Error(`${name}: expected comma-separated columns. Semicolon and tab delimiters are not supported.`);
+    const seen = new Set();
+    for (const h of headers) {
+      if (!h || h !== h.trim()) throw new Error(`${name}: header names must be non-empty, without leading or trailing whitespace.`);
+      if (seen.has(h)) throw new Error(`${name}: duplicate header "${h}".`);
+      seen.add(h);
+    }
+    let blankRecords = 0;
+    const rows = [];
+    for (const r of records) {
+      if (r.values.every(v => v === '')) { blankRecords++; continue; }
+      if (r.values.length !== headers.length) throw new Error(`${name}: record ${r.record} (line ${r.line}) has ${r.values.length} fields; expected ${headers.length}.`);
+      rows.push(r);
+    }
+    if (!rows.length) throw new Error(`${name}: no non-empty data records.`);
+    return { name, headers, rows, blankRecords };
+  }
+
+  function normalize(parsed, side) {
+    const map = Object.create(null), used = new Set(), issues = [];
+    for (const [key, aliases] of Object.entries(FIELDS)) {
+      const found = aliases.filter(a => parsed.headers.includes(a));
+      if (found.length > 1) throw new Error(`${parsed.name}: both aliases for ${label(key)} are present (${found.join(', ')}). Keep only one.`);
+      if (found.length) { map[key] = parsed.headers.indexOf(found[0]); used.add(found[0]); }
+    }
+    for (const required of ['handle', 'title', 'sku']) {
+      if (!own(map, required)) throw new Error(`${parsed.name}: this prototype requires ${FIELDS[required].join(' or ')}. SKU is a tool requirement, not a universal Shopify requirement.`);
+    }
+    const unknown = parsed.headers.filter(h => !used.has(h));
+    const groups = new Map(), variants = [], images = [], invalid = [];
+    const issue = (code, severity, row, field, message) => issues.push({
+      code, severity, source: side, handle: row ? row.handle : '', sku: row ? row.sku : '', field,
+      before: '', after: '', currentRecord: side === 'current' && row ? row.record : '',
+      updateRecord: side === 'update' && row ? row.record : '', message
+    });
+    for (const sourceRow of parsed.rows) {
+      const row = { record: sourceRow.record, line: sourceRow.line };
+      for (const key of Object.keys(map)) row[key] = sourceRow.values[map[key]];
+      row.handle = row.handle || ''; row.sku = row.sku || '';
+      if (!nonblank(row.handle) || row.handle !== row.handle.trim() || /\s/.test(row.handle)) {
+        issue('INVALID_HANDLE', 'blocking', row, label('handle'), 'Missing handle or whitespace in handle. This record is excluded; no identifier repair or guessing.');
+        invalid.push(row); continue;
+      }
+      if (!groups.has(row.handle)) groups.set(row.handle, []);
+      groups.get(row.handle).push(row);
+      // Image-only rows may contain handle and image fields, but nothing else.
+      const imageOnly = IMAGES.some(k => nonblank(row[k])) && sourceRow.values.every((v, i) =>
+        v === '' || i === map.handle || IMAGES.some(k => map[k] === i));
+      if (imageOnly) { images.push(row); row.kind = 'image'; continue; }
+      row.kind = 'variant'; variants.push(row);
+      if (!nonblank(row.sku) || row.sku !== row.sku.trim()) {
+        issue('UNMATCHABLE_SKU', 'blocking', row, label('sku'), 'A non-empty SKU without surrounding whitespace is required for exact matching in this prototype. This row is excluded.');
+        row.unmatchable = true;
+      }
+    }
+    const products = new Map();
+    for (const [handle, rows] of groups) {
+      const first = rows[0];
+      if (first.kind === 'image' || !nonblank(first.title)) {
+        issue('PRODUCT_ROW_UNCLEAR', 'blocking', first, 'Title', 'The first record for this handle must contain the product title. Product-level comparisons for this handle are excluded.');
+      } else {
+        const ambiguous = new Set();
+        for (const later of rows.slice(1)) for (const k of PRODUCT) {
+          if (nonblank(later[k]) && later[k] !== first[k]) {
+            if (!ambiguous.has(k)) issue('PRODUCT_FIELD_CONFLICT', 'blocking', later, label(k), 'Conflicting product-level values within this handle. This field is excluded from product-level comparison.');
+            ambiguous.add(k);
+          }
+        }
+        products.set(handle, { row: first, ambiguous });
+      }
+    }
+    const index = new Map();
+    for (const r of variants) if (!r.unmatchable) {
+      const key = keyOf(r); if (!index.has(key)) index.set(key, []); index.get(key).push(r);
+    }
+    for (const rows of index.values()) if (rows.length > 1) {
+      issue('DUPLICATE_KEY', 'blocking', rows[0], 'Handle + SKU', `Repeated handle + SKU at records ${rows.map(r => r.record).join(', ')}. All records with this key are excluded from matching.`);
+    }
+    if (unknown.length) issue('UNCHECKED_COLUMNS', 'warning', null, 'Coverage', `These columns are not assessed: ${unknown.join(', ')}. No conclusions are made about their changes or dependencies.`);
+    if (IMAGES.some(k => own(map, k))) issue('IMAGES_NOT_ASSESSED', 'warning', null, 'Images', `Image content, URLs, ordering and associations are not compared. ${images.length} image-only record(s) excluded from variant matching.`);
+    return { ...parsed, side, map, unknown, issues, variants, images, invalid, index, products, groups };
+  }
+
+  /** Parse non-negative decimal money exactly; no rounding or locale guessing. */
+  function money(raw) {
+    if (typeof raw !== 'string' || !/^\d{1,12}(?:\.\d{1,6})?$/.test(raw)) return null;
+    const [a, b = ''] = raw.split('.'); return BigInt(a) * 1000000n + BigInt(b.padEnd(6, '0'));
+  }
+  const roundedPct = (a, b) => a === 0n ? null : Number((b - a) * 10000n / a) / 100;
+
+  function compare(currentText, updateText, options = {}) {
+    const threshold = options.threshold === undefined ? 30 : Number(options.threshold);
+    if (!Number.isFinite(threshold) || threshold < 0 || threshold > 10000) throw new Error('Price threshold must be between 0 and 10,000 percent.');
+    // Preserve the numeric threshold's decimal value, including exponent notation,
+    // as an exact ratio. Rounding it can create false alerts or miss boundary changes.
+    const [coefficient, exponent = '0'] = String(threshold).split('e');
+    const [integer, fraction = ''] = coefficient.split('.');
+    const scale = fraction.length - Number(exponent);
+    const thresholdNumerator = BigInt(integer + fraction) * 10n ** BigInt(Math.max(0, -scale));
+    const thresholdDenominator = 10n ** BigInt(Math.max(0, scale));
+    const settings = { threshold, overwrite: options.overwrite === undefined ? true : options.overwrite };
+    if (typeof settings.overwrite !== 'boolean') throw new TypeError('Overwrite setting must be true or false.');
+    const current = normalize(parseCSV(currentText, options.currentName || 'Current catalog'), 'current');
+    const update = normalize(parseCSV(updateText, options.updateName || 'Proposed update'), 'update');
+    const findings = [...current.issues, ...update.issues], changes = [];
+    const stats = { currentVariants: current.variants.length, updateVariants: update.variants.length,
+      currentImageRows: current.images.length, updateImageRows: update.images.length,
+      matchedVariants: 0, comparedVariants: 0, priceChanges: 0, unpairedUpdateRows: 0,
+      currentRowsNotCompared: 0, ignoredExistingUpdateRows: 0, invalidRecords: current.invalid.length + update.invalid.length };
+    function add(code, severity, beforeRow, afterRow, field, before, after, message, pct = null) {
+      const r = afterRow || beforeRow || {};
+      const f = { code, severity, source: beforeRow && afterRow ? 'comparison' : afterRow ? 'update' : beforeRow ? 'current' : 'coverage',
+        handle: r.handle || '', sku: r.sku || '', field, before: before ?? '', after: after ?? '',
+        currentRecord: beforeRow ? beforeRow.record : '', updateRecord: afterRow ? afterRow.record : '', percentChange: pct, message };
+      findings.push(f); return f;
+    }
+    if (!settings.overwrite) add('OVERWRITE_DISABLED', 'info', null, null, 'Import setting', '', '', 'Overwrite is assumed disabled. Existing handles are ignored for change comparison; unmatched SKUs within those handles are not treated as additions.');
+    if (!own(update.map, 'option1Name') || !own(update.map, 'option1Value')) add('MISSING_OPTION_DEPENDENCY', 'blocking', null, null, 'Option1', '', '', 'SKU data is present without both Option1 name and Option1 value columns. Variant dependencies are incomplete; review Shopify import requirements before proceeding.');
+    const assessed = [...PRODUCT, ...VARIANT];
+    const omitted = assessed.filter(k => own(current.map, k) && !own(update.map, k));
+    if (omitted.length) add('OMITTED_COLUMNS', 'info', null, null, 'Coverage', '', omitted.map(label).join(', '), 'These baseline columns are absent from the update, not blank cells. They are not compared. This does not guarantee preservation where dependencies or defaults apply.');
+    const missingBaseline = assessed.filter(k => own(update.map, k) && !own(current.map, k));
+    if (missingBaseline.length) add('MISSING_BASELINE_COLUMNS', 'warning', null, null, 'Coverage', missingBaseline.map(label).join(', '), '', 'No baseline values for these update columns. Their before/after differences cannot be assessed.');
+
+    // Validate update values even when they are unchanged. This is not a full importer validator.
+    for (const r of update.variants) {
+      if (!settings.overwrite && current.groups.has(r.handle)) continue;
+      if (own(update.map, 'price') && money(r.price) === null) add('INVALID_PRICE', 'blocking', null, r, 'Price', '', r.price, 'Expected a non-negative decimal with a dot and no currency symbol (up to 6 decimals). A blank price needs explicit review; Shopify documents a zero default.');
+      if (own(update.map, 'compareAt') && r.compareAt !== '' && money(r.compareAt) === null) add('INVALID_COMPARE_AT', 'blocking', null, r, 'Compare-at price', '', r.compareAt, 'Expected an empty cell or a non-negative dot-decimal amount.');
+      if (money(r.price) !== null && money(r.compareAt) !== null && money(r.compareAt) > 0n && money(r.compareAt) <= money(r.price)) add('COMPARE_AT_NOT_HIGHER', 'warning', null, r, 'Compare-at price', r.price, r.compareAt, 'Compare-at price is not higher than the selling price. Review whether a discount display is intended.');
+      for (let n = 1; n <= 3; n++) {
+        const nk = `option${n}Name`, vk = `option${n}Value`;
+        if (nonblank(r[nk]) !== nonblank(r[vk])) add('OPTION_PAIR_INCOMPLETE', 'high', null, r, `Option${n}`, r[nk] || '', r[vk] || '', 'Option name and value are not both populated. The prototype does not infer the missing value.');
+      }
+    }
+    for (const [handle, p] of update.products) {
+      const r = p.row;
+      if (!settings.overwrite && current.groups.has(handle)) continue;
+      if (own(update.map, 'status') && !['active', 'draft', 'archived'].includes(r.status)) add('INVALID_STATUS', 'blocking', null, r, 'Status', '', r.status, 'When the Status column is present, use active, draft, or archived on the product row.');
+      if (own(update.map, 'published') && !['true', 'false', 'TRUE', 'FALSE'].includes(r.published)) add('PUBLICATION_REVIEW', 'warning', null, r, label('published'), '', r.published, 'Publication value is blank or not a recognized boolean. Review the import default.');
+    }
+
+    function diffField(k, a, b) {
+      if (!own(current.map, k) || !own(update.map, k) || a[k] === b[k]) return;
+      const before = a[k], after = b[k];
+      let severity = 'info', code = 'VALUE_CHANGED', message = 'Value differs between the supplied files. Review whether the change is intentional.', pct = null;
+      if (k === 'price') {
+        const av = money(before), bv = money(after);
+        if (av !== null && bv !== null && av === bv) return;
+        stats.priceChanges++;
+        if (av === null || bv === null) {
+          severity = 'high'; code = 'PRICE_NOT_COMPARABLE'; message = 'At least one price is blank or outside the supported decimal format. Percentage change is not calculated.';
+        } else {
+          pct = roundedPct(av, bv); code = 'PRICE_CHANGED';
+          const abs = bv > av ? bv - av : av - bv;
+          if (bv === 0n && av > 0n) { severity = 'high'; code = 'PRICE_TO_ZERO'; message = 'A previously positive price becomes zero. Confirm this is intentional.'; }
+          else if (av === 0n) { severity = 'warning'; code = 'PRICE_FROM_ZERO'; message = 'Price changes from zero; a percentage change is undefined.'; }
+          else if (abs * 100n * thresholdDenominator >= av * thresholdNumerator) { severity = 'high'; code = 'PRICE_THRESHOLD'; message = `Absolute price movement meets or exceeds the ${threshold}% review threshold.`; }
+          else { message = 'Price changes below the configured review threshold.'; }
+        }
+      } else if (after === '' && nonblank(before)) {
+        severity = 'high'; code = 'VALUE_CLEARED'; message = 'A populated value becomes an explicitly blank cell. Under the overwrite assumption, review clearing/default behavior for this field.';
+      }
+      if (OPTIONS.includes(k)) { severity = 'high'; code = 'OPTION_CHANGED'; message = k.endsWith('Value') ? 'Option value differs for the same handle + SKU. Shopify warns that changing option values recreates variant IDs and can break dependencies. This is not a prediction that SKU controls Shopify matching.' : 'Option name differs for the same handle + SKU. Review variant structure and import dependencies.'; }
+      if (k === 'status' || k === 'published') { severity = 'warning'; code = 'VISIBILITY_CHANGED'; message = 'Product status or online-store publication value changes. Review intended visibility.'; }
+      const change = add(code, severity, a, b, label(k), before, after, message, pct);
+      changes.push({ ...change, canonicalField: k });
+    }
+
+    // Product-level cells belong to the first row; blank continuation cells are not clearing instructions here.
+    if (settings.overwrite) for (const [handle, p] of update.products) {
+      const baseline = current.products.get(handle);
+      if (!baseline) continue;
+      for (const k of PRODUCT) if (!p.ambiguous.has(k) && !baseline.ambiguous.has(k)) diffField(k, baseline.row, p.row);
+    }
+    const comparedKeys = new Set();
+    for (const r of update.variants) {
+      if (!settings.overwrite && current.groups.has(r.handle)) { stats.ignoredExistingUpdateRows++; continue; }
+      const key = keyOf(r), newRows = update.index.get(key), oldRows = current.index.get(key);
+      if (r.unmatchable || !newRows || newRows.length !== 1 || (oldRows && oldRows.length !== 1)) { stats.unpairedUpdateRows++; continue; }
+      if (!oldRows) {
+        stats.unpairedUpdateRows++;
+        add('UPDATE_ROW_UNMATCHED', 'warning', null, r, 'Handle + SKU', '', r.sku,
+          current.groups.has(r.handle) ? 'No exact baseline match under this handle. Could be a new variant, changed SKU, or incomplete baseline. No before/after comparison or new-variant prediction.' : 'Handle is absent from the supplied baseline. Could be a new product or an incomplete baseline. Live-store existence is unknown.');
+        continue;
+      }
+      const baseline = oldRows[0];
+      stats.matchedVariants++; stats.comparedVariants++; comparedKeys.add(key);
+      for (const k of VARIANT) if (k !== 'sku') diffField(k, baseline, r);
+    }
+    if (settings.overwrite) for (const r of current.variants) {
+      if (r.unmatchable || comparedKeys.has(keyOf(r))) continue;
+      stats.currentRowsNotCompared++;
+      if (!update.index.has(keyOf(r))) add('CURRENT_ROW_NOT_IN_UPDATE', 'info', r, null, 'Handle + SKU', r.sku, '', 'No exact match in the update. This is not a deletion prediction. The update may be partial, or a SKU/handle may have changed.');
+    }
+    findings.sort((a, b) => RANK[a.severity] - RANK[b.severity] || a.handle.localeCompare(b.handle) || String(a.updateRecord).localeCompare(String(b.updateRecord), undefined, { numeric: true }));
+    findings.forEach((f, i) => f.id = `CG-${String(i + 1).padStart(4, '0')}`);
+    const counts = { blocking: 0, high: 0, warning: 0, info: 0 };
+    findings.forEach(f => counts[f.severity]++);
+    const fileMeta = f => ({ name: f.name, records: f.rows.length, variants: f.variants.length,
+      imageOnlyRecords: f.images.length, blankRecords: f.blankRecords, invalidRecords: f.invalid.length,
+      headers: f.headers, recognizedHeaders: Object.fromEntries(Object.keys(f.map).map(k => [k, f.headers[f.map[k]]])), uncheckedColumns: f.unknown });
+    return { version: VERSION, createdAt: new Date().toISOString(), settings, stats, counts,
+      verdict: counts.blocking ? 'Incomplete comparison — blockers need review' : counts.high || counts.warning ? 'Review findings before any import' : 'No findings within this limited rule set',
+      current: fileMeta(current), update: fileMeta(update), findings, changes,
+      limitations: [
+        'Read-only difference report, not a Shopify import simulator or a guarantee of import safety.',
+        'Exact, case-sensitive handle + SKU matches only. Shopify does not use this tool’s matching key as an import contract.',
+        'Missing or duplicate keys are not guessed; unchanged keys are needed to compare variant values.',
+        'Product fields are read from the first record for each handle. Conflicting repeated product fields are excluded.',
+        'Images, inventory, shipping, tax, markets, metafields and unrecognized columns are not assessed.',
+        'Omitted rows are not labelled as deletions. Missing columns are distinguished from blank cells; dependencies and defaults still require review.',
+        'Assumes both inputs represent the same store, currency and comparable snapshot. Currency is not inferred.',
+        'No live-store validation, backup creation, import execution, payment processing, AI inference, or server-side storage.'
+      ], sourceCheckedOn: '2026-10-18', sources: SOURCES };
+  }
+
+  function escapeHTML(value) { return String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])); }
+  function safeCell(value) {
+    let s = String(value ?? '');
+    if (/^[\s\u0000-\u001f]*[=+\-@]/.test(s) || /^[\t\r\n]/.test(s)) s = "'" + s;
+    return '"' + s.replace(/"/g, '""') + '"';
+  }
+  function findingsCSV(report) {
+    const keys = ['id', 'severity', 'code', 'source', 'handle', 'sku', 'field', 'before', 'after', 'percentChange', 'currentRecord', 'updateRecord', 'message'];
+    return '\uFEFF' + [keys.map(safeCell).join(','), ...report.findings.map(f => keys.map(k => safeCell(f[k])).join(','))].join('\r\n') + '\r\n';
+  }
+  function reportHTML(report) {
+    const h = escapeHTML;
+    const cell = v => v === '' || v === null || v === undefined ? '<span class="empty">(empty)</span>' : h(v);
+    return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'"><title>CSV Change Guard — Report</title><style>body{font:14px/1.55 system-ui,sans-serif;color:#172936;margin:36px auto;max-width:1200px;padding:0 24px}h1{font-size:30px;margin-bottom:6px}h2{margin-top:28px}p,li{max-width:1000px}table{border-collapse:collapse;width:100%;font-size:12px}th,td{text-align:left;border-bottom:1px solid #d9e1e5;padding:10px;vertical-align:top;overflow-wrap:anywhere;white-space:pre-wrap}th{background:#edf2f4}.empty{color:#707d85;font-style:italic}.note{background:#f0f4f5;padding:16px;border-left:4px solid #4c6f80}.blocking,.high{font-weight:bold;color:#982f37}.warning{color:#865200}.meta{color:#526572}@media print{body{margin:0;padding:0}thead{display:table-header}tr{break-inside:avoid}a{color:inherit}}</style></head><body><div class="meta">CSV CHANGE GUARD / READ-ONLY REPORT / v${h(report.version)}</div><h1>${h(report.verdict)}</h1><p>${h(report.createdAt)} · Threshold ${h(report.settings.threshold)}% · Overwrite assumed ${report.settings.overwrite ? 'enabled' : 'disabled'}</p><p><b>Current:</b> ${h(report.current.name)}<br><b>Update:</b> ${h(report.update.name)}</p><div class="note">${report.stats.comparedVariants} compared variants · ${report.stats.priceChanges} price changes · ${report.counts.blocking} blocking findings · ${report.counts.high} high-priority findings · ${report.counts.warning} warnings.<br>Blocking findings mean the comparison is incomplete. This is not a Shopify import approval. Record numbers include the header as record 1; quoted newlines do not create new records.</div><h2>Findings (${report.findings.length})</h2><table><thead><tr><th>Priority / code</th><th>Handle / SKU</th><th>Field / records</th><th>Before</th><th>After</th><th>Explanation</th></tr></thead><tbody>${report.findings.map(f => `<tr><td class="${h(f.severity)}">${h(f.severity.toUpperCase())}<br>${h(f.code)}</td><td>${h(f.handle)}<br>${h(f.sku)}</td><td>${h(f.field)}<br>Current: ${h(f.currentRecord)}<br>Update: ${h(f.updateRecord)}</td><td>${cell(f.before)}</td><td>${cell(f.after)}</td><td>${h(f.message)}${f.percentChange !== null && f.percentChange !== undefined ? '<br>Change: ' + h(f.percentChange) + '%' : ''}</td></tr>`).join('')}</tbody></table><h2>Coverage and limitations</h2><ul>${report.limitations.map(l => '<li>' + h(l) + '</li>').join('')}</ul><p><b>Unchecked current columns:</b> ${h(report.current.uncheckedColumns.join(', ') || 'None outside the explicitly limited scope')}<br><b>Unchecked update columns:</b> ${h(report.update.uncheckedColumns.join(', ') || 'None outside the explicitly limited scope')}</p><h2>Rule references</h2><p>Shopify documentation checked ${h(report.sourceCheckedOn)}. Platform behavior can change.</p><ul>${report.sources.map(s => '<li>' + h(s) + '</li>').join('')}</ul><p class="meta">This report may contain business-sensitive values from the selected files. Store and share it accordingly.</p></body></html>`;
+  }
+  return { VERSION, LIMITS, FIELDS, parseCSV, normalize, money, compare, findingsCSV, reportHTML, escapeHTML };
+});
+
+</script><script>
+/* Synthetic sample files only. Image URLs are placeholders and are never fetched. */
+globalThis.ChangeGuardDemo = {"current": "URL handle,Title,Description,Vendor,Type,Tags,Status,Published on online store,Option1 name,Option1 value,SKU,Price,Compare-at price,Product image URL\nnavy-tee,Navy cotton tee,\"Soft cotton, everyday fit.\",Northline,T-shirt,\"summer, cotton\",active,true,Size,S,TEE-S,20.00,25.00,\nnavy-tee,,,,,,,,Size,M,TEE-M,22.00,25.00,\nnavy-tee,,,,,,,,,,,,,https://example.invalid/tee.jpg\ndesk-lamp,Desk lamp,Adjustable reading lamp.,Northline,Lighting,home,active,true,Title,Default Title,LAMP-001,59.00,,\ncanvas-bag,Canvas tote,Heavy cotton tote.,Northline,Bag,travel,active,true,Title,Default Title,BAG-001,30.00,,\nceramic-mug,Ceramic mug,Hand-finished mug.,Northline,Kitchen,home,active,true,Title,Default Title,MUG-OLD,15.00,,\nnotebook,Notebook,Dotted pages.,Northline,Stationery,work,active,true,Title,Default Title,NOTE-001,12.00,,\nwool-scarf,Wool scarf,Warm wool.,Northline,Accessory,winter,active,true,Title,Default Title,SCARF-001,45.00,,\n", "update": "URL handle,Title,Description,Vendor,Type,Tags,Status,Published on online store,Option1 name,Option1 value,SKU,Price,Compare-at price,Product image URL\nnavy-tee,Navy cotton tee,,Northline,T-shirt,\"summer, cotton\",active,true,Size,XS,TEE-S,29.00,35.00,\nnavy-tee,,,,,,,,Size,M,TEE-M,20.00,25.00,\nnavy-tee,,,,,,,,,,,,,https://example.invalid/tee.jpg\ndesk-lamp,Desk lamp,Adjustable reading lamp.,Northline,Lighting,home,draft,true,Title,Default Title,LAMP-001,5.90,,\ncanvas-bag,Canvas tote,Heavy cotton tote.,Northline,Bag,travel,active,true,Title,Default Title,BAG-001,0.00,,\nceramic-mug,Ceramic mug,Hand-finished mug.,Northline,Kitchen,home,active,true,Title,Default Title,MUG-NEW,15.00,,\nnotebook,Notebook,Dotted pages.,Northline,Stationery,work,active,true,Title,Default Title,NOTE-001,12.00,,\nnotebook,,,,,,,,Title,Default Title,NOTE-001,12.00,,\nsteel-bottle,Steel bottle,Reusable bottle.,Northline,Drinkware,travel,active,true,Title,Default Title,BOTTLE-001,24.00,,\n"};
+
+</script><script>
+(function () {
+  'use strict';
+  const G = globalThis.ChangeGuard, h = G.escapeHTML, $ = id => document.getElementById(id);
+  const state = { current: null, update: null, report: null, filter: 'all', page: 0, busy: false, reads: { current: 0, update: 0 } };
+  const PAGE = 40;
+  function hideReport() { state.report = null; $('results').hidden = true; $('error').hidden = true; for (const id of ['findings', 'coverage-body', 'verdict']) $(id).replaceChildren(); }
+  function sync() { $('compare').disabled = state.busy || !state.current || !state.update; $('demo').disabled = state.busy; }
+  function setFile(side, text, name) {
+    const parsed = G.parseCSV(text, name); G.normalize(parsed, side);
+    state[side] = { text, name };
+    $(side + '-name').textContent = name;
+    $(side + '-meta').textContent = `${parsed.rows.length.toLocaleString()} data records · ${parsed.headers.length} columns · local only`;
+    $(side + '-card').classList.add('loaded');
+    $('run-state').textContent = state.current && state.update ? 'Both files ready. Confirm the settings and compare.' : 'Choose the other file to continue.';
+    sync();
+  }
+  function clearSide(side) {
+    state[side] = null; $(side + '-file').value = '';
+    $(side + '-name').textContent = 'Choose a CSV file';
+    $(side + '-meta').textContent = 'UTF-8 · comma-delimited · up to 10 MiB';
+    $(side + '-card').classList.remove('loaded');
+  }
+  function showError(error) { $('error').textContent = error.message || String(error); $('error').hidden = false; $('run-state').textContent = 'The comparison did not complete. Review the message above.'; }
+  for (const side of ['current', 'update']) $(side + '-file').addEventListener('change', async event => {
+    const file = event.target.files[0], request = ++state.reads[side];
+    hideReport(); clearSide(side); sync();
+    if (!file) return;
+    try {
+      if (file.size > G.LIMITS.bytes) throw new Error(`${file.name}: exceeds the 10 MiB prototype limit.`);
+      const buffer = await file.arrayBuffer();
+      if (request !== state.reads[side]) return;
+      let text;
+      try { text = new TextDecoder('utf-8', { fatal: true }).decode(buffer); }
+      catch (_) { throw new Error(`${file.name}: not valid UTF-8. Export a UTF-8, comma-delimited CSV and try again.`); }
+      setFile(side, text, file.name);
+    } catch (e) { if (request === state.reads[side]) { clearSide(side); showError(e); sync(); } }
+  });
+  function reset() {
+    for (const side of ['current', 'update']) { state.reads[side]++; clearSide(side); }
+    hideReport(); state.filter = 'all'; state.page = 0; $('search').value = '';
+    $('run-state').textContent = 'Choose both files or use the demo to begin.'; sync();
+  }
+  $('reset').addEventListener('click', reset);
+  for (const id of ['threshold', 'overwrite']) $(id).addEventListener('input', () => { hideReport(); $('run-state').textContent = 'Settings changed. Run the comparison again.'; });
+  async function run() {
+    if (!state.current || !state.update || state.busy) return;
+    hideReport(); state.busy = true; sync(); $('reset').disabled = true;
+    $('run-state').textContent = 'Comparing locally…';
+    await new Promise(resolve => setTimeout(resolve, 25));
+    try {
+      if ($('threshold').value.trim() === '') throw new Error('Enter a price-change threshold.');
+      const report = G.compare(state.current.text, state.update.text, { threshold: Number($('threshold').value), overwrite: $('overwrite').value === 'true', currentName: state.current.name, updateName: state.update.name });
+      state.report = report; state.filter = 'all'; state.page = 0; $('search').value = '';
+      renderReport(); $('results').hidden = false;
+      $('run-state').textContent = `Finished locally. ${report.findings.length} findings. No files were uploaded.`;
+      $('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch (e) { showError(e); }
+    finally { state.busy = false; $('reset').disabled = false; sync(); }
+  }
+  $('compare').addEventListener('click', run);
+  $('demo').addEventListener('click', () => {
+    reset(); $('threshold').value = '30'; $('overwrite').value = 'true';
+    try { setFile('current', ChangeGuardDemo.current, 'demo-current-catalog.csv'); setFile('update', ChangeGuardDemo.update, 'demo-proposed-update.csv'); run(); }
+    catch (e) { showError(e); }
+  });
+  function renderReport() {
+    const r = state.report;
+    $('verdict').className = 'verdict ' + (r.counts.blocking ? 'blocked' : r.counts.high || r.counts.warning ? '' : 'neutral');
+    $('verdict').innerHTML = `<strong>${h(r.verdict)}</strong><small>Blocking findings mean part of the comparison was excluded—not that Shopify will necessarily reject the file. This is not an import approval.</small>`;
+    $('metric-compared').textContent = r.stats.comparedVariants.toLocaleString(); $('metric-prices').textContent = r.stats.priceChanges.toLocaleString();
+    $('metric-priority').textContent = (r.counts.blocking + r.counts.high).toLocaleString(); $('metric-unpaired').textContent = r.stats.unpairedUpdateRows.toLocaleString();
+    $('count-all').textContent = r.findings.length;
+    for (const k of ['blocking', 'high', 'warning', 'info']) $('count-' + k).textContent = r.counts[k];
+    $('coverage-body').innerHTML = `<p><b>Current:</b> ${h(r.current.name)} · ${r.current.records} data records · ${r.current.variants} variant candidates · ${r.current.imageOnlyRecords} image-only records.</p><p><b>Update:</b> ${h(r.update.name)} · ${r.update.records} data records · ${r.update.variants} variant candidates · ${r.update.imageOnlyRecords} image-only records.</p><p><b>Assumptions:</b> overwrite matching handles ${r.settings.overwrite ? 'enabled' : 'disabled'}; price threshold ${h(r.settings.threshold)}%; same store and currency. ${r.stats.ignoredExistingUpdateRows} existing-handle update records ignored due to the overwrite setting.</p><p><b>Record numbering:</b> header is record 1; quoted multiline values do not create extra records. Files may contain sensitive business data.</p><ul>${r.limitations.map(l => '<li>' + h(l) + '</li>').join('')}</ul><details><summary>Recognized header mappings and unassessed columns</summary><pre>${h(JSON.stringify({ current: r.current.recognizedHeaders, update: r.update.recognizedHeaders, uncheckedCurrent: r.current.uncheckedColumns, uncheckedUpdate: r.update.uncheckedColumns }, null, 2))}</pre></details><p>Rules checked against Shopify documentation on ${h(r.sourceCheckedOn)}. Platform behavior can change.</p>${r.sources.map(s => '<p>' + h(s) + '</p>').join('')}`;
+    renderRows();
+  }
+  const displayValue = v => v === '' || v === null || v === undefined ? '<span class="empty">—</span>' : `<span class="value">${h(String(v).length > 180 ? String(v).slice(0, 180) + '…' : v)}</span>`;
+  function renderRows() {
+    if (!state.report) return;
+    const query = $('search').value.trim().toLowerCase();
+    const rows = state.report.findings.filter(f => (state.filter === 'all' || state.filter === f.severity) && (!query || [f.handle, f.sku, f.field, f.code, f.message, f.before, f.after].join(' ').toLowerCase().includes(query)));
+    const pages = Math.max(1, Math.ceil(rows.length / PAGE)); state.page = Math.max(0, Math.min(state.page, pages - 1));
+    const chunk = rows.slice(state.page * PAGE, (state.page + 1) * PAGE);
+    $('findings').innerHTML = chunk.map(f => `<tr><td><span class="pill ${h(f.severity)}">${h(f.severity[0].toUpperCase() + f.severity.slice(1))}</span></td><td>${h(f.handle || 'File-level check')}<span class="sku">${h(f.sku)}</span></td><td><span class="finding-title">${h(f.field)} · ${h(f.code.toLowerCase().replaceAll('_', ' '))}</span><span class="finding-message">${h(f.message)}</span></td><td>${displayValue(f.before)}</td><td>${displayValue(f.after)}${f.percentChange !== null && f.percentChange !== undefined ? '<span class="percent">' + (f.percentChange > 0 ? '+' : '') + h(f.percentChange) + '%</span>' : ''}</td><td><span class="row-ref">Current ${h(f.currentRecord || '—')}<br>Update ${h(f.updateRecord || '—')}</span></td></tr>`).join('') || '<tr><td colspan="6">No findings match this filter. Check coverage before drawing conclusions.</td></tr>';
+    $('shown').textContent = rows.length ? `Showing ${state.page * PAGE + 1}–${Math.min((state.page + 1) * PAGE, rows.length)} of ${rows.length} findings · full values in exports` : '0 matching findings';
+    $('previous').disabled = state.page === 0; $('next').disabled = state.page >= pages - 1;
+    document.querySelectorAll('[data-filter]').forEach(b => { const active = b.dataset.filter === state.filter; b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active)); });
+  }
+  document.querySelectorAll('[data-filter]').forEach(b => b.addEventListener('click', () => { state.filter = b.dataset.filter; state.page = 0; renderRows(); }));
+  $('search').addEventListener('input', () => { state.page = 0; renderRows(); });
+  $('previous').addEventListener('click', () => { state.page--; renderRows(); });
+  $('next').addEventListener('click', () => { state.page++; renderRows(); });
+  function download(text, type, suffix) {
+    const blob = new Blob([text], { type }), url = URL.createObjectURL(blob), link = document.createElement('a');
+    link.href = url; link.download = `csv-change-guard-report.${suffix}`; document.body.appendChild(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+  $('export-html').addEventListener('click', () => { if (state.report) download(G.reportHTML(state.report), 'text/html;charset=utf-8', 'html'); });
+  $('export-csv').addEventListener('click', () => { if (state.report) download(G.findingsCSV(state.report), 'text/csv;charset=utf-8', 'csv'); });
+  $('export-json').addEventListener('click', () => { if (state.report) download(JSON.stringify(state.report, null, 2), 'application/json;charset=utf-8', 'json'); });
+})();
+
+</script>
+</body></html>

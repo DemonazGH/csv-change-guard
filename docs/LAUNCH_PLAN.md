@@ -14,6 +14,7 @@ Validate a self-service product whose ordinary customer cycle can be automated. 
 - [x] Search, filters, responsive layout and no runtime third-party dependencies.
 - [x] 106 engine/scenario tests and 15 grouped browser checks in both Windows/Chrome launch modes, with sandboxing enabled; see [current evidence](SHOPIFY_SAMPLE_VALIDATION.md).
 - [x] Official public sample compared with itself after focused compatibility fixes; coverage limitations remain explicit.
+- [x] Automated Windows/Edge synthetic checks on 19 October 2026: 15 browser groups per route, demo/sample selection, clearing, report reopening and nine scenarios, with sandboxing enabled; see [Edge evidence](EDGE_VALIDATION.md).
 - [x] Source package, build command, optional local server, and known limitations.
 - [x] [Owner validation instructions](LOCAL_VALIDATION.md) and a blank results sheet.
 
@@ -28,6 +29,10 @@ real-data checks below remain open. Automation does not complete those gates.
 - [ ] Export a full HTML report and confirm it explains the findings without assistance.
 - [ ] Test actual file-selection behavior and the supported legacy/current headers.
 - [ ] Test on both current Chrome and Edge before promising compatibility.
+
+Automated Chrome and Edge checks have passed for their recorded versions.
+The checkbox above remains open for the manual owner exercise, including native
+file dialogs and report comprehension; this is not a browser support matrix.
 
 ## Gate 2 — Representative data, before publicity
 

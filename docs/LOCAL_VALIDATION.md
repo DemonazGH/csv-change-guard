@@ -107,9 +107,12 @@ through both direct-file and localhost navigation. The demo, exact sample pair,
 clearing, downloaded reports, and nine linked scenarios passed; see
 [WINDOWS_VALIDATION.md](WINDOWS_VALIDATION.md) for results and screenshots.
 [SCENARIO_VALIDATION.md](SCENARIO_VALIDATION.md) retains the cloud scenario record.
-Manual Windows Explorer/file-dialog interaction, owner usability review, Edge,
-real merchant comparisons, and controlled development-store import round trips
-remain separate checks. Each requires its own observed result.
+Automated [Windows/Edge validation](EDGE_VALIDATION.md) on 19 October 2026 also
+passed 15 browser groups per route, the synthetic START_HERE workflow and nine
+scenarios, with sandboxing enabled. Manual Windows Explorer/file-dialog
+interaction, owner usability review, other browser versions, real merchant
+comparisons, and controlled development-store import round trips remain separate
+checks. Each requires its own observed result.
 
 The earlier cloud attempt to retrieve Shopify's official sample returned HTTP
 403. A later Windows retrieval on 18 October 2026 succeeded and reproduced two

@@ -1,0 +1,158 @@
+import hashlib
+import json
+import os
+import platform
+from pathlib import Path
+import socket
+import subprocess
+import sys
+import time
+import traceback
+from datetime import datetime, timezone
+from urllib.request import urlopen
+
+ROOT = Path(r'<repository>')
+TASK = Path(r'<codex-task>')
+CHROME = r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+OUT = TASK / 'outputs' / ('windows-edge-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ'))
+OUT.mkdir(parents=True, exist_ok=False)
+ENV = dict(os.environ, CHROMIUM_PATH=CHROME)
+records = []
+summary = {'root': str(ROOT), 'artifacts': str(OUT), 'started_at': datetime.now(timezone.utc).isoformat(),
+           'platform': platform.platform(), 'python': platform.python_version(),
+           'python_executable': sys.executable, 'edge_executable': CHROME, 'sandbox_enabled': True,
+           'commands': records}
+
+def command(args, name, env=None):
+    run = subprocess.run(args, cwd=ROOT, env=env or ENV, capture_output=True, encoding='utf-8', errors='replace')
+    (OUT / (name + '.txt')).write_text(run.stdout + run.stderr, encoding='utf-8')
+    records.append({'command': args, 'exit_code': run.returncode, 'log': name + '.txt'})
+    print(name, 'exit', run.returncode, flush=True)
+    return run
+
+def tracked_hashes():
+    paths = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().split('\0')
+    return {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest() for name in paths if name}
+
+def supplemental_script():
+    source = (TASK / 'work/windows_workflow_test.py').read_text(encoding='utf-8')
+    source = source.replace("ROOT = Path(r'<downloads-copy>')", "ROOT = Path(r'<repository>')")
+    source = source.replace("OUT = Path(__file__).resolve().parents[1] / 'outputs' / 'windows-workflow-verified'", "OUT = Path(__file__).resolve().parent / 'start-here'")
+    source = source.replace(r'C:\Program Files\Google\Chrome\Application\chrome.exe', CHROME).replace('Chrome', 'Edge').replace('chrome_version', 'browser_version')
+    needle = "            clear_and_verify(page, 'cleared-after-demo.png')"
+    assert source.count(needle) == 1
+    source = source.replace(needle, '''            with page.expect_download() as demo_download_info:
+                page.get_by_role('button', name='Save HTML report', exact=True).click()
+            demo_download = demo_download_info.value
+            demo_report = OUT / 'demo-downloaded-report.html'
+            demo_download.save_as(demo_report)
+            assert demo_download.failure() is None
+            demo_report_page = context.new_page()
+            demo_report_page.goto(demo_report.as_uri(), wait_until='load')
+            assert demo_report_page.title() == 'CSV Change Guard — Report'
+            assert demo_report_page.locator('tbody tr').count() == 15
+            assert '4 compared variants' in demo_report_page.locator('body').inner_text()
+            assert 'Coverage and limitations' in demo_report_page.locator('body').inner_text()
+            assert demo_report_page.locator('script').count() == 0
+            demo_report_page.screenshot(path=str(OUT / 'demo-downloaded-report-open.png'))
+            demo_report_page.close()
+            result['checks'].append('START_HERE step 4: demo HTML downloaded and opened locally; 15 findings and coverage readable')
+''' + needle)
+    needle = "            assert result['http_requests'] == [], result['http_requests']"
+    assert source.count(needle) == 1
+    source = source.replace(needle, '''            report_page.close()
+            scenario_page = context.new_page()
+            scenario_page.goto((ROOT / 'dist/index.html').as_uri(), wait_until='load')
+            result['scenario_metrics'] = {}
+            scenarios = [('catalog.csv', 6, 0), ('partial-prices.csv', 2, 2),
+                         ('explicit-clears.csv', 6, 0), ('reordered.csv', 6, 0),
+                         ('changed-identifiers.csv', 3, 0), ('invalid-identifiers.csv', 2, 0),
+                         ('duplicate-identifiers.csv', 5, 0), ('mixed-header-prices.csv', 6, 1),
+                         ('unusual-prices.csv', 6, 5)]
+            for filename, compared, prices in scenarios:
+                scenario_page.locator('#reset').click()
+                scenario_page.locator('#current-file').set_input_files(str(ROOT / 'samples/scenarios/catalog.csv'))
+                scenario_page.locator('#update-file').set_input_files(str(ROOT / 'samples/scenarios' / filename))
+                expect(scenario_page.locator('#compare')).to_be_enabled()
+                assert scenario_page.locator('#threshold').input_value() == '30'
+                assert scenario_page.locator('#overwrite').input_value() == 'true'
+                scenario_page.locator('#compare').click()
+                expect(scenario_page.locator('#results')).to_be_visible()
+                expect(scenario_page.locator('#metric-compared')).to_have_text(str(compared))
+                expect(scenario_page.locator('#metric-prices')).to_have_text(str(prices))
+                assert scenario_page.locator('#error').is_hidden()
+                result['scenario_metrics'][filename] = metrics(scenario_page)
+                scenario_page.locator('#results').scroll_into_view_if_needed()
+                scenario_page.screenshot(path=str(OUT / ('scenario-' + filename + '.png')))
+            result['checks'].append('All nine linked synthetic scenarios selected through browser file inputs; compared/price counts match samples/scenarios/README.md')
+''' + needle)
+    assert "ROOT = Path(r'<repository>')" in source
+    script = OUT / 'start_here_test.py'
+    script.write_text(source, encoding='utf-8')
+    return script
+
+try:
+    summary['commit'] = command(['git', 'rev-parse', 'HEAD'], 'commit').stdout.strip()
+    summary['initial_git_status'] = command(['git', 'status', '--porcelain=v1'], 'git-status-before').stdout
+    summary['node'] = command(['node', '--version'], 'node-version').stdout.strip()
+    summary['npm'] = command(['npm.cmd', '--version'], 'npm-version').stdout.strip()
+    command([sys.executable, '-m', 'pip', 'freeze'], 'python-packages')
+    (OUT / 'browser_test.py.txt').write_bytes((ROOT / 'tests/browser_test.py').read_bytes())
+    (OUT / 'validation_driver.py.txt').write_bytes(Path(__file__).read_bytes())
+    before = tracked_hashes()
+    (OUT / 'tracked-files-before.json').write_text(json.dumps(before, indent=2), encoding='utf-8')
+    summary['engine_exit'] = command(['npm.cmd', 'test'], 'engine-tests').returncode
+    test_args = [sys.executable, 'tests/browser_test.py', '--artifacts-dir', str(OUT / 'browser')]
+    summary['file_browser_exit'] = command(test_args + ['--file'], 'browser-file').returncode
+    with socket.socket() as sock:
+        sock.bind(('127.0.0.1', 0))
+        port = sock.getsockname()[1]
+    url = f'http://127.0.0.1:{port}/'
+    summary['localhost_url'] = url
+    with (OUT / 'localhost-server.txt').open('w', encoding='utf-8') as server_log:
+        server = subprocess.Popen(['node', 'server.cjs'], cwd=ROOT, env=dict(ENV, PORT=str(port)),
+                                  stdout=server_log, stderr=subprocess.STDOUT,
+                                  creationflags=subprocess.CREATE_NO_WINDOW)
+        summary['server_pid'] = server.pid
+        try:
+            deadline = time.monotonic() + 15
+            while True:
+                try:
+                    with urlopen(url, timeout=1) as response:
+                        assert response.read() == (ROOT / 'dist/index.html').read_bytes()
+                    break
+                except OSError:
+                    if server.poll() is not None or time.monotonic() > deadline:
+                        raise RuntimeError('Localhost server did not start')
+                    time.sleep(0.1)
+            summary['localhost_browser_exit'] = command(test_args + ['--url', url], 'browser-localhost').returncode
+        finally:
+            server.terminate()
+            server.wait(timeout=10)
+            summary['localhost_server_stopped'] = server.poll() is not None
+    summary['start_here_exit'] = command([sys.executable, str(supplemental_script())], 'start-here-workflow').returncode
+    build_path = ROOT / 'dist/index.html'
+    original_build = build_path.read_bytes()
+    summary['tested_build_sha256'] = hashlib.sha256(original_build).hexdigest()
+    summary['build_exit'] = command(['npm.cmd', 'run', 'build'], 'build').returncode
+    built = build_path.read_bytes()
+    summary['rebuilt_sha256'] = hashlib.sha256(built).hexdigest()
+    summary['rebuild_exact_bytes_equal'] = built == original_build
+    summary['rebuild_equal_after_newline_normalization'] = built.replace(b'\r\n', b'\n') == original_build.replace(b'\r\n', b'\n')
+    if summary['rebuild_equal_after_newline_normalization'] and built != original_build:
+        build_path.write_bytes(original_build)
+        summary['restored_original_checkout_newlines'] = True
+    after = tracked_hashes()
+    summary['tracked_files_byte_identical_after_tests'] = before == after
+    summary['tracked_files_count'] = len(before)
+    summary['final_git_status'] = command(['git', 'status', '--porcelain=v1'], 'git-status-after').stdout
+    summary['status'] = 'passed' if (all(summary[key] == 0 for key in ['engine_exit', 'file_browser_exit', 'localhost_browser_exit', 'start_here_exit', 'build_exit'])
+                                               and summary['rebuild_equal_after_newline_normalization'] and before == after) else 'failed'
+except Exception:
+    summary['status'] = 'failed'
+    summary['error'] = traceback.format_exc()
+finally:
+    summary['finished_at'] = datetime.now(timezone.utc).isoformat()
+    (OUT / 'run-summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+    print(json.dumps({key: value for key, value in summary.items() if key != 'commands'}, indent=2), flush=True)
+sys.exit(0 if summary['status'] == 'passed' else 1)

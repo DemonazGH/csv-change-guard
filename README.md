@@ -13,7 +13,10 @@ uploaded handoff artifacts remain historical evidence.
 
 [Windows/Edge validation](docs/EDGE_VALIDATION.md) on 19 October 2026 passed
 106 engine/scenario tests, 15 browser groups per launch route, and the synthetic
-START_HERE workflow with sandboxing enabled. Manual owner usability remains open.
+START_HERE workflow with sandboxing enabled. A separate
+[guided manual owner test](docs/MANUAL_OWNER_VALIDATION.md) on 19 October 2026
+records the owner's Chrome/Edge workflow and report-comprehension confirmations,
+plus four Chrome scenarios. Those confirmations are distinct from automated evidence.
 
 A read-only review tool for two Shopify product CSV files: a current catalog and a proposed update. It compares a defined subset of fields using exact identifiers. It does not connect to a store, execute imports, charge customers, or guarantee import safety.
 

@@ -18,21 +18,25 @@ Validate a self-service product whose ordinary customer cycle can be automated. 
 - [x] Source package, build command, optional local server, and known limitations.
 - [x] [Owner validation instructions](LOCAL_VALIDATION.md) and a blank results sheet.
 
-Representative merchant files are not available yet. Automated owner-machine
-checks and the official public sample are verified; the human usability and
-real-data checks below remain open. Automation does not complete those gates.
+Automated owner-machine checks and the official public sample have recorded
+evidence. The [guided manual owner test](MANUAL_OWNER_VALIDATION.md) now records
+the owner's synthetic workflow and report-comprehension confirmations for
+Chrome and Edge. Representative merchant workflow validation remains open.
 
 ## Gate 1 — Owner smoke test
 
-- [ ] Open the provided standalone HTML on the owner's Windows computer.
-- [ ] Run the built-in demo and examine all six priority findings.
-- [ ] Export a full HTML report and confirm it explains the findings without assistance.
-- [ ] Test actual file-selection behavior and the supported legacy/current headers.
-- [ ] Test on both current Chrome and Edge before promising compatibility.
+- [x] Open the provided standalone HTML on the owner's Windows computer.
+- [x] Run the built-in demo in Chrome and Edge; inspect all six priority findings in Chrome.
+- [x] Export a full HTML report in each browser; owner confirms it makes sense on its own after closing the app tab.
+- [x] Test actual Windows file-selection behavior with the supplied sample pair in Chrome and Edge, and clear the selected files.
+- [x] Complete the basic manual workflow on the recorded Chrome and Edge versions.
+- [ ] Manually select a separate legacy/current-header pair; existing alias coverage is automated.
 
-Automated Chrome and Edge checks have passed for their recorded versions.
-The checkbox above remains open for the manual owner exercise, including native
-file dialogs and report comprehension; this is not a browser support matrix.
+Checked manual items above are owner confirmations from a guided exercise, not
+new automated evidence or an unassisted usability study. Four further synthetic
+scenarios passed manually in Chrome; they were not repeated manually in Edge.
+See the manual report for exact versions, counts and checks not run. These
+results are not a browser support matrix or proof of Shopify import behavior.
 
 ## Gate 2 — Representative data, before publicity
 

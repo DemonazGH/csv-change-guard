@@ -47,6 +47,9 @@ The kit is for owner validation. Automated Windows/Chrome checks passed on
 enabled, the demo, sample selection, clearing, and opening downloaded reports.
 See docs/WINDOWS_VALIDATION.md for results and screenshots. Automated Windows/Edge
 checks also passed on 19 October 2026 with sandboxing enabled; see
-docs/EDGE_VALIDATION.md for fresh results and screenshots. Manual Windows
-Explorer/file-dialog use, owner report comprehension, other browser versions,
-and real merchant workflows remain separate validation tasks.
+docs/EDGE_VALIDATION.md for fresh results and screenshots. A guided manual owner
+test on 19 October 2026 confirmed the basic Chrome/Edge workflow, native file
+selection, clearing, and report comprehension, plus four Chrome scenarios.
+See docs/MANUAL_OWNER_VALIDATION.md for owner-reported results and checks not run;
+these confirmations are separate from automated evidence. Representative merchant
+workflows and controlled Shopify imports remain unverified.

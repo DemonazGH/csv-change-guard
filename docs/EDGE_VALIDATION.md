@@ -1,5 +1,10 @@
 # Windows and Microsoft Edge validation
 
+This page preserves the automated Edge run. The later
+[manual owner record](MANUAL_OWNER_VALIDATION.md) separately documents guided
+Chrome/Edge confirmations, including native file dialogs and report comprehension.
+The remaining-validation section below describes the automated run's scope.
+
 On **19 October 2026, 00:02:34–00:03:01 Europe/Warsaw (UTC+02:00)**,
 the unchanged checkout at commit
 [`fa49d64`](https://github.com/DemonazGH/csv-change-guard/commit/fa49d64f8f308c7f24398f1571e5b63a5534623c)
@@ -138,6 +143,7 @@ inputs, representative merchant workflows and controlled Shopify import
 comparisons remain separate checks. No merchant files, Shopify connection,
 import, payment or deployment was involved. No findings is not import approval.
 
-The next small step remains a manual owner smoke test with the same synthetic
-files, recording confusing steps and whether the saved report explains the
-findings without assistance.
+At the time of this automated run, the next step was a manual owner smoke test.
+The later [manual owner record](MANUAL_OWNER_VALIDATION.md) reports the completed
+basic workflow in both browsers and four additional Chrome scenarios. It also
+identifies what was not run manually and the next representative-data step.

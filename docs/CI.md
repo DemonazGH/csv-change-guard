@@ -43,6 +43,21 @@ checkout credentials are not persisted, and no repository secrets are required.
 The workflow tests synthetic data only. It does not deploy, publish a release,
 or change branch-protection settings.
 
+## CSP-safe browser synchronization
+
+The browser runner uses retrying locator assertions for enabled buttons and
+test-hook readiness. Test-injected callbacks expose readiness through temporary
+`data-test-*` attributes on the document root; resuming the callback removes its
+marker. The race-condition checks still wait for the actual held operation,
+with the original 15-second timeout and all functional assertions retained.
+
+This avoids string-based `wait_for_function` polling, which hit an intermittent
+`unsafe-eval` CSP rejection in the [first post-merge run for PR #2](https://github.com/DemonazGH/csv-change-guard/actions/runs/39168710502/attempts/1).
+The application CSP and sandbox settings stay unchanged. Do not add `unsafe-eval`,
+enable CSP bypass, or disable sandboxing to make the tests pass. Historical
+script snapshots under `test-artifacts/` retain their original recorded code;
+the maintained runner is `tests/browser_test.py`.
+
 ## Run the same checks locally
 
 ```bash

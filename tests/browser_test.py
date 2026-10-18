@@ -83,34 +83,43 @@ def write_result(out, result):
 
 
 def hold_next_comparison(page):
+    from playwright.sync_api import expect
+
     # Hold the app's rendering yield so input changes exercise the pending run
     # deterministically, without depending on machine speed or arbitrary sleeps.
+    # A test-only DOM marker exposes hook readiness to a CSP-safe locator assertion.
     page.evaluate('''() => {
         const original = window.setTimeout;
         window.setTimeout = (callback, delay, ...args) => {
             if (delay === 25) {
                 window.setTimeout = original;
                 window.resumeComparison = () => callback(...args);
+                document.documentElement.setAttribute('data-test-comparison-held', 'true');
                 return 0;
             }
             return original(callback, delay, ...args);
         };
     }''')
     page.locator('#compare').click()
-    page.wait_for_function("typeof window.resumeComparison === 'function'")
+    expect(page.locator('html')).to_have_attribute('data-test-comparison-held', 'true', timeout=15000)
     assert page.locator('#reset').is_disabled()
 
 
 def resume_comparison(page):
+    from playwright.sync_api import expect
+
     page.evaluate('''() => {
         const resume = window.resumeComparison;
         delete window.resumeComparison;
+        document.documentElement.removeAttribute('data-test-comparison-held');
         resume();
     }''')
-    page.wait_for_function("!document.getElementById('reset').disabled")
+    expect(page.locator('#reset')).to_be_enabled(timeout=15000)
 
 
 def check_pending_file_change(page):
+    from playwright.sync_api import expect
+
     page.locator('#demo').click()
     page.locator('#results').wait_for(state='visible')
     hold_next_comparison(page)
@@ -120,13 +129,14 @@ def check_pending_file_change(page):
             File.prototype.arrayBuffer = original;
             return new Promise((resolve, reject) => {
                 window.finishFileRead = () => original.call(this).then(resolve, reject);
+                document.documentElement.setAttribute('data-test-file-read-held', 'true');
             });
         };
     }''')
     page.locator('#update-file').set_input_files({
         'name': 'replacement-update.csv', 'mimeType': 'text/csv',
         'buffer': (ROOT / 'samples/unchanged-update.csv').read_bytes()})
-    page.wait_for_function("typeof window.finishFileRead === 'function'")
+    expect(page.locator('html')).to_have_attribute('data-test-file-read-held', 'true', timeout=15000)
     resume_comparison(page)
     assert page.locator('#results').is_hidden(), 'Changed files must cancel the pending report'
     assert page.locator('#error').is_hidden(), 'Cancellation must not show an internal comparison error'
@@ -134,9 +144,10 @@ def check_pending_file_change(page):
     page.evaluate('''async () => {
         const finish = window.finishFileRead;
         delete window.finishFileRead;
+        document.documentElement.removeAttribute('data-test-file-read-held');
         await finish();
     }''')
-    page.wait_for_function("!document.getElementById('compare').disabled")
+    expect(page.locator('#compare')).to_be_enabled(timeout=15000)
     assert page.locator('#update-name').inner_text() == 'replacement-update.csv'
     assert page.locator('#results').is_hidden(), 'Reading a replacement must not run an unrequested comparison'
     assert page.locator('#error').is_hidden()
@@ -186,6 +197,8 @@ def check_clear_rejected_filename(page):
 
 
 def check_sample_compatibility(page):
+    from playwright.sync_api import expect
+
     # Independently constructed synthetic data; no network/template dependency.
     header = 'URL handle,Title,Status,Option1 name,Option1 value,SKU,Price\n'
     current = header + 'sample-shirt,Sample shirt,Active,Size,S,COMPAT-S,10.00\n' + 'sample-shirt,,,Size,M,COMPAT-M,10.00\n'
@@ -197,7 +210,7 @@ def check_sample_compatibility(page):
                                  ('update-file', 'compat-update.csv', update)]:
         page.locator('#' + selector).set_input_files({
             'name': name, 'mimeType': 'text/csv', 'buffer': text.encode('utf-8')})
-    page.wait_for_function("!document.getElementById('compare').disabled")
+    expect(page.locator('#compare')).to_be_enabled(timeout=15000)
     page.locator('#compare').click()
     page.locator('#results').wait_for(state='visible')
     assert page.locator('#metric-compared').inner_text() == '2'
@@ -209,7 +222,7 @@ def check_sample_compatibility(page):
     page.locator('#update-file').set_input_files({
         'name': 'compat-changed.csv', 'mimeType': 'text/csv',
         'buffer': update.replace(',M,COMPAT-M,', ',L,COMPAT-M,').encode('utf-8')})
-    page.wait_for_function("!document.getElementById('compare').disabled")
+    expect(page.locator('#compare')).to_be_enabled(timeout=15000)
     page.locator('#compare').click()
     page.locator('#results').wait_for(state='visible')
     assert page.locator('#metric-priority').inner_text() == '1'
@@ -219,6 +232,8 @@ def check_sample_compatibility(page):
 
 
 def run_checks(page, out, checks, requests, errors, source_html, mode):
+    from playwright.sync_api import expect
+
     # Preserve the eleven original groups, including real input and download events.
     OUT = out
     assert page.title() == 'CSV Change Guard — Review before you import'
@@ -278,7 +293,7 @@ def run_checks(page, out, checks, requests, errors, source_html, mode):
     page.locator('#threshold').fill('30')
     page.locator('#current-file').set_input_files(str(ROOT / 'samples/legacy-current.csv'))
     page.locator('#update-file').set_input_files(str(ROOT / 'samples/unchanged-update.csv'))
-    page.wait_for_function("!document.getElementById('compare').disabled")
+    expect(page.locator('#compare')).to_be_enabled(timeout=15000)
     page.locator('#compare').click()
     page.locator('#results').wait_for(state='visible')
     assert page.locator('#metric-compared').inner_text() == '7'

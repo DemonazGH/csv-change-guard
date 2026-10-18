@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Add an owner validation guide, quick-start instructions, and a blank results
+  sheet, keeping real-data and owner-browser checks explicitly pending.
 - Add reusable synthetic catalog scenarios for partial updates, explicit clearing,
   reordered variants, ambiguous identifiers, mixed headers, and large updates.
 - Distinguish informational findings from a report with no findings and include

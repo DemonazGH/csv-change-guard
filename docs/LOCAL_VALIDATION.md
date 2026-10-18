@@ -1,0 +1,114 @@
+# Try the local application
+
+Start with the included synthetic catalogs. You do not need a Shopify store,
+product export, account, or API key. This exercise checks whether the application
+opens and produces an understandable report on your computer. Real merchant
+workflow validation is a separate step once suitable files are available.
+
+## Download and open
+
+Download the local validation ZIP supplied with this task, or open
+[the GitHub repository](https://github.com/DemonazGH/csv-change-guard), select
+**Code → Download ZIP**, and choose **Extract All** on Windows. In the extracted
+folder, open `dist`, then right-click `index.html` and choose **Open with →
+Google Chrome** or **Microsoft Edge**. Do not run it from the ZIP preview.
+
+The provided HTML is the complete application. No installation or build is
+required. If your browser blocks local files, leave its security settings in
+place. When Node.js is already installed, you can open a terminal in the extracted
+folder, run `node server.cjs`, and open the printed local address instead. Keep
+the terminal running during the test and press Ctrl+C when finished. Record a
+blocked launch if neither route is available.
+
+## First check: demo and real file selection
+
+1. Click **Try the built-in demo**. Expect 4 compared variants, 4 price changes,
+   6 priority findings, 4 unpaired update rows, and 15 total findings under **All**.
+   The incomplete-comparison verdict is intentional: the demo includes a
+   duplicate key that prevents part of the comparison.
+2. Open **Coverage, matching rules, and limitations**. Read the recognized
+   header mappings and unassessed columns. A compared variant is an exact
+   identity match, not proof that every field was checked.
+3. Click **Save HTML report**. Open the download in the browser and confirm that
+   its explanations are understandable. Exports include all findings even if a
+   filter or search is active.
+4. Click **Clear files**, choose `samples/current-catalog.csv` under **Current
+   catalog**, and `samples/proposed-update.csv` under **Proposed update**.
+   Leave the threshold at **30%** and **Overwrite matching handles: enabled**.
+   Click **Compare files**. Expect the same counts as the demo.
+5. Record the result in a copy of [the results sheet](VALIDATION_RESULTS_TEMPLATE.md).
+   Repeat in the other browser if available; record each browser separately.
+
+Do not import the supplied synthetic CSVs into a store. The tool does not connect
+to Shopify or make any store changes.
+
+## A few useful follow-up comparisons
+
+Use `samples/scenarios/catalog.csv` as the current catalog, with the same 30%
+threshold and overwrite enabled:
+
+| Proposed update in `samples/scenarios/` | Expected result |
+|---|---|
+| `catalog.csv` | 6 compared variants, no price changes; image coverage warnings still appear |
+| `partial-prices.csv` | 2 compared variants, 2 price changes; four absent variants are informational, not deletions; omitted columns are unassessed |
+| `explicit-clears.csv` | 6 compared variants, no price changes; three explicit clears: shirt description, mug vendor, tea tin compare-at price |
+| `invalid-identifiers.csv` | 2 compared variants, no price changes, 4 unpaired update rows; blocking findings explain the incomplete coverage |
+
+The [scenario reference](../samples/scenarios/README.md) lists all nine files and
+their expected outcomes. A coverage warning is not automatically a false alarm.
+A missing row is not a deletion prediction, and no findings is not import approval.
+
+## When representative files become available
+
+Use copies of a current product export and the actual proposed update from the
+same store and currency, with permission to use them. Keep those copies and
+their reports on your computer, outside the source repository and AI workspace.
+The browser application processes selected files locally; it does not upload
+them. No need to send them to this chat to perform the test.
+
+Before comparing, write down the changes you expect from the update. Use local
+case labels such as `price-case-1` in any shareable notes instead of handles or
+SKUs. Include expected before/after values only in your private copy of the notes.
+For a large update, state whether your expected-change list is complete or just
+a sample; checking a sample cannot establish that there are no missed changes.
+
+Both files must use the supported UTF-8, comma-delimited format, have recognized
+handle, Title, and SKU columns, and be within 5,000 records, 10 MiB, and 200 columns
+per file. Exact, case-sensitive handle + non-empty SKU establishes identity.
+Changing those identifiers prevents pairing. Complete variant data should include
+Option1 name/value. See [the product scope](PRODUCT_SCOPE.md) for the contract.
+Do not silently repair identifiers or discard excluded records just to obtain a
+clean result. If a real workflow does not fit the contract, record that limitation.
+
+Choose the threshold and overwrite assumption deliberately and record them.
+For each expected change, classify the result as:
+
+- **Found:** the affected identity, field, before/after values, and explanation agree.
+- **Missed:** an expected change inside the supported, paired scope has no finding.
+- **False alert:** a finding asserts an in-scope change that the files do not contain.
+- **Unassessed:** the record or field is excluded, ambiguous, absent, or unsupported.
+
+Record coverage separately: compared variants, unpaired update rows, image-only
+records, overwrite-ignored rows, omitted columns, and unrecognized columns. Read
+these from the application; the saved HTML report does not reproduce every UI
+counter. Do not add overlapping counters into a single coverage percentage.
+
+Review unexpected results before drawing conclusions. Record **Clear files** and
+export behavior too. Reports may contain original values, so keep them local.
+When sharing feedback, use counts, finding codes, and generic descriptions only.
+Any reproduction added to the repository must use separately constructed
+synthetic data. This exercise does not perform an import or establish how the
+Shopify importer will handle the update.
+
+## Evidence still needed
+
+The automated synthetic checks are documented in
+[SCENARIO_VALIDATION.md](SCENARIO_VALIDATION.md). Owner Windows/Chrome/Edge
+launches, real merchant comparisons, and controlled development-store import
+round trips remain pending. Each requires its own observed result.
+
+On 18 October 2026, an attempt to retrieve the official sample linked from
+Shopify's product CSV help page was blocked by the cloud environment's network
+allowlist (HTTP 403). No official sample was obtained or tested, and the existing
+platform references were not reverified during this task. Included sample files
+are our synthetic fixtures, not Shopify's official sample.

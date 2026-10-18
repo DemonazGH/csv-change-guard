@@ -6,14 +6,18 @@
 
 Validate a self-service product whose ordinary customer cycle can be automated. Start with paying demand and low support effort; work toward approximately USD 1,000 monthly operating profit before scaling. Personal after-tax income is a separate measure.
 
-## Completed in this delivery
+## Completed technical preparation
 
 - [x] One bounded product scope and an explicit comparison contract.
 - [x] Working browser prototype with synthetic examples.
 - [x] Deterministic comparison, incomplete-match diagnostics and exportable reports.
 - [x] Search, filters, responsive layout and no runtime third-party dependencies.
-- [x] 66 engine tests and 11 grouped browser checks.
+- [x] 92 engine/scenario tests and 14 grouped browser checks; see [current evidence](SCENARIO_VALIDATION.md).
 - [x] Source package, build command, optional local server, and known limitations.
+- [x] [Owner validation instructions](LOCAL_VALIDATION.md) and a blank results sheet.
+
+Representative merchant files are not available yet. Owner-machine and real-data
+checks below remain open; synthetic test results do not complete those gates.
 
 ## Gate 1 — Owner smoke test
 
@@ -53,7 +57,8 @@ The previous USD 9–19/report and USD 29–49/month figures are pricing hypothe
 - [ ] For a paid launch, configure seller/payment details, approved terms and support/refund process.
 - [ ] Test checkout, server-verified payment events, duplicate events, failed payment, delivery retry, refunds and revocation as appropriate to the selected model.
 
-No domain, paid hosting, seller account, ads, subscription or external publication has been created by this work.
+The source is published to the owner's GitHub repository. No product website,
+domain, paid hosting, seller account, ads, or subscription has been set up.
 
 ## Gate 4 — One acquisition experiment
 

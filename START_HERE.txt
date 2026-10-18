@@ -1,0 +1,46 @@
+CSV CHANGE GUARD — LOCAL VALIDATION KIT
+Prototype 0.1.0 — no account, store connection, or payment required
+
+1. Download the ZIP and extract all files into a folder on your computer.
+   Do not open the app inside the ZIP preview.
+
+2. Open the dist folder. Right-click index.html, choose Open with, then
+   Google Chrome or Microsoft Edge. No installation or build is needed.
+
+3. Click "Try the built-in demo". You should see:
+   Compared variants: 4       Price changes: 4
+   Priority findings: 6       Unpaired update rows: 4
+   All findings: 15
+   An incomplete-comparison verdict is expected for this deliberately risky demo.
+
+4. Click "Save HTML report". Open the downloaded report in your browser.
+   Confirm that you can understand the findings without using the app.
+
+5. Click "Clear files". For a file-selection test, choose these included files:
+   Current catalog: samples/current-catalog.csv
+   Proposed update: samples/proposed-update.csv
+   Leave the threshold at 30% and overwrite enabled. Click "Compare files".
+   The counts should match step 3.
+
+More scenarios and expected results: samples/scenarios/README.md
+Full instructions and later real-data validation: docs/LOCAL_VALIDATION.md
+Copy the results sheet for your notes: docs/VALIDATION_RESULTS_TEMPLATE.md
+
+All supplied catalogs are synthetic. Do not import them into a real store.
+The app only compares files; it never performs an import or modifies a store.
+No findings does not mean an import is approved. Images, inventory, taxes,
+shipping, markets, and metafields are outside the comparison.
+
+If your browser blocks local HTML, do not change its security settings.
+If Node.js is already available, open a terminal in this extracted folder,
+run "node server.cjs", and open the local address printed by the command.
+Keep the terminal open while testing; press Ctrl+C to stop afterwards.
+Otherwise record the blocked launch so we can help with a supported option.
+
+For feedback on these synthetic tests, share the browser, the four counts,
+whether the report opens, and any confusing step. You do not need to send CSV
+files, screenshots, or exported reports. Keep any later real store files and
+reports on your computer, outside the source repository and AI workspace.
+
+The kit is for owner validation. Windows/browser results and real merchant
+workflow results remain pending until someone actually runs those checks.

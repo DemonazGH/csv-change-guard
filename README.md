@@ -12,6 +12,11 @@ A read-only review tool for two Shopify product CSV files: a current catalog and
 
 ## Try it
 
+Download the repository with **Code → Download ZIP** on GitHub, then **Extract
+All** on Windows. Start with [START_HERE.txt](START_HERE.txt) or follow
+[the local validation guide](docs/LOCAL_VALIDATION.md). The included synthetic
+files let you try the workflow without a store export.
+
 Open **`dist/index.html`** in a current desktop browser. There is no installation, account, API key, or build requirement to try the provided HTML file.
 
 Click **Try the built-in demo**. The demo uses synthetic data and produces findings immediately. Alternatively, choose the two CSV files in `samples/` and click **Compare files**. Results can be filtered and exported as HTML, CSV, or JSON. Open the exported HTML report in a browser for a standalone, printable view.

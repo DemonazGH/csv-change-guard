@@ -1,0 +1,4 @@
+# Preserve recorded artifact bytes when Git checks out files on another OS.
+* -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+README.md text eol=lf
+.gitattributes text eol=lf

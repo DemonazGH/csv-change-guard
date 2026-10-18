@@ -12,6 +12,8 @@ prices, file contents, screenshots, and exported reports from real catalogs.
 - Operating system:
 - Browser and version:
 - Launch route: direct HTML / localhost / blocked
+- Execution: manual owner check / automated browser check
+- Browser sandbox (if automated): enabled / disabled with reason / not recorded
 - Data: built-in demo / named synthetic scenario / authorized real pair
 - Private pair label (generic; no store or filename):
 - Expected-change review: complete / sample / not prepared

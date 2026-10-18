@@ -5,7 +5,9 @@
 Catalog workflow validation now includes reusable synthetic fixtures and targeted
 reporting and file-selection regressions. See [the current validation report](docs/SCENARIO_VALIDATION.md)
 and [cloud setup instructions](docs/CLOUD_DEVELOPMENT.md) for executed checks and
-environment limitations. The [initial baseline](docs/BASELINE_REVIEW.md) and
+environment limitations. [Windows/Chrome validation](docs/WINDOWS_VALIDATION.md)
+records fresh sandboxed file and localhost checks, the owner smoke workflow,
+and screenshots. The [initial baseline](docs/BASELINE_REVIEW.md) and
 uploaded handoff artifacts remain historical evidence.
 
 A read-only review tool for two Shopify product CSV files: a current catalog and a proposed update. It compares a defined subset of fields using exact identifiers. It does not connect to a store, execute imports, charge customers, or guarantee import safety.
@@ -124,9 +126,13 @@ blocked direct-file navigation are explained in [cloud development](docs/CLOUD_D
 
 Current verification passed **92 engine and scenario tests and 14 grouped browser
 checks over localhost**. See [the validation report](docs/SCENARIO_VALIDATION.md)
-for scope and results. The uploaded historical run
-had 66 engine tests and 11 in-memory browser checks. Windows double-click launch,
-public HTTPS deployment, and Shopify import round trips remain manual release checks.
+for scope and results. A separate [Windows/Chrome run](docs/WINDOWS_VALIDATION.md)
+passed all 92 engine/scenario tests and all 14 browser groups through both
+`file://` and localhost navigation with sandboxing enabled. It also verified the
+`START_HERE.txt` functional workflow and all nine linked synthetic scenarios.
+The uploaded historical run had 66 engine tests and 11 in-memory browser checks.
+Manual Windows double-click launch, public HTTPS deployment, and Shopify import
+round trips remain manual release checks.
 
 ## Before a commercial launch
 

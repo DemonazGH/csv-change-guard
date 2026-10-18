@@ -4,6 +4,13 @@ Executed on 18 October 2026 using synthetic data only. The suite now passes
 **80 engine tests, 12 catalog scenario tests, and 14 grouped browser checks**.
 These checks exercise the documented comparison subset, not Shopify imports.
 
+A later [Windows/Chrome run](WINDOWS_VALIDATION.md) at commit `99ca694` passed
+the same 92 engine/scenario tests and 14 browser groups through both direct-file
+and localhost navigation with sandboxing enabled. It also checked the
+`START_HERE.txt` workflow and all nine scenario pairs through browser file inputs.
+That report contains the Windows evidence and screenshots; the environment and
+commands below describe the earlier cloud run.
+
 ## Reusable scenarios
 
 [Nine CSV fixtures and their expected outcomes](../samples/scenarios/README.md)

@@ -42,5 +42,9 @@ whether the report opens, and any confusing step. You do not need to send CSV
 files, screenshots, or exported reports. Keep any later real store files and
 reports on your computer, outside the source repository and AI workspace.
 
-The kit is for owner validation. Windows/browser results and real merchant
-workflow results remain pending until someone actually runs those checks.
+The kit is for owner validation. Automated Windows/Chrome checks passed on
+18 October 2026, including direct-file and localhost navigation with sandboxing
+enabled, the demo, sample selection, clearing, and opening downloaded reports.
+See docs/WINDOWS_VALIDATION.md for results and screenshots. Manual Windows
+Explorer/file-dialog checks, other browsers, and real merchant workflows remain
+separate validation tasks.

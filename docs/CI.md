@@ -73,3 +73,8 @@ bash scripts/ci-browser.sh --no-sandbox
 That local exception does not prove sandboxed GitHub execution. Only a successful
 run in the repository's Actions tab confirms the hosted workflow passed. CI is
 Linux/Chromium coverage, not a Windows, browser-matrix, or Shopify-import guarantee.
+
+Independent [Windows/Chrome validation](WINDOWS_VALIDATION.md) at commit `99ca694`
+passed both file and localhost browser modes with sandboxing enabled. Its
+checked-in evidence and screenshots are a dated local run, not a replacement
+for the Actions result on a later commit. No CI configuration changed for it.

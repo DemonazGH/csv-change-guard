@@ -2,6 +2,12 @@
 
 Run date: 18 October 2026.
 
+This is the original prototype report, retained as historical evidence. For
+fresh sandboxed Windows/Chrome results at commit `99ca694` (92 engine/scenario
+tests, 14 browser groups in each of file and localhost modes, owner smoke checks
+and screenshots), see [WINDOWS_VALIDATION.md](WINDOWS_VALIDATION.md). The original
+11 in-memory browser checks below are not the Windows run.
+
 ## Engine tests
 
 **66 passed, 0 failed.** Node.js 22.16.0, dependency-free `node:test` runner.

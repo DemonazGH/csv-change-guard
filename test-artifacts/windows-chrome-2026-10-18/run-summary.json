@@ -1,0 +1,135 @@
+{
+  "root": "<repository>",
+  "artifacts": "<validation-artifacts>",
+  "started_at": "2026-10-18T21:16:06.895451+00:00",
+  "platform": "Windows-11-10.0.26100-SP0",
+  "python": "3.14.0",
+  "python_executable": "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+  "chrome_executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "sandbox_enabled": true,
+  "commands": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "log": "commit.txt"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "log": "git-status-before.txt"
+    },
+    {
+      "command": [
+        "node",
+        "--version"
+      ],
+      "exit_code": 0,
+      "log": "node-version.txt"
+    },
+    {
+      "command": [
+        "npm.cmd",
+        "--version"
+      ],
+      "exit_code": 0,
+      "log": "npm-version.txt"
+    },
+    {
+      "command": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "-m",
+        "pip",
+        "freeze"
+      ],
+      "exit_code": 0,
+      "log": "python-packages.txt"
+    },
+    {
+      "command": [
+        "npm.cmd",
+        "test"
+      ],
+      "exit_code": 0,
+      "log": "engine-tests.txt"
+    },
+    {
+      "command": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "tests/browser_test.py",
+        "--artifacts-dir",
+        "<validation-artifacts>\\browser",
+        "--file"
+      ],
+      "exit_code": 0,
+      "log": "browser-file.txt"
+    },
+    {
+      "command": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "tests/browser_test.py",
+        "--artifacts-dir",
+        "<validation-artifacts>\\browser",
+        "--url",
+        "http://127.0.0.1:52996/"
+      ],
+      "exit_code": 0,
+      "log": "browser-localhost.txt"
+    },
+    {
+      "command": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "<validation-artifacts>\\start_here_test.py"
+      ],
+      "exit_code": 0,
+      "log": "start-here-workflow.txt"
+    },
+    {
+      "command": [
+        "npm.cmd",
+        "run",
+        "build"
+      ],
+      "exit_code": 0,
+      "log": "build.txt"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit_code": 0,
+      "log": "git-status-after.txt"
+    }
+  ],
+  "commit": "99ca694a23dff180642a7a3c84d2765450a41a3a",
+  "initial_git_status": "",
+  "node": "v24.12.0",
+  "npm": "11.6.2",
+  "engine_exit": 0,
+  "file_browser_exit": 0,
+  "localhost_url": "http://127.0.0.1:52996/",
+  "server_pid": 16760,
+  "localhost_browser_exit": 0,
+  "localhost_server_stopped": true,
+  "start_here_exit": 0,
+  "tested_build_sha256": "d5215bd4fbec4615094f97c403d2b0dacb02a997ac6672a3dffa2849cb70a270",
+  "build_exit": 0,
+  "rebuilt_sha256": "3bd4c4b2e094ee77e17e3105c4f1ddd44ce91f8e0c2d3c0824c308c60c49e13a",
+  "rebuild_exact_bytes_equal": false,
+  "rebuild_equal_after_newline_normalization": true,
+  "restored_original_checkout_newlines": true,
+  "tracked_files_byte_identical_after_tests": true,
+  "tracked_files_count": 59,
+  "final_git_status": "",
+  "status": "passed",
+  "finished_at": "2026-10-18T21:16:28.012775+00:00"
+}

@@ -102,10 +102,14 @@ Shopify importer will handle the update.
 
 ## Evidence still needed
 
-The automated synthetic checks are documented in
-[SCENARIO_VALIDATION.md](SCENARIO_VALIDATION.md). Owner Windows/Chrome/Edge
-launches, real merchant comparisons, and controlled development-store import
-round trips remain pending. Each requires its own observed result.
+Automated Windows/Chrome checks passed on 18 October 2026 with sandboxing enabled
+through both direct-file and localhost navigation. The demo, exact sample pair,
+clearing, downloaded reports, and nine linked scenarios passed; see
+[WINDOWS_VALIDATION.md](WINDOWS_VALIDATION.md) for results and screenshots.
+[SCENARIO_VALIDATION.md](SCENARIO_VALIDATION.md) retains the cloud scenario record.
+Manual Windows Explorer/file-dialog interaction, owner usability review, Edge,
+real merchant comparisons, and controlled development-store import round trips
+remain separate checks. Each requires its own observed result.
 
 On 18 October 2026, an attempt to retrieve the official sample linked from
 Shopify's product CSV help page was blocked by the cloud environment's network

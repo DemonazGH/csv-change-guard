@@ -1,0 +1,9 @@
+"Handle","Title","Body (HTML)","Vendor","Type","Tags","Status","Published on online store","Variant SKU","Price","Variant Compare At Price","Option1 Name","Option1 value","Option2 name","Option2 value","Image Src","Image position","Image Alt Text","Inventory quantity"
+"linen-shirt","Linen shirt — natural","<p>Natural linen, ""summer"" weight.</p>
+<p>Żółty len · 日本語 · café</p>","Synthetic Studio","Clothing","linen, summer","active","true","LINEN-S","30.00","45.00","Size","S","Colour","Natural","","","","not assessed"
+"linen-shirt","","","","","","","","LINEN-M","30.00","45.00","Size","M","Colour","Natural","","","","not assessed"
+"linen-shirt","","","","","","","","LINEN-L","39.00","45.00","Size","L","Colour","Natural","","","","not assessed"
+"linen-shirt","","","","","","","","","","","","","","","https://example.invalid/synthetic-linen.jpg","2","Synthetic linen, detail",""
+"glazed-mug","Glazed mug","<p>Hand-finished cup, 250 ml.</p>","Synthetic Studio","Kitchen","ceramic, gifts","draft","false","MUG-RED","12.50","20.00","Colour","Red","","","","","","not assessed"
+"glazed-mug","","","","","","","","MUG-BLUE","12.50","20.00","Colour","Blue","","","","","","not assessed"
+"tea-tin","Tea tin","<p>Reusable tea tin — 100 g.</p>","Synthetic Goods","Kitchen","storage","active","true","TEA-TIN","10.00","15.00","Title","Default Title","","","","","","not assessed"

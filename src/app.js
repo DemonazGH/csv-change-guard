@@ -1,9 +1,12 @@
 (function () {
   'use strict';
   const G = globalThis.ChangeGuard, h = G.escapeHTML, $ = id => document.getElementById(id);
-  const state = { current: null, update: null, report: null, filter: 'all', page: 0, busy: false, reads: { current: 0, update: 0 } };
+  const state = { current: null, update: null, report: null, filter: 'all', page: 0, busy: false, revision: 0, reads: { current: 0, update: 0 } };
   const PAGE = 40;
-  function hideReport() { state.report = null; $('results').hidden = true; $('error').hidden = true; for (const id of ['findings', 'coverage-body', 'verdict']) $(id).replaceChildren(); }
+  function hideReport() {
+    state.revision++; state.report = null; $('results').hidden = true; $('error').hidden = true;
+    for (const id of ['findings', 'coverage-body', 'verdict', 'error']) $(id).replaceChildren();
+  }
   function sync() { $('compare').disabled = state.busy || !state.current || !state.update; $('demo').disabled = state.busy; }
   function setFile(side, text, name) {
     const parsed = G.parseCSV(text, name); G.normalize(parsed, side);
@@ -24,7 +27,11 @@
   for (const side of ['current', 'update']) $(side + '-file').addEventListener('change', async event => {
     const file = event.target.files[0], request = ++state.reads[side];
     hideReport(); clearSide(side); sync();
-    if (!file) return;
+    if (!file) {
+      $('run-state').textContent = state.current || state.update ? 'Choose the other file to continue.' : 'Choose both files or use the demo to begin.';
+      return;
+    }
+    $('run-state').textContent = `Reading ${file.name} locally…`;
     try {
       if (file.size > G.LIMITS.bytes) throw new Error(`${file.name}: exceeds the 10 MiB prototype limit.`);
       const buffer = await file.arrayBuffer();
@@ -45,11 +52,15 @@
   async function run() {
     if (!state.current || !state.update || state.busy) return;
     hideReport(); state.busy = true; sync(); $('reset').disabled = true;
+    const revision = state.revision, current = state.current, update = state.update;
     $('run-state').textContent = 'Comparing locally…';
-    await new Promise(resolve => setTimeout(resolve, 25));
     try {
+      await new Promise(resolve => setTimeout(resolve, 25));
+      // Input events during the rendering yield invalidate this run. Leave their
+      // newer file/settings state intact and wait for another explicit comparison.
+      if (revision !== state.revision) return;
       if ($('threshold').value.trim() === '') throw new Error('Enter a price-change threshold.');
-      const report = G.compare(state.current.text, state.update.text, { threshold: Number($('threshold').value), overwrite: $('overwrite').value === 'true', currentName: state.current.name, updateName: state.update.name });
+      const report = G.compare(current.text, update.text, { threshold: Number($('threshold').value), overwrite: $('overwrite').value === 'true', currentName: current.name, updateName: update.name });
       state.report = report; state.filter = 'all'; state.page = 0; $('search').value = '';
       renderReport(); $('results').hidden = false;
       $('run-state').textContent = `Finished locally. ${report.findings.length} findings. No files were uploaded.`;

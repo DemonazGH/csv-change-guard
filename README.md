@@ -2,10 +2,11 @@
 
 **Version 0.1.0 · local working prototype · 18 October 2026**
 
-Cloud development baseline: **72 engine tests and 11 browser checks pass** after
-the threshold precision fix. See [the current verification report](docs/BASELINE_REVIEW.md)
+Catalog workflow validation now includes reusable synthetic fixtures and targeted
+reporting and file-selection regressions. See [the current validation report](docs/SCENARIO_VALIDATION.md)
 and [cloud setup instructions](docs/CLOUD_DEVELOPMENT.md) for executed checks and
-environment limitations. Historical handoff artifacts are retained separately.
+environment limitations. The [initial baseline](docs/BASELINE_REVIEW.md) and
+uploaded handoff artifacts remain historical evidence.
 
 A read-only review tool for two Shopify product CSV files: a current catalog and a proposed update. It compares a defined subset of fields using exact identifiers. It does not connect to a store, execute imports, charge customers, or guarantee import safety.
 
@@ -46,7 +47,7 @@ Both files must contain a recognized **handle**, **Title**, and **SKU** column. 
 
 This prototype accepts up to **5,000 data records and 10 MiB per file**, with at most 200 columns. These are prototype limits, not Shopify's platform limits.
 
-Price comparisons use non-negative dot-decimal values with up to 12 integer digits and 6 decimal places. No currency symbols, locale guessing, negative prices, or scientific notation. Decimal arithmetic is exact for threshold comparisons; displayed percentages are truncated to two decimal places.
+Price comparisons use non-negative dot-decimal values with up to 12 integer digits and 6 decimal places. No currency symbols, locale guessing, negative prices, or scientific notation. Decimal arithmetic is exact for threshold comparisons; displayed percentages are truncated to two decimal places. In JSON, `percentChange` is normally a number, an exact decimal string when numeric rendering would lose precision, or `null` when no percentage can be calculated.
 
 Images, inventory, taxes, shipping, market-specific prices, metafields, arbitrary supplier files and unrecognized columns are not compared. It is not a full validator of Shopify's schema, dependencies, defaults, option combinations, encoding requirements, or importer behavior. Missing or duplicated keys make matching incomplete. A changed SKU or handle is not inferred from row order.
 
@@ -64,6 +65,11 @@ Images, inventory, taxes, shipping, market-specific prices, metafields, arbitrar
 | `samples/demo-report.json` | Full structured demo report |
 
 Expected risky-demo results: **4 compared variants, 4 price changes, 6 priority findings (1 blocking + 5 high), 4 unpaired update rows, 15 total findings**. Findings are not a count of unique products; a record may generate more than one finding.
+
+For manual testing, [synthetic catalog scenarios](samples/scenarios/README.md)
+provide nine CSV files with expected outcomes for partial updates, explicit
+clearing, reordered variants, invalid identifiers, and unusual prices. Their
+automated suite also generates a 5,000-record update with selective changes.
 
 ## Project structure
 
@@ -111,8 +117,9 @@ silently replaced by another mode. Fresh artifacts go into ignored
 Sandboxing is enabled by default. The cloud container's documented opt-out and
 blocked direct-file navigation are explained in [cloud development](docs/CLOUD_DEVELOPMENT.md).
 
-Current verification passed **72 engine tests and 11 grouped browser checks over
-localhost**, with a separate 11-group in-memory run. The uploaded historical run
+Current verification passed **92 engine and scenario tests and 14 grouped browser
+checks over localhost**. See [the validation report](docs/SCENARIO_VALIDATION.md)
+for scope and results. The uploaded historical run
 had 66 engine tests and 11 in-memory browser checks. Windows double-click launch,
 public HTTPS deployment, and Shopify import round trips remain manual release checks.
 

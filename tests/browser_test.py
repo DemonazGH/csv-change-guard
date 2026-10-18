@@ -19,7 +19,7 @@ from uuid import uuid4
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'dist/index.html'
-EXPECTED_CHECKS = 11
+EXPECTED_CHECKS = 14
 
 
 def parse_args():
@@ -80,6 +80,109 @@ def write_result(out, result):
     temporary = destination.with_suffix('.json.tmp')
     temporary.write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
     temporary.replace(destination)
+
+
+def hold_next_comparison(page):
+    # Hold the app's rendering yield so input changes exercise the pending run
+    # deterministically, without depending on machine speed or arbitrary sleeps.
+    page.evaluate('''() => {
+        const original = window.setTimeout;
+        window.setTimeout = (callback, delay, ...args) => {
+            if (delay === 25) {
+                window.setTimeout = original;
+                window.resumeComparison = () => callback(...args);
+                return 0;
+            }
+            return original(callback, delay, ...args);
+        };
+    }''')
+    page.locator('#compare').click()
+    page.wait_for_function("typeof window.resumeComparison === 'function'")
+    assert page.locator('#reset').is_disabled()
+
+
+def resume_comparison(page):
+    page.evaluate('''() => {
+        const resume = window.resumeComparison;
+        delete window.resumeComparison;
+        resume();
+    }''')
+    page.wait_for_function("!document.getElementById('reset').disabled")
+
+
+def check_pending_file_change(page):
+    page.locator('#demo').click()
+    page.locator('#results').wait_for(state='visible')
+    hold_next_comparison(page)
+    page.evaluate('''() => {
+        const original = File.prototype.arrayBuffer;
+        File.prototype.arrayBuffer = function () {
+            File.prototype.arrayBuffer = original;
+            return new Promise((resolve, reject) => {
+                window.finishFileRead = () => original.call(this).then(resolve, reject);
+            });
+        };
+    }''')
+    page.locator('#update-file').set_input_files({
+        'name': 'replacement-update.csv', 'mimeType': 'text/csv',
+        'buffer': (ROOT / 'samples/unchanged-update.csv').read_bytes()})
+    page.wait_for_function("typeof window.finishFileRead === 'function'")
+    resume_comparison(page)
+    assert page.locator('#results').is_hidden(), 'Changed files must cancel the pending report'
+    assert page.locator('#error').is_hidden(), 'Cancellation must not show an internal comparison error'
+    assert page.locator('#compare').is_disabled(), 'The replacement file has not finished reading'
+    page.evaluate('''async () => {
+        const finish = window.finishFileRead;
+        delete window.finishFileRead;
+        await finish();
+    }''')
+    page.wait_for_function("!document.getElementById('compare').disabled")
+    assert page.locator('#update-name').inner_text() == 'replacement-update.csv'
+    assert page.locator('#results').is_hidden(), 'Reading a replacement must not run an unrequested comparison'
+    assert page.locator('#error').is_hidden()
+    assert 'Both files ready' in page.locator('#run-state').inner_text()
+    page.locator('#compare').click()
+    page.locator('#results').wait_for(state='visible')
+    assert page.locator('#metric-compared').inner_text() == '7'
+    assert page.locator('#metric-prices').inner_text() == '0'
+    assert 'replacement-update.csv' in page.locator('#coverage-body').text_content()
+
+
+def check_pending_settings_change(page):
+    for setting, value in [('threshold', '95'), ('overwrite', 'false')]:
+        page.locator('#demo').click()
+        page.locator('#results').wait_for(state='visible')
+        hold_next_comparison(page)
+        if setting == 'threshold':
+            page.locator('#threshold').fill(value)
+        else:
+            page.locator('#overwrite').select_option(value)
+        resume_comparison(page)
+        assert page.locator('#results').is_hidden(), 'Changed settings must cancel the pending report'
+        assert page.locator('#error').is_hidden()
+        assert page.locator('#compare').is_enabled()
+        assert page.locator('#' + setting).input_value() == value
+        assert 'Settings changed' in page.locator('#run-state').inner_text()
+        page.locator('#compare').click()
+        page.locator('#results').wait_for(state='visible')
+        if setting == 'threshold':
+            assert page.locator('#metric-priority').inner_text() == '4'
+        else:
+            assert page.locator('#metric-compared').inner_text() == '0'
+
+
+def check_clear_rejected_filename(page):
+    rejected_name = 'synthetic-sensitive-store-name.csv'
+    page.locator('#update-file').set_input_files({
+        'name': rejected_name, 'mimeType': 'text/csv', 'buffer': b'a;b\n1;2'})
+    page.locator('#error').wait_for(state='visible')
+    assert rejected_name in page.locator('#error').inner_text()
+    page.locator('#reset').click()
+    assert page.locator('#error').is_hidden()
+    assert page.locator('#error').text_content() == '', 'Clear files must remove rejected names from the DOM'
+    assert rejected_name not in page.locator('body').text_content()
+    assert page.locator('#results').is_hidden()
+    assert page.locator('#compare').is_disabled()
 
 
 def run_checks(page, out, checks, requests, errors, source_html, mode):
@@ -159,6 +262,15 @@ def run_checks(page, out, checks, requests, errors, source_html, mode):
     page.locator('#error').wait_for(state='visible')
     assert 'UTF-8' in page.locator('#error').inner_text()
     checks.append('invalid UTF-8 rejected in browser file loader')
+
+    check_clear_rejected_filename(page)
+    checks.append('clear files removes rejected filenames and errors from the DOM')
+
+    check_pending_file_change(page)
+    checks.append('file replacement cancels a pending comparison and requires an explicit new run')
+
+    check_pending_settings_change(page)
+    checks.append('threshold and overwrite changes cancel pending comparisons without replacing newer settings')
 
     page.locator('#demo').click()
     page.locator('#results').wait_for(state='visible')

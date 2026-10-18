@@ -4,7 +4,7 @@
   "private": true,
   "description": "Local, read-only Shopify CSV comparison prototype",
   "scripts": {
-    "test": "node --test tests/engine.test.cjs",
+    "test": "node --test tests/engine.test.cjs tests/scenarios.test.cjs",
     "build": "node build.cjs",
     "dev": "node server.cjs"
   },

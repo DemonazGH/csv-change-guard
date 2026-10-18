@@ -51,7 +51,7 @@ changed. A local address is used internally for testing, not as a shareable clou
 preview.
 
 The runner requires the served bytes to match `dist/index.html`, exercises all
-11 check groups, and rejects HTTP requests beyond the initial page navigation.
+browser check groups, and rejects HTTP requests beyond the initial page navigation.
 Fresh results, screenshots, and synthetic exports go to a unique run directory
 under ignored `.local-test-artifacts/browser/`. Failures and blocked navigation
 exit nonzero and receive their own result file; old success files are never reused.

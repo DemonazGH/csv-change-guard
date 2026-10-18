@@ -23,6 +23,7 @@ onboarding, sales calls, or recurring manual report production.
 - `build.cjs`: bundles the source into `dist/index.html`.
 - `server.cjs`: optional localhost-only development server, not a backend.
 - `tests/engine.test.cjs`: Node built-in test suite.
+- `tests/scenarios.test.cjs`, `samples/scenarios/`: synthetic catalog workflow checks.
 - `tests/browser_test.py`: optional Python/Playwright browser checks.
 
 Edit readable sources, then rebuild. Do not hand-edit the generated HTML as

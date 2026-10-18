@@ -209,7 +209,17 @@
     if (typeof raw !== 'string' || !/^\d{1,12}(?:\.\d{1,6})?$/.test(raw)) return null;
     const [a, b = ''] = raw.split('.'); return BigInt(a) * 1000000n + BigInt(b.padEnd(6, '0'));
   }
-  const roundedPct = (a, b) => a === 0n ? null : Number((b - a) * 10000n / a) / 100;
+  function truncatedPct(a, b) {
+    if (a === 0n) return null;
+    const hundredths = (b - a) * 10000n / a;
+    const magnitude = hundredths < 0n ? -hundredths : hundredths;
+    const fraction = String(magnitude % 100n).padStart(2, '0').replace(/0+$/, '');
+    const exact = (hundredths < 0n ? '-' : '') + String(magnitude / 100n) + (fraction ? '.' + fraction : '');
+    const numeric = Number(exact);
+    // Keep ordinary report values numeric; preserve exact text when a Number
+    // would round the displayed percentage within the supported price range.
+    return String(numeric) === exact ? numeric : exact;
+  }
 
   function compare(currentText, updateText, options = {}) {
     const threshold = options.threshold === undefined ? 30 : Number(options.threshold);
@@ -228,7 +238,7 @@
     const findings = [...current.issues, ...update.issues], changes = [];
     const stats = { currentVariants: current.variants.length, updateVariants: update.variants.length,
       currentImageRows: current.images.length, updateImageRows: update.images.length,
-      matchedVariants: 0, comparedVariants: 0, priceChanges: 0, unpairedUpdateRows: 0,
+      matchedVariants: 0, comparedVariants: 0, priceChanges: 0, unpairedUpdateRows: update.invalid.length,
       currentRowsNotCompared: 0, ignoredExistingUpdateRows: 0, invalidRecords: current.invalid.length + update.invalid.length };
     function add(code, severity, beforeRow, afterRow, field, before, after, message, pct = null) {
       const r = afterRow || beforeRow || {};
@@ -274,7 +284,7 @@
         if (av === null || bv === null) {
           severity = 'high'; code = 'PRICE_NOT_COMPARABLE'; message = 'At least one price is blank or outside the supported decimal format. Percentage change is not calculated.';
         } else {
-          pct = roundedPct(av, bv); code = 'PRICE_CHANGED';
+          pct = truncatedPct(av, bv); code = 'PRICE_CHANGED';
           const abs = bv > av ? bv - av : av - bv;
           if (bv === 0n && av > 0n) { severity = 'high'; code = 'PRICE_TO_ZERO'; message = 'A previously positive price becomes zero. Confirm this is intentional.'; }
           else if (av === 0n) { severity = 'warning'; code = 'PRICE_FROM_ZERO'; message = 'Price changes from zero; a percentage change is undefined.'; }
@@ -324,7 +334,7 @@
       imageOnlyRecords: f.images.length, blankRecords: f.blankRecords, invalidRecords: f.invalid.length,
       headers: f.headers, recognizedHeaders: Object.fromEntries(Object.keys(f.map).map(k => [k, f.headers[f.map[k]]])), uncheckedColumns: f.unknown });
     return { version: VERSION, createdAt: new Date().toISOString(), settings, stats, counts,
-      verdict: counts.blocking ? 'Incomplete comparison — blockers need review' : counts.high || counts.warning ? 'Review findings before any import' : 'No findings within this limited rule set',
+      verdict: counts.blocking ? 'Incomplete comparison — blockers need review' : counts.high || counts.warning ? 'Review findings before any import' : counts.info ? 'Informational findings — review changes and coverage' : 'No findings within this limited rule set',
       current: fileMeta(current), update: fileMeta(update), findings, changes,
       limitations: [
         'Read-only difference report, not a Shopify import simulator or a guarantee of import safety.',
@@ -364,9 +374,12 @@ globalThis.ChangeGuardDemo = {"current": "URL handle,Title,Description,Vendor,Ty
 (function () {
   'use strict';
   const G = globalThis.ChangeGuard, h = G.escapeHTML, $ = id => document.getElementById(id);
-  const state = { current: null, update: null, report: null, filter: 'all', page: 0, busy: false, reads: { current: 0, update: 0 } };
+  const state = { current: null, update: null, report: null, filter: 'all', page: 0, busy: false, revision: 0, reads: { current: 0, update: 0 } };
   const PAGE = 40;
-  function hideReport() { state.report = null; $('results').hidden = true; $('error').hidden = true; for (const id of ['findings', 'coverage-body', 'verdict']) $(id).replaceChildren(); }
+  function hideReport() {
+    state.revision++; state.report = null; $('results').hidden = true; $('error').hidden = true;
+    for (const id of ['findings', 'coverage-body', 'verdict', 'error']) $(id).replaceChildren();
+  }
   function sync() { $('compare').disabled = state.busy || !state.current || !state.update; $('demo').disabled = state.busy; }
   function setFile(side, text, name) {
     const parsed = G.parseCSV(text, name); G.normalize(parsed, side);
@@ -387,7 +400,11 @@ globalThis.ChangeGuardDemo = {"current": "URL handle,Title,Description,Vendor,Ty
   for (const side of ['current', 'update']) $(side + '-file').addEventListener('change', async event => {
     const file = event.target.files[0], request = ++state.reads[side];
     hideReport(); clearSide(side); sync();
-    if (!file) return;
+    if (!file) {
+      $('run-state').textContent = state.current || state.update ? 'Choose the other file to continue.' : 'Choose both files or use the demo to begin.';
+      return;
+    }
+    $('run-state').textContent = `Reading ${file.name} locally…`;
     try {
       if (file.size > G.LIMITS.bytes) throw new Error(`${file.name}: exceeds the 10 MiB prototype limit.`);
       const buffer = await file.arrayBuffer();
@@ -408,11 +425,15 @@ globalThis.ChangeGuardDemo = {"current": "URL handle,Title,Description,Vendor,Ty
   async function run() {
     if (!state.current || !state.update || state.busy) return;
     hideReport(); state.busy = true; sync(); $('reset').disabled = true;
+    const revision = state.revision, current = state.current, update = state.update;
     $('run-state').textContent = 'Comparing locally…';
-    await new Promise(resolve => setTimeout(resolve, 25));
     try {
+      await new Promise(resolve => setTimeout(resolve, 25));
+      // Input events during the rendering yield invalidate this run. Leave their
+      // newer file/settings state intact and wait for another explicit comparison.
+      if (revision !== state.revision) return;
       if ($('threshold').value.trim() === '') throw new Error('Enter a price-change threshold.');
-      const report = G.compare(state.current.text, state.update.text, { threshold: Number($('threshold').value), overwrite: $('overwrite').value === 'true', currentName: state.current.name, updateName: state.update.name });
+      const report = G.compare(current.text, update.text, { threshold: Number($('threshold').value), overwrite: $('overwrite').value === 'true', currentName: current.name, updateName: update.name });
       state.report = report; state.filter = 'all'; state.page = 0; $('search').value = '';
       renderReport(); $('results').hidden = false;
       $('run-state').textContent = `Finished locally. ${report.findings.length} findings. No files were uploaded.`;

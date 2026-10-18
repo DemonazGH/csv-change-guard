@@ -165,7 +165,17 @@
     if (typeof raw !== 'string' || !/^\d{1,12}(?:\.\d{1,6})?$/.test(raw)) return null;
     const [a, b = ''] = raw.split('.'); return BigInt(a) * 1000000n + BigInt(b.padEnd(6, '0'));
   }
-  const roundedPct = (a, b) => a === 0n ? null : Number((b - a) * 10000n / a) / 100;
+  function truncatedPct(a, b) {
+    if (a === 0n) return null;
+    const hundredths = (b - a) * 10000n / a;
+    const magnitude = hundredths < 0n ? -hundredths : hundredths;
+    const fraction = String(magnitude % 100n).padStart(2, '0').replace(/0+$/, '');
+    const exact = (hundredths < 0n ? '-' : '') + String(magnitude / 100n) + (fraction ? '.' + fraction : '');
+    const numeric = Number(exact);
+    // Keep ordinary report values numeric; preserve exact text when a Number
+    // would round the displayed percentage within the supported price range.
+    return String(numeric) === exact ? numeric : exact;
+  }
 
   function compare(currentText, updateText, options = {}) {
     const threshold = options.threshold === undefined ? 30 : Number(options.threshold);
@@ -184,7 +194,7 @@
     const findings = [...current.issues, ...update.issues], changes = [];
     const stats = { currentVariants: current.variants.length, updateVariants: update.variants.length,
       currentImageRows: current.images.length, updateImageRows: update.images.length,
-      matchedVariants: 0, comparedVariants: 0, priceChanges: 0, unpairedUpdateRows: 0,
+      matchedVariants: 0, comparedVariants: 0, priceChanges: 0, unpairedUpdateRows: update.invalid.length,
       currentRowsNotCompared: 0, ignoredExistingUpdateRows: 0, invalidRecords: current.invalid.length + update.invalid.length };
     function add(code, severity, beforeRow, afterRow, field, before, after, message, pct = null) {
       const r = afterRow || beforeRow || {};
@@ -230,7 +240,7 @@
         if (av === null || bv === null) {
           severity = 'high'; code = 'PRICE_NOT_COMPARABLE'; message = 'At least one price is blank or outside the supported decimal format. Percentage change is not calculated.';
         } else {
-          pct = roundedPct(av, bv); code = 'PRICE_CHANGED';
+          pct = truncatedPct(av, bv); code = 'PRICE_CHANGED';
           const abs = bv > av ? bv - av : av - bv;
           if (bv === 0n && av > 0n) { severity = 'high'; code = 'PRICE_TO_ZERO'; message = 'A previously positive price becomes zero. Confirm this is intentional.'; }
           else if (av === 0n) { severity = 'warning'; code = 'PRICE_FROM_ZERO'; message = 'Price changes from zero; a percentage change is undefined.'; }
@@ -280,7 +290,7 @@
       imageOnlyRecords: f.images.length, blankRecords: f.blankRecords, invalidRecords: f.invalid.length,
       headers: f.headers, recognizedHeaders: Object.fromEntries(Object.keys(f.map).map(k => [k, f.headers[f.map[k]]])), uncheckedColumns: f.unknown });
     return { version: VERSION, createdAt: new Date().toISOString(), settings, stats, counts,
-      verdict: counts.blocking ? 'Incomplete comparison — blockers need review' : counts.high || counts.warning ? 'Review findings before any import' : 'No findings within this limited rule set',
+      verdict: counts.blocking ? 'Incomplete comparison — blockers need review' : counts.high || counts.warning ? 'Review findings before any import' : counts.info ? 'Informational findings — review changes and coverage' : 'No findings within this limited rule set',
       current: fileMeta(current), update: fileMeta(update), findings, changes,
       limitations: [
         'Read-only difference report, not a Shopify import simulator or a guarantee of import safety.',

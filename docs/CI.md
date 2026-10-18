@@ -3,11 +3,11 @@
 The `CI` workflow runs on pushes to `main`, pull requests, and manual dispatch.
 One Ubuntu 24.04 job uses Node 24 and Python 3.12 to:
 
-1. Run the existing engine suite with `npm test` (currently 72 tests).
+1. Run the engine and synthetic catalog scenario suites with `npm test`.
 2. Rebuild `dist/index.html` and fail if it differs from the committed artifact.
 3. Install the pinned optional Playwright dependency and select the runner's
    packaged Google Chrome explicitly.
-4. Start the actual development server and run all 11 browser smoke groups over
+4. Start the actual development server and run all browser smoke groups over
    localhost with Chromium sandboxing enabled.
 
 If the build check fails after a source change, run `npm run build` and commit the
@@ -33,8 +33,9 @@ unavailable or sandboxed launch fails, the job fails without a fallback.
 Each browser run writes a fresh JSON result, screenshots, and synthetic exports.
 The `browser-results` artifact retains them and the server log for seven days,
 including when the smoke step fails. Check that the current JSON says `passed`,
-`rendering_mode: url`, `sandbox_enabled: true`, and 11 completed groups. Historical
-files under `test-artifacts/` are not used as CI evidence. If an earlier step fails
+`rendering_mode: url`, `sandbox_enabled: true`, and `checks_passed` equal to
+`checks_expected`. Historical files under `test-artifacts/` are not used as CI
+evidence. If an earlier step fails
 before the server starts, there may be no browser artifact; read that step's log.
 
 Actions are pinned to immutable commits. The workflow's token is read-only,

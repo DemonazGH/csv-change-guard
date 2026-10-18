@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Add reusable synthetic catalog scenarios for partial updates, explicit clearing,
+  reordered variants, ambiguous identifiers, mixed headers, and large updates.
+- Distinguish informational findings from a report with no findings and include
+  invalid-handle update rows in the unpaired-row count.
+- Preserve exact displayed percentages when values exceed numeric display precision.
+- Cancel pending comparisons when files/settings change and remove old error
+  content when clearing files.
 - Add GitHub Actions checks for engine tests, generated-build freshness, and
   sandboxed Chromium smoke tests, with failure artifacts and server cleanup.
 - Import the complete v0.1.0 prototype into the cloud repository.

@@ -10,7 +10,27 @@ const csv = (rows = [row()], headers = H) => [headers, ...rows.map(r => headers.
 const run = (a = [row()], b = [row()], opts = {}, headers = H) => G.compare(csv(a, headers), csv(b, headers), opts);
 const has = (r, code) => r.findings.some(f => f.code === code);
 
-test('unchanged supported data has no findings', () => { const r = run(); assert.equal(r.findings.length, 0); assert.equal(r.stats.comparedVariants, 1); });
+test('unchanged supported data has no findings', () => { const r = run(); assert.equal(r.findings.length, 0); assert.equal(r.stats.comparedVariants, 1); assert.equal(r.verdict, 'No findings within this limited rule set'); });
+test('ordinary price changes have an informational verdict', () => {
+ const r=run(undefined,[row({'Variant Price':'11'})]);
+ assert.equal(r.stats.priceChanges,1);
+ assert.deepEqual(r.counts,{blocking:0,high:0,warning:0,info:1});
+ assert.ok(has(r,'PRICE_CHANGED'));
+ assert.equal(r.verdict,'Informational findings — review changes and coverage');
+ assert.ok(G.reportHTML(r).includes('<h1>Informational findings — review changes and coverage</h1>'));
+});
+test('partial updates and omitted columns retain an informational coverage verdict', () => {
+ const current=[row(),row({'Handle':'pants','Title':'Pants','Variant SKU':'SKU-2'})];
+ const updateHeaders=H.filter(h=>h!=='Body (HTML)');
+ const r=G.compare(csv(current),csv([row()],updateHeaders));
+ assert.equal(r.stats.comparedVariants,1);
+ assert.equal(r.stats.currentRowsNotCompared,1);
+ assert.deepEqual(r.counts,{blocking:0,high:0,warning:0,info:2});
+ assert.ok(has(r,'OMITTED_COLUMNS'));
+ assert.ok(has(r,'CURRENT_ROW_NOT_IN_UPDATE'));
+ assert.ok(!has(r,'VALUE_CLEARED'));
+ assert.equal(r.verdict,'Informational findings — review changes and coverage');
+});
 test('quoted commas, escaped quotes and multiline fields parse', () => { const s='a,b\r\n"hi, there","line 1\r\nline 2 ""quoted"""\r\n';const r=G.parseCSV(s); assert.equal(r.rows[0].values[1], 'line 1\nline 2 "quoted"'); });
 test('UTF-8 BOM and no final newline are supported', () => assert.equal(G.parseCSV('\uFEFFa,b\n1,2').rows[0].values[1], '2'));
 test('blank records are counted and skipped', () => { const r=G.parseCSV('a,b\n\n1,2\n,,\n'); assert.equal(r.rows.length,1);assert.equal(r.blankRecords,2); });
@@ -38,7 +58,30 @@ test('case-sensitive SKU matching does not guess', () => {const r=run(undefined,
 test('same SKU in different handles is permitted', () => {const rows=[row(),row({'Handle':'pants','Title':'Pants'})];assert.equal(run(rows,rows).stats.comparedVariants,2);});
 test('missing SKU is excluded', () => {const r=run(undefined,[row({'Variant SKU':''})]);assert.ok(has(r,'UNMATCHABLE_SKU'));assert.equal(r.stats.comparedVariants,0);});
 test('surrounding SKU whitespace is not silently trimmed', () => assert.ok(has(run(undefined,[row({'Variant SKU':' SKU-1'})]),'UNMATCHABLE_SKU')));
-test('invalid handle is excluded', () => {const r=run(undefined,[row({'Handle':'bad handle'})]);assert.ok(has(r,'INVALID_HANDLE'));assert.equal(r.stats.comparedVariants,0);});
+test('invalid handle is excluded', () => {const r=run(undefined,[row({'Handle':'bad handle'})]);assert.ok(has(r,'INVALID_HANDLE'));assert.equal(r.stats.comparedVariants,0);assert.equal(r.verdict,'Incomplete comparison — blockers need review');});
+test('unpaired update rows include invalid handles and count missing SKUs once', () => {
+ const r=run(undefined,[row(),row({'Handle':''}),row({'Handle':'bad handle'}),row({'Handle':'pants','Title':'Pants','Variant SKU':''})]);
+ assert.equal(r.stats.comparedVariants,1);
+ assert.equal(r.stats.unpairedUpdateRows,3);
+ assert.equal(r.stats.invalidRecords,2);
+ assert.equal(r.findings.filter(f=>f.code==='INVALID_HANDLE' && f.source==='update').length,2);
+ assert.equal(r.findings.filter(f=>f.code==='UNMATCHABLE_SKU' && f.source==='update').length,1);
+});
+test('invalid baseline handles do not increase unpaired update rows', () => {
+ const r=run([row(),row({'Handle':''}),row({'Handle':'bad handle'})],[row()]);
+ assert.equal(r.stats.comparedVariants,1);
+ assert.equal(r.stats.unpairedUpdateRows,0);
+ assert.equal(r.stats.invalidRecords,2);
+ assert.equal(r.findings.filter(f=>f.code==='INVALID_HANDLE' && f.source==='current').length,2);
+});
+test('disabled overwrite cannot assume invalid update handles are existing products', () => {
+ const r=run(undefined,[row(),row({'Handle':' shirt'}),row({'Handle':''})],{overwrite:false});
+ assert.equal(r.stats.comparedVariants,0);
+ assert.equal(r.stats.ignoredExistingUpdateRows,1);
+ assert.equal(r.stats.unpairedUpdateRows,2);
+ assert.equal(r.stats.invalidRecords,2);
+ assert.equal(r.changes.length,0);
+});
 test('duplicate update keys are not arbitrarily matched', () => {const r=run(undefined,[row(),row()]);assert.ok(has(r,'DUPLICATE_KEY'));assert.equal(r.stats.comparedVariants,0);assert.equal(r.stats.unpairedUpdateRows,2);});
 test('duplicate baseline keys are not arbitrarily matched', () => {const r=run([row(),row()]);assert.ok(has(r,'DUPLICATE_KEY'));assert.equal(r.stats.comparedVariants,0);});
 test('product continuation blanks are not mistaken for clearing', () => {
@@ -68,7 +111,7 @@ test('changed SKU is not paired by row order', () => {const r=run(undefined,[row
 test('disabled overwrite suppresses existing product changes', () => {const r=run(undefined,[row({'Variant Price':'100','Body (HTML)':''})],{overwrite:false});assert.equal(r.stats.comparedVariants,0);assert.equal(r.changes.length,0);assert.equal(r.stats.ignoredExistingUpdateRows,1);});
 test('disabled overwrite does not call changed SKU an addition', () => {const r=run(undefined,[row({'Variant SKU':'NEW'})],{overwrite:false});assert.ok(!has(r,'UPDATE_ROW_UNMATCHED'));});
 test('disabled overwrite still identifies unknown handles', () => {const r=run(undefined,[row({'Handle':'new'})],{overwrite:false});assert.ok(has(r,'UPDATE_ROW_UNMATCHED'));});
-test('price movements above threshold are high', () => assert.ok(has(run(undefined,[row({'Variant Price':'14'})]),'PRICE_THRESHOLD')));
+test('price movements above threshold are high', () => {const r=run(undefined,[row({'Variant Price':'14'})]);assert.ok(has(r,'PRICE_THRESHOLD'));assert.equal(r.verdict,'Review findings before any import');});
 test('threshold boundary uses exact decimal arithmetic', () => {assert.ok(has(run(undefined,[row({'Variant Price':'13.00'})]),'PRICE_THRESHOLD'));assert.ok(!has(run(undefined,[row({'Variant Price':'12.999999'})]),'PRICE_THRESHOLD'));});
 test('fractional thresholds are not rounded down into false alerts', () => {
  const threshold=30.000049;
@@ -110,6 +153,28 @@ test('zero and maximum thresholds preserve inclusive price comparisons', () => {
  }
 });
 test('price decreases count against absolute threshold', () => {const r=run(undefined,[row({'Variant Price':'1'})]);assert.equal(r.changes.find(f=>f.canonicalField==='price').percentChange,-90);});
+test('the largest supported price ratio preserves the exact displayed percentage', () => {
+ const r=run([row({'Variant Price':'0.000001'})],[row({'Variant Price':'999999999999.999999'})]);
+ const expected='99999999999999999800';
+ assert.equal(r.changes[0].percentChange,expected);
+ assert.equal(r.changes[0].code,'PRICE_THRESHOLD');
+ assert.equal(r.stats.priceChanges,1);
+ assert.equal(JSON.parse(JSON.stringify(r)).changes[0].percentChange,expected);
+ assert.ok(G.reportHTML(r).includes('Change: '+expected+'%'));
+ assert.ok(G.findingsCSV(r).includes('"'+expected+'"'));
+});
+test('large fractional percentages preserve exact truncation in reports', () => {
+ const r=run([row({'Variant Price':'0.01'})],[row({'Variant Price':'999999999999.999999'})]);
+ assert.equal(r.changes[0].percentChange,'9999999999999899.99');
+ assert.equal(r.changes[0].code,'PRICE_THRESHOLD');
+});
+test('ordinary percentage values remain numeric and truncate toward zero', () => {
+ for(const [before,after,expected] of [['100','129.99',29.99],['3','4',33.33],['3','2',-33.33],['10','1',-90],['1000000','1000000.000001',0]]) {
+  const r=run([row({'Variant Price':before})],[row({'Variant Price':after})]);
+  assert.equal(r.changes[0].percentChange,expected);
+  assert.equal(typeof r.changes[0].percentChange,'number');
+ }
+});
 test('equivalent monetary formatting is not a price change', () => assert.equal(run(undefined,[row({'Variant Price':'10.0'})]).stats.priceChanges,0));
 test('positive price to zero is high priority', () => assert.ok(has(run(undefined,[row({'Variant Price':'0.00'})]),'PRICE_TO_ZERO')));
 test('price from zero has no invented percentage', () => {const r=run([row({'Variant Price':'0'})],[row()]);assert.ok(has(r,'PRICE_FROM_ZERO'));assert.equal(r.changes[0].percentChange,null);});

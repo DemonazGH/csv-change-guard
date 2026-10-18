@@ -5,7 +5,8 @@ One Ubuntu 24.04 job uses Node 24 and Python 3.12 to:
 
 1. Run the existing engine suite with `npm test` (currently 72 tests).
 2. Rebuild `dist/index.html` and fail if it differs from the committed artifact.
-3. Install the pinned optional Playwright dependency and its matching Chromium.
+3. Install the pinned optional Playwright dependency and select the runner's
+   packaged Google Chrome explicitly.
 4. Start the actual development server and run all 11 browser smoke groups over
    localhost with Chromium sandboxing enabled.
 
@@ -21,13 +22,13 @@ opening alone does not count as a passing test.
 
 ## Browser sandbox and evidence
 
-The runner selects Playwright's installed browser explicitly with `CHROMIUM_PATH`.
-Ubuntu's user namespace restrictions are handled using the existing root-owned,
-setuid Google Chrome sandbox helper supplied by the GitHub runner image, through
-`CHROME_DEVEL_SANDBOX`. This follows [Chromium's documented guidance](https://github.com/chromium/chromium/blob/main/docs/security/apparmor-userns-restrictions.md).
-The helper is checked before the suite starts. CI does not disable Chromium
-sandboxing or change AppArmor/sysctl settings. If the helper is unavailable or
-browser launch fails, the job fails rather than silently falling back.
+The runner selects packaged Google Chrome explicitly with `CHROMIUM_PATH`, rather
+than its separately downloaded Chromium snapshot. The Chrome package includes
+Ubuntu sandbox integration; see [Chromium's documented guidance](https://github.com/chromium/chromium/blob/main/docs/security/apparmor-userns-restrictions.md).
+The browser version is printed during setup and recorded in each result because
+it can change with the hosted runner image. Playwright remains pinned. CI does
+not disable Chromium sandboxing or change AppArmor/sysctl settings. If Chrome is
+unavailable or sandboxed launch fails, the job fails without a fallback.
 
 Each browser run writes a fresh JSON result, screenshots, and synthetic exports.
 The `browser-results` artifact retains them and the server log for seven days,
@@ -53,7 +54,7 @@ bash scripts/ci-browser.sh
 ```
 
 Select a compatible browser with `CHROMIUM_PATH` if necessary; the CI workflow
-forces Playwright's own browser rather than relying on system autodetection.
+forces packaged Google Chrome rather than relying on system autodetection.
 `CCG_PYTHON` selects a Python virtual-environment interpreter, and `PORT` selects
 the server port. Local results are ignored under `.local-test-artifacts/ci/`.
 

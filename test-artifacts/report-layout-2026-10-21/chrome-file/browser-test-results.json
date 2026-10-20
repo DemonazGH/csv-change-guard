@@ -1,7 +1,7 @@
 {
   "status": "passed",
-  "started_at": "2026-10-20T22:42:18.100201+00:00",
-  "finished_at": "2026-10-20T22:42:27.884035+00:00",
+  "started_at": "2026-10-20T22:48:36.300109+00:00",
+  "finished_at": "2026-10-20T22:48:45.135070+00:00",
   "browser": "Chromium",
   "rendering_mode": "file",
   "requested_target": "file:///<REPO>/dist/index.html",
@@ -58,7 +58,7 @@
     "--mute-audio",
     "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
     "--enable-automation",
-    "--user-data-dir=<USER>\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-D8dp39",
+    "--user-data-dir=<USER>\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-Kd8YoI",
     "--remote-debugging-pipe",
     "--no-startup-window",
     "--noerrdialogs",
@@ -89,6 +89,6 @@
   ],
   "page_errors": [],
   "http_requests": [],
-  "artifacts_dir": "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-run\\browser\\chrome\\file\\file-20261020T224218099330Z-0f1729aa",
+  "artifacts_dir": "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-portable2\\browser\\chrome\\file\\file-20261020T224836299580Z-a711797b",
   "error": null
 }

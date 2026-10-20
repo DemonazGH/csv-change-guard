@@ -9,7 +9,7 @@
   "page_errors": [],
   "http_requests": [
     {
-      "url": "http://127.0.0.1:60711/",
+      "url": "http://127.0.0.1:50596/",
       "initial_document": true
     }
   ],
@@ -29,11 +29,11 @@
   "narrow_page": {
     "viewport": 390,
     "content": 390,
-    "table": 1120
+    "table": 1200
   },
   "narrow_region": {
     "width": 342,
-    "content": 1120
+    "content": 1200
   },
   "print_page": {
     "viewport": 794,

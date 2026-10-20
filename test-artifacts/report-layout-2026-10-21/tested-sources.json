@@ -2,13 +2,13 @@
   "baseCommit": "e5d336476fa0d1fa26fdf486439ae828cae85ca6",
   "files": {
     "src/engine.js": {
-      "sha256": "f1395b765bf9cd07468c86fe8c59fc71d720bb2e120cfeb1a47d9e889af6639f",
-      "canonicalLfSha256": "f1395b765bf9cd07468c86fe8c59fc71d720bb2e120cfeb1a47d9e889af6639f",
+      "sha256": "45c300f2cd98e7c7ba1646c57f7fd7c2e6ef86458c78074fef34cb748b2d9d9c",
+      "canonicalLfSha256": "45c300f2cd98e7c7ba1646c57f7fd7c2e6ef86458c78074fef34cb748b2d9d9c",
       "bytes": 29558
     },
     "dist/index.html": {
-      "sha256": "7f14ed7128556aef4a203c05a992b2f792e0481578f3d8b01f00ff4b65f28eb9",
-      "canonicalLfSha256": "fd4de332375390523ddc50b062d385ee947f457248dc6dff5bec8370f89e7df7",
+      "sha256": "fdc160e635742c154b8b48218bc868c96559474ed8a287635d8d5c7032afb329",
+      "canonicalLfSha256": "5d126e2a456f3b547cc87c6521eb628658a2071c531844bb0323136363d46c5d",
       "bytes": 63494
     },
     "tests/browser_test.py": {

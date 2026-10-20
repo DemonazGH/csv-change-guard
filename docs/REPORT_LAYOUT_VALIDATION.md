@@ -43,7 +43,7 @@ The checks verify rendered behavior rather than matching CSS strings:
 - At 1440px, all six headers and the full before/after prices occupy one line;
   code, identity and record columns have usable space. Actual widths were
   **156 / 228 / 144 / 168 / 168 / 336px**.
-- At 390px, the document fits the viewport. The table keeps its 1120px width
+- At 390px, the document fits the viewport. The table keeps its 1200px width
   inside a 342px region; keyboard scrolling works and the full Explanation
   header is reachable. Exact full-range prices remain intact.
 - At a 794px print-media viewport, the table fits the page width without a
@@ -65,9 +65,19 @@ fixed the source issue; the assertion was retained. That
 [development failure](../test-artifacts/report-layout-2026-10-21/development-narrow-failure.json)
 is separate from the four fresh final runs below.
 
+The [first Linux PR CI run](https://github.com/DemonazGH/csv-change-guard/actions/runs/39510467358)
+also caught font-dependent wrapping of the longest price at the initial 1120px
+minimum table width. Its narrow value column was 156.8px and rendered the value
+on two lines, while the desktop 168px value column passed. Raising the table
+minimum to 1200px gives narrow-screen prices the same proven desktop width;
+the single-line assertion is unchanged and print still removes the minimum.
+The [failed CI record](../test-artifacts/report-layout-2026-10-21/ci-portability-failure.json)
+is retained separately. All four final Windows routes were rerun after this
+correction.
+
 ## Fresh Windows results
 
-The final four-route run was **00:42:14–00:42:56 UTC+02:00**. Tests used the
+The final four-route run was **00:48:33–00:49:13 UTC+02:00**. Tests used the
 existing Python **3.14.0** virtual environment and Playwright **1.62.0** on
 Windows build **26100**. Browser versions came from the running instances.
 
@@ -85,7 +95,7 @@ installed-browser automation results, separate from the earlier
 
 `npm.cmd test` passed **106/106 before and after**; `npm.cmd run build` succeeded.
 The local build was **63,494 bytes**; its canonical LF SHA-256 is
-`fd4de332375390523ddc50b062d385ee947f457248dc6dff5bec8370f89e7df7`.
+`5d126e2a456f3b547cc87c6521eb628658a2071c531844bb0323136363d46c5d`.
 The [tested-source hashes](../test-artifacts/report-layout-2026-10-21/tested-sources.json)
 identify the modified working tree based on commit `e5d3364`, including Windows
 checkout and canonical LF hashes. CI separately verifies the committed build.

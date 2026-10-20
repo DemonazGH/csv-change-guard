@@ -1,7 +1,7 @@
 {
   "status": "passed",
-  "started_at": "2026-10-20T22:42:37.112900+00:00",
-  "finished_at": "2026-10-20T22:42:46.712740+00:00",
+  "started_at": "2026-10-20T22:48:54.721186+00:00",
+  "finished_at": "2026-10-20T22:49:03.597739+00:00",
   "browser": "Chromium",
   "rendering_mode": "file",
   "requested_target": "file:///<REPO>/dist/index.html",
@@ -58,7 +58,7 @@
     "--mute-audio",
     "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
     "--enable-automation",
-    "--user-data-dir=<USER>\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-f2BRxi",
+    "--user-data-dir=<USER>\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-DxyGpB",
     "--remote-debugging-pipe",
     "--no-startup-window",
     "--noerrdialogs",
@@ -89,6 +89,6 @@
   ],
   "page_errors": [],
   "http_requests": [],
-  "artifacts_dir": "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-run\\browser\\edge\\file\\file-20261020T224237112328Z-f642a128",
+  "artifacts_dir": "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-portable2\\browser\\edge\\file\\file-20261020T224854720516Z-79b6379a",
   "error": null
 }

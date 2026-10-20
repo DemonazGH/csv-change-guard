@@ -1,11 +1,11 @@
 {
   "status": "passed",
-  "started_at": "2026-10-20T22:42:47.013240+00:00",
-  "finished_at": "2026-10-20T22:42:56.089413+00:00",
+  "started_at": "2026-10-20T22:49:03.860391+00:00",
+  "finished_at": "2026-10-20T22:49:13.008696+00:00",
   "browser": "Chromium",
   "rendering_mode": "url",
-  "requested_target": "http://127.0.0.1:60711/",
-  "actual_page_url": "http://127.0.0.1:60711/",
+  "requested_target": "http://127.0.0.1:50596/",
+  "actual_page_url": "http://127.0.0.1:50596/",
   "sandbox_enabled": true,
   "sandbox_configuration": "enabled (default)",
   "versions": {
@@ -58,7 +58,7 @@
     "--mute-audio",
     "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
     "--enable-automation",
-    "--user-data-dir=<USER>\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-fbYxFz",
+    "--user-data-dir=<USER>\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-dY459O",
     "--remote-debugging-pipe",
     "--no-startup-window",
     "--noerrdialogs",
@@ -90,11 +90,11 @@
   "page_errors": [],
   "http_requests": [
     {
-      "url": "http://127.0.0.1:60711/",
+      "url": "http://127.0.0.1:50596/",
       "resource_type": "document",
       "initial_document": true
     }
   ],
-  "artifacts_dir": "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-run\\browser\\edge\\localhost\\url-20261020T224247012285Z-5b5206ea",
+  "artifacts_dir": "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-portable2\\browser\\edge\\localhost\\url-20261020T224903859790Z-3d0cf722",
   "error": null
 }

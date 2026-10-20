@@ -1,5 +1,5 @@
 {
-  "startedAt": "2026-10-20T22:42:57.768291+00:00",
+  "startedAt": "2026-10-20T22:49:14.281230+00:00",
   "timestampZone": "UTC",
   "clientTimezone": "Europe/Warsaw",
   "validationLocalDate": "2026-10-21",
@@ -7,7 +7,7 @@
   "operatingSystem": "Windows-11-10.0.26100-SP0",
   "python": "3.14.0",
   "playwright": "1.62.0",
-  "repositoryCommit": "e5d336476fa0d1fa26fdf486439ae828cae85ca6",
+  "repositoryCommit": "909b04deada3c9cbfbdebdc703d63d24e6091b98",
   "chromeExecutable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
   "sandboxRequested": true,
   "headless": true,
@@ -16,7 +16,7 @@
   "reports": [
     {
       "file": "browser-self-comparison-report.html",
-      "sha256": "7345d5be99817f8fa446b77867eb3be49bea6df8dd7e35c3c806042942ddbbd9",
+      "sha256": "c1c21acaf2c7a02d5cab30ebd25dcb5ecfbefb0c5f1e94ec185bdc2422b183f6",
       "navigation": "file://",
       "status": "passed",
       "comparedVariants": 4,
@@ -84,7 +84,7 @@
     },
     {
       "file": "browser-known-price-comparison-report.html",
-      "sha256": "e88fc4f1051cd4a37bf3d567931bef302758344c5183173f19ff006246c8495f",
+      "sha256": "a2c447001c5085094493ad0a61394efb1a7c0f62487bb5a839f4fcfe25aec5c8",
       "navigation": "file://",
       "status": "passed",
       "comparedVariants": 4,
@@ -179,8 +179,8 @@
     }
   ],
   "sourceHashes": {
-    "browser-self-comparison-report.html": "7345d5be99817f8fa446b77867eb3be49bea6df8dd7e35c3c806042942ddbbd9",
-    "browser-known-price-comparison-report.html": "e88fc4f1051cd4a37bf3d567931bef302758344c5183173f19ff006246c8495f"
+    "browser-self-comparison-report.html": "c1c21acaf2c7a02d5cab30ebd25dcb5ecfbefb0c5f1e94ec185bdc2422b183f6",
+    "browser-known-price-comparison-report.html": "a2c447001c5085094493ad0a61394efb1a7c0f62487bb5a839f4fcfe25aec5c8"
   },
   "status": "passed",
   "browserVersion": "155.0.8059.85",
@@ -228,7 +228,7 @@
     "--mute-audio",
     "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
     "--enable-automation",
-    "--user-data-dir=<USER>\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-SAqo6v",
+    "--user-data-dir=<USER>\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-QGqbej",
     "--remote-debugging-pipe",
     "--no-startup-window",
     "--noerrdialogs",
@@ -238,5 +238,5 @@
   ],
   "sandboxVerified": true,
   "inputsAndAppUnchanged": true,
-  "finishedAt": "2026-10-20T22:43:00.227853+00:00"
+  "finishedAt": "2026-10-20T22:49:16.275445+00:00"
 }

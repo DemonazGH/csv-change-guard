@@ -7,76 +7,80 @@
       "sha256": "9cdd140d8acb6cd5b4935841d693a979cd2e2d40fc6af4370306a84428d91abc"
     },
     "chrome-file/browser-test-results.json": {
-      "bytes": 4529,
-      "sha256": "ae0c529af317ff7ba7bd92b08076166fca8589f652eb4a28a868acc5cd389b0f"
+      "bytes": 4535,
+      "sha256": "ea080de2b3ca21e0e249593c5a749df40932fe1f4212b7f80cfdc24071038245"
     },
     "chrome-file/coverage-heavy-report.html": {
       "bytes": 12012,
-      "sha256": "eef7dfd5ddb5d2055d77d803cc0fcdb7571dacaa6b11e5379ab732ab564f49cb"
+      "sha256": "5324c132e8eca15519c4a4bda9da31af256168787193d47088d204dce5dea368"
     },
     "chrome-file/report-desktop.png": {
-      "bytes": 339888,
-      "sha256": "0b3d628beccfcc5425cc646ede9852ddf610d20680a2a8c7fd0d899ab649089c"
+      "bytes": 339933,
+      "sha256": "395ec91f421d5faa1164e471fa5ccf9c0048b6c6219ab96d43507a5136210d28"
     },
     "chrome-file/report-layout-results.json": {
       "bytes": 1083,
-      "sha256": "53afb2e0e5758b61347009d594076c4b0a4289b3b4a58d274b33ae373a20c5a9"
+      "sha256": "5dba870a770b519d705a612b28c6bfe14fd3bd3c00f2e28138f7e23004192b88"
     },
     "chrome-file/report-narrow-scrolled.png": {
-      "bytes": 265228,
-      "sha256": "4804475942159264357bde316ec50807ce2e3cc6a10f43f90de50812ed1755a2"
+      "bytes": 253399,
+      "sha256": "ebd1b8a00aeddc2e9011230756ea4d49f0d61363d416855d2c6e7461ea44bfca"
     },
     "chrome-file/report-print-layout.png": {
-      "bytes": 359499,
-      "sha256": "4093f8b3e9d20575dc5c2a35da5c94b7862ede7d777402d5ff4644b18e3ea0df"
+      "bytes": 359543,
+      "sha256": "6fed4e52a9948780344f0cc8ffdfca83acbd9dbc614fbe275c66b485b9e76132"
     },
     "chrome-localhost/browser-test-results.json": {
-      "bytes": 4638,
-      "sha256": "3c27d14f93116b8e9b22065e4ad48e2bcb1da18b96ac2f4ff64f534b4deaf977"
+      "bytes": 4644,
+      "sha256": "09d5234a0a175239db73d57587085fc1685674abdb43d140bfebc9326dc9c425"
     },
     "chrome-localhost/report-layout-results.json": {
       "bytes": 1169,
-      "sha256": "2ef7882b0ece9ba2fed7fbad772c6edfdfa4a20b8aef69cecc5602d11875140b"
+      "sha256": "053d97ec6df8f08b033b22ffaf209261d70eff3388043ff4927ca3e07e80f602"
+    },
+    "ci-portability-failure.json": {
+      "bytes": 879,
+      "sha256": "52416442d3bdddbac529e26af5878aa04e46963df6307e06078d72fa246504ca"
     },
     "development-narrow-failure.json": {
       "bytes": 793,
       "sha256": "041f40f1a0a8f5b66d064f1f00a5cdec1830ba32f25bb766ddd1660d8c569cc5"
     },
     "edge-file/browser-test-results.json": {
-      "bytes": 4541,
-      "sha256": "826a7dc884260dc1433a1f5b31d26e08bb34e4a080da5b105d2d4a5a2e4040fc"
+      "bytes": 4547,
+      "sha256": "4daca098d7bf7998f9195d4b313150dae5e2ed53e1415c9639c4a5786d8382ef"
     },
     "edge-file/coverage-heavy-report.html": {
       "bytes": 12012,
-      "sha256": "1df8fe195cae2443c0b8a0067d327e23f108f7601dc5d143bd619af8957ec459"
+      "sha256": "5020bae46e0ec08e120e0c862027fe3b5163419740e2d8fdd50ca89183edcb2a"
     },
     "edge-file/report-desktop.png": {
-      "bytes": 339887,
-      "sha256": "cd4757ec5607a053b75e1b6b5c7bd2a39bba7054dda1aa6c1df978e809b6dd65"
+      "bytes": 339835,
+      "sha256": "d1200fea8bfce925f1f1d90d09b7762e97f89cb7e3b86c37cf0863160ff279cd"
     },
     "edge-file/report-layout-results.json": {
       "bytes": 1083,
-      "sha256": "53afb2e0e5758b61347009d594076c4b0a4289b3b4a58d274b33ae373a20c5a9"
+      "sha256": "5dba870a770b519d705a612b28c6bfe14fd3bd3c00f2e28138f7e23004192b88"
     },
     "edge-file/report-narrow-scrolled.png": {
-      "bytes": 265236,
-      "sha256": "df579af7bb2d42ff465f0170161ab1a5ec87f241d2b4716e4272d3c8f114485b"
+      "bytes": 253252,
+      "sha256": "163bafec445c01d5fc42e31e5766c7f525cd11ef7ec1c37f4a0f10c3a78cdaba"
     },
     "edge-file/report-print-layout.png": {
-      "bytes": 359497,
-      "sha256": "ca86d707a38979240c45296201a808d357bcab7f8e0e07caf99f947beea53452"
+      "bytes": 359442,
+      "sha256": "2e647175a6d46b87a63c0d47b344b069eafda6b66e6acdb063bf5c0813e82c5c"
     },
     "edge-localhost/browser-test-results.json": {
-      "bytes": 4650,
-      "sha256": "0ffc1f7361cfd171297a90846c07a7323aa613dd85630e7b9178ef0aded87500"
+      "bytes": 4656,
+      "sha256": "d8258ce752b77a9a2493511c57f2307781640117a5c55719346017fabb76c664"
     },
     "edge-localhost/report-layout-results.json": {
       "bytes": 1169,
-      "sha256": "2ef7882b0ece9ba2fed7fbad772c6edfdfa4a20b8aef69cecc5602d11875140b"
+      "sha256": "053d97ec6df8f08b033b22ffaf209261d70eff3388043ff4927ca3e07e80f602"
     },
     "engine-after.txt": {
       "bytes": 7645,
-      "sha256": "cac51e68ed8c7410d5276ae9e53a8010491602e08662e61c5d537b3eb11e7c3d"
+      "sha256": "32277c6cd95809a5733f0442216f20d7d0636dede5458b09d0f265e901cfb66b"
     },
     "engine-before.txt": {
       "bytes": 7646,
@@ -87,36 +91,36 @@
       "sha256": "3f6df94a4c3c91781efcf329fb9cdf86c3124ae17c3562c314342489b01bc700"
     },
     "known-price-comparison-after.png": {
-      "bytes": 95403,
-      "sha256": "60283a3376ee637cfe83515dde87f9031a0061c13d7d358e8b2e049f3217b2ae"
+      "bytes": 95372,
+      "sha256": "05e29591c3bc9fa8e4a5280ca0904de2c6c8815caad7d2e11a85c27ba7460c9d"
     },
     "known-price-comparison-report.html": {
       "bytes": 8595,
-      "sha256": "e88fc4f1051cd4a37bf3d567931bef302758344c5183173f19ff006246c8495f"
+      "sha256": "a2c447001c5085094493ad0a61394efb1a7c0f62487bb5a839f4fcfe25aec5c8"
     },
     "old-regression.json": {
       "bytes": 578,
       "sha256": "7b2fdb7394c2d63faef3fa0817e6c8dbe6af5c6a539107f0c38bc0c32d510b9e"
     },
     "run-summary.json": {
-      "bytes": 2908,
-      "sha256": "37df371fd29535610e582519ccdae1123e6cb120c63085f1252b21960a549ea0"
+      "bytes": 2956,
+      "sha256": "6a8c18979d8fc349d1bf870147aea050091b59e180a6f549b0779b30211d8265"
     },
     "self-comparison-after.png": {
-      "bytes": 93024,
-      "sha256": "d0a24f4ff89812825e60792a5b02b7649bdad9a5068987e008565987ade23156"
+      "bytes": 92875,
+      "sha256": "7b8ff1a7977652710589c4999fbc871a5b4ee4b459a4656f342a9146f7131714"
     },
     "self-comparison-report.html": {
       "bytes": 7796,
-      "sha256": "7345d5be99817f8fa446b77867eb3be49bea6df8dd7e35c3c806042942ddbbd9"
+      "sha256": "c1c21acaf2c7a02d5cab30ebd25dcb5ecfbefb0c5f1e94ec185bdc2422b183f6"
     },
     "shopify-pair-reopening.json": {
       "bytes": 11047,
-      "sha256": "78fd92ff832c10b2ab83fba66d24dc751f890869648267917ff29f1f86886726"
+      "sha256": "b975c9fbb62a02823f99a8d8b84e468b097346c367b2bd9630b7049f0e988fb1"
     },
     "tested-sources.json": {
       "bytes": 1211,
-      "sha256": "ae3c2bbe7416b44c83b086e040fa0e7995d69e51c487557b6799c003494cebd4"
+      "sha256": "13b3ae473ba7e2ca74e8c5bb922111b5638d476dbb1a6ad4c14549527c0eb637"
     }
   },
   "policy": "Images and HTML/logs retain bytes; JSON paths are sanitized. Reports regenerated with updated presentation; historical artifacts are unchanged. No business planning answers are included."

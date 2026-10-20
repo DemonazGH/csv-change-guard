@@ -1,0 +1,123 @@
+{
+  "date": "2026-10-21",
+  "timezone": "Europe/Warsaw",
+  "files": {
+    ".gitattributes": {
+      "bytes": 64,
+      "sha256": "9cdd140d8acb6cd5b4935841d693a979cd2e2d40fc6af4370306a84428d91abc"
+    },
+    "chrome-file/browser-test-results.json": {
+      "bytes": 4529,
+      "sha256": "ae0c529af317ff7ba7bd92b08076166fca8589f652eb4a28a868acc5cd389b0f"
+    },
+    "chrome-file/coverage-heavy-report.html": {
+      "bytes": 12012,
+      "sha256": "eef7dfd5ddb5d2055d77d803cc0fcdb7571dacaa6b11e5379ab732ab564f49cb"
+    },
+    "chrome-file/report-desktop.png": {
+      "bytes": 339888,
+      "sha256": "0b3d628beccfcc5425cc646ede9852ddf610d20680a2a8c7fd0d899ab649089c"
+    },
+    "chrome-file/report-layout-results.json": {
+      "bytes": 1083,
+      "sha256": "53afb2e0e5758b61347009d594076c4b0a4289b3b4a58d274b33ae373a20c5a9"
+    },
+    "chrome-file/report-narrow-scrolled.png": {
+      "bytes": 265228,
+      "sha256": "4804475942159264357bde316ec50807ce2e3cc6a10f43f90de50812ed1755a2"
+    },
+    "chrome-file/report-print-layout.png": {
+      "bytes": 359499,
+      "sha256": "4093f8b3e9d20575dc5c2a35da5c94b7862ede7d777402d5ff4644b18e3ea0df"
+    },
+    "chrome-localhost/browser-test-results.json": {
+      "bytes": 4638,
+      "sha256": "3c27d14f93116b8e9b22065e4ad48e2bcb1da18b96ac2f4ff64f534b4deaf977"
+    },
+    "chrome-localhost/report-layout-results.json": {
+      "bytes": 1169,
+      "sha256": "2ef7882b0ece9ba2fed7fbad772c6edfdfa4a20b8aef69cecc5602d11875140b"
+    },
+    "development-narrow-failure.json": {
+      "bytes": 793,
+      "sha256": "041f40f1a0a8f5b66d064f1f00a5cdec1830ba32f25bb766ddd1660d8c569cc5"
+    },
+    "edge-file/browser-test-results.json": {
+      "bytes": 4541,
+      "sha256": "826a7dc884260dc1433a1f5b31d26e08bb34e4a080da5b105d2d4a5a2e4040fc"
+    },
+    "edge-file/coverage-heavy-report.html": {
+      "bytes": 12012,
+      "sha256": "1df8fe195cae2443c0b8a0067d327e23f108f7601dc5d143bd619af8957ec459"
+    },
+    "edge-file/report-desktop.png": {
+      "bytes": 339887,
+      "sha256": "cd4757ec5607a053b75e1b6b5c7bd2a39bba7054dda1aa6c1df978e809b6dd65"
+    },
+    "edge-file/report-layout-results.json": {
+      "bytes": 1083,
+      "sha256": "53afb2e0e5758b61347009d594076c4b0a4289b3b4a58d274b33ae373a20c5a9"
+    },
+    "edge-file/report-narrow-scrolled.png": {
+      "bytes": 265236,
+      "sha256": "df579af7bb2d42ff465f0170161ab1a5ec87f241d2b4716e4272d3c8f114485b"
+    },
+    "edge-file/report-print-layout.png": {
+      "bytes": 359497,
+      "sha256": "ca86d707a38979240c45296201a808d357bcab7f8e0e07caf99f947beea53452"
+    },
+    "edge-localhost/browser-test-results.json": {
+      "bytes": 4650,
+      "sha256": "0ffc1f7361cfd171297a90846c07a7323aa613dd85630e7b9178ef0aded87500"
+    },
+    "edge-localhost/report-layout-results.json": {
+      "bytes": 1169,
+      "sha256": "2ef7882b0ece9ba2fed7fbad772c6edfdfa4a20b8aef69cecc5602d11875140b"
+    },
+    "engine-after.txt": {
+      "bytes": 7645,
+      "sha256": "cac51e68ed8c7410d5276ae9e53a8010491602e08662e61c5d537b3eb11e7c3d"
+    },
+    "engine-before.txt": {
+      "bytes": 7646,
+      "sha256": "900f42d8e81e45547b5c7fa4c1f88a71d87c8abd6e8ffd9dbd15e33adab22abb"
+    },
+    "known-price-before.png": {
+      "bytes": 78994,
+      "sha256": "3f6df94a4c3c91781efcf329fb9cdf86c3124ae17c3562c314342489b01bc700"
+    },
+    "known-price-comparison-after.png": {
+      "bytes": 95403,
+      "sha256": "60283a3376ee637cfe83515dde87f9031a0061c13d7d358e8b2e049f3217b2ae"
+    },
+    "known-price-comparison-report.html": {
+      "bytes": 8595,
+      "sha256": "e88fc4f1051cd4a37bf3d567931bef302758344c5183173f19ff006246c8495f"
+    },
+    "old-regression.json": {
+      "bytes": 578,
+      "sha256": "7b2fdb7394c2d63faef3fa0817e6c8dbe6af5c6a539107f0c38bc0c32d510b9e"
+    },
+    "run-summary.json": {
+      "bytes": 2908,
+      "sha256": "37df371fd29535610e582519ccdae1123e6cb120c63085f1252b21960a549ea0"
+    },
+    "self-comparison-after.png": {
+      "bytes": 93024,
+      "sha256": "d0a24f4ff89812825e60792a5b02b7649bdad9a5068987e008565987ade23156"
+    },
+    "self-comparison-report.html": {
+      "bytes": 7796,
+      "sha256": "7345d5be99817f8fa446b77867eb3be49bea6df8dd7e35c3c806042942ddbbd9"
+    },
+    "shopify-pair-reopening.json": {
+      "bytes": 11047,
+      "sha256": "78fd92ff832c10b2ab83fba66d24dc751f890869648267917ff29f1f86886726"
+    },
+    "tested-sources.json": {
+      "bytes": 1211,
+      "sha256": "ae3c2bbe7416b44c83b086e040fa0e7995d69e51c487557b6799c003494cebd4"
+    }
+  },
+  "policy": "Images and HTML/logs retain bytes; JSON paths are sanitized. Reports regenerated with updated presentation; historical artifacts are unchanged. No business planning answers are included."
+}

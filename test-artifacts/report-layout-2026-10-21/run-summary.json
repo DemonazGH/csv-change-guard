@@ -1,0 +1,79 @@
+{
+  "status": "passed",
+  "started_at": "2026-10-20T22:42:14.870740+00:00",
+  "runs": [
+    {
+      "browser": "chrome",
+      "mode": "file",
+      "command": [
+        "<TASK_WORKSPACE>\\work\\browser-venv\\Scripts\\python.exe",
+        "<REPO>\\tests\\browser_test.py",
+        "--file",
+        "--artifacts-dir",
+        "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-run\\browser\\chrome\\file"
+      ],
+      "result": "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-run\\browser\\chrome\\file\\file-20261020T224218099330Z-0f1729aa\\browser-test-results.json",
+      "status": "passed",
+      "groups": 17,
+      "version": "155.0.8059.85",
+      "sandbox": true
+    },
+    {
+      "browser": "chrome",
+      "mode": "localhost",
+      "command": [
+        "<TASK_WORKSPACE>\\work\\browser-venv\\Scripts\\python.exe",
+        "<REPO>\\tests\\browser_test.py",
+        "--url",
+        "http://127.0.0.1:60711/",
+        "--artifacts-dir",
+        "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-run\\browser\\chrome\\localhost"
+      ],
+      "result": "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-run\\browser\\chrome\\localhost\\url-20261020T224228127456Z-7ec2c630\\browser-test-results.json",
+      "status": "passed",
+      "groups": 17,
+      "version": "155.0.8059.85",
+      "sandbox": true
+    },
+    {
+      "browser": "edge",
+      "mode": "file",
+      "command": [
+        "<TASK_WORKSPACE>\\work\\browser-venv\\Scripts\\python.exe",
+        "<REPO>\\tests\\browser_test.py",
+        "--file",
+        "--artifacts-dir",
+        "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-run\\browser\\edge\\file"
+      ],
+      "result": "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-run\\browser\\edge\\file\\file-20261020T224237112328Z-f642a128\\browser-test-results.json",
+      "status": "passed",
+      "groups": 17,
+      "version": "155.0.4283.62",
+      "sandbox": true
+    },
+    {
+      "browser": "edge",
+      "mode": "localhost",
+      "command": [
+        "<TASK_WORKSPACE>\\work\\browser-venv\\Scripts\\python.exe",
+        "<REPO>\\tests\\browser_test.py",
+        "--url",
+        "http://127.0.0.1:60711/",
+        "--artifacts-dir",
+        "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-run\\browser\\edge\\localhost"
+      ],
+      "result": "<TASK_WORKSPACE>\\outputs\\report-layout-2026-10-21\\final-run\\browser\\edge\\localhost\\url-20261020T224247012285Z-5b5206ea\\browser-test-results.json",
+      "status": "passed",
+      "groups": 17,
+      "version": "155.0.4283.62",
+      "sandbox": true
+    }
+  ],
+  "old_browser_version": "155.0.8059.85",
+  "old_regression": {
+    "result": "expected failure",
+    "error": "[43.140625, 48.078125, 35.828125, 41.671875, 41.671875, 989.609375]"
+  },
+  "url": "http://127.0.0.1:60711/",
+  "finished_at": "2026-10-20T22:42:56.149274+00:00"
+}

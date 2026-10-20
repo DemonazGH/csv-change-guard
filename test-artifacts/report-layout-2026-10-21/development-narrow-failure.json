@@ -1,0 +1,27 @@
+{
+  "status": "failed",
+  "checks": [
+    "At 1440px, identifiers/codes/records retain usable widths; all six headers and full-range before/after prices render on one line"
+  ],
+  "page_errors": [],
+  "http_requests": [],
+  "desktop_column_widths": [
+    156,
+    228,
+    144,
+    168,
+    168,
+    336
+  ],
+  "desktop_page": {
+    "viewport": 1440,
+    "content": 1440,
+    "table": 1200
+  },
+  "narrow_page": {
+    "viewport": 390,
+    "content": 398,
+    "table": 1120
+  },
+  "error": "Traceback (most recent call last):\n  File \"<REPO>\\tests\\browser_pagination.py\", line 143, in check_report_layout\n    assert result['narrow_page']['content'] <= result['narrow_page']['viewport']\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}

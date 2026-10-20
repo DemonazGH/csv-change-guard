@@ -1,0 +1,29 @@
+{
+  "status": "failed",
+  "started_at": "2026-10-20T21:44:16.713894+00:00",
+  "finished_at": "2026-10-20T21:44:17.720457+00:00",
+  "browser": "Chromium",
+  "rendering_mode": "file",
+  "requested_target": "file:///<repository>/dist/index.html",
+  "actual_page_url": null,
+  "sandbox_enabled": true,
+  "sandbox_configuration": "enabled (default)",
+  "versions": {
+    "python": "3.14.0",
+    "playwright": "1.62.0",
+    "chromium": null
+  },
+  "executable_path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "browser_command_line": null,
+  "checks_expected": 16,
+  "checks_passed": 0,
+  "checks": [],
+  "page_errors": [],
+  "http_requests": [],
+  "artifacts_dir": "<codex-task>\\outputs\\pagination-20261020T214413Z\\chrome\\file\\file-20261020T214416712481Z-ba983bc2",
+  "error": {
+    "type": "Error",
+    "message": "CDPSession.send: Protocol error (Browser.getBrowserCommandLine): Command line not returned because --enable-automation not set.",
+    "traceback": "Traceback (most recent call last):\n  File \"<repository>\\tests\\browser_test.py\", line 390, in main\n    result['browser_command_line'] = session.send('Browser.getBrowserCommandLine')['arguments']\n                                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<codex-task>\\work\\browser-venv\\Lib\\site-packages\\playwright\\sync_api\\_generated.py\", line 15797, in send\n    self._sync(\n    ~~~~~~~~~~^\n        self._impl_obj.send(method=method, params=mapping.to_impl(params))\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    )\n    ^\n  File \"<codex-task>\\work\\browser-venv\\Lib\\site-packages\\playwright\\_impl\\_sync_base.py\", line 115, in _sync\n    return task.result()\n           ~~~~~~~~~~~^^\n  File \"<codex-task>\\work\\browser-venv\\Lib\\site-packages\\playwright\\_impl\\_cdp_session.py\", line 40, in send\n    return await self._channel.send(\"send\", None, locals_to_params(locals()))\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"<codex-task>\\work\\browser-venv\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 76, in send\n    return await self._connection.wrap_api_call(\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ...<3 lines>...\n    )\n    ^\n  File \"<codex-task>\\work\\browser-venv\\Lib\\site-packages\\playwright\\_impl\\_connection.py\", line 632, in wrap_api_call\n    raise rewrite_error(error, f\"{parsed_st['apiName']}: {error}\") from None\nplaywright._impl._errors.Error: CDPSession.send: Protocol error (Browser.getBrowserCommandLine): Command line not returned because --enable-automation not set.\n"
+  }
+}

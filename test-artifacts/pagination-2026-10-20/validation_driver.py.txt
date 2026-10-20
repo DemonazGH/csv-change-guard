@@ -1,0 +1,102 @@
+import hashlib
+import json
+import os
+from pathlib import Path
+import platform
+import socket
+import subprocess
+import sys
+import time
+import traceback
+from datetime import datetime, timezone
+from importlib.metadata import version
+from urllib.request import urlopen
+
+ROOT = Path(r'<repository>')
+TASK = Path(__file__).resolve().parents[1]
+OUT = TASK / 'outputs' / ('pagination-' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ'))
+OUT.mkdir(parents=True, exist_ok=False)
+BROWSERS = {'chrome': r'C:\Program Files\Google\Chrome\Application\chrome.exe',
+            'edge': r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'}
+summary = {'status': 'running', 'started_at': datetime.now(timezone.utc).isoformat(),
+           'base_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT).decode().strip(),
+           'platform': platform.platform(), 'python': platform.python_version(),
+           'playwright': version('playwright'), 'commands': [], 'runs': []}
+
+
+def hashes():
+    paths = subprocess.check_output(['git', 'ls-files', '-z'], cwd=ROOT).decode().split('\0')
+    return {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in paths if p}
+
+
+def command(args, name, env=None):
+    result = subprocess.run(args, cwd=ROOT, env=env, capture_output=True, encoding='utf-8', errors='replace')
+    (OUT / (name + '.txt')).write_text(result.stdout + result.stderr, encoding='utf-8')
+    summary['commands'].append({'args': args, 'exit_code': result.returncode, 'log': name + '.txt'})
+    print(name, 'exit', result.returncode, flush=True)
+    assert result.returncode == 0, name
+
+
+server = None
+try:
+    before = hashes()
+    for path in ['tests/browser_test.py', 'tests/browser_pagination.py']:
+        (OUT / (Path(path).name + '.txt')).write_bytes((ROOT / path).read_bytes())
+    (OUT / 'validation_driver.py.txt').write_bytes(Path(__file__).read_bytes())
+    summary['node'] = subprocess.check_output(['node', '--version']).decode().strip()
+    summary['npm'] = subprocess.check_output(['npm.cmd', '--version']).decode().strip()
+    command(['npm.cmd', 'test'], 'engine-tests')
+    with socket.socket() as sock:
+        sock.bind(('127.0.0.1', 0))
+        port = sock.getsockname()[1]
+    target = f'http://127.0.0.1:{port}/'
+    with (OUT / 'localhost-server.txt').open('w', encoding='utf-8') as log:
+        server = subprocess.Popen(['node', 'server.cjs'], cwd=ROOT,
+                                  env=dict(os.environ, PORT=str(port)), stdout=log,
+                                  stderr=subprocess.STDOUT, creationflags=subprocess.CREATE_NO_WINDOW)
+        deadline = time.monotonic() + 15
+        while True:
+            try:
+                with urlopen(target, timeout=1) as response:
+                    assert response.read() == (ROOT / 'dist/index.html').read_bytes()
+                break
+            except OSError:
+                if server.poll() is not None or time.monotonic() > deadline:
+                    raise RuntimeError('Localhost server unavailable')
+                time.sleep(0.1)
+        for name, executable in BROWSERS.items():
+            for route in ['file', 'localhost']:
+                parent = OUT / name / route
+                args = [sys.executable, 'tests/browser_test.py', '--artifacts-dir', str(parent)]
+                args += ['--file'] if route == 'file' else ['--url', target]
+                command(args, name + '-' + route, dict(os.environ, CHROMIUM_PATH=executable))
+                paths = list(parent.glob('*/browser-test-results.json'))
+                assert len(paths) == 1
+                data = json.loads(paths[0].read_text())
+                assert data['status'] == 'passed' and data['checks_passed'] == data['checks_expected'] == 16
+                assert data['sandbox_enabled'] and '--no-sandbox' not in data['browser_command_line']
+                pagination = json.loads((paths[0].parent / 'pagination/pagination-results.json').read_text())
+                assert pagination['status'] == 'passed' and pagination['page_sizes'] == [40, 40, 20]
+                summary['runs'].append({'browser': name, 'route': route, 'version': data['versions']['chromium'],
+                                        'result': str(paths[0].relative_to(OUT)), 'sandbox_enabled': True,
+                                        'groups_passed': 16, 'pagination_checks': pagination['checks']})
+    after = hashes()
+    summary['tracked_files_byte_identical_after_tests'] = before == after
+    assert before == after
+    summary['application_hashes'] = {p: h for p, h in before.items() if p.startswith(('src/', 'dist/'))}
+    summary['test_hashes'] = {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest()
+                              for p in ['tests/browser_test.py', 'tests/browser_pagination.py']}
+    summary['status'] = 'passed'
+except Exception:
+    summary['status'] = 'failed'
+    summary['error'] = traceback.format_exc()
+finally:
+    if server is not None and server.poll() is None:
+        server.terminate()
+        server.wait(timeout=10)
+    summary['localhost_server_stopped'] = server is None or server.poll() is not None
+    summary['finished_at'] = datetime.now(timezone.utc).isoformat()
+    (OUT / 'run-summary.json').write_text(json.dumps(summary, indent=2) + '\n', encoding='utf-8')
+    print(json.dumps({'status': summary['status'], 'out': str(OUT), 'runs': summary['runs'],
+                      'error': summary.get('error')}, indent=2), flush=True)
+raise SystemExit(0 if summary['status'] == 'passed' else 1)

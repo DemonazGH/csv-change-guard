@@ -12,7 +12,7 @@ Validate a self-service product whose ordinary customer cycle can be automated. 
 - [x] Working browser prototype with synthetic examples.
 - [x] Deterministic comparison, incomplete-match diagnostics and exportable reports.
 - [x] Search, filters, responsive layout and no runtime third-party dependencies.
-- [x] 106 engine/scenario tests and 15 grouped browser checks in both Windows/Chrome launch modes, with sandboxing enabled; see [current evidence](SHOPIFY_SAMPLE_VALIDATION.md).
+- [x] 106 engine/scenario tests and 16 grouped browser checks per route in Windows Chrome and Edge, with sandboxing enabled; see [current pagination/export evidence](PAGINATION_VALIDATION.md).
 - [x] Official public sample compared with itself after focused compatibility fixes; coverage limitations remain explicit.
 - [x] Automated Windows/Edge synthetic checks on 19 October 2026: 15 browser groups per route, demo/sample selection, clearing, report reopening and nine scenarios, with sandboxing enabled; see [Edge evidence](EDGE_VALIDATION.md).
 - [x] Source package, build command, optional local server, and known limitations.

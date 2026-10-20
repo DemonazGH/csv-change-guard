@@ -19,7 +19,7 @@ from uuid import uuid4
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'dist/index.html'
-EXPECTED_CHECKS = 15
+EXPECTED_CHECKS = 16
 
 
 def parse_args():
@@ -323,6 +323,11 @@ def run_checks(page, out, checks, requests, errors, source_html, mode):
     check_sample_compatibility(page)
     checks.append('Active status alias and sparse continuation option names avoid false alerts while real option changes remain high priority')
 
+    from browser_pagination import check_pagination_exports
+    check_pagination_exports(page.context.browser, page.url, out / 'pagination',
+                             source_html if mode == 'content' else None)
+    checks.append('100-finding pagination, search/severity resets and complete HTML/CSV/JSON exports pass against independent synthetic expectations')
+
     page.locator('#demo').click()
     page.locator('#results').wait_for(state='visible')
     page.set_viewport_size({'width':390,'height':844})
@@ -357,6 +362,7 @@ def main():
         'sandbox_configuration': 'disabled by explicit --no-sandbox' if args.no_sandbox else 'enabled (default)',
         'versions': {'python': platform.python_version(), 'playwright': None, 'chromium': None},
         'executable_path': None,
+        'browser_command_line': None,
         'checks_expected': EXPECTED_CHECKS,
         'checks_passed': 0,
         'checks': checks,
@@ -379,7 +385,11 @@ def main():
             result['executable_path'] = executable or playwright.chromium.executable_path
             browser = playwright.chromium.launch(
                 executable_path=executable, headless=True,
-                chromium_sandbox=not args.no_sandbox)
+                chromium_sandbox=not args.no_sandbox, args=['--enable-automation'])
+            session = browser.new_browser_cdp_session()
+            result['browser_command_line'] = session.send('Browser.getBrowserCommandLine')['arguments']
+            session.detach()
+            assert ('--no-sandbox' in result['browser_command_line']) == args.no_sandbox
             result['versions']['chromium'] = browser.version
             page = browser.new_page(viewport={'width': 1440, 'height': 1100}, device_scale_factor=1)
             page.set_default_timeout(15000)

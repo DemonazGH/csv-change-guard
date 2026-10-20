@@ -18,6 +18,10 @@ START_HERE workflow with sandboxing enabled. A separate
 records the owner's Chrome/Edge workflow and report-comprehension confirmations,
 plus four Chrome scenarios. Those confirmations are distinct from automated evidence.
 
+[Synthetic pagination validation](docs/PAGINATION_VALIDATION.md) on 20 October
+2026 adds automated checks of 100 findings across three pages and complete
+HTML/CSV/JSON exports while filtered, in both installed Windows browsers.
+
 A read-only review tool for two Shopify product CSV files: a current catalog and a proposed update. It compares a defined subset of fields using exact identifiers. It does not connect to a store, execute imports, charge customers, or guarantee import safety.
 
 ## Try it
@@ -139,9 +143,10 @@ silently replaced by another mode. Fresh artifacts go into ignored
 Sandboxing is enabled by default. The cloud container's documented opt-out and
 blocked direct-file navigation are explained in [cloud development](docs/CLOUD_DEVELOPMENT.md).
 
-Current verification passed **106 engine/scenario tests and 15 grouped browser
-checks in each of file and localhost modes** on Windows/Chrome with sandboxing
-enabled. The unchanged official sample compared 16 variants with zero changes
+Current verification passed **106 engine/scenario tests and 16 grouped browser
+checks per route** through file and localhost navigation in Windows Chrome and
+Edge with sandboxing enabled; see [pagination validation](docs/PAGINATION_VALIDATION.md).
+The earlier unchanged official sample compared 16 variants with zero changes
 or blocking/high findings and four coverage warnings. See
 [official sample validation](docs/SHOPIFY_SAMPLE_VALIDATION.md) for evidence.
 The `START_HERE.txt` workflow and nine linked synthetic scenarios also passed.

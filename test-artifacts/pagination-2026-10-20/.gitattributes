@@ -1,0 +1,5 @@
+# Preserve evidence bytes and hashes across checkouts.
+* -text
+# CSV exports and generated expectations retain native record separators.
+*.csv whitespace=cr-at-eol
+*.json whitespace=cr-at-eol

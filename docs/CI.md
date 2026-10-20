@@ -43,6 +43,21 @@ checkout credentials are not persisted, and no repository secrets are required.
 The workflow tests synthetic data only. It does not deploy, publish a release,
 or change branch-protection settings.
 
+## Pagination and export coverage
+
+The maintained suite now has **16 grouped checks**, including the independently
+constructed 100-finding pagination/export contract in `tests/browser_pagination.py`.
+It runs through the existing entry point, so CI checks 40/40/20-row navigation,
+search/severity resets and complete HTML/CSV/JSON exports while filtered.
+The standalone report is reopened in a fresh context after the comparison context
+is closed. Explicit `--content` mode uses in-memory rendering for both app and
+report and remains distinct from navigation evidence.
+
+The runner adds `--enable-automation` to obtain its CDP command-line diagnostic.
+It records the arguments and asserts that `--no-sandbox` is present only when
+the documented explicit opt-out was requested. This does not change the sandbox
+default or the application CSP. See [Windows results](PAGINATION_VALIDATION.md).
+
 ## CSP-safe browser synchronization
 
 The browser runner uses retrying locator assertions for enabled buttons and

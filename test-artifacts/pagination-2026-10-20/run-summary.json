@@ -1,0 +1,143 @@
+{
+  "status": "passed",
+  "started_at": "2026-10-20T21:44:34.148116+00:00",
+  "base_commit": "5a7480b6f19c634195412e748144a6700ba875df",
+  "platform": "Windows-11-10.0.26100-SP0",
+  "python": "3.14.0",
+  "playwright": "1.62.0",
+  "commands": [
+    {
+      "args": [
+        "npm.cmd",
+        "test"
+      ],
+      "exit_code": 0,
+      "log": "engine-tests.txt"
+    },
+    {
+      "args": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "tests/browser_test.py",
+        "--artifacts-dir",
+        "<validation-artifacts>\\chrome\\file",
+        "--file"
+      ],
+      "exit_code": 0,
+      "log": "chrome-file.txt"
+    },
+    {
+      "args": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "tests/browser_test.py",
+        "--artifacts-dir",
+        "<validation-artifacts>\\chrome\\localhost",
+        "--url",
+        "http://127.0.0.1:62435/"
+      ],
+      "exit_code": 0,
+      "log": "chrome-localhost.txt"
+    },
+    {
+      "args": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "tests/browser_test.py",
+        "--artifacts-dir",
+        "<validation-artifacts>\\edge\\file",
+        "--file"
+      ],
+      "exit_code": 0,
+      "log": "edge-file.txt"
+    },
+    {
+      "args": [
+        "<codex-task>\\work\\browser-venv\\Scripts\\python.exe",
+        "tests/browser_test.py",
+        "--artifacts-dir",
+        "<validation-artifacts>\\edge\\localhost",
+        "--url",
+        "http://127.0.0.1:62435/"
+      ],
+      "exit_code": 0,
+      "log": "edge-localhost.txt"
+    }
+  ],
+  "runs": [
+    {
+      "browser": "chrome",
+      "route": "file",
+      "version": "155.0.8059.85",
+      "result": "chrome\\file\\file-20261020T214436550324Z-cd80d118\\browser-test-results.json",
+      "sandbox_enabled": true,
+      "groups_passed": 16,
+      "pagination_checks": [
+        "All 100 identities visited exactly once across 40/40/20 rows; reverse navigation and end buttons correct",
+        "Search, empty search results and high/info/all filters reset later-page pagination correctly",
+        "JSON and CSV exports retain all 100 exact identities, values, severity, codes, percentages and record numbers while only one filtered row is visible",
+        "Static HTML checked by file navigation in a fresh context after comparison context closed; all 100 rows/values present and no scripts",
+        "No page errors or HTTP requests beyond the localhost application document"
+      ]
+    },
+    {
+      "browser": "chrome",
+      "route": "localhost",
+      "version": "155.0.8059.85",
+      "result": "chrome\\localhost\\url-20261020T214443969457Z-9524fd54\\browser-test-results.json",
+      "sandbox_enabled": true,
+      "groups_passed": 16,
+      "pagination_checks": [
+        "All 100 identities visited exactly once across 40/40/20 rows; reverse navigation and end buttons correct",
+        "Search, empty search results and high/info/all filters reset later-page pagination correctly",
+        "JSON and CSV exports retain all 100 exact identities, values, severity, codes, percentages and record numbers while only one filtered row is visible",
+        "Static HTML checked by file navigation in a fresh context after comparison context closed; all 100 rows/values present and no scripts",
+        "No page errors or HTTP requests beyond the localhost application document"
+      ]
+    },
+    {
+      "browser": "edge",
+      "route": "file",
+      "version": "155.0.4283.62",
+      "result": "edge\\file\\file-20261020T214450991501Z-0bed23be\\browser-test-results.json",
+      "sandbox_enabled": true,
+      "groups_passed": 16,
+      "pagination_checks": [
+        "All 100 identities visited exactly once across 40/40/20 rows; reverse navigation and end buttons correct",
+        "Search, empty search results and high/info/all filters reset later-page pagination correctly",
+        "JSON and CSV exports retain all 100 exact identities, values, severity, codes, percentages and record numbers while only one filtered row is visible",
+        "Static HTML checked by file navigation in a fresh context after comparison context closed; all 100 rows/values present and no scripts",
+        "No page errors or HTTP requests beyond the localhost application document"
+      ]
+    },
+    {
+      "browser": "edge",
+      "route": "localhost",
+      "version": "155.0.4283.62",
+      "result": "edge\\localhost\\url-20261020T214458028173Z-36c6d994\\browser-test-results.json",
+      "sandbox_enabled": true,
+      "groups_passed": 16,
+      "pagination_checks": [
+        "All 100 identities visited exactly once across 40/40/20 rows; reverse navigation and end buttons correct",
+        "Search, empty search results and high/info/all filters reset later-page pagination correctly",
+        "JSON and CSV exports retain all 100 exact identities, values, severity, codes, percentages and record numbers while only one filtered row is visible",
+        "Static HTML checked by file navigation in a fresh context after comparison context closed; all 100 rows/values present and no scripts",
+        "No page errors or HTTP requests beyond the localhost application document"
+      ]
+    }
+  ],
+  "node": "v24.12.0",
+  "npm": "11.6.2",
+  "tracked_files_byte_identical_after_tests": true,
+  "application_hashes": {
+    "dist/index.html": "6671736080fde8ccf9c1e2225c49c3a787f6fc51b435ef21c5d9d2cfe10e5f54",
+    "src/app.js": "0fd60ba3c6e1c2f2f1bae8fab49a8591cf19c13f0df4206448e60047d2f84938",
+    "src/demo.js": "6d64feb6d974ba2cab6f01b3714671ce4f959861b2539b5d7af101945b217818",
+    "src/engine.js": "bc7c9e7199bbf68f7b5436790ac58c95dab31fc295918af3be0dedddd4974af7",
+    "src/index.html": "dd207171b9d40c330384a7342d8534ef84fc11467f0b16118901a2e4f0c7f21e",
+    "src/styles.css": "92c5c30317ef8a219303b62cb808fa521c3c0e616329491c5a036ff1d9565fa2"
+  },
+  "test_hashes": {
+    "tests/browser_test.py": "e7e2f42b6be008aa28da8cabcd935b243250e6ef32b30887511449866a7416cd",
+    "tests/browser_pagination.py": "6b02e2add74f24296a3864214248ac285bd1bf6bbd4f12c9f0346fa4ee80b692"
+  },
+  "localhost_server_stopped": true,
+  "finished_at": "2026-10-20T21:45:04.981783+00:00"
+}

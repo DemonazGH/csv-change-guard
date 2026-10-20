@@ -102,6 +102,12 @@ Shopify importer will handle the update.
 
 ## Evidence still needed
 
+The [20 October pagination/export run](PAGINATION_VALIDATION.md) passed 106 Node
+tests and 16 browser groups per route in Windows Chrome and Edge, with sandboxing
+enabled. It verifies 100 synthetic findings across 40/40/20 rows, filter/search
+resets and complete exports after filtering. This is automated evidence, not
+an extension of the manual owner confirmations below.
+
 Automated Windows/Chrome checks passed on 18 October 2026 with sandboxing enabled
 through both direct-file and localhost navigation. The demo, exact sample pair,
 clearing, downloaded reports, and nine linked scenarios passed; see

@@ -51,5 +51,10 @@ docs/EDGE_VALIDATION.md for fresh results and screenshots. A guided manual owner
 test on 19 October 2026 confirmed the basic Chrome/Edge workflow, native file
 selection, clearing, and report comprehension, plus four Chrome scenarios.
 See docs/MANUAL_OWNER_VALIDATION.md for owner-reported results and checks not run;
-these confirmations are separate from automated evidence. Representative merchant
-workflows and controlled Shopify imports remain unverified.
+these confirmations are separate from automated evidence. On 21 October 2026,
+two focused Shopify-generated synthetic export comparisons passed in the Codex
+in-app browser: unchanged data and three known local price changes. See
+docs/SHOPIFY_EXPORT_VALIDATION.md for results, screenshots and limits. This was
+not a Chrome/Edge suite rerun; fresh-context report reopening and sandbox launch
+arguments were not verified. Representative merchant workflows and controlled
+Shopify imports remain unverified.

@@ -22,6 +22,13 @@ plus four Chrome scenarios. Those confirmations are distinct from automated evid
 2026 adds automated checks of 100 findings across three pages and complete
 HTML/CSV/JSON exports while filtered, in both installed Windows browsers.
 
+[Shopify-generated synthetic export comparisons](docs/SHOPIFY_EXPORT_VALIDATION.md)
+on 21 October 2026 passed two focused checks in the **Codex in-app browser**:
+an unchanged four-variant export and a local copy with three known price changes.
+The record includes screenshots and downloaded reports. It is separate from the
+earlier installed Chrome/Edge suites and manual owner confirmations; sandbox
+launch arguments and fresh-context report reopening were not verified in this run.
+
 A read-only review tool for two Shopify product CSV files: a current catalog and a proposed update. It compares a defined subset of fields using exact identifiers. It does not connect to a store, execute imports, charge customers, or guarantee import safety.
 
 ## Try it

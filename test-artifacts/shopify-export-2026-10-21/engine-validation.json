@@ -1,0 +1,91 @@
+{
+  "runAt": "2026-10-20T22:10:02.796Z",
+  "evidenceType": "Automated Node engine checks; not browser evidence",
+  "repositoryCommit": "d8523c4cbd6c7e10b0d99a449fcf6abc116fd35f",
+  "baselineSha256": "d0c28f8754de35ebad6012a9209570712780c4bf8d49a2f9677b851eb83dd1e7",
+  "settings": {
+    "threshold": 30,
+    "overwrite": true,
+    "currentName": "shopify-synthetic-catalog.csv"
+  },
+  "cellChanges": [
+    {
+      "sku": "CGTEST-MUG-001",
+      "before": "12.50",
+      "after": "1.25"
+    },
+    {
+      "sku": "CGTEST-SHIRT-S",
+      "before": "30.00",
+      "after": "39.00"
+    },
+    {
+      "sku": "CGTEST-TEA-001",
+      "before": "15.00",
+      "after": "16.50"
+    }
+  ],
+  "cases": [
+    {
+      "current": "shopify-synthetic-catalog.csv",
+      "update": "shopify-synthetic-catalog.csv",
+      "stats": {
+        "currentVariants": 4,
+        "updateVariants": 4,
+        "currentImageRows": 0,
+        "updateImageRows": 0,
+        "matchedVariants": 4,
+        "comparedVariants": 4,
+        "priceChanges": 0,
+        "unpairedUpdateRows": 0,
+        "currentRowsNotCompared": 0,
+        "ignoredExistingUpdateRows": 0,
+        "invalidRecords": 0
+      },
+      "counts": {
+        "blocking": 0,
+        "high": 0,
+        "warning": 4,
+        "info": 0
+      },
+      "findings": 4,
+      "verdict": "Review findings before any import"
+    },
+    {
+      "current": "shopify-synthetic-catalog.csv",
+      "update": "shopify-synthetic-known-price-update.csv",
+      "stats": {
+        "currentVariants": 4,
+        "updateVariants": 4,
+        "currentImageRows": 0,
+        "updateImageRows": 0,
+        "matchedVariants": 4,
+        "comparedVariants": 4,
+        "priceChanges": 3,
+        "unpairedUpdateRows": 0,
+        "currentRowsNotCompared": 0,
+        "ignoredExistingUpdateRows": 0,
+        "invalidRecords": 0
+      },
+      "counts": {
+        "blocking": 0,
+        "high": 2,
+        "warning": 4,
+        "info": 1
+      },
+      "findings": 7,
+      "verdict": "Review findings before any import"
+    }
+  ],
+  "browser": {
+    "result": "blocked",
+    "browser": "Existing Windows Edge tab",
+    "reason": "Browser URL policy rejects observing file:// pages. No alternate UI surface or browser policy bypass attempted."
+  },
+  "screenshots": "No new browser screenshots: page observation was blocked.",
+  "initialCheckCorrection": "The first check expected only two image warnings and failed. Inspection of source and findings confirmed two additional UNCHECKED_COLUMNS warnings for the 26 unsupported export columns. Final checks assert each warning code and source; no application change was made.",
+  "appChanged": false,
+  "storeChanged": false,
+  "importsPerformed": false,
+  "scope": "Earlier Node engine checks, not browser evidence. The blocked Edge observation preceded the later successful in-app browser session."
+}

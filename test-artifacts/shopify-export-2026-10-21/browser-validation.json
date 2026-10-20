@@ -1,0 +1,72 @@
+{
+  "observedAt": "2026-10-20T22:16:24.798Z",
+  "timezone": "Europe/Warsaw",
+  "browser": "Codex in-app browser, on Windows; not an installed Edge or Chrome rerun",
+  "url": "http://127.0.0.1:8080/",
+  "baselineFileSelection": "User manually selected products_export.csv for both inputs; confirmed in browser DOM.",
+  "actions": "Agent clicked Compare files, inspected UI, saved screenshots, and downloaded reports. Agent then selected the prepared local known-price CSV through the supported in-app file chooser and repeated comparison.",
+  "selfComparison": {
+    "compared": 4,
+    "priceChanges": 0,
+    "priorityFindings": 0,
+    "unpaired": 0,
+    "warning": 4,
+    "findings": 4,
+    "result": "passed"
+  },
+  "knownPriceComparison": {
+    "compared": 4,
+    "priceChanges": 3,
+    "priorityFindings": 2,
+    "unpaired": 0,
+    "warning": 4,
+    "info": 1,
+    "findings": 7,
+    "result": "passed"
+  },
+  "verdict": "Review findings before any import",
+  "exports": {
+    "selfHtml": "browser-self-comparison-report.html",
+    "knownPriceHtml": "browser-known-price-comparison-report.html",
+    "knownPriceJson": "browser-known-price-comparison-report.json"
+  },
+  "screenshots": [
+    "browser-self-comparison.jpg",
+    "browser-known-price-comparison.jpg"
+  ],
+  "verification": "Browser-generated HTML and JSON independently checked with Node strict assertions against expected counts, price changes, percentages, severities and identifiers.",
+  "security": "No browser security or sandbox settings changed. File URL observation remained blocked; the user opened the supported localhost page. No Shopify imports or account changes.",
+  "appChanges": false,
+  "limits": [
+    "Exported HTML files saved and content-checked; not reopened in a fresh browser tab during this run.",
+    "This validates the selected supported comparison cases, not Shopify import behavior."
+  ],
+  "browserVersion": "not recorded",
+  "operatingSystemBuild": "not captured again for this run",
+  "sandbox": {
+    "settingsChanged": false,
+    "launchArgumentsCaptured": false,
+    "enabledVerified": "not independently verified in this session"
+  },
+  "checklistNotRerun": [
+    "START_HERE demo/sample/clear workflow",
+    "Installed Chrome and Edge suites",
+    "Fresh-context reopening of downloaded HTML",
+    "Shopify import round trip"
+  ],
+  "checkoutContext": {
+    "commit": "d8523c4cbd6c7e10b0d99a449fcf6abc116fd35f",
+    "bundleSha256": "6671736080fde8ccf9c1e2225c49c3a787f6fc51b435ef21c5d9d2cfe10e5f54",
+    "servedResponseHashCaptured": false,
+    "note": "Checkout context, not a hash captured from the browser response."
+  },
+  "documentationChecks": {
+    "command": "npm.cmd test",
+    "passed": 106,
+    "failed": 0,
+    "node": "v24.12.0",
+    "npm": "11.6.2",
+    "log": "docs-update-engine-tests.txt",
+    "browserSuiteRerun": false
+  }
+}

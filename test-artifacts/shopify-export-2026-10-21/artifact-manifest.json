@@ -1,0 +1,60 @@
+{
+  "curatedAt": "2026-10-21T00:20:48.395181+02:00",
+  "evidenceDate": "2026-10-21",
+  "timezone": "Europe/Warsaw",
+  "files": {
+    ".gitattributes": {
+      "bytes": 208,
+      "sha256": "a0a8b9e725de9e588d0c93e7358e0000f9e5ce0d7e92b0a2077a3518e819b972"
+    },
+    "browser-known-price-comparison-dom.txt": {
+      "bytes": 15318,
+      "sha256": "5eeeb8731984822ecd127d5729d0021177147063eef61f6cb24b5746933f674d"
+    },
+    "browser-known-price-comparison-report.html": {
+      "bytes": 7907,
+      "sha256": "90940089ec1a7d086642895d6273291b0d1bbc9969610ecb206dc2436d0de475"
+    },
+    "browser-known-price-comparison-report.json": {
+      "bytes": 13358,
+      "sha256": "565e0d574703cb30ff2817fade52c4ac709171477ede7a0a08f214a861a15b2e"
+    },
+    "browser-known-price-comparison.jpg": {
+      "bytes": 53352,
+      "sha256": "1d0ef05b2acb80dbbf33cc7eb6978c90881144a441a89f0d180760a2a35b6e24"
+    },
+    "browser-self-comparison-dom.txt": {
+      "bytes": 12811,
+      "sha256": "bdc3f7e3f5338ee1756fc72e8f87006ade1996b50fc60a7a2dd912e05f730864"
+    },
+    "browser-self-comparison-report.html": {
+      "bytes": 7108,
+      "sha256": "3b580ec4c68e77b65ec7725cb4593d271217023c4e8b2b19f85fb73cf3604cc9"
+    },
+    "browser-self-comparison.jpg": {
+      "bytes": 56484,
+      "sha256": "da76cc146edf81a3740741b94e61c7d58bf8fd2afc9bc24cd56cbd86c986c89b"
+    },
+    "browser-validation.json": {
+      "bytes": 2848,
+      "sha256": "96961c616394d3b7af95142c1245c542152becd3300c115ed1cf89a9dd66a5da"
+    },
+    "docs-update-engine-tests.txt": {
+      "bytes": 7653,
+      "sha256": "2d319e82251e502dfa4bef17d85c1caa0522d643259976508711c0301ccce6f8"
+    },
+    "engine-validation.json": {
+      "bytes": 2862,
+      "sha256": "c8571179c48b9a33afc81c49068456118690008040492b17f55203914caa2987"
+    },
+    "shopify-synthetic-catalog.csv": {
+      "bytes": 1991,
+      "sha256": "d0c28f8754de35ebad6012a9209570712780c4bf8d49a2f9677b851eb83dd1e7"
+    },
+    "shopify-synthetic-known-price-update.csv": {
+      "bytes": 2441,
+      "sha256": "ccc8a2ccab4aff30256034de410fc1bdc228c1b34e319b43c300429987ea6234"
+    }
+  },
+  "copyPolicy": "CSVs, two screenshots, browser DOM snapshots and downloaded reports preserve their original bytes. Summary JSON is curated to label scope and omit private machine paths. No Shopify account screenshots or credentials are included."
+}

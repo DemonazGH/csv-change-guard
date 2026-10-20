@@ -1,0 +1,179 @@
+- banner:
+  - link "CSV Change Guard PROTOTYPE 0.1":
+    - /url: "#"
+    - generic: CG
+    - text: CSV Change Guard
+    - generic: PROTOTYPE 0.1
+  - navigation:
+    - link "What it checks":
+      - /url: "#scope"
+    - link "Privacy":
+      - /url: "#privacy"
+    - generic: Runs locally
+- main:
+  - generic: A SECOND LOOK BEFORE A BULK UPDATE
+  - heading "Review the changes. Before the import." [level=1]:
+    - text: Review the changes.
+    - text: Before the import.
+  - paragraph: Compare a current Shopify catalog with a proposed CSV update. Find price jumps, blanked fields, and ambiguous matches—without connecting your store.
+  - button "Try the built-in demo":
+    - text: Try the built-in demo
+    - generic: →
+  - link "Or choose your files":
+    - /url: "#workspace"
+  - paragraph: No account. No uploads. No live-store changes.
+  - complementary:
+    - generic: EXAMPLE FINDING
+    - generic: High priority
+    - paragraph:
+      - text: Desk lamp
+      - generic: LAMP-001
+    - generic: "59.00"
+    - generic: →
+    - strong: "5.90"
+    - generic: −90%
+    - paragraph:
+      - text: A price drop above your threshold.
+      - text: Intentional discount—or a misplaced decimal?
+    - generic: Synthetic example. Currency is not inferred.
+  - region "Two files. One clearer picture.":
+    - generic: 01 / COMPARE YOUR FILES
+    - heading "Two files. One clearer picture." [level=2]
+    - generic: Read-only comparison
+    - generic: A
+    - strong: Current catalog
+    - generic: The export you trust as your baseline
+    - generic: products_export.csv
+    - generic: 4 data records · 47 columns · local only
+    - button "Choose current catalog CSV"
+    - generic: B
+    - strong: Proposed update
+    - generic: The file you plan to review before importing
+    - generic: products_export.csv
+    - generic: 4 data records · 47 columns · local only
+    - button "Choose proposed update CSV"
+    - generic: Flag price movements of at least
+    - spinbutton "Flag price movements of at least % Both increases and decreases": "30"
+    - generic: "%"
+    - generic: Both increases and decreases
+    - generic: Assumed Shopify import setting
+    - combobox "Assumed Shopify import setting This changes the report only, never your store":
+      - 'option "Overwrite matching handles: enabled" [selected]'
+      - 'option "Overwrite matching handles: disabled"'
+    - generic: This changes the report only, never your store
+    - paragraph:
+      - strong: "Exact matches only:"
+      - text: handle + non-empty SKU. Use files from the same store and currency. New and legacy Shopify headers are recognized for the supported fields. Maximum 5,000 data records per file.
+    - button "Compare files":
+      - text: Compare files
+      - generic: →
+    - button "Clear files"
+    - status: Finished locally. 4 findings. No files were uploaded.
+  - region "Comparison results":
+    - generic: 02 / YOUR REVIEW REPORT
+    - heading "Comparison results" [level=2]
+    - button "Save HTML report"
+    - button "Export findings CSV"
+    - button "JSON"
+    - status:
+      - strong: Review findings before any import
+      - generic: Blocking findings mean part of the comparison was excluded—not that Shopify will necessarily reject the file. This is not an import approval.
+    - generic: Compared variants
+    - strong: "4"
+    - generic: Exact handle + SKU pairs
+    - generic: Price changes
+    - strong: "0"
+    - generic: Within compared variants
+    - generic: Priority findings
+    - strong: "0"
+    - generic: Blocking + high priority
+    - generic: Unpaired update rows
+    - strong: "0"
+    - generic: Excluded or without an exact match
+    - generic "Filter findings by severity":
+      - button "All 4" [pressed]
+      - button "Blocking 0"
+      - button "High 0"
+      - button "Warning 4"
+      - button "Info 0"
+    - searchbox "Search findings"
+    - table:
+      - rowgroup:
+        - row "Priority Product / SKU Finding Before After Records":
+          - columnheader "Priority"
+          - columnheader "Product / SKU"
+          - columnheader "Finding"
+          - columnheader "Before"
+          - columnheader "After"
+          - columnheader "Records"
+      - rowgroup:
+        - 'row "Warning File-level check Coverage · unchecked columns These columns are not assessed: Product Category, Option1 Linked To, Option2 Linked To, Option3 Linked To, Variant Grams, Variant Inventory Tracker, Variant Inventory Qty, Variant Inventory Policy, Variant Fulfillment Service, Variant Requires Shipping, Variant Taxable, Unit Price Total Measure, Unit Price Total Measure Unit, Unit Price Base Measure, Unit Price Base Measure Unit, Variant Barcodes, Gift Card, SEO Title, SEO Description, Variant Weight Unit, Variant Tax Code, Cost per item, Variant Packed Length, Variant Packed Width, Variant Packed Height, Variant Packed Dimension Unit. No conclusions are made about their changes or dependencies. — — Current — Update —"':
+          - cell "Warning":
+            - generic: Warning
+          - cell "File-level check": File-level check
+          - 'cell "Coverage · unchecked columns These columns are not assessed: Product Category, Option1 Linked To, Option2 Linked To, Option3 Linked To, Variant Grams, Variant Inventory Tracker, Variant Inventory Qty, Variant Inventory Policy, Variant Fulfillment Service, Variant Requires Shipping, Variant Taxable, Unit Price Total Measure, Unit Price Total Measure Unit, Unit Price Base Measure, Unit Price Base Measure Unit, Variant Barcodes, Gift Card, SEO Title, SEO Description, Variant Weight Unit, Variant Tax Code, Cost per item, Variant Packed Length, Variant Packed Width, Variant Packed Height, Variant Packed Dimension Unit. No conclusions are made about their changes or dependencies."':
+            - generic: Coverage · unchecked columns
+            - text: "These columns are not assessed: Product Category, Option1 Linked To, Option2 Linked To, Option3 Linked To, Variant Grams, Variant Inventory Tracker, Variant Inventory Qty, Variant Inventory Policy, Variant Fulfillment Service, Variant Requires Shipping, Variant Taxable, Unit Price Total Measure, Unit Price Total Measure Unit, Unit Price Base Measure, Unit Price Base Measure Unit, Variant Barcodes, Gift Card, SEO Title, SEO Description, Variant Weight Unit, Variant Tax Code, Cost per item, Variant Packed Length, Variant Packed Width, Variant Packed Height, Variant Packed Dimension Unit. No conclusions are made about their changes or dependencies."
+          - cell "—"
+          - cell "—"
+          - cell "Current — Update —":
+            - text: Current —
+            - text: Update —
+        - row "Warning File-level check Images · images not assessed Image content, URLs, ordering and associations are not compared. 0 image-only record(s) excluded from variant matching. — — Current — Update —":
+          - cell "Warning":
+            - generic: Warning
+          - cell "File-level check": File-level check
+          - cell "Images · images not assessed Image content, URLs, ordering and associations are not compared. 0 image-only record(s) excluded from variant matching.":
+            - generic: Images · images not assessed
+            - text: Image content, URLs, ordering and associations are not compared. 0 image-only record(s) excluded from variant matching.
+          - cell "—"
+          - cell "—"
+          - cell "Current — Update —":
+            - text: Current —
+            - text: Update —
+        - 'row "Warning File-level check Coverage · unchecked columns These columns are not assessed: Product Category, Option1 Linked To, Option2 Linked To, Option3 Linked To, Variant Grams, Variant Inventory Tracker, Variant Inventory Qty, Variant Inventory Policy, Variant Fulfillment Service, Variant Requires Shipping, Variant Taxable, Unit Price Total Measure, Unit Price Total Measure Unit, Unit Price Base Measure, Unit Price Base Measure Unit, Variant Barcodes, Gift Card, SEO Title, SEO Description, Variant Weight Unit, Variant Tax Code, Cost per item, Variant Packed Length, Variant Packed Width, Variant Packed Height, Variant Packed Dimension Unit. No conclusions are made about their changes or dependencies. — — Current — Update —"':
+          - cell "Warning":
+            - generic: Warning
+          - cell "File-level check": File-level check
+          - 'cell "Coverage · unchecked columns These columns are not assessed: Product Category, Option1 Linked To, Option2 Linked To, Option3 Linked To, Variant Grams, Variant Inventory Tracker, Variant Inventory Qty, Variant Inventory Policy, Variant Fulfillment Service, Variant Requires Shipping, Variant Taxable, Unit Price Total Measure, Unit Price Total Measure Unit, Unit Price Base Measure, Unit Price Base Measure Unit, Variant Barcodes, Gift Card, SEO Title, SEO Description, Variant Weight Unit, Variant Tax Code, Cost per item, Variant Packed Length, Variant Packed Width, Variant Packed Height, Variant Packed Dimension Unit. No conclusions are made about their changes or dependencies."':
+            - generic: Coverage · unchecked columns
+            - text: "These columns are not assessed: Product Category, Option1 Linked To, Option2 Linked To, Option3 Linked To, Variant Grams, Variant Inventory Tracker, Variant Inventory Qty, Variant Inventory Policy, Variant Fulfillment Service, Variant Requires Shipping, Variant Taxable, Unit Price Total Measure, Unit Price Total Measure Unit, Unit Price Base Measure, Unit Price Base Measure Unit, Variant Barcodes, Gift Card, SEO Title, SEO Description, Variant Weight Unit, Variant Tax Code, Cost per item, Variant Packed Length, Variant Packed Width, Variant Packed Height, Variant Packed Dimension Unit. No conclusions are made about their changes or dependencies."
+          - cell "—"
+          - cell "—"
+          - cell "Current — Update —":
+            - text: Current —
+            - text: Update —
+        - row "Warning File-level check Images · images not assessed Image content, URLs, ordering and associations are not compared. 0 image-only record(s) excluded from variant matching. — — Current — Update —":
+          - cell "Warning":
+            - generic: Warning
+          - cell "File-level check": File-level check
+          - cell "Images · images not assessed Image content, URLs, ordering and associations are not compared. 0 image-only record(s) excluded from variant matching.":
+            - generic: Images · images not assessed
+            - text: Image content, URLs, ordering and associations are not compared. 0 image-only record(s) excluded from variant matching.
+          - cell "—"
+          - cell "—"
+          - cell "Current — Update —":
+            - text: Current —
+            - text: Update —
+    - generic: Showing 1–4 of 4 findings · full values in exports
+    - button "Previous" [disabled]
+    - button "Next" [disabled]
+    - generic "Coverage, matching rules, and limitations"
+    - paragraph: Exports include all findings, regardless of filters. Reports may contain sensitive values from your files. CSV formula-like cells are prefixed for safer spreadsheet viewing; JSON preserves original text.
+  - article:
+    - generic: WHAT THIS VERSION CHECKS
+    - heading "Small scope. Explicit rules." [level=3]
+    - paragraph: Price movements and zero-price changes; blanked descriptions and other supported product fields; option changes; duplicate keys; unmatched rows; and selected format/dependency checks.
+    - paragraph: Uncertain matches are excluded rather than guessed. A missing row is not labelled as a deletion. Blank continuation cells are not treated as new product descriptions.
+  - article:
+    - generic: LOCAL BY DESIGN
+    - heading "Your files stay in your browser." [level=3]
+    - paragraph: No analytics, model APIs, cookies, accounts, or file uploads. The prototype has no network calls or local-storage persistence. Clear the files or close the tab when finished.
+    - paragraph: It does not connect to Shopify, make a backup, validate the live store, or perform an import. A clean report is not a guarantee of a safe import.
+  - article:
+    - generic: NOT A FULL IMPORT SIMULATOR
+    - heading "Know what is outside the check." [level=3]
+    - paragraph: Images, inventory, taxes, shipping, metafields, market prices, and unrecognized columns are not compared. SKU-less variants, arbitrary supplier formats, XLSX, and semicolon-delimited files are outside this prototype.
+    - paragraph: No payments are enabled. This is a testable product foundation—not a launched commercial service.
+  - generic: CSV Change Guard · v0.1.0 · Independent prototype; not affiliated with Shopify.
+  - generic: Deterministic checks. Human decisions.

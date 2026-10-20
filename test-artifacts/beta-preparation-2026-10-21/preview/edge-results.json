@@ -1,0 +1,73 @@
+{
+  "status": "passed",
+  "started_at": "2026-10-20T23:05:35.397829+00:00",
+  "python": "3.14.0",
+  "os": "Windows",
+  "package_directory": "CSV-Change-Guard",
+  "artifacts_run": "20261020T230535Z-4713fec9",
+  "checks": [
+    "Exact ZIP/extracted membership, CRCs, manifest, nine checksums and unchanged app verified",
+    "All help/commerce links, local assets and fragments resolve"
+  ],
+  "pages": [
+    {
+      "page": "product",
+      "desktop_mobile_fit": true,
+      "local_styles": true,
+      "inert_controls": true,
+      "http_requests": 0,
+      "page_console_errors": 0
+    },
+    {
+      "page": "checkout",
+      "desktop_mobile_fit": true,
+      "local_styles": true,
+      "inert_controls": true,
+      "http_requests": 0,
+      "page_console_errors": 0
+    },
+    {
+      "page": "delivery",
+      "desktop_mobile_fit": true,
+      "local_styles": true,
+      "inert_controls": true,
+      "http_requests": 0,
+      "page_console_errors": 0
+    },
+    {
+      "page": "help",
+      "desktop_mobile_fit": true,
+      "local_styles": true,
+      "inert_controls": true,
+      "http_requests": 0,
+      "page_console_errors": 0
+    }
+  ],
+  "source_sha256": {
+    "commerce-draft/index.html": "8e8a94143c15022474a18a717ebb4342d7d96ded4fe6010abe730809567d7754",
+    "commerce-draft/checkout.html": "67cfef479e792f17313c921ecf6df2e3f43da8616faf7c34ba687548a0c524d5",
+    "commerce-draft/confirmation.html": "5f9e4006444ba1dfe643f3d4fb5d143cdeb366386d8de91e7442b67b82594a8a",
+    "commerce-draft/styles.css": "4b3380daee31e2bcaab74249d42958de5170253e4e3357140eed4cad4b255554",
+    "release/help.html": "55982cab27ee0a773f7e3eee6f34e0bf5c6c4a16900f9ab38aab758e57682fe6",
+    "release/START_HERE.txt": "f3adf4c1ae7a5de554dd793810020c7ee071175312b8fbf5eaafb03265f6f080",
+    "release/DRAFT-NOT-FOR-SALE.txt": "be70e46099c02e50e52a6148d5c054689cbef1b6423f2c501aeb470287aae50f",
+    "scripts/build-release.cjs": "cdaed6d427ea94a2cbc9f8b60d7f2a4a33aaa0e122804a01d773a4d915ffa151",
+    "tests/beta_preview_test.py": "f052ebec4ccf8c2c829e1f0d00a39b5db42a0b7ba6fc13a9a6abc1d3034f8efe",
+    "dist/index.html": "585ce2008f2bab0005f2ba2cc9b00c43cae1ffb3fb8d5c954e698a919e35e1b8",
+    "package.json": "21b6b322c7047c05bf66d03942f0abecb3fb258205deb8429214a0ad59058cd1"
+  },
+  "playwright": "1.62.0",
+  "browser_executable": "msedge.exe",
+  "archive": {
+    "filename": "csv-change-guard-0.1.0-beta.1.zip",
+    "bytes": 96591,
+    "sha256": "6c0224bd1487c0b897638ef97689a4e7d4fa2fb489a86ebeb99e7bff938c1277",
+    "entries": 10,
+    "packaged_app_sha256": "585ce2008f2bab0005f2ba2cc9b00c43cae1ffb3fb8d5c954e698a919e35e1b8"
+  },
+  "browser_version": "155.0.4283.62",
+  "sandbox_enabled": true,
+  "no_sandbox_argument": false,
+  "disable_web_security_argument": false,
+  "finished_at": "2026-10-20T23:05:40.017702+00:00"
+}

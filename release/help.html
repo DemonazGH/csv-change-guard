@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>CSV Change Guard — Offline help</title>
+<style>
+:root{color-scheme:light;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#19313a;background:#f4f8f7;line-height:1.65}
+*{box-sizing:border-box}body{margin:0}a{color:#00665f;text-underline-offset:.16em}a:focus-visible{outline:3px solid #1b7871;outline-offset:4px}main{max-width:62rem;margin:auto;padding:2.5rem 1.5rem 4rem}header{margin-bottom:2rem}h1,h2,h3{line-height:1.2;letter-spacing:-.025em}h1{font-size:clamp(2rem,5vw,3rem);margin:.5rem 0}h2{font-size:1.65rem;margin:0 0 1rem}h3{font-size:1.15rem;margin:1.5rem 0 .5rem}.eyebrow{color:#46666e;font-size:.85rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.intro{max-width:48rem;font-size:1.12rem}.notice{padding:1rem 1.2rem;border-left:4px solid #9a6010;background:#fff3d9;color:#5e3b09;border-radius:.25rem;margin:1.5rem 0}.card{padding:1.5rem;background:#fff;border:1px solid #d5e4e1;border-radius:.65rem;margin:1.5rem 0}.card>:last-child{margin-bottom:0}.button{display:inline-block;background:#006a61;color:#fff;padding:.65rem 1rem;border-radius:.4rem;font-weight:700;text-decoration:none}nav ul{display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;padding:0;list-style:none}li{margin:.5rem 0}li p{margin:.3rem 0}code,pre{font-family:Consolas,"Courier New",monospace;font-size:.95em}code{overflow-wrap:anywhere}pre{padding:1rem;background:#edf4f2;white-space:pre-wrap;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{text-align:left;padding:.7rem;border-bottom:1px solid #d8e5e2;vertical-align:top}th{background:#edf4f2}p,li,td,th{overflow-wrap:anywhere}.small{font-size:.92rem;color:#46616a}.skip{position:absolute;left:1rem;top:-5rem;background:#fff;padding:.6rem}.skip:focus{top:.5rem}footer{border-top:1px solid #d5e4e1;padding-top:1.25rem;margin-top:2rem;color:#46616a}
+@media(max-width:36rem){main{padding:1.5rem 1rem 3rem}.card{padding:1rem}th,td{padding:.5rem;font-size:.95rem}nav ul{display:block}}
+@media print{:root{background:#fff;color:#000}main{max-width:none;padding:0}.card{border:0;border-radius:0;padding:0;margin:1.5rem 0}.notice{background:#fff;border:1px solid #777;padding:.8rem}nav,.button,.skip{display:none}a{color:#000}h2,h3{break-after:avoid}tr{break-inside:avoid}footer{color:#000}}
+</style>
+</head>
+<body>
+<a class="skip" href="#quick-start">Skip to quick start</a>
+<main>
+<header>
+<p class="eyebrow">CSV Change Guard · application version 0.1.0</p>
+<h1>Review the changes before the import.</h1>
+<p class="intro">Compare a current catalog with a proposed CSV update on your own computer. This guide works offline and explains what the report can tell you, and what it leaves unassessed.</p>
+<div class="notice"><strong>Internal beta candidate — not yet for sale.</strong> Commercial terms and the support contact are not finalized. The proposed email response target is two business days; this is a draft commitment, not a live support service.</div>
+<p><a class="button" href="dist/index.html">Open CSV Change Guard</a></p>
+<nav aria-label="Help contents"><ul>
+<li><a href="#quick-start">Quick start</a></li><li><a href="#your-files">Choose files and settings</a></li><li><a href="#findings">Understand findings</a></li><li><a href="#exports">Save and clear</a></li><li><a href="#scope">Scope and limits</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#support">Report a problem</a></li>
+</ul></nav>
+</header>
+
+<section class="card" id="quick-start" aria-labelledby="quick-start-title">
+<h2 id="quick-start-title">Start with the synthetic demo</h2>
+<ol>
+<li>On Windows, right-click the downloaded ZIP and choose <strong>Extract All</strong>. Open the extracted <strong>CSV-Change-Guard</strong> folder. Keep the folder's contents together; do not run inside the ZIP preview.</li>
+<li>Open the <strong>dist</strong> folder, right-click <strong>index.html</strong>, and choose <strong>Open with → Google Chrome</strong> or <strong>Microsoft Edge</strong>. No installation, account, build, or internet connection is needed for this local-file workflow.</li>
+<li>Click <strong>Try the built-in demo</strong>. It sets the price threshold to <strong>30%</strong> and the assumed overwrite setting to <strong>enabled</strong>, then compares synthetic data.</li>
+<li>Review the verdict, counts, findings, and coverage. The deliberately risky demo should match the table below.</li>
+<li>Click <strong>Save HTML report</strong> and open the download in Chrome or Edge. Close the app tab and confirm the report still makes sense on its own.</li>
+</ol>
+<table><caption>Expected built-in demo results</caption><thead><tr><th scope="col">Measure</th><th scope="col">Expected</th></tr></thead><tbody>
+<tr><th scope="row">Compared variants</th><td>4</td></tr>
+<tr><th scope="row">Price changes</th><td>4</td></tr>
+<tr><th scope="row">Priority findings</th><td>6: 1 blocking and 5 high</td></tr>
+<tr><th scope="row">Unpaired update rows</th><td>4</td></tr>
+<tr><th scope="row">All findings</th><td>15</td></tr>
+<tr><th scope="row">Verdict</th><td>Incomplete comparison — blockers need review</td></tr>
+</tbody></table>
+<p>The demo includes a duplicate identifier. The app cannot reliably match those rows, so it excludes them and marks the comparison incomplete. It does not guess a price comparison. A single record can have several findings.</p>
+<p>All supplied catalogs are synthetic. <strong>Do not import these samples into a real store.</strong> CSV Change Guard only compares files; it never performs an import.</p>
+</section>
+
+<section class="card" id="your-files" aria-labelledby="your-files-title">
+<h2 id="your-files-title">Choose files and settings</h2>
+<ol>
+<li>Open the app and click <strong>Clear files</strong> if a previous comparison is loaded.</li>
+<li>Under <strong>Current catalog</strong>, select your trusted baseline. For a synthetic practice run, choose <a href="samples/current-catalog.csv"><code>samples/current-catalog.csv</code></a> from the extracted folder.</li>
+<li>Under <strong>Proposed update</strong>, select the file to review. For the same practice run, choose <a href="samples/proposed-update.csv"><code>samples/proposed-update.csv</code></a>.</li>
+<li>Check both displayed filenames. Confirm the price threshold and the assumed Shopify import setting, then click <strong>Compare files</strong>.</li>
+</ol>
+<p>With the supplied practice pair, a 30% threshold and overwrite enabled, the results match the demo above. To try an unchanged comparison, use <a href="samples/unchanged-update.csv"><code>samples/unchanged-update.csv</code></a> as the proposed update. Image-coverage warnings remain because images are outside the comparison.</p>
+<h3>Price threshold</h3>
+<p>The default 30% flags price increases and decreases of at least 30% for priority review. Smaller valid price changes are still reported. A threshold is a review preference, not a rule that makes a price safe. Changing a setting hides the previous report: click <strong>Compare files</strong> again to generate results with the new setting.</p>
+<h3>Overwrite assumption</h3>
+<p><strong>Overwrite matching handles: enabled</strong> allows the report to compare supported changes for existing handles. With <strong>disabled</strong>, existing-handle update records are ignored for change comparison and disclosed in coverage. The app does not know which handles currently exist in a live store. This setting changes the report only; it does not read or change your Shopify settings.</p>
+<p>Use files from the <strong>same store and currency</strong>. The app does not infer currency or convert amounts. Keep your original files and an appropriate backup. Test any actual import separately in an authorized, controlled workflow.</p>
+</section>
+
+<section class="card" id="findings" aria-labelledby="findings-title">
+<h2 id="findings-title">Read the whole report</h2>
+<p>Begin with the verdict and <strong>Coverage, matching rules, and limitations</strong>. Check the filenames, threshold, overwrite assumption, excluded rows, recognized columns, and limitations before drawing conclusions from a count.</p>
+<table><caption>What the finding levels mean</caption><thead><tr><th scope="col">Level</th><th scope="col">How to use it</th></tr></thead><tbody>
+<tr><th scope="row">Blocking</th><td>Part of the input could not be reliably assessed, or a selected structural issue was found. The comparison may be incomplete. This does not claim Shopify will reject the file.</td></tr>
+<tr><th scope="row">High</th><td>A potentially consequential change needs review, such as a threshold price movement, zero price, explicit clearing, or changed option value.</td></tr>
+<tr><th scope="row">Warning</th><td>Review a coverage gap, unmatched update record, selected inconsistency, or visibility change.</td></tr>
+<tr><th scope="row">Info</th><td>An ordinary change or scope detail, such as a baseline variant absent from a partial update.</td></tr>
+</tbody></table>
+<p><strong>Priority findings</strong> adds blocking and high findings. <strong>Compared variants</strong> counts exact matched variant pairs; it does not count all source rows. <strong>Unpaired update rows</strong> identifies update rows without a usable exact pair. Findings can overlap on the same record.</p>
+<p>Use the severity buttons and search box to inspect findings. <strong>Next</strong> and <strong>Previous</strong> move through pages of up to 40 findings. A search with no matches means the current view is empty; it does not mean the comparison passed. Long before/after values may be shortened in the app; exports contain the full values.</p>
+<p>Record references count the header as record 1. A quoted value spanning several text lines remains one CSV record.</p>
+<p><strong>An absent row is not a deletion prediction. An omitted column is unassessed, not an explicitly cleared value. No findings is not import approval.</strong></p>
+</section>
+
+<section class="card" id="exports" aria-labelledby="exports-title">
+<h2 id="exports-title">Save a report, then clear the workspace</h2>
+<ul>
+<li><strong>Save HTML report</strong> downloads a readable, standalone report with findings, settings, filenames, coverage, and limitations. Open it in a browser without the app. Use the browser's Print command if you need paper or a PDF; review the print preview first. On narrow screens, scroll the findings table sideways to reach every column.</li>
+<li><strong>Export findings CSV</strong> downloads findings for spreadsheet viewing. Formula-like cells are prefixed with an apostrophe as a viewing precaution. This is a findings report, <strong>not an import-ready product CSV</strong>.</li>
+<li><strong>JSON</strong> downloads the structured report and preserves original strings. It is intended for inspection or further technical analysis.</li>
+</ul>
+<p>Every export includes <strong>all findings</strong>, regardless of the current filter, search, or page. The browser controls the download location, usually Downloads. Later downloads may receive a numbered filename; check that you opened the new report.</p>
+<p>Click <strong>Clear files</strong> to remove both loaded filenames and visible results, disable Compare files, and clear search and report state. Your threshold and overwrite setting remain selected. The built-in demo restores its default settings.</p>
+<p>Clear files does not delete the original CSVs or any downloaded HTML, CSV, JSON, or PDF reports. It removes loaded data from application state and the page; browser memory is managed by the browser and secure erasure is not guaranteed.</p>
+</section>
+
+<section class="card" id="scope" aria-labelledby="scope-title">
+<h2 id="scope-title">Supported scope and limits</h2>
+<ul>
+<li><strong>Format:</strong> UTF-8, comma-delimited CSV, including quoted commas, escaped quotes, and multiline fields. XLSX files, semicolon-delimited files, and arbitrary supplier schemas are not supported.</li>
+<li><strong>Required columns:</strong> recognized handle, Title, and SKU columns in both files. Selected current and legacy Shopify header names are recognized. Complete supported variant data should include Option1 name/value.</li>
+<li><strong>Identity:</strong> exact, case-sensitive handle plus non-empty SKU. This is this tool's comparison key, not a claim about Shopify importer identity rules. Missing or duplicate keys make matching incomplete. Changed handles or SKUs are not inferred from row order or fuzzy similarity.</li>
+<li><strong>Per-file limits:</strong> 5,000 data records, 10 MiB, and 200 columns. Image-only continuation records count toward the input record limit even though images are unassessed. These are the tool's limits, not Shopify platform limits.</li>
+<li><strong>Prices:</strong> non-negative dot-decimal values, with up to 12 integer digits and 6 decimal places. Currency symbols, locale guessing, negative prices, and scientific notation are unsupported. Threshold comparisons use exact decimal arithmetic; displayed percentages are truncated to two decimal places.</li>
+<li><strong>Checks:</strong> supported price changes, selected malformed prices, explicit blanks in selected fields, selected option/visibility changes, and missing/ambiguous identifier diagnostics. Only supported columns present in both files are compared.</li>
+<li><strong>Product and continuation rows:</strong> product fields come from the first row for a handle. Blank later option names can use a clear first-row option name within the same input; option values are never inherited. Image-only continuation records are excluded from variant comparison.</li>
+</ul>
+<p><strong>Unassessed:</strong> images, inventory, taxes, shipping, market-specific prices, metafields, unrecognized columns, and comprehensive Shopify schema rules, dependencies, defaults, or option combinations. The app does not simulate Shopify's importer, make a backup, fix source files, or verify live-store state.</p>
+<p>The tool is an independent review aid. It is not affiliated with or certified by Shopify. Matching counts and zero price changes do not establish that an import is safe.</p>
+</section>
+
+<section class="card" id="privacy" aria-labelledby="privacy-title">
+<h2 id="privacy-title">Your files stay on your computer</h2>
+<p>The application reads selected files in browser memory and generates local downloads. This build has no CSV uploads, store connection, telemetry, tracking, external fonts or scripts, cookies, or local-storage persistence. No model or API processes your catalog. The optional localhost server serves the static app and accepts no file uploads.</p>
+<p>Original files and downloaded reports remain wherever you saved them. Reports may contain sensitive product identifiers, filenames, and before/after business values. Decide who can access them before sharing, backing them up, printing, or storing them in a shared folder.</p>
+<p>The browser, extensions, operating system, cloud-synced folders, filesystem backups, and other software have their own access and retention behavior. The app's local processing does not control those systems.</p>
+<p>Do not send merchant CSVs, exported reports, or unredacted screenshots to support, a public repository, or an AI workspace. Reproduce problems with the supplied synthetic samples wherever possible.</p>
+</section>
+
+<section class="card" id="troubleshooting" aria-labelledby="troubleshooting-title">
+<h2 id="troubleshooting-title">Troubleshooting</h2>
+<h3>The file opens as text, or the app will not open</h3>
+<p>Confirm the ZIP is fully extracted. Right-click <code>dist/index.html</code> and use <strong>Open with</strong> to select Chrome or Edge. If a managed browser blocks local HTML, keep security settings and sandboxing enabled. Ask your administrator about the policy or use the optional localhost route below if permitted.</p>
+<h3>Optional localhost route</h3>
+<p>If Node.js is already installed, open PowerShell in the extracted <strong>CSV-Change-Guard</strong> folder and run:</p>
+<pre><code>node server.cjs</code></pre>
+<p>Open the <code>http://127.0.0.1:...</code> address printed in the terminal. Leave the terminal open while using the app. Press <strong>Ctrl+C</strong> to stop it afterwards. No dependency installation is required. This route needs Node.js; the normal direct-file route does not.</p>
+<p>If the server reports that its port is already in use, use the working direct-file route or record the error for review. Do not terminate an unfamiliar process or disable browser protections to make the test pass. The server serves only the app; open this help file directly from the extracted folder.</p>
+<h3>Compare files is disabled</h3>
+<p>Select both a current catalog and a proposed update, and wait for reading to finish. Check the displayed filenames. If a file failed to load, read the error message and select a valid file again. Clear files intentionally disables comparison until two files are selected.</p>
+<h3>An encoding, header, or input-limit error appears</h3>
+<p>Use a UTF-8, comma-delimited CSV with recognized required columns and within the limits above. A filename ending in <code>.csv</code> does not establish the format. Keep the original, and avoid spreadsheet changes that silently alter identifiers, encoding, or decimal notation. Test with the included samples before changing a real workflow.</p>
+<h3>An unchanged file still has warnings</h3>
+<p>Coverage warnings describe what the app did not assess, such as images or unsupported columns. They can appear with identical files and zero price changes. Read coverage rather than treating the warnings as proof of a changed catalog.</p>
+<h3>There are fewer comparisons than expected</h3>
+<p>Check missing/duplicate identifiers, unpaired update rows, excluded image-only rows, and the overwrite assumption. A changed SKU or handle cannot be paired by guessing. An incomplete comparison is a reason to investigate the unassessed rows.</p>
+<h3>The report seems old, or the download is missing</h3>
+<p>Use the browser's Downloads list to find the latest file. Check its filenames and settings. Browser-managed download restrictions may need administrator help. Do not disable protections. For long tables on small screens, scroll horizontally and review full values in the export.</p>
+<h3>Can the report make changes in Shopify?</h3>
+<p>No. It cannot connect to a store or perform an import. Findings CSV and JSON exports are reports, not corrected product-update files. You remain responsible for reviewing changes and separately validating the actual import workflow.</p>
+</section>
+
+<section class="card" id="support" aria-labelledby="support-title">
+<h2 id="support-title">Record a problem without sending catalog data</h2>
+<p><strong>Support contact is not configured for this internal candidate.</strong> The proposed email response target is two business days; the final address and support terms must be added before sale.</p>
+<p>For owner review, record:</p>
+<ul>
+<li>The application version and candidate identifier from the package manifest.</li>
+<li>Windows version, browser name/version, and whether you opened the local file or localhost address.</li>
+<li>Steps to reproduce, expected result, actual result, and whether the same problem occurs with the supplied synthetic files.</li>
+<li>Error text with private filenames, identifiers, and business values removed. Include counts and settings if relevant.</li>
+</ul>
+<p>Keep merchant files and reports on your computer. A synthetic example usually communicates the issue without exposing business data. This candidate does not check for or install updates automatically; retain its manifest so later packages can be identified.</p>
+</section>
+
+<footer><p>Working name: CSV Change Guard. Offline help for the internal beta candidate, prepared 21 October 2026. The existing repository license status remains UNLICENSED; this candidate does not grant finalized paid-use terms. Review <strong>DRAFT-NOT-FOR-SALE.txt</strong> and <strong>manifest.json</strong> before distribution.</p></footer>
+</main>
+</body>
+</html>

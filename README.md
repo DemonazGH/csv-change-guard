@@ -2,6 +2,14 @@
 
 **Version 0.1.0 · local working prototype · 18 October 2026**
 
+Paid-beta preparation now has an [internal release package](docs/RELEASE_PACKAGE.md),
+[offline customer help](release/help.html), and [local product/checkout drafts](commerce-draft/index.html).
+The selected offer is a USD 29 one-time downloadable utility with local CSV
+processing. These are preparation artifacts, **not an active sale**. See
+[decisions and remaining launch gates](docs/PAID_BETA_PREPARATION.md) and the
+[fresh preparation checks](docs/BETA_PREPARATION_VALIDATION.md). The application
+and repository's `UNLICENSED` designation remain unchanged.
+
 Catalog workflow validation now includes reusable synthetic fixtures and targeted
 reporting and file-selection regressions. See [the current validation report](docs/SCENARIO_VALIDATION.md)
 and [cloud setup instructions](docs/CLOUD_DEVELOPMENT.md) for executed checks and
@@ -160,6 +168,9 @@ blocked direct-file navigation are explained in [cloud development](docs/CLOUD_D
 Current verification passed **106 engine/scenario tests and 17 grouped browser
 checks per route** through file and localhost navigation in Windows Chrome and
 Edge with sandboxing enabled; see [report layout validation](docs/REPORT_LAYOUT_VALIDATION.md).
+The later [beta preparation checks](docs/BETA_PREPARATION_VALIDATION.md) add six
+package tests (**112 Node tests total**), repeat the 17 groups against the extracted
+package in both browsers/routes, and check the offline help and inert commerce drafts.
 The earlier unchanged official sample compared 16 variants with zero changes
 or blocking/high findings and four coverage warnings. See
 [official sample validation](docs/SHOPIFY_SAMPLE_VALIDATION.md) for evidence.

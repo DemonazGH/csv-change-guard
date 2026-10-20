@@ -1,0 +1,242 @@
+{
+  "startedAt": "2026-10-20T22:49:14.281230+00:00",
+  "timestampZone": "UTC",
+  "clientTimezone": "Europe/Warsaw",
+  "validationLocalDate": "2026-10-21",
+  "evidenceType": "Fresh automated installed-Google-Chrome standalone report checks; agent visual review recorded separately",
+  "operatingSystem": "Windows-11-10.0.26100-SP0",
+  "python": "3.14.0",
+  "playwright": "1.62.0",
+  "repositoryCommit": "909b04deada3c9cbfbdebdc703d63d24e6091b98",
+  "chromeExecutable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "sandboxRequested": true,
+  "headless": true,
+  "comparisonTabClosed": "The agent closed the existing in-app comparison tab and verified that its tab list was empty before this run.",
+  "isolation": "Fresh temporary Chrome profile; a new browser context for each report. No comparison application was loaded into Chrome.",
+  "reports": [
+    {
+      "file": "browser-self-comparison-report.html",
+      "sha256": "c1c21acaf2c7a02d5cab30ebd25dcb5ecfbefb0c5f1e94ec185bdc2422b183f6",
+      "navigation": "file://",
+      "status": "passed",
+      "comparedVariants": 4,
+      "priceChanges": 0,
+      "blocking": 0,
+      "high": 0,
+      "warnings": 4,
+      "findings": 4,
+      "codes": [
+        "UNCHECKED_COLUMNS",
+        "IMAGES_NOT_ASSESSED",
+        "UNCHECKED_COLUMNS",
+        "IMAGES_NOT_ASSESSED"
+      ],
+      "renderedRows": [
+        [
+          "WARNING\nUNCHECKED_COLUMNS",
+          "\n",
+          "Coverage\nCurrent: \nUpdate: ",
+          "(empty)",
+          "(empty)",
+          "These columns are not assessed: Product Category, Option1 Linked To, Option2 Linked To, Option3 Linked To, Variant Grams, Variant Inventory Tracker, Variant Inventory Qty, Variant Inventory Policy, Variant Fulfillment Service, Variant Requires Shipping, Variant Taxable, Unit Price Total Measure, Unit Price Total Measure Unit, Unit Price Base Measure, Unit Price Base Measure Unit, Variant Barcodes, Gift Card, SEO Title, SEO Description, Variant Weight Unit, Variant Tax Code, Cost per item, Variant Packed Length, Variant Packed Width, Variant Packed Height, Variant Packed Dimension Unit. No conclusions are made about their changes or dependencies."
+        ],
+        [
+          "WARNING\nIMAGES_NOT_ASSESSED",
+          "\n",
+          "Images\nCurrent: \nUpdate: ",
+          "(empty)",
+          "(empty)",
+          "Image content, URLs, ordering and associations are not compared. 0 image-only record(s) excluded from variant matching."
+        ],
+        [
+          "WARNING\nUNCHECKED_COLUMNS",
+          "\n",
+          "Coverage\nCurrent: \nUpdate: ",
+          "(empty)",
+          "(empty)",
+          "These columns are not assessed: Product Category, Option1 Linked To, Option2 Linked To, Option3 Linked To, Variant Grams, Variant Inventory Tracker, Variant Inventory Qty, Variant Inventory Policy, Variant Fulfillment Service, Variant Requires Shipping, Variant Taxable, Unit Price Total Measure, Unit Price Total Measure Unit, Unit Price Base Measure, Unit Price Base Measure Unit, Variant Barcodes, Gift Card, SEO Title, SEO Description, Variant Weight Unit, Variant Tax Code, Cost per item, Variant Packed Length, Variant Packed Width, Variant Packed Height, Variant Packed Dimension Unit. No conclusions are made about their changes or dependencies."
+        ],
+        [
+          "WARNING\nIMAGES_NOT_ASSESSED",
+          "\n",
+          "Images\nCurrent: \nUpdate: ",
+          "(empty)",
+          "(empty)",
+          "Image content, URLs, ordering and associations are not compared. 0 image-only record(s) excluded from variant matching."
+        ]
+      ],
+      "pageErrors": [],
+      "httpRequests": [],
+      "screenshots": [
+        "self-comparison-full.png",
+        "self-comparison-top.png"
+      ],
+      "checks": [
+        "fresh context with no app loaded",
+        "exact report title/verdict",
+        "counts and finding codes",
+        "filenames and settings",
+        "exact changed identifiers/values/percentages/record numbers",
+        "coverage disclosures and limitations",
+        "no scripts or page errors",
+        "no HTTP(S) document requests"
+      ]
+    },
+    {
+      "file": "browser-known-price-comparison-report.html",
+      "sha256": "a2c447001c5085094493ad0a61394efb1a7c0f62487bb5a839f4fcfe25aec5c8",
+      "navigation": "file://",
+      "status": "passed",
+      "comparedVariants": 4,
+      "priceChanges": 3,
+      "blocking": 0,
+      "high": 2,
+      "warnings": 4,
+      "findings": 7,
+      "codes": [
+        "PRICE_THRESHOLD",
+        "PRICE_THRESHOLD",
+        "UNCHECKED_COLUMNS",
+        "IMAGES_NOT_ASSESSED",
+        "UNCHECKED_COLUMNS",
+        "IMAGES_NOT_ASSESSED",
+        "PRICE_CHANGED"
+      ],
+      "renderedRows": [
+        [
+          "HIGH\nPRICE_THRESHOLD",
+          "csv-guard-test-ceramic-mug\nCGTEST-MUG-001",
+          "Price\nCurrent: 2\nUpdate: 2",
+          "12.50",
+          "1.25",
+          "Absolute price movement meets or exceeds the 30% review threshold.\nChange: -90%"
+        ],
+        [
+          "HIGH\nPRICE_THRESHOLD",
+          "csv-guard-test-linen-shirt\nCGTEST-SHIRT-S",
+          "Price\nCurrent: 3\nUpdate: 3",
+          "30.00",
+          "39.00",
+          "Absolute price movement meets or exceeds the 30% review threshold.\nChange: 30%"
+        ],
+        [
+          "WARNING\nUNCHECKED_COLUMNS",
+          "\n",
+          "Coverage\nCurrent: \nUpdate: ",
+          "(empty)",
+          "(empty)",
+          "These columns are not assessed: Product Category, Option1 Linked To, Option2 Linked To, Option3 Linked To, Variant Grams, Variant Inventory Tracker, Variant Inventory Qty, Variant Inventory Policy, Variant Fulfillment Service, Variant Requires Shipping, Variant Taxable, Unit Price Total Measure, Unit Price Total Measure Unit, Unit Price Base Measure, Unit Price Base Measure Unit, Variant Barcodes, Gift Card, SEO Title, SEO Description, Variant Weight Unit, Variant Tax Code, Cost per item, Variant Packed Length, Variant Packed Width, Variant Packed Height, Variant Packed Dimension Unit. No conclusions are made about their changes or dependencies."
+        ],
+        [
+          "WARNING\nIMAGES_NOT_ASSESSED",
+          "\n",
+          "Images\nCurrent: \nUpdate: ",
+          "(empty)",
+          "(empty)",
+          "Image content, URLs, ordering and associations are not compared. 0 image-only record(s) excluded from variant matching."
+        ],
+        [
+          "WARNING\nUNCHECKED_COLUMNS",
+          "\n",
+          "Coverage\nCurrent: \nUpdate: ",
+          "(empty)",
+          "(empty)",
+          "These columns are not assessed: Product Category, Option1 Linked To, Option2 Linked To, Option3 Linked To, Variant Grams, Variant Inventory Tracker, Variant Inventory Qty, Variant Inventory Policy, Variant Fulfillment Service, Variant Requires Shipping, Variant Taxable, Unit Price Total Measure, Unit Price Total Measure Unit, Unit Price Base Measure, Unit Price Base Measure Unit, Variant Barcodes, Gift Card, SEO Title, SEO Description, Variant Weight Unit, Variant Tax Code, Cost per item, Variant Packed Length, Variant Packed Width, Variant Packed Height, Variant Packed Dimension Unit. No conclusions are made about their changes or dependencies."
+        ],
+        [
+          "WARNING\nIMAGES_NOT_ASSESSED",
+          "\n",
+          "Images\nCurrent: \nUpdate: ",
+          "(empty)",
+          "(empty)",
+          "Image content, URLs, ordering and associations are not compared. 0 image-only record(s) excluded from variant matching."
+        ],
+        [
+          "INFO\nPRICE_CHANGED",
+          "csv-guard-test-tea-tin\nCGTEST-TEA-001",
+          "Price\nCurrent: 5\nUpdate: 5",
+          "15.00",
+          "16.50",
+          "Price changes below the configured review threshold.\nChange: 10%"
+        ]
+      ],
+      "pageErrors": [],
+      "httpRequests": [],
+      "screenshots": [
+        "known-price-comparison-full.png",
+        "known-price-comparison-top.png"
+      ],
+      "checks": [
+        "fresh context with no app loaded",
+        "exact report title/verdict",
+        "counts and finding codes",
+        "filenames and settings",
+        "exact changed identifiers/values/percentages/record numbers",
+        "coverage disclosures and limitations",
+        "no scripts or page errors",
+        "no HTTP(S) document requests"
+      ]
+    }
+  ],
+  "sourceHashes": {
+    "browser-self-comparison-report.html": "c1c21acaf2c7a02d5cab30ebd25dcb5ecfbefb0c5f1e94ec185bdc2422b183f6",
+    "browser-known-price-comparison-report.html": "a2c447001c5085094493ad0a61394efb1a7c0f62487bb5a839f4fcfe25aec5c8"
+  },
+  "status": "passed",
+  "browserVersion": "155.0.8059.85",
+  "browserArguments": [
+    "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+    "--disable-field-trial-config",
+    "--disable-background-networking",
+    "--disable-background-timer-throttling",
+    "--disable-backgrounding-occluded-windows",
+    "--disable-back-forward-cache",
+    "--disable-breakpad",
+    "--disable-client-side-phishing-detection",
+    "--disable-component-extensions-with-background-pages",
+    "--disable-component-update",
+    "--no-default-browser-check",
+    "--disable-default-apps",
+    "--disable-dev-shm-usage",
+    "--disable-edgeupdater",
+    "--disable-extensions",
+    "--disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion",
+    "--enable-features=CDPScreenshotNewSurface",
+    "--allow-pre-commit-input",
+    "--disable-hang-monitor",
+    "--disable-ipc-flooding-protection",
+    "--disable-popup-blocking",
+    "--disable-prompt-on-repost",
+    "--disable-renderer-backgrounding",
+    "--disable-updater-scheduler",
+    "--force-color-profile=srgb",
+    "--metrics-recording-only",
+    "--no-first-run",
+    "--password-store=basic",
+    "--use-mock-keychain",
+    "--no-service-autorun",
+    "--export-tagged-pdf",
+    "--disable-search-engine-choice-screen",
+    "--unsafely-disable-devtools-self-xss-warnings",
+    "--edge-skip-compat-layer-relaunch",
+    "--disable-infobars",
+    "--disable-search-engine-choice-screen",
+    "--disable-sync",
+    "--enable-unsafe-swiftshader",
+    "--headless",
+    "--hide-scrollbars",
+    "--mute-audio",
+    "--blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4",
+    "--enable-automation",
+    "--user-data-dir=<USER>\\AppData\\Local\\Temp\\playwright_chromiumdev_profile-QGqbej",
+    "--remote-debugging-pipe",
+    "--no-startup-window",
+    "--noerrdialogs",
+    "--flag-switches-begin",
+    "--flag-switches-end",
+    "--enable-unsafe-swiftshader"
+  ],
+  "sandboxVerified": true,
+  "inputsAndAppUnchanged": true,
+  "finishedAt": "2026-10-20T22:49:16.275445+00:00"
+}

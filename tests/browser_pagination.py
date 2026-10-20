@@ -1,8 +1,188 @@
-"""Synthetic pagination/export contract, called by the optional browser runner."""
+"""Synthetic pagination, export and report layout checks for the browser runner."""
 import csv
 import io
 import json
 import traceback
+
+
+def report_layout_fixture():
+    """Long unassessed-column messages must not squeeze identities or prices."""
+    supported = ['Handle', 'Title', 'Option1 Name', 'Option1 Value', 'Variant SKU', 'Variant Price']
+    unsupported = [f'Synthetic unsupported catalog detail {number:02}' for number in range(1, 41)]
+    header = supported + unsupported
+    current = [header]
+    proposed = [header]
+    expected = [
+        {'handle': 'synthetic-report-layout-extreme', 'sku': 'REPORT-LAYOUT-EXTREME-001',
+         'before': '999999999999.999999', 'after': '999999999999.999998'},
+        {'handle': 'synthetic-report-layout-discount', 'sku': 'REPORT-LAYOUT-DISCOUNT-002',
+         'before': '12.50', 'after': '1.25'},
+    ]
+    for wanted in expected:
+        row = [wanted['handle'], 'Synthetic report layout product', 'Title',
+               'Default Title', wanted['sku']]
+        current.append(row + [wanted['before']] + ['synthetic'] * len(unsupported))
+        proposed.append(row + [wanted['after']] + ['synthetic'] * len(unsupported))
+
+    def encode(rows):
+        stream = io.StringIO(newline='')
+        csv.writer(stream, lineterminator='\n').writerows(rows)
+        return stream.getvalue()
+
+    return encode(current), encode(proposed), expected
+
+
+def check_report_layout(browser, target, out, source_html=None):
+    """Exercise a downloaded coverage-heavy report at desktop, narrow and print widths."""
+    from playwright.sync_api import expect
+
+    out.mkdir()
+    current, proposed, expected = report_layout_fixture()
+    for name, text in [('current.csv', current), ('proposed.csv', proposed)]:
+        (out / name).write_text(text, encoding='utf-8', newline='\n')
+    result = {'status': 'running', 'checks': [], 'page_errors': [], 'http_requests': []}
+    context = None
+
+    def watch(page, allow_initial=False):
+        def request_seen(request):
+            if request.url.startswith(('http://', 'https://')):
+                result['http_requests'].append({
+                    'url': request.url,
+                    'initial_document': (allow_initial and request.url == target
+                                         and request.is_navigation_request()
+                                         and request.frame == page.main_frame
+                                         and request.redirected_from is None),
+                })
+        page.on('request', request_seen)
+        page.on('pageerror', lambda error: result['page_errors'].append(str(error)))
+
+    def page_widths(page):
+        return page.evaluate('''() => ({
+            viewport: document.documentElement.clientWidth,
+            content: document.documentElement.scrollWidth,
+            table: document.querySelector('table').getBoundingClientRect().width
+        })''')
+
+    # Count rendered line boxes, rather than merely checking DOM text or CSS values.
+    # A correctly preserved price that breaks into three fragments is unreadable.
+    line_geometry = '''cell => {
+        const range = document.createRange();
+        range.selectNodeContents(cell);
+        const boxes = Array.from(range.getClientRects());
+        const cellBox = cell.getBoundingClientRect();
+        return {
+            lines: new Set(boxes.filter(box => box.width > 0).map(box => Math.round(box.top))).size,
+            contained: boxes.every(box => box.left >= cellBox.left && box.right <= cellBox.right),
+            width: cellBox.width
+        };
+    }'''
+
+    try:
+        context = browser.new_context(viewport={'width': 1440, 'height': 1100}, accept_downloads=True)
+        page = context.new_page()
+        page.set_default_timeout(15000)
+        watch(page, allow_initial=True)
+        if source_html is None:
+            page.goto(target, wait_until='load')
+        else:
+            page.set_content(source_html, wait_until='load')
+        for side, name in [('current', 'current.csv'), ('update', 'proposed.csv')]:
+            page.locator(f'#{side}-file').set_input_files(str(out / name))
+        expect(page.locator('#compare')).to_be_enabled()
+        page.locator('#compare').click()
+        expect(page.locator('#results')).to_be_visible()
+        expect(page.locator('#metric-compared')).to_have_text('2')
+        expect(page.locator('#metric-prices')).to_have_text('2')
+        with page.expect_download() as download_info:
+            page.locator('#export-html').click()
+        download_info.value.save_as(out / 'coverage-heavy-report.html')
+        assert download_info.value.failure() is None
+        context.close()
+
+        context = browser.new_context(viewport={'width': 1440, 'height': 1100})
+        report_page = context.new_page()
+        report_page.set_default_timeout(15000)
+        watch(report_page)
+        html_path = out / 'coverage-heavy-report.html'
+        if source_html is None:
+            report_page.goto(html_path.as_uri(), wait_until='load')
+        else:
+            report_page.set_content(html_path.read_text(encoding='utf-8'), wait_until='load')
+        assert report_page.locator('script').count() == 0
+        expect(report_page.locator('tbody')).to_contain_text('Synthetic unsupported catalog detail 40')
+
+        price_rows = []
+        for wanted in expected:
+            row = report_page.locator('tbody tr').filter(has_text=wanted['sku'])
+            expect(row).to_have_count(1)
+            expect(row.locator('td').nth(3)).to_have_text(wanted['before'])
+            expect(row.locator('td').nth(4)).to_have_text(wanted['after'])
+            price_rows.append(row)
+
+        widths = report_page.locator('thead th').evaluate_all(
+            'cells => cells.map(cell => cell.getBoundingClientRect().width)')
+        result['desktop_column_widths'] = widths
+        # These bounds reserve usable identity/code/record space even alongside a
+        # long explanation. Price assertions below check actual maximum-length values.
+        assert widths[0] >= 130 and widths[1] >= 190 and widths[2] >= 120, widths
+        for row in price_rows:
+            for index in (3, 4):
+                geometry = row.locator('td').nth(index).evaluate(line_geometry)
+                assert geometry['lines'] == 1 and geometry['contained'], geometry
+        for header in report_page.locator('thead th').all():
+            assert header.evaluate(line_geometry)['lines'] == 1
+        result['desktop_page'] = page_widths(report_page)
+        assert result['desktop_page']['content'] <= result['desktop_page']['viewport']
+        report_page.screenshot(path=str(out / 'report-desktop.png'), full_page=True)
+        result['checks'].append('At 1440px, identifiers/codes/records retain usable widths; all six headers and full-range before/after prices render on one line')
+
+        report_page.set_viewport_size({'width': 390, 'height': 844})
+        region = report_page.get_by_role('region', name='Findings table — scroll horizontally on smaller screens', exact=True)
+        expect(region).to_be_visible()
+        result['narrow_page'] = page_widths(report_page)
+        assert result['narrow_page']['content'] <= result['narrow_page']['viewport']
+        result['narrow_region'] = region.evaluate(
+            'element => ({width: element.clientWidth, content: element.scrollWidth})')
+        assert result['narrow_region']['content'] > result['narrow_region']['width']
+        region.focus()
+        expect(region).to_be_focused()
+        region.press('ArrowRight')
+        expect(region).not_to_have_js_property('scrollLeft', 0)
+        report_page.locator('thead th').last.scroll_into_view_if_needed()
+        last_header = report_page.locator('thead th').last.bounding_box()
+        region_box = region.bounding_box()
+        assert last_header['x'] >= region_box['x'] - 1
+        assert last_header['x'] + last_header['width'] <= region_box['x'] + region_box['width'] + 1
+        for row in price_rows:
+            for index in (3, 4):
+                geometry = row.locator('td').nth(index).evaluate(line_geometry)
+                assert geometry['lines'] == 1 and geometry['contained'], geometry
+        report_page.screenshot(path=str(out / 'report-narrow-scrolled.png'), full_page=True)
+        result['checks'].append('At 390px, only the named focusable table region scrolls horizontally; keyboard scrolling works, the Explanation column is reachable, and full-range prices remain unbroken')
+
+        report_page.emulate_media(media='print')
+        report_page.set_viewport_size({'width': 794, 'height': 1123})
+        result['print_page'] = page_widths(report_page)
+        assert result['print_page']['content'] <= result['print_page']['viewport']
+        assert region.evaluate('element => element.scrollWidth <= element.clientWidth')
+        expect(report_page.get_by_role('heading', name='Coverage and limitations', exact=True)).to_be_visible()
+        report_page.screenshot(path=str(out / 'report-print-layout.png'), full_page=True)
+        report_page.pdf(path=str(out / 'report-print.pdf'), format='A4', print_background=True)
+        result['checks'].append('Print media removes the table minimum width and scroll clipping; findings and limitations fit the page width and a PDF is generated')
+        assert result['page_errors'] == []
+        assert all(request['initial_document'] for request in result['http_requests'])
+        assert len(result['http_requests']) == (1 if target.startswith(('http://', 'https://')) else 0)
+        result['report_route'] = 'file navigation' if source_html is None else 'explicit in-memory rendering'
+        result['checks'].append('Fresh report context after comparison closed; no scripts, page errors or unexpected HTTP requests')
+        result['status'] = 'passed'
+    except Exception:
+        result['status'] = 'failed'
+        result['error'] = traceback.format_exc()
+        raise
+    finally:
+        if context is not None:
+            context.close()
+        (out / 'report-layout-results.json').write_text(json.dumps(result, indent=2) + '\n', encoding='utf-8')
 
 
 def pagination_fixture():

@@ -119,11 +119,18 @@ Shopify importer will handle the update.
 
 ## Evidence still needed
 
+The [standalone report layout follow-up](REPORT_LAYOUT_VALIDATION.md) fixes
+squeezed exported-report columns. Fresh installed Chrome/Edge checks pass
+17 groups per file/localhost route with sandboxing enabled. The regenerated
+Shopify synthetic reports were independently reopened in Chrome and inspected
+by the agent; this is automated/agent evidence, not a manual owner confirmation.
+
 The [21 October Shopify export comparisons](SHOPIFY_EXPORT_VALIDATION.md) add
 in-app browser and engine observations, with manual initial file selection.
 No browser version or sandbox command-line evidence was captured. Independent
-reopening of these exported reports, installed Chrome/Edge checks with this
-pair and controlled import behavior remain unverified.
+reopening during that earlier in-app session was not performed. Later Chrome
+reopening is recorded separately above; Edge checks of this exact pair, owner
+comprehension of these reports and controlled import behavior remain unverified.
 
 The [20 October pagination/export run](PAGINATION_VALIDATION.md) passed 106 Node
 tests and 16 browser groups per route in Windows Chrome and Edge, with sandboxing

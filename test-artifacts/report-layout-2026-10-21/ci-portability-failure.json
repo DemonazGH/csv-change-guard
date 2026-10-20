@@ -1,0 +1,17 @@
+{
+  "status": "failed",
+  "headCommit": "909b04deada3c9cbfbdebdc703d63d24e6091b98",
+  "runUrl": "https://github.com/DemonazGH/csv-change-guard/actions/runs/39510467358",
+  "job": "Engine, build, and browser",
+  "step": "Run browser smoke tests with sandboxing enabled",
+  "test": "check_report_layout: narrow-screen full-range before/after value line geometry",
+  "observed": {
+    "lines": 2,
+    "contained": true,
+    "width": 156.796875
+  },
+  "desktopValueColumnPixels": 168,
+  "originalNarrowTableMinimumPixels": 1120,
+  "correction": "Increase the minimum table width to 1200px so narrow-screen value columns retain the same 168px width that passed on desktop. Keep the full-range single-line price assertion unchanged. Print still removes the minimum width.",
+  "scope": "First CI attempt, not a successful Linux result. Final local results and later CI are separate."
+}

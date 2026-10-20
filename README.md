@@ -29,6 +29,13 @@ The record includes screenshots and downloaded reports. It is separate from the
 earlier installed Chrome/Edge suites and manual owner confirmations; sandbox
 launch arguments and fresh-context report reopening were not verified in this run.
 
+The later [standalone report layout fix](docs/REPORT_LAYOUT_VALIDATION.md) on
+21 October adds readable desktop columns, contained narrow-screen scrolling and
+print-width checks. Fresh installed Chrome and Edge runs passed **17 browser
+groups per file/localhost route**, with sandboxing enabled. The regenerated
+Shopify-pair reports also reopened independently in Chrome with their contents
+unchanged; this remains separate from owner usability confirmation.
+
 A read-only review tool for two Shopify product CSV files: a current catalog and a proposed update. It compares a defined subset of fields using exact identifiers. It does not connect to a store, execute imports, charge customers, or guarantee import safety.
 
 ## Try it
@@ -150,9 +157,9 @@ silently replaced by another mode. Fresh artifacts go into ignored
 Sandboxing is enabled by default. The cloud container's documented opt-out and
 blocked direct-file navigation are explained in [cloud development](docs/CLOUD_DEVELOPMENT.md).
 
-Current verification passed **106 engine/scenario tests and 16 grouped browser
+Current verification passed **106 engine/scenario tests and 17 grouped browser
 checks per route** through file and localhost navigation in Windows Chrome and
-Edge with sandboxing enabled; see [pagination validation](docs/PAGINATION_VALIDATION.md).
+Edge with sandboxing enabled; see [report layout validation](docs/REPORT_LAYOUT_VALIDATION.md).
 The earlier unchanged official sample compared 16 variants with zero changes
 or blocking/high findings and four coverage warnings. See
 [official sample validation](docs/SHOPIFY_SAMPLE_VALIDATION.md) for evidence.
@@ -161,8 +168,8 @@ Earlier [scenario validation](docs/SCENARIO_VALIDATION.md) and
 [Windows/Chrome evidence](docs/WINDOWS_VALIDATION.md) retain their original
 92-test/14-group results and tested source versions.
 The uploaded historical run had 66 engine tests and 11 in-memory browser checks.
-Manual Windows double-click launch, public HTTPS deployment, and Shopify import
-round trips remain manual release checks.
+Other browser/version combinations, representative merchant workflows, public
+HTTPS deployment and Shopify import round trips remain separate release checks.
 
 ## Before a commercial launch
 

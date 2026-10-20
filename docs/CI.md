@@ -45,7 +45,7 @@ or change branch-protection settings.
 
 ## Pagination and export coverage
 
-The maintained suite now has **16 grouped checks**, including the independently
+The maintained suite now has **17 grouped checks**, including the independently
 constructed 100-finding pagination/export contract in `tests/browser_pagination.py`.
 It runs through the existing entry point, so CI checks 40/40/20-row navigation,
 search/severity resets and complete HTML/CSV/JSON exports while filtered.
@@ -57,6 +57,12 @@ The runner adds `--enable-automation` to obtain its CDP command-line diagnostic.
 It records the arguments and asserts that `--no-sandbox` is present only when
 the documented explicit opt-out was requested. This does not change the sandbox
 default or the application CSP. See [Windows results](PAGINATION_VALIDATION.md).
+
+The new standalone-report layout group uses 40 unsupported synthetic columns
+and maximum-length supported prices. It checks rendered desktop line geometry,
+keyboard scrolling at 390px, print-width fit/PDF creation, fresh-context report
+reopening and privacy behavior. It does not rely on historical report fixtures.
+See the [layout fix and fresh Windows evidence](REPORT_LAYOUT_VALIDATION.md).
 
 ## CSP-safe browser synchronization
 

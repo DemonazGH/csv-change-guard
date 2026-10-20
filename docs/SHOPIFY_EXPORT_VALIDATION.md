@@ -1,5 +1,9 @@
 # Shopify-generated synthetic export comparisons
 
+A later [standalone report layout follow-up](REPORT_LAYOUT_VALIDATION.md) records
+fresh installed-browser checks and regenerated Shopify-pair report reopening in
+Chrome. The original in-app session below retains its own scope and limitations.
+
 On **21 October 2026 (Europe/Warsaw)**, two comparisons passed in the
 **Codex in-app browser** at `http://127.0.0.1:8080/`. The input was a fresh Shopify
 export of owner-authorized synthetic Draft products. The agent operated the

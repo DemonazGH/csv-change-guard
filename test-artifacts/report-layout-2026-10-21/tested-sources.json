@@ -1,0 +1,26 @@
+{
+  "baseCommit": "e5d336476fa0d1fa26fdf486439ae828cae85ca6",
+  "files": {
+    "src/engine.js": {
+      "sha256": "45c300f2cd98e7c7ba1646c57f7fd7c2e6ef86458c78074fef34cb748b2d9d9c",
+      "canonicalLfSha256": "45c300f2cd98e7c7ba1646c57f7fd7c2e6ef86458c78074fef34cb748b2d9d9c",
+      "bytes": 29558
+    },
+    "dist/index.html": {
+      "sha256": "fdc160e635742c154b8b48218bc868c96559474ed8a287635d8d5c7032afb329",
+      "canonicalLfSha256": "5d126e2a456f3b547cc87c6521eb628658a2071c531844bb0323136363d46c5d",
+      "bytes": 63494
+    },
+    "tests/browser_test.py": {
+      "sha256": "d343253d6f29829ab814ab04074db34558842b4728c3888bae3314109c70494e",
+      "canonicalLfSha256": "54a4400a2b7b082e8753e0bdfd74981a46c6623330fe98344001f6c4682672c8",
+      "bytes": 23051
+    },
+    "tests/browser_pagination.py": {
+      "sha256": "70df2e78dcb256c935caf4bffd457559031d8dba73779865d33e773d1d135157",
+      "canonicalLfSha256": "9f4ba3932b718274247c496b5fcdab90b40c47fd0bd83f0467857cff16f522d6",
+      "bytes": 22219
+    }
+  },
+  "semanticsCheck": "Old/new engine comparison JSON (same createdAt) and findings CSV were asserted byte/value-identical on both Shopify synthetic pairs before generating updated HTML."
+}

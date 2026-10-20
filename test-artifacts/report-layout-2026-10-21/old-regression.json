@@ -1,0 +1,15 @@
+{
+  "status": "failed",
+  "checks": [],
+  "page_errors": [],
+  "http_requests": [],
+  "desktop_column_widths": [
+    43.140625,
+    48.078125,
+    35.828125,
+    41.671875,
+    41.671875,
+    989.609375
+  ],
+  "error": "Traceback (most recent call last):\n  File \"<REPO>\\tests\\browser_pagination.py\", line 127, in check_report_layout\n    assert widths[0] >= 130 and widths[1] >= 190 and widths[2] >= 120, widths\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: [43.140625, 48.078125, 35.828125, 41.671875, 41.671875, 989.609375]\n"
+}

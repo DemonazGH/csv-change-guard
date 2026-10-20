@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "checks": [
+    "At 1440px, identifiers/codes/records retain usable widths; all six headers and full-range before/after prices render on one line",
+    "At 390px, only the named focusable table region scrolls horizontally; keyboard scrolling works, the Explanation column is reachable, and full-range prices remain unbroken",
+    "Print media removes the table minimum width and scroll clipping; findings and limitations fit the page width and a PDF is generated",
+    "Fresh report context after comparison closed; no scripts, page errors or unexpected HTTP requests"
+  ],
+  "page_errors": [],
+  "http_requests": [
+    {
+      "url": "http://127.0.0.1:50596/",
+      "initial_document": true
+    }
+  ],
+  "desktop_column_widths": [
+    156,
+    228,
+    144,
+    168,
+    168,
+    336
+  ],
+  "desktop_page": {
+    "viewport": 1440,
+    "content": 1440,
+    "table": 1200
+  },
+  "narrow_page": {
+    "viewport": 390,
+    "content": 390,
+    "table": 1200
+  },
+  "narrow_region": {
+    "width": 342,
+    "content": 1200
+  },
+  "print_page": {
+    "viewport": 794,
+    "content": 794,
+    "table": 794
+  },
+  "report_route": "file navigation"
+}

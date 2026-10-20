@@ -19,7 +19,7 @@ from uuid import uuid4
 
 ROOT = Path(__file__).resolve().parents[1]
 BUILD = ROOT / 'dist/index.html'
-EXPECTED_CHECKS = 16
+EXPECTED_CHECKS = 17
 
 
 def parse_args():
@@ -323,10 +323,14 @@ def run_checks(page, out, checks, requests, errors, source_html, mode):
     check_sample_compatibility(page)
     checks.append('Active status alias and sparse continuation option names avoid false alerts while real option changes remain high priority')
 
-    from browser_pagination import check_pagination_exports
+    from browser_pagination import check_pagination_exports, check_report_layout
     check_pagination_exports(page.context.browser, page.url, out / 'pagination',
                              source_html if mode == 'content' else None)
     checks.append('100-finding pagination, search/severity resets and complete HTML/CSV/JSON exports pass against independent synthetic expectations')
+
+    check_report_layout(page.context.browser, page.url, out / 'report-layout',
+                        source_html if mode == 'content' else None)
+    checks.append('standalone report preserves readable desktop columns and exact prices, confines narrow-screen scrolling, and fits print media')
 
     page.locator('#demo').click()
     page.locator('#results').wait_for(state='visible')

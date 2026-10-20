@@ -1,0 +1,127 @@
+{
+  "date": "2026-10-21",
+  "timezone": "Europe/Warsaw",
+  "files": {
+    ".gitattributes": {
+      "bytes": 64,
+      "sha256": "9cdd140d8acb6cd5b4935841d693a979cd2e2d40fc6af4370306a84428d91abc"
+    },
+    "chrome-file/browser-test-results.json": {
+      "bytes": 4535,
+      "sha256": "ea080de2b3ca21e0e249593c5a749df40932fe1f4212b7f80cfdc24071038245"
+    },
+    "chrome-file/coverage-heavy-report.html": {
+      "bytes": 12012,
+      "sha256": "5324c132e8eca15519c4a4bda9da31af256168787193d47088d204dce5dea368"
+    },
+    "chrome-file/report-desktop.png": {
+      "bytes": 339933,
+      "sha256": "395ec91f421d5faa1164e471fa5ccf9c0048b6c6219ab96d43507a5136210d28"
+    },
+    "chrome-file/report-layout-results.json": {
+      "bytes": 1083,
+      "sha256": "5dba870a770b519d705a612b28c6bfe14fd3bd3c00f2e28138f7e23004192b88"
+    },
+    "chrome-file/report-narrow-scrolled.png": {
+      "bytes": 253399,
+      "sha256": "ebd1b8a00aeddc2e9011230756ea4d49f0d61363d416855d2c6e7461ea44bfca"
+    },
+    "chrome-file/report-print-layout.png": {
+      "bytes": 359543,
+      "sha256": "6fed4e52a9948780344f0cc8ffdfca83acbd9dbc614fbe275c66b485b9e76132"
+    },
+    "chrome-localhost/browser-test-results.json": {
+      "bytes": 4644,
+      "sha256": "09d5234a0a175239db73d57587085fc1685674abdb43d140bfebc9326dc9c425"
+    },
+    "chrome-localhost/report-layout-results.json": {
+      "bytes": 1169,
+      "sha256": "053d97ec6df8f08b033b22ffaf209261d70eff3388043ff4927ca3e07e80f602"
+    },
+    "ci-portability-failure.json": {
+      "bytes": 879,
+      "sha256": "52416442d3bdddbac529e26af5878aa04e46963df6307e06078d72fa246504ca"
+    },
+    "development-narrow-failure.json": {
+      "bytes": 793,
+      "sha256": "041f40f1a0a8f5b66d064f1f00a5cdec1830ba32f25bb766ddd1660d8c569cc5"
+    },
+    "edge-file/browser-test-results.json": {
+      "bytes": 4547,
+      "sha256": "4daca098d7bf7998f9195d4b313150dae5e2ed53e1415c9639c4a5786d8382ef"
+    },
+    "edge-file/coverage-heavy-report.html": {
+      "bytes": 12012,
+      "sha256": "5020bae46e0ec08e120e0c862027fe3b5163419740e2d8fdd50ca89183edcb2a"
+    },
+    "edge-file/report-desktop.png": {
+      "bytes": 339835,
+      "sha256": "d1200fea8bfce925f1f1d90d09b7762e97f89cb7e3b86c37cf0863160ff279cd"
+    },
+    "edge-file/report-layout-results.json": {
+      "bytes": 1083,
+      "sha256": "5dba870a770b519d705a612b28c6bfe14fd3bd3c00f2e28138f7e23004192b88"
+    },
+    "edge-file/report-narrow-scrolled.png": {
+      "bytes": 253252,
+      "sha256": "163bafec445c01d5fc42e31e5766c7f525cd11ef7ec1c37f4a0f10c3a78cdaba"
+    },
+    "edge-file/report-print-layout.png": {
+      "bytes": 359442,
+      "sha256": "2e647175a6d46b87a63c0d47b344b069eafda6b66e6acdb063bf5c0813e82c5c"
+    },
+    "edge-localhost/browser-test-results.json": {
+      "bytes": 4656,
+      "sha256": "d8258ce752b77a9a2493511c57f2307781640117a5c55719346017fabb76c664"
+    },
+    "edge-localhost/report-layout-results.json": {
+      "bytes": 1169,
+      "sha256": "053d97ec6df8f08b033b22ffaf209261d70eff3388043ff4927ca3e07e80f602"
+    },
+    "engine-after.txt": {
+      "bytes": 7645,
+      "sha256": "32277c6cd95809a5733f0442216f20d7d0636dede5458b09d0f265e901cfb66b"
+    },
+    "engine-before.txt": {
+      "bytes": 7646,
+      "sha256": "900f42d8e81e45547b5c7fa4c1f88a71d87c8abd6e8ffd9dbd15e33adab22abb"
+    },
+    "known-price-before.png": {
+      "bytes": 78994,
+      "sha256": "3f6df94a4c3c91781efcf329fb9cdf86c3124ae17c3562c314342489b01bc700"
+    },
+    "known-price-comparison-after.png": {
+      "bytes": 95372,
+      "sha256": "05e29591c3bc9fa8e4a5280ca0904de2c6c8815caad7d2e11a85c27ba7460c9d"
+    },
+    "known-price-comparison-report.html": {
+      "bytes": 8595,
+      "sha256": "a2c447001c5085094493ad0a61394efb1a7c0f62487bb5a839f4fcfe25aec5c8"
+    },
+    "old-regression.json": {
+      "bytes": 578,
+      "sha256": "7b2fdb7394c2d63faef3fa0817e6c8dbe6af5c6a539107f0c38bc0c32d510b9e"
+    },
+    "run-summary.json": {
+      "bytes": 2956,
+      "sha256": "6a8c18979d8fc349d1bf870147aea050091b59e180a6f549b0779b30211d8265"
+    },
+    "self-comparison-after.png": {
+      "bytes": 92875,
+      "sha256": "7b8ff1a7977652710589c4999fbc871a5b4ee4b459a4656f342a9146f7131714"
+    },
+    "self-comparison-report.html": {
+      "bytes": 7796,
+      "sha256": "c1c21acaf2c7a02d5cab30ebd25dcb5ecfbefb0c5f1e94ec185bdc2422b183f6"
+    },
+    "shopify-pair-reopening.json": {
+      "bytes": 11047,
+      "sha256": "b975c9fbb62a02823f99a8d8b84e468b097346c367b2bd9630b7049f0e988fb1"
+    },
+    "tested-sources.json": {
+      "bytes": 1211,
+      "sha256": "13b3ae473ba7e2ca74e8c5bb922111b5638d476dbb1a6ad4c14549527c0eb637"
+    }
+  },
+  "policy": "Images and HTML/logs retain bytes; JSON paths are sanitized. Reports regenerated with updated presentation; historical artifacts are unchanged. No business planning answers are included."
+}

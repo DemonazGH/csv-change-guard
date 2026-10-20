@@ -33,7 +33,7 @@ jobs:
           node-version: '24'
           package-manager-cache: false
 
-      - name: Run engine tests
+      - name: Run engine, scenario, and package tests
         run: npm test
 
       - name: Verify the committed standalone build
@@ -41,6 +41,9 @@ jobs:
           git ls-files --error-unmatch dist/index.html > /dev/null
           npm run build
           git diff --exit-code -- dist/index.html
+
+      - name: Build internal beta package
+        run: npm run package:beta -- --output .local-test-artifacts/release
 
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -61,6 +64,14 @@ jobs:
 
       - name: Run browser smoke tests with sandboxing enabled
         run: bash scripts/ci-browser.sh
+
+      - name: Verify internal package and commerce drafts with sandboxing enabled
+        run: |
+          ccg_candidate_version="$(node -p "require('./package.json').version + '-beta.1'")"
+          python tests/beta_preview_test.py \
+            --package-dir ".local-test-artifacts/release/${ccg_candidate_version}/CSV-Change-Guard" \
+            --archive ".local-test-artifacts/release/${ccg_candidate_version}/csv-change-guard-${ccg_candidate_version}.zip" \
+            --artifacts-dir .local-test-artifacts/ci/beta-preview
 
       - name: Save browser results and server log
         if: always()

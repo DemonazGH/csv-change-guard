@@ -2,6 +2,14 @@
 
 Prepared: **18 October 2026**. Product remains **v0.1.0**.
 
+**21 October update:** the owner selected preparation of a USD 29 one-time
+downloadable beta, local CSV processing, asynchronous support, commercial terms
+for review and the working name CSV Change Guard. The internal allowlisted ZIP,
+help and inert commerce drafts are described in [paid-beta preparation](PAID_BETA_PREPARATION.md).
+There is no live checkout or public deployment. Repository licensing remains
+`UNLICENSED`. The baseline and proposed sequence below are historical; use the
+README and linked validation records for current tests and completed work.
+
 ## What the owner is trying to build
 
 The owner chose CSV Change Guard as a first small remote-business experiment.
@@ -25,7 +33,8 @@ findings. It is not a Shopify import simulator or certified safety checker.
 Working promise: **Review the changes before the import.**
 
 Pay-per-report, credits, a downloadable license, and recurring plans were
-considered as hypotheses. None is selected or implemented. A local freely
+considered as hypotheses. The downloadable direction is now selected for
+preparation, but no payments are implemented. A local freely
 delivered engine cannot be reliably protected by a superficial paywall.
 
 ## What is implemented
@@ -135,12 +144,12 @@ authorized test environment; no production-store experimentation.
 delivery, and monetization architecture first. Public deployment, payment setup,
 spend, and outreach require the owner's explicit direction.
 
-## Decisions still open
+## Remaining commercial decisions
 
-- First distribution channel and exact customer segment.
-- Local downloadable license versus hosted service versus later API.
-- Pricing, measurement, and support boundaries.
-- Hosting, domain, payment provider, license, and trademark/name checks.
+- Initial segment and delivery/price experiment are recorded in the paid-beta plan.
+- Unassisted user trials, representative merchant validation and acquisition evidence.
+- Final support contact, effective terms, refund policy and purchase privacy notice.
+- Hosting/domain, provider approval and test-mode delivery, and trademark/name checks.
 
 Do not settle these by implementing whatever infrastructure is easiest for an
 agent to generate. Present the smallest useful option and its tradeoffs.

@@ -1,6 +1,7 @@
 # Launch and validation plan
 
-**Status:** functioning local prototype, not a public or paid launch.
+**Status:** functioning local prototype with internal paid-beta preparation,
+not a public or paid launch. See [the selected offer and prepared artifacts](PAID_BETA_PREPARATION.md).
 
 ## Goal
 
@@ -51,22 +52,21 @@ Do not import the intentionally risky demo CSV into a real store. No live-store 
 
 ## Gate 3 — Distribution and commercial model
 
-Choose one model before implementing checkout:
+The owner selected a **paid downloadable utility**, with all CSV processing
+local, and a **USD 29 one-time beta** price experiment. Local comparisons remain
+unmetered within the existing scope. This is an offer to validate, not evidence
+of paid demand. Browser source is inspectable; copy protection is not promised.
+Hosted pay-per-report and subscription infrastructure are outside this beta.
 
-**A. Paid local/downloadable utility.** Sell access to the actual utility or a license; files stay local. A sample-only public demo can be separate from paid delivery. Copy protection and recurring revenue are not automatic, and license checks cannot make browser source secret.
-
-**B. Hosted pay-per-report service.** Requires a real server-side payment/entitlement boundary and idempotent delivery. If files move to a server, the present “no uploads” promise must change; design retention, deletion, security, support and privacy disclosures before accepting data.
-
-**C. Free local utility with later paid capabilities.** Can test usability and acquire relevant users, but free usage does not validate willingness to pay.
-
-The previous USD 9–19/report and USD 29–49/month figures are pricing hypotheses, not verified prices or implemented plans. Do not force a subscription before observing repeated need.
-
-- [ ] Select a model and a price experiment.
+- [x] Select a model and a price experiment for preparation.
+- [x] Prepare an internal allowlisted ZIP, offline help and inert product/checkout drafts.
 - [ ] Check name availability and select a domain only after owner approval.
-- [ ] Select a repository owner and visibility; no public code publication by default.
+- [x] Existing source repository is owned by DemonazGH and public; preserve its visibility and `UNLICENSED` designation during drafting.
 - [ ] Deploy a clearly labelled HTTPS test site with an accurate data-handling statement.
 - [ ] For a paid launch, configure seller/payment details, approved terms and support/refund process.
-- [ ] Test checkout, server-verified payment events, duplicate events, failed payment, delivery retry, refunds and revocation as appropriate to the selected model.
+- [ ] Test provider-hosted single-payment checkout, duplicate/failed attempts,
+  receipts, download retry and refunds using the [acceptance plan](CHECKOUT_ACCEPTANCE.md).
+  No custom webhook/backend is proposed. Downloaded copies cannot be remotely revoked.
 
 The source is published to the owner's GitHub repository. No product website,
 domain, paid hosting, seller account, ads, or subscription has been set up.

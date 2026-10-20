@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; base-uri 'none'; form-action 'none'; connect-src 'none'">
+  <meta name="robots" content="noindex,nofollow">
+  <title>CSV Change Guard — paid beta product-page draft</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <p class="draft-banner"><strong>Draft — not for sale.</strong> Product and checkout preview for owner review. No orders or payments are accepted.</p>
+  <header class="topbar">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">CSV</span><span>CSV Change Guard<small>Local catalog review</small></span></a>
+    <nav aria-label="Main"><a href="#how-it-works">How it works</a><a href="#fit">Check the fit</a><a href="#offer">Beta offer</a></nav>
+  </header>
+  <main id="main">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">For Shopify catalog operators</p>
+        <h1>Review the changes.<br><span>Before the import.</span></h1>
+        <p class="lead">Compare your current product CSV with a proposed update. Spot price movements, explicit clears, and matching problems in an understandable report.</p>
+        <div class="actions"><a class="button" href="checkout.html">Preview the $29 beta offer <span aria-hidden="true">→</span></a><a class="inline-link" href="#fit">Is it right for my files?</a></div>
+        <p class="small muted">Downloadable browser utility. Your CSV contents stay on your computer.</p>
+      </div>
+      <aside class="example" aria-label="Illustrative synthetic finding">
+        <div class="example-top"><p class="eyebrow">A change worth a second look</p><span class="pill">High priority</span></div>
+        <h3>Desk lamp</h3><span class="sku">LAMP-001</span>
+        <div class="prices"><s>59.00</s><span aria-label="changes to">→</span><strong>5.90</strong></div>
+        <p class="example-note"><strong>−90% price movement</strong><br>Intentional discount, or a misplaced decimal? Review the change before deciding what to import.</p>
+        <p class="example-foot">Illustrative synthetic example, not a live catalog. Currency is not inferred.</p>
+      </aside>
+    </div>
+    <div class="proof-line" aria-label="Product properties"><span>Local CSV processing</span><span>No store connection</span><span>Read-only reports</span><span>No subscription proposed</span></div>
+    <section id="how-it-works">
+      <div class="section-intro"><p class="eyebrow">A review you can repeat</p><h2>Two files. One clearer picture.</h2><p class="muted">For people who already prepare Shopify product CSV updates and want an independent check of the supported fields.</p></div>
+      <div class="grid">
+        <article class="card"><span class="step" aria-hidden="true">01</span><h3>Choose your files</h3><p class="muted">Open the downloaded HTML app in a browser. Select a current catalog and your proposed update from the same store and currency.</p></article>
+        <article class="card"><span class="step" aria-hidden="true">02</span><h3>Understand the findings</h3><p class="muted">Set a price-movement threshold and overwrite assumption. Review matched variants, selected field changes, and anything the tool could not assess.</p></article>
+        <article class="card"><span class="step" aria-hidden="true">03</span><h3>Keep a useful record</h3><p class="muted">Download an HTML report to reopen independently, or export findings as CSV or JSON. Exports include all findings, regardless of your current filter.</p></article>
+      </div>
+    </section>
+    <section id="fit">
+      <div class="section-intro"><p class="eyebrow">Check before buying</p><h2>A focused comparison, with clear limits.</h2><p class="muted">The beta checks a documented subset of Shopify product CSV fields. It is useful only when that subset fits your workflow.</p></div>
+      <div class="split">
+        <article class="card"><h3>A good fit when you have</h3><ul class="list muted"><li>UTF-8, comma-delimited product CSV files from the same store and currency.</li><li>Recognized handle, Title, and SKU columns, with stable, non-empty SKUs.</li><li>Exact, case-sensitive handle + SKU pairs that can identify the variants you want to compare.</li><li>Up to 5,000 data records and 10 MiB per file, with at most 200 columns.</li><li>A need to review prices, selected product/option/visibility fields, explicit clears, and comparison gaps.</li></ul></article>
+        <article class="card"><h3>Outside this beta’s coverage</h3><ul class="list muted"><li>Images, inventory, shipping, taxes, market-specific prices, and metafields.</li><li>Arbitrary supplier formats, XLSX, semicolon-delimited files, and every Shopify schema dependency.</li><li>Fuzzy matching, guessed identifiers, or matching variants whose handle or SKU has changed.</li><li>Store connections, imports, automatic corrections, backups, or import simulation.</li><li>A guarantee that Shopify will accept an import or that an import is safe.</li></ul></article>
+      </div>
+      <div class="notice fit-details"><strong>Zero findings does not mean “approved to import.”</strong> Missing or ambiguous identifiers make comparison incomplete. An absent row is not a deletion prediction. Omitted columns are unassessed; they are different from explicit blank cells.</div>
+      <details class="fit-details"><summary>Price format and browser evidence</summary><p class="small muted">Prices must be non-negative dot-decimal values with up to 12 integer digits and 6 decimal places. No currency symbols, locale guessing, negative prices, or scientific notation. Threshold arithmetic is exact within that supported range; displayed percentages are truncated to two decimal places.</p><p class="small muted">Automated Windows checks on 21 October 2026 passed in installed Chrome 155.0.8059.85 and Edge 155.0.4283.62, using both standalone-file and localhost navigation with browser sandboxing enabled. This is evidence for those tested versions and routes, not a guarantee for all browsers, managed devices, or merchant workflows.</p></details>
+    </section>
+    <section id="offer">
+      <div class="offer">
+        <div><p class="eyebrow">Proposed paid beta</p><h2>One purchase.<br>Repeat your local review.</h2><p>Download the utility, try the included synthetic samples, and run unlimited local comparisons within the documented limits.</p><p class="small">Proposed commercial license for one business, including its staff using it for that business. No resale or redistribution. Beta updates included; future major versions are not promised.</p></div>
+        <div><p class="price">$29 <span>USD, once</span></p><p class="small">Plus applicable tax, finalized by the payment provider at checkout. No subscription or per-report charges proposed.</p><div class="actions"><a class="button full" href="checkout.html">Review the checkout draft <span aria-hidden="true">→</span></a></div><p class="small">Draft offer. Final seller, support, license, and payment details still require owner review.</p></div>
+      </div>
+    </section>
+    <section class="faq" id="questions">
+      <p class="eyebrow">Before you decide</p><h2>Practical questions</h2>
+      <details><summary>Do my CSV files leave my computer?</summary><p>The utility reads selected files and creates reports in your browser. It does not upload CSV contents, connect to Shopify, send telemetry, or persist your catalog in local storage. Downloaded reports can contain catalog values, so store and share them with care. A future payment provider would separately process purchase details; it does not need your catalog files.</p></details>
+      <details><summary>Do I need a Shopify app installation or an account here?</summary><p>No store installation, Shopify credentials, product account, or API key is required to run the utility. The proposed purchase would be handled separately by a payment provider. This independent utility is not affiliated with or endorsed by Shopify.</p></details>
+      <details><summary>Can I send you a file to compare for me?</summary><p>This beta is a self-service utility. Support should start with error text and synthetic reproductions, not catalog attachments or store credentials. A two-business-day email response target is proposed. The actual support address must be supplied before a paid release.</p></details>
+      <details><summary>What happens if my browser blocks downloaded HTML?</summary><p>Extract the package before opening the app. Some managed browsers restrict local HTML. An optional localhost fallback using Node.js is included for users who can run it; it is not a backend or upload service. If your device policy prevents both routes, check with your administrator rather than disabling browser sandboxing.</p></details>
+      <details><summary>Is the beta a complete Shopify import validator?</summary><p>No. It compares supported fields using the tool’s exact handle + non-empty SKU key. That key is not a claim about Shopify’s importer identity rules. Review the report’s coverage, assumptions, and limitations, keep an appropriate backup, and validate your actual import workflow separately.</p></details>
+    </section>
+    <aside class="owner-review" aria-labelledby="owner-review-heading"><p class="eyebrow">Owner review — not customer commitments yet</p><h2 id="owner-review-heading">Before this page can become an offer</h2><ul class="list muted"><li>Supply the legal seller identity, contact details, and support address.</li><li>Review and approve the commercial license, refund process, privacy disclosure, and applicable consumer-rights wording.</li><li>Confirm product-name availability and the final price, tax presentation, and update/support commitments.</li><li>Obtain payment-provider approval and test purchase, receipt, delivery, failure, and refund flows. No checkout is connected here.</li><li>Validate the fit with representative, authorized workflows. Synthetic tests do not establish paid demand or full merchant compatibility.</li></ul></aside>
+  </main>
+  <footer class="footer"><p>CSV Change Guard is a working name for an independent utility. Not affiliated with Shopify. Current app: v0.1.0. Draft prepared 21 October 2026.</p><a href="checkout.html">Checkout draft</a></footer>
+</body>
+</html>

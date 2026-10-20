@@ -1,0 +1,16 @@
+CSV CHANGE GUARD - INTERNAL BETA CANDIDATE
+
+This is a review package, not an approved paid release or an offer for sale.
+Application version: 0.1.0. The manifest identifies the candidate version.
+
+The commercial licence, seller details, support address, checkout, delivery,
+refund wording and final release approval are not complete in this candidate.
+The repository's existing UNLICENSED status remains unchanged. This notice
+does not grant a commercial licence or change the application's comparison
+scope. Do not sell, publish or distribute this candidate to customers yet.
+
+CSV processing stays in the local browser. No checkout, payment processing,
+store connection, uploads or telemetry are added by this package.
+
+Use synthetic files while reviewing it. Read START_HERE.txt and help.html,
+and keep generated reports private when they contain confidential information.

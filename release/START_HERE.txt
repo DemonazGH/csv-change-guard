@@ -1,0 +1,63 @@
+CSV CHANGE GUARD — START HERE
+Internal beta candidate · application version 0.1.0
+NOT YET FOR SALE. Commercial terms and a support contact are not finalized.
+
+1. On Windows, right-click the downloaded ZIP and choose Extract All.
+   Open the extracted CSV-Change-Guard folder. Do not run inside the ZIP preview.
+
+2. Open help.html for the offline guide, supported scope, privacy notes,
+   troubleshooting, and synthetic examples.
+
+3. In the dist folder, right-click index.html, choose Open with, then
+   Google Chrome or Microsoft Edge. No installation, account, build, or
+   internet connection is needed for the normal local-file workflow.
+
+4. Click "Try the built-in demo". This uses synthetic data and sets the
+   threshold to 30% with overwrite enabled. Expected results:
+   Compared variants: 4     Price changes: 4
+   Priority findings: 6     Unpaired update rows: 4     All findings: 15
+   Verdict: "Incomplete comparison — blockers need review"
+   The duplicate identifier is deliberately ambiguous; excluded rows are
+   not guessed matches. Multiple findings may refer to the same record.
+
+5. Click "Save HTML report". Open the downloaded report in Chrome or Edge.
+   It works on its own after closing the app tab. The report includes all
+   findings even if a filter or search is active in the app.
+
+6. Reopen the app if needed. Click "Clear files", then choose:
+   Current catalog: samples/current-catalog.csv
+   Proposed update: samples/proposed-update.csv
+   Confirm 30% and "Overwrite matching handles: enabled".
+   Click "Compare files". The results should match step 4.
+
+7. Click "Clear files" when finished. Both filenames and visible results
+   disappear and Compare files is disabled. Clear files keeps your threshold
+   and overwrite setting. It does not delete source files or downloaded reports.
+
+All supplied CSV files are synthetic. Do not import them into a real store.
+The app only compares selected files locally. It never connects to Shopify,
+uploads CSV contents, performs an import, or changes a store.
+
+Supported files: UTF-8, comma-delimited CSV from the same store and currency;
+recognized handle, Title and SKU columns; exact case-sensitive handle plus
+non-empty SKU matching. Limit per file: 5,000 data records, 10 MiB, 200 columns.
+Images, inventory, taxes, shipping, markets, metafields, and unrecognized
+columns are unassessed. Missing/duplicate keys make comparison incomplete.
+An absent row is not a deletion prediction. No findings is not import approval.
+
+If local HTML is blocked, keep browser security and sandboxing enabled.
+If Node.js is already installed, open PowerShell in this extracted folder,
+run "node server.cjs", and open the localhost address it prints.
+Keep that terminal open while using the app; Ctrl+C stops it. No dependency
+installation is required. Otherwise record the blocked launch for review.
+
+CSV files and HTML/CSV/JSON reports may contain sensitive business values.
+Keep them on your own computer. Do not attach merchant files, reports, or
+unredacted screenshots to support requests or commit them to a repository.
+For a problem report, record the application version, Windows/browser version,
+file or localhost launch route, steps, and error text with private values removed.
+Use included synthetic files to reproduce an issue wherever possible.
+
+Support contact is not configured for this internal candidate. The proposed
+email support response target is two business days; this is a draft commitment.
+Do not use this package as a paid release until the owner completes launch review.

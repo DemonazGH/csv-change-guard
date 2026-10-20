@@ -3,12 +3,21 @@
 The `CI` workflow runs on pushes to `main`, pull requests, and manual dispatch.
 One Ubuntu 24.04 job uses Node 24 and Python 3.12 to:
 
-1. Run the engine and synthetic catalog scenario suites with `npm test`.
+1. Run the engine, synthetic catalog scenario and release-package suites with `npm test`.
 2. Rebuild `dist/index.html` and fail if it differs from the committed artifact.
-3. Install the pinned optional Playwright dependency and select the runner's
+3. Build the real internal beta candidate from an explicit allowlist, without publishing it.
+4. Install the pinned optional Playwright dependency and select the runner's
    packaged Google Chrome explicitly.
-4. Start the actual development server and run all browser smoke groups over
+5. Start the actual development server and run all browser smoke groups over
    localhost with Chromium sandboxing enabled.
+6. Independently verify the extracted package with Python's ZIP reader, check
+   package/help/draft links and digests, and preview the offline help and three
+   inert commerce pages at desktop and 390px widths in sandboxed Chrome.
+
+The optional `tests/beta_preview_test.py` uses the same pinned Playwright test
+dependency. It does not connect to a payment provider. Its results/screenshots
+join the ordinary seven-day CI browser artifact; the internal ZIP is built for
+checking and is not published as a GitHub Release or a live product.
 
 If the build check fails after a source change, run `npm run build` and commit the
 updated `dist/index.html` alongside the source. Do not edit the generated HTML

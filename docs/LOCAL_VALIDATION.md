@@ -58,6 +58,23 @@ The [scenario reference](../samples/scenarios/README.md) lists all nine files an
 their expected outcomes. A coverage warning is not automatically a false alarm.
 A missing row is not a deletion prediction, and no findings is not import approval.
 
+## Shopify-generated synthetic export pair
+
+The [21 October in-app browser record](SHOPIFY_EXPORT_VALIDATION.md) uses a fresh
+Shopify export of three owner-authorized synthetic Draft products with four
+variants. It includes preserved input files, independent expected changes,
+screenshots and browser-generated reports. This is a focused agent-operated
+in-app check, not another installed Chrome/Edge run or manual owner confirmation.
+
+At 30% with overwrite enabled, comparing that export against itself gives
+**4 compared, 0 price changes, 0 priority findings, 0 unpaired rows and 4 coverage
+warnings**. Comparing it against the supplied known-price update gives
+**4 compared, 3 price changes, 2 priority findings, 0 unpaired rows and 7 findings**.
+The high-priority changes are −90% and +30%; the +10% change is informational.
+Both reports retain two image and two unsupported-column warnings. No imports
+were performed. These synthetic artifacts are shareable; that does not change
+the private-file handling requirements below for real catalogs.
+
 ## When representative files become available
 
 Use copies of a current product export and the actual proposed update from the
@@ -101,6 +118,12 @@ synthetic data. This exercise does not perform an import or establish how the
 Shopify importer will handle the update.
 
 ## Evidence still needed
+
+The [21 October Shopify export comparisons](SHOPIFY_EXPORT_VALIDATION.md) add
+in-app browser and engine observations, with manual initial file selection.
+No browser version or sandbox command-line evidence was captured. Independent
+reopening of these exported reports, installed Chrome/Edge checks with this
+pair and controlled import behavior remain unverified.
 
 The [20 October pagination/export run](PAGINATION_VALIDATION.md) passed 106 Node
 tests and 16 browser groups per route in Windows Chrome and Edge, with sandboxing

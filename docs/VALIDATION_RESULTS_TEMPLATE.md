@@ -11,9 +11,12 @@ prices, file contents, screenshots, and exported reports from real catalogs.
 - Application version / source commit (or downloaded ZIP name):
 - Operating system:
 - Browser and version:
+- Browser surface: installed Chrome / installed Edge / in-app browser / other
 - Launch route: direct HTML / localhost / blocked
-- Execution: manual owner check / automated browser check
+- Execution: manual owner check / agent-operated browser check / automated suite
+- File selection: owner manual / agent file chooser / automated suite
 - Browser sandbox (if automated): enabled / disabled with reason / not recorded
+- Sandbox evidence: captured launch arguments / other recorded evidence / not captured
 - Data: built-in demo / named synthetic scenario / authorized real pair
 - Private pair label (generic; no store or filename):
 - Expected-change review: complete / sample / not prepared

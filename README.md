@@ -202,6 +202,12 @@ product launch are separate states. Live sales remain disabled; purchase/support
 privacy and effective terms still need completion. Customer CSV processing stays
 local and the app has no file-upload endpoint.
 
+The [purchase privacy notice draft](docs/PURCHASE_PRIVACY_DRAFT.md) and
+[privacy/withdrawal review](docs/PRIVACY_AND_CONSENT_REVIEW.md) distinguish local
+CSV processing from hosting, checkout and support data. They record unresolved
+production email, retention, transfers and consent/confirmation requirements;
+they are not effective policies or a passed legal-compliance check.
+
 ## Rule sources
 
 Selected rules were checked against these primary sources on 18 October 2026. The implementation covers a subset; links are not an endorsement or certification.

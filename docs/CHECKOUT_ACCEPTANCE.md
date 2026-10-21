@@ -18,6 +18,15 @@ remain unverified. The owner approved preparation of the
 [licence](COMMERCIAL_TERMS_DRAFT.md) and [refund policy](REFUND_POLICY_DRAFT.md),
 not an effective contract or live release. See [release gates](SELLER_DETAILS.md).
 
+A later 22 October read-only review inspected a **prepared Poland Test-mode
+checkout without submitting Pay**, the existing test order and provider Design
+panels. It found provider terms/privacy links but no separate supplier privacy
+link, immediate-delivery consent or withdrawal-loss acknowledgement in that
+state. No withdrawal function was observed on the inspected existing-order page.
+This is a bounded observation, not a finding about all configurations or live
+behavior. See the [privacy/consent review](PRIVACY_AND_CONSENT_REVIEW.md) and
+[non-effective notice draft](PURCHASE_PRIVACY_DRAFT.md). No new order was created.
+
 The local [draft checkout](../commerce-draft/checkout.html) is an inert copy/layout
 preview. Opening it, following the sample confirmation link or viewing screenshots
 does not verify a transaction. That local layout is not the separate real
@@ -56,6 +65,10 @@ An owner-approved live purchase would be a separate, later check.
 | New file version | Existing buyer access and fresh buyer delivery are understood; version, help and terms agree | Old/new version behavior |
 | Purchase privacy | Required purchase data goes only through disclosed seller/provider flows; no catalog data enters them | Field/notice review and redacted observations |
 | Regional disclosures | Buyer sees correct seller/terms, tax-inclusive final amount and any required digital-content consent before ordering | Applicable test region and reviewed copy |
+| Express delivery consent / withdrawal acknowledgement | Where relied on for the paid digital-content exception, actual prior choice and required durable confirmation are established separately from generic provider terms or optional Link account creation | Exact wording/version, affirmative action, timestamp and buyer confirmation; not verified by the prepared checkout |
+| Online withdrawal function | If applicable under current law, accessible function, distinct confirmation and durable receipt acknowledgement work | Applicability/provider confirmation first; function not observed on the inspected test-order page |
+| Versioned supplier documents | Approved licence, refund and privacy text available before purchase and delivered through the required durable confirmation | Exact versions received by buyer; not merely links to mutable pages |
+| Marketing separation | Automatic purchaser subscriber record does not cause unauthorised marketing; optional signup/tracking handled deliberately | Provider explanation and actual configuration; no campaign/export/signup to obtain evidence |
 
 A downloadable unmetered app cannot erase or disable an existing local copy
 after refund. Any license consequences belong in reviewed terms and provider

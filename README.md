@@ -10,6 +10,16 @@ processing. These are preparation artifacts, **not an active sale**. See
 [fresh preparation checks](docs/BETA_PREPARATION_VALIDATION.md). The application
 and repository's `UNLICENSED` designation remain unchanged.
 
+**22 October commercial update:** an informational prelaunch page and separate
+Lemon Squeezy Test-mode checkout now exist; fake-card order/receipt checks passed,
+but hosted downloads are blocked in Test mode and live sales remain disabled.
+The owner approved commercial defaults for [licence/support terms](docs/COMMERCIAL_TERMS_DRAFT.md)
+and [a 14-day voluntary refund](docs/REFUND_POLICY_DRAFT.md). Text is still pending
+effective-contract/privacy/provider review; the existing ZIP grants no commercial
+licence. See [seller details and remaining gates](docs/SELLER_DETAILS.md) and
+[the bounded provenance review](docs/OWNERSHIP_REVIEW.md). Earlier preparation
+records retain their dated scope; they are not evidence of live sales.
+
 Catalog workflow validation now includes reusable synthetic fixtures and targeted
 reporting and file-selection regressions. See [the current validation report](docs/SCENARIO_VALIDATION.md)
 and [cloud setup instructions](docs/CLOUD_DEVELOPMENT.md) for executed checks and
@@ -184,11 +194,13 @@ HTTPS deployment and Shopify import round trips remain separate release checks.
 
 ## Before a commercial launch
 
-The application is deliberately unmetered and has no payment boundary. **A client-side “pay to unlock” button would not securely enforce pay-per-report billing when the full engine is already delivered to the browser.** Choose the monetization architecture before adding checkout: a paid downloadable utility/license, or a genuinely server-enforced service with an updated data-handling model.
+The application is deliberately unmetered and has no payment boundary. **A client-side “pay to unlock” button would not securely enforce pay-per-report billing when the full engine is already delivered to the browser.** The owner selected a paid downloadable utility/licence with local CSV processing. The external Test-mode checkout remains separate from the utility; no runtime activation or account backend is added.
 
-See `docs/LAUNCH_PLAN.md`. Source repository publication is separate from a product
-launch. No hosting, domain, advertising, payment account, or customer-data
-collection is part of this development setup.
+See [the launch plan](docs/LAUNCH_PLAN.md) and [current commercial gates](docs/SELLER_DETAILS.md).
+Source publication, the informational website, the provider test and a paid
+product launch are separate states. Live sales remain disabled; purchase/support
+privacy and effective terms still need completion. Customer CSV processing stays
+local and the app has no file-upload endpoint.
 
 ## Rule sources
 

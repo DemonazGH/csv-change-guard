@@ -1,5 +1,14 @@
 # Paid beta preparation — 21 October 2026
 
+**22 October update:** the informational prelaunch page is public on Cloudflare
+Pages; support is configured; a separate Lemon Squeezy Test-mode checkout/order/
+receipt passed. Provider downloads are blocked in Test mode. Live activation is
+still disabled. The owner approved one-business licensing, 12 months of support/
+maintenance and a full 14-day voluntary refund. See [current seller/release gates](SELLER_DETAILS.md),
+[review-ready terms](COMMERCIAL_TERMS_DRAFT.md) and [refund policy](REFUND_POLICY_DRAFT.md).
+The historical preparation statements below describe 21 October; they do not
+override this update. The original ZIP remains not for sale and unchanged.
+
 **Internal candidate, not for sale.** The owner selected the recommended defaults
 for preparation. This records the chosen direction; it does not announce a launch.
 The application remains v0.1.0, with local CSV processing and unchanged behavior.
@@ -12,8 +21,9 @@ The application remains v0.1.0, with local CSV processing and unchanged behavior
 | Delivery | Downloadable browser utility; extract the ZIP and open the HTML locally |
 | Scope | The existing supported comparison subset, identifiers and limits; no new importer or store integration |
 | Price experiment | USD 29 once for the beta, unlimited local comparisons within the limits; no subscription or per-report metering |
-| Support | Asynchronous email; proposed response target of two business days, subject to a staffed contact being configured |
-| License | Commercial terms for one business and its staff, drafted for review; no resale or redistribution grant |
+| Support | csvchangeguard.support@gmail.com; first-response target two Polish business days; 12 months of email support/maintenance from purchase approved for preparation |
+| License | One business, staff/contractors solely for that business, its own stores/devices and backups; no agency/multiclient, resale or redistribution grant |
+| Refund | Full voluntary refund requested within 14 calendar days, no reason required even after download; mandatory rights unaffected |
 | Name | CSV Change Guard as the working name; availability has not been checked |
 
 The five defaults concern scope, price, support, commercial-license drafting and

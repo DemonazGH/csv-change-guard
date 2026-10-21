@@ -2,6 +2,15 @@
 
 Prepared: **18 October 2026**. Product remains **v0.1.0**.
 
+**22 October current status:** public informational prelaunch page and support
+inbox exist; Lemon Squeezy Test-mode checkout/order/receipt passed, while hosted
+downloads are blocked there. Live sales remain disabled. Commercial defaults
+are owner-approved but licence text is not effective; personal supplier details
+are held outside Git. Start with [seller details and release gates](SELLER_DETAILS.md),
+[terms](COMMERCIAL_TERMS_DRAFT.md), [refund policy](REFUND_POLICY_DRAFT.md) and
+[ownership review](OWNERSHIP_REVIEW.md). Older no-account/no-deployment statements
+below are historical. App, repository licensing and the internal ZIP are unchanged.
+
 **21 October update:** the owner selected preparation of a USD 29 one-time
 downloadable beta, local CSV processing, asynchronous support, commercial terms
 for review and the working name CSV Change Guard. The internal allowlisted ZIP,

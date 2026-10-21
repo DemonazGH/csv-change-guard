@@ -1,8 +1,27 @@
-# Checkout and delivery acceptance — not yet executed
+# Checkout and delivery acceptance — partial Test-mode evidence
+
+## Current status — 22 October 2026
+
+The owner authorised a separate Lemon Squeezy **Test-mode** rehearsal. Connected
+Windows Edge UI checks passed the USD 29 single-payment fake-card checkout,
+matching paid test order, buyer receipt and seller notification in the support
+Gmail Inbox. Receipt reply-to matched `csvchangeguard.support@gmail.com`.
+The customer order listed the internal ZIP, but its Download action returned
+**Downloads are not available in test mode**. This is an expected provider
+restriction, not a passed delivery/extraction check. Live activation and actual
+sales remain disabled. Private screenshots, IDs and signed access URLs are
+outside Git; this summary is separate from the earlier app/browser suites.
+
+Refunds, decline/cancel, duplicate submission, resend/recovery, updates,
+independent-buyer receipt access, statutory disclosures and live tax handling
+remain unverified. The owner approved preparation of the
+[licence](COMMERCIAL_TERMS_DRAFT.md) and [refund policy](REFUND_POLICY_DRAFT.md),
+not an effective contract or live release. See [release gates](SELLER_DETAILS.md).
 
 The local [draft checkout](../commerce-draft/checkout.html) is an inert copy/layout
 preview. Opening it, following the sample confirmation link or viewing screenshots
-does not verify a transaction. No checkout or provider-delivery tests have run.
+does not verify a transaction. That local layout is not the separate real
+Test-mode provider checkout described above.
 
 ## Proposed provider configuration
 
@@ -27,11 +46,11 @@ An owner-approved live purchase would be a separate, later check.
 
 | Case | Expected behavior | Evidence to retain |
 |---|---|---|
-| Successful single payment | Correct product, currency, total/tax and no renewal; exactly one order with receipt/download access | Redacted mode/version/result and expected/observed total |
+| Successful single payment | Test checkout/order and receipt passed on 22 October; displayed subtotal/total USD 29 with no separate tax line. Live tax and delivery remain unverified | Mode/version and observed total; private account evidence outside Git |
 | Declined or cancelled checkout | Clear next step; no success claim or delivered entitlement for a failed order | Redacted result and retry outcome |
 | Reload/back/duplicate submit | No unintended duplicate purchase; verify actual provider order state | Order count and provider behavior, without IDs |
-| Receipt and fresh session | Receipt reaches test inbox; download is available independently of the marketing page | Access result; no private download token |
-| Delivery/extraction | Received ZIP hash equals approved artifact; Windows Extract All works; app/demo/report work with sandboxing enabled | Artifact hash, browser/OS and test result |
+| Receipt and fresh session | Receipt reached owner/support Gmail; independent buyer/fresh-session access still untested | Access result; no private download token |
+| Delivery/extraction | Blocked in Test mode; a separately authorised delivery check must verify ZIP hash, extraction and app/demo/report with sandboxing | Artifact hash, browser/OS and actual result; do not count local candidate tests as provider delivery |
 | Lost receipt/download retry | Provider can resend access; retry does not create a new charge | Support/provider recovery steps and observed result |
 | Refund | Provider test mode supports a documented refund test or case is explicitly not run; no claim downloaded copies are remotely revoked | Financial state and refund notice result |
 | New file version | Existing buyer access and fresh buyer delivery are understood; version, help and terms agree | Old/new version behavior |

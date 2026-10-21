@@ -2,6 +2,14 @@
 
 Prepared: **18 October 2026**. Product remains **v0.1.0**.
 
+**Latest 22 October privacy decision:** domain and paid email are postponed.
+The owner approved a manual monthly review/deletion of routine support emails
+after about three months from closure. Use the [current website/Gmail notice](CURRENT_WEBSITE_GMAIL_PRIVACY.md)
+and [setup record](CURRENT_PRIVACY_SETUP.md), which supersede earlier purchase
+and routine-retention proposals below. Consumer Gmail is not described as a
+contracted processor. Optional Gmail privacy controls remain owner-operated;
+no assistant security/privacy change, automatic deletion or live activation.
+
 **22 October current status:** public informational prelaunch page and support
 inbox exist; Lemon Squeezy Test-mode checkout/order/receipt passed, while hosted
 downloads are blocked there. Live sales remain disabled. Commercial defaults

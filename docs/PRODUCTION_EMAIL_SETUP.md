@@ -1,6 +1,10 @@
 # Production email proposal — 22 October 2026
 
-**Recommended, not purchased or activated. Live sales remain disabled.**
+**Postponed by the owner on 22 October 2026. Not purchased or activated. Live
+sales remain disabled.** Keep the proposal below as a possible later option;
+do not reopen purchase/upgrade flows without a new request. The current task is
+the existing website and consumer Gmail arrangement, described in the
+[current notice](CURRENT_WEBSITE_GMAIL_PRIVACY.md).
 The existing contact is still `csvchangeguard.support@gmail.com`. Do not publish
 or use a proposed address until its mailbox and delivery have been verified.
 

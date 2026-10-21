@@ -8,7 +8,9 @@ The public website and support inbox already create data flows: their current
 privacy information needs completion now, independently of a paid launch. An
 unpublished draft and disabled sales do not satisfy that existing obligation.
 The [production email proposal](PRODUCTION_EMAIL_SETUP.md) recommends one
-Workspace Business Starter mailbox and a domain; neither is active. The
+Workspace Business Starter mailbox and a domain; the owner has postponed both.
+Use the [current website/Gmail notice](CURRENT_WEBSITE_GMAIL_PRIVACY.md) for the
+existing activities. The
 [operating procedure](SUPPORT_PRIVACY_OPERATIONS.md) separates proposed retention
 from practices already implemented. Do not replace the current Gmail description
 with Workspace claims until the business account and terms are verified.
@@ -90,7 +92,7 @@ lists or keep local copies of payment data for convenience.
 
 | Record | Proposed retention rule to finalise |
 |---|---|
-| Routine support enquiries | Proposed monthly review and start of deletion once 90 days have elapsed after closure, normally within days 90–121, followed by Trash/provider deletion stages. Owner approval and implementation pending; retain only an anonymised technical issue when useful. Longer retention needs a documented contractual duty, active complaint or claim |
+| Routine support enquiries | Owner-approved manual monthly review and start of deletion once 90 days have elapsed after closure, normally within days 90–121, followed by consumer Gmail Trash/provider deletion stages. Future monthly reviews are the owner's responsibility; no automatic deletion. Retain only an anonymised technical issue when useful. Longer retention needs a documented contractual duty, active complaint or claim |
 | Purchase/licence and included support/update entitlement | Keep the minimum reference needed to recognise the delivered continuing licence and administer the 12-month included period; **[choose a review/deletion schedule that still supports the promised continuing licence and justify any later claim retention]** |
 | Supplier accounting/tax and claim evidence | Keep only categories the supplier actually needs for applicable Polish duties/claim periods; **[accountant/legal review to specify categories, period and starting event]**. A refund does not automatically erase these records |
 | Website technical records | **[Confirm provider and supplier-accessible log retention and implement any chosen controls]** |

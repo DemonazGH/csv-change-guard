@@ -1,10 +1,12 @@
 # Security and privacy notes — prototype
 
 These notes describe the **offline utility**, not every service around its sale.
-The [purchase privacy draft](PURCHASE_PRIVACY_DRAFT.md) and
-[privacy/consent review](PRIVACY_AND_CONSENT_REVIEW.md) cover the separate public
-informational website, Test-mode checkout and support inbox. They are not an
-effective customer policy. Live sales remain disabled.
+The [current website/Gmail notice](CURRENT_WEBSITE_GMAIL_PRIVACY.md) describes
+the existing informational page and support inbox, with evidence and owner
+handoffs in the [current setup record](CURRENT_PRIVACY_SETUP.md). The separate
+[purchase privacy draft](PURCHASE_PRIVACY_DRAFT.md) and
+[privacy/consent review](PRIVACY_AND_CONSENT_REVIEW.md) still have unresolved
+paid-release gates. Live sales remain disabled; domain/paid email are postponed.
 
 ## Data flow
 

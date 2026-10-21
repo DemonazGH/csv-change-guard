@@ -6,6 +6,14 @@ This is an implementation review, not legal compliance certification. The
 completion fields. No app, ZIP, public website, account privacy setting or live
 payment configuration was changed during this review.
 
+**Latest owner direction:** postpone domain/paid email; use the
+[current website/Gmail notice](CURRENT_WEBSITE_GMAIL_PRIVACY.md) for existing
+activities and the [current setup record](CURRENT_PRIVACY_SETUP.md) for fresh
+read-only findings. The owner has now approved manual routine retention of about
+three months after closure followed by monthly review. Earlier proposal/approval
+statuses below are historical. No existing mail was deleted or rule automated;
+purchase-specific gates remain open.
+
 The public website and working support inbox already have transparency and
 handling obligations. Complete accurate **current prelaunch website/support
 information now**, separately from the future purchase notice. Disabled sales

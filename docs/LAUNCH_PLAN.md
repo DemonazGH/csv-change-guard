@@ -70,6 +70,9 @@ Hosted pay-per-report and subscription infrastructure are outside this beta.
 - [x] Existing source repository is owned by DemonazGH and public; preserve its visibility and `UNLICENSED` designation during drafting.
 - [x] Publish the informational HTTPS prelaunch page, with local CSV-processing scope and no live checkout.
 - [ ] For a paid launch, configure seller/payment details, approved terms and support/refund process.
+- [ ] Complete the [purchase privacy notice](PURCHASE_PRIVACY_DRAFT.md) and
+  [privacy/withdrawal gates](PRIVACY_AND_CONSENT_REVIEW.md): production email terms,
+  provider roles/transfers, retention, marketing separation and durable confirmation.
 - [ ] Test provider-hosted single-payment checkout, duplicate/failed attempts,
   receipts, download retry and refunds using the [acceptance plan](CHECKOUT_ACCEPTANCE.md).
   No custom webhook/backend is proposed. Downloaded copies cannot be remotely revoked.

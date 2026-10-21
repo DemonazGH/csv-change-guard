@@ -11,6 +11,14 @@ are held outside Git. Start with [seller details and release gates](SELLER_DETAI
 [ownership review](OWNERSHIP_REVIEW.md). Older no-account/no-deployment statements
 below are historical. App, repository licensing and the internal ZIP are unchanged.
 
+The [purchase privacy draft](PURCHASE_PRIVACY_DRAFT.md) and
+[consent/implementation review](PRIVACY_AND_CONSENT_REVIEW.md) now record a
+bounded, unsubmitted Poland Test-mode checkout inspection. Consumer Gmail has
+no DPA/processor role; automatic purchaser subscriber records do not establish
+marketing consent. Production email, retention/transfers, withdrawal controls
+and durable confirmation remain open. No account privacy settings or public
+policy were changed; no live activation is authorised.
+
 **21 October update:** the owner selected preparation of a USD 29 one-time
 downloadable beta, local CSV processing, asynchronous support, commercial terms
 for review and the working name CSV Change Guard. The internal allowlisted ZIP,

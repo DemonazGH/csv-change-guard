@@ -51,6 +51,13 @@ Use the [licence/support terms](COMMERCIAL_TERMS_DRAFT.md),
 commercial defaults do not license the current not-for-sale ZIP. Public Git
 keeps identity placeholders; final public copy will use the private worksheet.
 
+The [purchase/support/website privacy notice](PURCHASE_PRIVACY_DRAFT.md) is now
+drafted, with an [evidence and implementation review](PRIVACY_AND_CONSENT_REVIEW.md).
+It is not effective: production email terms, specific retention and transfer
+arrangements, and provider withdrawal/confirmation behavior remain unresolved.
+The 22 October read-only Test-mode inspection found no separate delivery/withdrawal
+control in its prepared Poland checkout; no new transaction was submitted.
+
 Before effective terms or live sales:
 
 1. Confirm current public supplier/address details and any additional required
@@ -61,11 +68,12 @@ Before effective terms or live sales:
    information/consent/confirmation, applicable online withdrawal function and
    dispute information. Do not invent an exclusive foreign court or reuse an
    obsolete EU ODR link.
-3. Finish purchase/support/website privacy copy: controller identity, actual
-   seller access to order data, Gmail support, provider/host roles/transfers,
-   lawful purposes, retention and rights/contact routes. Local CSV processing
-   does not mean checkout has no cookies or purchase/support data is never
-   processed. Do not invent a legal retention period without the actual setup.
+3. Complete and approve the privacy draft against the actual production setup.
+   Resolve consumer Gmail's lack of a DPA/processor role, purchaser subscriber
+   records versus marketing consent, purpose-specific provider/host roles and
+   transfers, and supplier/provider retention. Confirm the actual email service
+   and accountant's required record categories/periods. Do not treat a draft
+   notice, unchecked analytics tags or local CSV processing as privacy clearance.
 4. Verify durable delivery of the exact versioned terms and the included-update
    channel, plus provider decline/cancel, duplicate submission, refund and recovery
    cases in [checkout acceptance](CHECKOUT_ACCEPTANCE.md). A mutable webpage

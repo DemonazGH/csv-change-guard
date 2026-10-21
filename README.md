@@ -208,6 +208,11 @@ CSV processing from hosting, checkout and support data. They record unresolved
 production email, retention, transfers and consent/confirmation requirements;
 they are not effective policies or a passed legal-compliance check.
 
+See the [production email proposal](docs/PRODUCTION_EMAIL_SETUP.md) and
+[proposed support/privacy procedure](docs/SUPPORT_PRIVACY_OPERATIONS.md) for the
+one-mailbox recommendation, verified price references and owner handoffs. The
+new domain/mailbox and retention process are not active; live sales stay disabled.
+
 ## Rule sources
 
 Selected rules were checked against these primary sources on 18 October 2026. The implementation covers a subset; links are not an endorsement or certification.

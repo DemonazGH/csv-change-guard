@@ -3,6 +3,12 @@
 **Status:** functioning local prototype with internal paid-beta preparation,
 not a public or paid launch. See [the selected offer and prepared artifacts](PAID_BETA_PREPARATION.md).
 
+**22 October update:** an informational prelaunch page is public; support and
+Lemon Squeezy Test-mode checkout/order/receipt are configured and partially
+verified. Live sales remain disabled. Hosted downloads are blocked in Test mode.
+Commercial defaults are owner-approved, with effective terms/privacy and provider
+checks still pending in [seller details and release gates](SELLER_DETAILS.md).
+
 ## Goal
 
 Validate a self-service product whose ordinary customer cycle can be automated. Start with paying demand and low support effort; work toward approximately USD 1,000 monthly operating profit before scaling. Personal after-tax income is a separate measure.
@@ -62,14 +68,16 @@ Hosted pay-per-report and subscription infrastructure are outside this beta.
 - [x] Prepare an internal allowlisted ZIP, offline help and inert product/checkout drafts.
 - [ ] Check name availability and select a domain only after owner approval.
 - [x] Existing source repository is owned by DemonazGH and public; preserve its visibility and `UNLICENSED` designation during drafting.
-- [ ] Deploy a clearly labelled HTTPS test site with an accurate data-handling statement.
+- [x] Publish the informational HTTPS prelaunch page, with local CSV-processing scope and no live checkout.
 - [ ] For a paid launch, configure seller/payment details, approved terms and support/refund process.
 - [ ] Test provider-hosted single-payment checkout, duplicate/failed attempts,
   receipts, download retry and refunds using the [acceptance plan](CHECKOUT_ACCEPTANCE.md).
   No custom webhook/backend is proposed. Downloaded copies cannot be remotely revoked.
 
-The source is published to the owner's GitHub repository. No product website,
-domain, paid hosting, seller account, ads, or subscription has been set up.
+The source is published to the owner's GitHub repository. The informational
+Cloudflare Pages site and a Lemon Squeezy Test-mode store now exist. No live
+activation, real charge, paid hosting, purchased domain, ads or subscription is
+part of this setup. A fake-card test order is not evidence of paid demand.
 
 ## Gate 4 — One acquisition experiment
 

@@ -1,92 +1,160 @@
-# Commercial terms — working draft
+# CSV Change Guard - commercial licence and support terms
 
-**For owner and legal review. Not effective terms, not a license grant, not for
-publication or inclusion as an agreed contract in the current package.** The
-repository remains `UNLICENSED`. Missing seller/contact details are intentional.
+**Owner-approved commercial defaults, prepared for review on 22 October 2026.
+Not yet effective; not a present licence grant or live offer.** Final identity,
+legal/privacy and provider checks remain in [seller details](SELLER_DETAILS.md).
+The repository remains `UNLICENSED`; the current beta.1 ZIP remains internal
+and not for sale. The text below is for a later approved commercial release.
 
-## Proposed license copy
+## 1. Supplier and purchase
 
-Seller: **[legal business name, service address and required registration details]**.
-Product: CSV Change Guard paid beta, **[final release identifier]**.
-Contact: **[working support email]**. Effective date: **[date of approved terms]**.
+Software supplier/licensor: **[REGISTERED_BUSINESS_NAME]**, a **[LEGAL_FORM]**
+registered in **[REGISTRATION_COUNTRY]**. Business/correspondence address:
+**[PUBLIC_BUSINESS_ADDRESS]**. Registration/tax details:
+**[APPLICABLE_REGISTRATION_AND_TAX_DETAILS]**.
+Support: **csvchangeguard.support@gmail.com**.
+Terms version/effective date: **[APPROVED_TERMS_VERSION_AND_DATE]**.
+The purchased package version is identified in the order and manifest.
 
-For a one-time payment of USD 29, plus any applicable tax as clearly presented
-before payment, the purchaser would receive a non-exclusive license for one
-business and that business's staff to use the delivered browser utility on their
-devices for that business's own catalog work. There would be no comparison quota
-or recurring subscription. Each input remains subject to the stated technical
-limits. External agencies serving multiple client businesses are outside this
-initial proposed license and need separately agreed terms before purchase.
+For purchases through its checkout, Lemon Squeezy is the merchant of record and
+authorised reseller. Its buyer terms govern that transaction. We supply and
+license the software under these terms; we do not change the provider's terms
+or speak on its behalf. Mandatory rights take precedence over conflicting limits.
 
-The purchaser could keep using the delivered version. Included beta updates
-would be made available through the original delivery channel. No future major
-version, new platform integration, perpetual support or specific feature date
-is promised. Mandatory rights and any required updates are not limited by this
-proposal; finalize the supported update period and delivery mechanism before sale.
+## 2. One purchase for one business
 
-The proposal does not permit resale, sublicensing or redistribution of the
-utility. A purchaser could share generated reports for their own business use,
-subject to their authority over the data. The purchaser retains control of their
-input data; the app processes it locally and does not upload it to the seller.
+For the USD 29 one-time beta price, plus applicable tax shown before payment,
+the purchasing business receives a non-exclusive licence to use the delivered
+utility for its own catalog work. There is no subscription, comparison quota,
+per-report charge or runtime licence activation.
 
-CSV Change Guard compares a documented subset of two product CSV files. It never
-connects to Shopify, imports changes, restores a backup or approves an import.
-Exact, case-sensitive handle plus non-empty SKU is the tool's comparison key,
-not a claim about importer identity. Missing or ambiguous identifiers mean
-incomplete comparison. Images, inventory, taxes, shipping, market-specific prices,
-metafields and other unrecognized columns are outside coverage. An absent row
-does not predict deletion; no findings does not establish safety. The purchaser
-remains responsible for backups, reviewing findings and independently testing
-any import workflow.
+Staff and contractors may use it solely for that licensed business. You may
+install it on the devices used for that work and keep backups. Stores operated
+by the same business are covered without a separate device, staff or owned-store
+count limit; technical input limits still apply. Contractors receive no licence
+for their other clients. Agency services for separate client businesses are
+outside this offer; each separate business needs its own appropriate licence.
 
-Before these become terms, obtain appropriate review of ownership, permitted
-use, updates, remedies, liability, termination and governing-law/dispute provisions
-for the actual seller and buyer markets. This draft deliberately supplies no
-invented liability cap, consumer-rights waiver or exclusive court clause.
+Do not resell, sublicense, publicly redistribute or offer the utility as a hosted
+service, except where mandatory law permits otherwise. Software ownership is not
+transferred. This licence covers the delivered package; it does not relicense the
+public source repository. You retain your rights in input data and reports and
+may keep/share reports for your business if you have authority over their data.
+We do not require you to send that data to us.
 
-## Proposed support copy
+## 3. Delivered version, maintenance and support
 
-Email **[support address]** for installation, supported-format and report questions.
-Our target is a first response within two business days, Monday–Friday, excluding
-public holidays at the seller's location. The final page must state the seller's
-location and working support contact. This is a response target, not an emergency
-service or a resolution guarantee.
+You may keep using the delivered version without a licence expiry unless the
+licence ends under section 6. Keep your ZIP and receipt; perpetual download-link
+hosting is not promised.
 
-Include the release version, Windows/browser version, action taken, exact error
-and an invented minimal example when possible. Do not email private merchant
-CSVs, exported reports, store credentials or payment details. We do not offer
-managed imports, private catalog analysis or live-store access as part of this beta.
-The support process must handle accidentally received sensitive material without
-copying it to Git, screenshots or AI tools; define access/deletion rules before sale.
+The purchase includes 12 months of email support and maintenance updates released
+for this beta product, starting on the purchase date. Maintenance means corrections
+and compatibility/security maintenance within the described scope. No release
+schedule, requested feature, future major version or new platform is promised.
+Included packages will be provided through the original purchase-delivery channel;
+contact support with the order reference if access fails. The utility does not
+automatically check for or install updates.
 
-## Proposed refund and delivery copy
+There is no automatic renewal or charge after 12 months; you keep the delivered
+version. This voluntary period does not shorten mandatory periods for necessary
+updates, conformity or other remedies.
 
-If the download is missing or corrupt, contact **[support address]** with the
-order reference from your receipt. We will help restore access through the
-payment provider. If the delivered utility does not work as described, contact
-us for assistance and the remedies available for your purchase. This does not
-limit mandatory consumer rights.
+Email **csvchangeguard.support@gmail.com** for installation, supported-format,
+report or purchase-access questions. We aim for a first response within two
+business days, Monday-Friday excluding Polish public holidays. This is a response
+target, not an emergency service or guaranteed resolution time. Managed imports,
+private catalog analysis, custom onboarding and live-store access are not included.
+This support scope does not remove a legal complaint or remedy route.
 
-**Owner decision before sale:** finalize a clearly stated voluntary refund window
-and request process consistent with the provider and applicable law. Do not use
-“all digital sales are final,” a preselected waiver, or an unsupported promise
-that every buyer loses withdrawal rights at download. Do not publish these
-unresolved notes as a finished refund policy.
+Include the app/package version, Windows/browser version, steps and error text.
+Use synthetic examples. Do not send merchant CSVs, reports, credentials, card
+details or unredacted screenshots. Support is separate from local app processing.
 
-EU guidance distinguishes withdrawal from remedies for faulty digital content.
-For certain immediate-download arrangements, prior express consent and
-acknowledgment matter; this draft does not implement that process. See
-[EU distance-selling guidance](https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm)
-and [digital-content remedies](https://commission.europa.eu/topics/business-and-industry/contract-rules/digital-contracts/digital-contract-rules_en),
-checked on 21 October 2026. Provider operations also need verification against
-[its refund documentation](https://docs.lemonsqueezy.com/help/orders/refund-order).
+## 4. Product scope and requirements
 
-## Separate purchase/support privacy notice needed
+CSV Change Guard is a local, read-only comparison aid for a documented subset of
+two Shopify product CSVs from the same store and currency. It requires exact,
+case-sensitive handle plus non-empty SKU matching. This is the tool's key, not
+Shopify importer identity. Missing/ambiguous keys make comparison incomplete.
+It does not connect to Shopify, import changes, repair a CSV or make a backup.
 
-The application's local-processing statement does not cover a future purchase.
-Before launch, identify the seller/controller, payment and delivery provider,
-data collected (such as order/contact details), purposes and legal bases,
-recipients/transfers, retention, rights and contact/complaint route. Review any
-provider cookies or analytics instead of claiming the entire buying journey
-has no tracking. The current local HTML drafts contain no forms, scripts,
-analytics or external assets and collect no purchase data.
+Both inputs must be UTF-8 comma-delimited CSVs with recognised handle, Title and
+SKU columns. Each file is limited to 5,000 data records, 10 MiB and 200 columns.
+Prices use the documented non-negative dot-decimal format. Images, inventory,
+taxes, shipping, market-specific prices, metafields, unrecognised columns and
+comprehensive importer/schema validation are outside coverage. Absent rows are
+not deletion predictions. Omitted columns differ from explicit blank cells.
+
+Review fit and browser requirements before purchase. Recorded Windows Chrome/Edge
+checks cover specific tested versions/routes, not every browser, managed device
+or merchant workflow. Zero findings is not an import approval or safety guarantee.
+Keep backups and independently test the actual import workflow. Scope statements
+do not excuse failure to deliver the described product or remove legal remedies.
+
+The app processes selected CSVs locally and creates local reports. It has no CSV
+uploads, store credentials, telemetry or runtime external scripts. Checkout,
+website hosting and support have separate privacy notices/data flows; the whole
+purchase journey is not represented as data-free. The utility is independent
+and is not affiliated with or certified by Shopify.
+
+## 5. Refunds and complaints
+
+The [refund policy](REFUND_POLICY_DRAFT.md) offers a full voluntary refund when
+requested within 14 calendar days of purchase, without a reason, even after
+software download/use. Troubleshooting is not a condition of a timely request.
+The voluntary period does not limit mandatory rights. Payment refunds are handled
+through Lemon Squeezy. Missing-delivery or product-conformity complaints can be
+raised after the voluntary period; applicable remedies still apply.
+
+## 6. Ending use
+
+After a completed full refund, stop using and delete the utility copies covered
+by that purchase, including backups. You may retain your own reports and business
+data. We cannot remotely erase or disable downloaded copies.
+
+For a material licence breach, we may end the licence by written notice if you
+do not correct a remediable breach within 14 calendar days after receiving notice
+identifying it. This does not override mandatory rights or create a remote lockout.
+You may stop using the utility at any time.
+
+## 7. Rights and later terms
+
+Nothing here excludes mandatory consumer or protected business-buyer rights,
+required digital-content updates/remedies or liability that cannot legally be
+excluded. This draft imposes no blanket as-is waiver, invented liability cap,
+compulsory foreign court or withdrawal waiver. It promises no exclusive copyright
+or trademark status for AI-assisted material.
+
+The approved terms supplied with the purchase govern that version. Later website
+edits do not retrospectively remove purchased rights. Any material change needing
+agreement will be presented separately. Save the terms with your order.
+
+## Owner implementation notes - remove from effective customer copy
+
+- Fill identity from the private verified worksheet. Do not put registration
+  documents or unnecessary identifiers in Git.
+- Replace draft links/placeholders with approved public policies. Supply matching,
+  versioned licence/refund/privacy text in the approved commercial ZIP and durable
+  purchase confirmation; a mutable webpage alone does not establish which terms
+  were delivered to a buyer. Do not silently repackage the existing beta.1 ZIP.
+- Validate included-update delivery and recovery. Test checkout/receipt passed;
+  hosted ZIP retrieval, file replacement and recovery have not passed.
+- Review the applicable supplier/MoR relationship, Polish/EU digital-content
+  remedies, complaint deadlines, withdrawal information/consent/confirmation,
+  online withdrawal function and dispute information before effectiveness.
+- Retain ownership/creation evidence and verify applicable AI-service terms;
+  see [the bounded provenance review](OWNERSHIP_REVIEW.md). This is drafted
+  contract text, not an ownership or compliance certification.
+
+## Primary sources checked 22 October 2026
+
+[Lemon Squeezy buyer terms](https://www.lemonsqueezy.com/buyer-terms) distinguish
+its transaction from the supplier software licence. [Its refund guidance](https://docs.lemonsqueezy.com/help/payments/refunds-chargebacks)
+permits supplier policies while retaining provider discretion. Neither source
+approves this particular licence.
+
+[EU digital-content rules](https://commission.europa.eu/topics/business-and-industry/contract-rules/digital-contracts/digital-contract-rules_en)
+and [distance-selling guidance](https://europa.eu/youreurope/business/selling-in-eu/selling-goods-services/ecommerce-distance-selling/index_en.htm)
+help distinguish voluntary promises from mandatory rights. Final applicability
+and Polish implementation need review before live activation.

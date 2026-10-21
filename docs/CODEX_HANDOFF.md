@@ -19,6 +19,13 @@ marketing consent. Production email, retention/transfers, withdrawal controls
 and durable confirmation remain open. No account privacy settings or public
 policy were changed; no live activation is authorised.
 
+Production email is now [specified for approval](PRODUCTION_EMAIL_SETUP.md),
+with a [proposed privacy handling procedure](SUPPORT_PRIVACY_OPERATIONS.md).
+Workspace and the domain are not active; the current Gmail contact remains in
+use. The owner-approved provider inquiry was sent and verified in Sent. Purchase,
+owner-operated account/security steps, delivery tests and final privacy copy
+remain pending. Do not present draft procedures as settings already applied.
+
 **21 October update:** the owner selected preparation of a USD 29 one-time
 downloadable beta, local CSV processing, asynchronous support, commercial terms
 for review and the working name CSV Change Guard. The internal allowlisted ZIP,

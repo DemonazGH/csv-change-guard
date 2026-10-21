@@ -58,6 +58,13 @@ arrangements, and provider withdrawal/confirmation behavior remain unresolved.
 The 22 October read-only Test-mode inspection found no separate delivery/withdrawal
 control in its prepared Poland checkout; no new transaction was submitted.
 
+The [production email recommendation](PRODUCTION_EMAIL_SETUP.md) proposes
+Workspace Business Starter Flexible plus a domain, within the service budget
+subject to final quotes and approval. Nothing has been bought or activated.
+The [support/privacy procedure](SUPPORT_PRIVACY_OPERATIONS.md) is proposed, not
+an automatic retention rule. The provider inquiry has now been sent with owner
+permission; its answers and the other release gates remain pending.
+
 Before effective terms or live sales:
 
 1. Confirm current public supplier/address details and any additional required

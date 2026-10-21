@@ -4,6 +4,12 @@
 licence, 12 months of email support/maintenance and a full 14-day voluntary refund.
 Final legal approval and live activation are separate steps.
 
+**Current privacy direction:** domain and paid email are postponed. The
+[current website/Gmail notice](CURRENT_WEBSITE_GMAIL_PRIVACY.md) and
+[setup record](CURRENT_PRIVACY_SETUP.md) cover the existing services. The owner
+approved the manual routine-support retention rule; this does not clear the
+consumer-service arrangement or remaining purchase/privacy/legal gates.
+
 ## Identity and contact
 
 Required supplier fields were extracted and visually checked from the owner's

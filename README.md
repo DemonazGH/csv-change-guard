@@ -10,6 +10,13 @@ processing. These are preparation artifacts, **not an active sale**. See
 [fresh preparation checks](docs/BETA_PREPARATION_VALIDATION.md). The application
 and repository's `UNLICENSED` designation remain unchanged.
 
+The owner postponed domain and paid email. The
+[current website/support privacy notice](docs/CURRENT_WEBSITE_GMAIL_PRIVACY.md)
+describes the existing Cloudflare page and consumer Gmail inbox, with fresh
+read-only findings and owner handoffs in the [setup record](docs/CURRENT_PRIVACY_SETUP.md).
+Routine email retention is a manual owner procedure; no automatic deletion or
+new account service is active. Live sales remain disabled.
+
 **22 October commercial update:** an informational prelaunch page and separate
 Lemon Squeezy Test-mode checkout now exist; fake-card order/receipt checks passed,
 but hosted downloads are blocked in Test mode and live sales remain disabled.

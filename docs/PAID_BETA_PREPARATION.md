@@ -45,6 +45,10 @@ offered. The repository's `UNLICENSED` designation and visibility remain unchang
   with purchase controls disabled and no payment or customer-data collection.
 - [Commercial terms and refund/support copy for review](COMMERCIAL_TERMS_DRAFT.md).
 - [Checkout and delivery acceptance plan](CHECKOUT_ACCEPTANCE.md).
+- [Unassisted synthetic trial protocol](UNASSISTED_BETA_TRIAL.md) and separate
+  [participant task card](UNASSISTED_BETA_TASK_CARD.md), prepared with trials
+  still **Not run**; candidate sharing and recruitment require a deliberate
+  owner-authorised step.
 
 The ZIP is marked `internal-preview-not-for-sale`. It contains the app, help, three
 synthetic samples and the optional localhost server, without development history,
@@ -102,5 +106,7 @@ There is no public deployment, purchase, outreach or account change in this work
 
 Have an intended user run the packaged synthetic demo without live coaching.
 Use the help and record completion time, misunderstood findings and requests
-for support. Prepare provider test-mode setup in parallel once the seller and
+for support using the [prepared trial packet](UNASSISTED_BETA_TRIAL.md).
+Preparing it does not grant distribution permission or record a completed trial.
+Prepare provider test-mode setup in parallel once the seller and
 support details are available; no real payment is needed for that rehearsal.

@@ -75,6 +75,12 @@ Fresh Windows browser results for the extracted candidate are recorded in
 [beta preparation validation](BETA_PREPARATION_VALIDATION.md). These are separate
 from the earlier manual owner confirmations and do not validate payments.
 
+The [unassisted synthetic trial protocol](UNASSISTED_BETA_TRIAL.md) and separate
+[participant task card](UNASSISTED_BETA_TASK_CARD.md) are prepared for a later
+owner-authorised review using this unchanged candidate. No trial has been run
+by preparing the packet. It is not added to the ZIP and grants no new licence
+or distribution permission.
+
 Before any paid release, finish the [remaining gates](PAID_BETA_PREPARATION.md),
 approve effective terms and contact details, and deliberately update the package
 status/version/content policy. Removing a draft marker alone is insufficient.

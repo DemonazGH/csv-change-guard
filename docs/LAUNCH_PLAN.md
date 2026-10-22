@@ -9,6 +9,15 @@ verified. Live sales remain disabled. Hosted downloads are blocked in Test mode.
 Commercial defaults are owner-approved, with effective terms/privacy and provider
 checks still pending in [seller details and release gates](SELLER_DETAILS.md).
 
+[Later bounded Test-mode validation](LEMON_SQUEEZY_TEST_MODE_VALIDATION.md)
+records seller-assisted recovery in the owner's session, unpaid abandonment/
+reopening, required-postcode validation and an insufficient-funds decline.
+Recovered-order back/reload does not establish concurrent-submission protection.
+One simulated refund was submitted once but remains unverified, with no provider
+defect established. These checks do not rerun the application's Chrome/Edge
+suites or clear hosted delivery, independent-buyer access, successful retry,
+version updates, live tax/payment or supplier terms/privacy/consent.
+
 ## Goal
 
 Validate a self-service product whose ordinary customer cycle can be automated. Start with paying demand and low support effort; work toward approximately USD 1,000 monthly operating profit before scaling. Personal after-tax income is a separate measure.
@@ -73,9 +82,14 @@ Hosted pay-per-report and subscription infrastructure are outside this beta.
 - [ ] Complete the [purchase privacy notice](PURCHASE_PRIVACY_DRAFT.md) and
   [privacy/withdrawal gates](PRIVACY_AND_CONSENT_REVIEW.md): production email terms,
   provider roles/transfers, retention, marketing separation and durable confirmation.
-- [ ] Test provider-hosted single-payment checkout, duplicate/failed attempts,
-  receipts, download retry and refunds using the [acceptance plan](CHECKOUT_ACCEPTANCE.md).
-  No custom webhook/backend is proposed. Downloaded copies cannot be remotely revoked.
+- [x] Record bounded Test-mode checkout/receipt, owner-session seller-assisted
+  recovery, unpaid abandonment/reopening and required-field/decline evidence;
+  see the [dated provider validation](LEMON_SQUEEZY_TEST_MODE_VALIDATION.md).
+- [ ] Finish concurrent-submission and successful-retry checks, verify the
+  inconclusive refund outcome, independent-buyer access, actual hosted ZIP
+  delivery and version updates using the [acceptance plan](CHECKOUT_ACCEPTANCE.md).
+  Back/reload of a recovered order covers none of those cases. No custom
+  webhook/backend is proposed. Downloaded copies cannot be remotely revoked.
 
 The source is published to the owner's GitHub repository. The informational
 Cloudflare Pages site and a Lemon Squeezy Test-mode store now exist. No live

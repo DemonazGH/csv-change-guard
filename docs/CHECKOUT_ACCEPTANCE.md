@@ -12,13 +12,23 @@ restriction, not a passed delivery/extraction check. Live activation and actual
 sales remain disabled. Private screenshots, IDs and signed access URLs are
 outside Git; this summary is separate from the earlier app/browser suites.
 
-Refunds, decline/cancel, duplicate submission, resend/recovery, updates,
-independent-buyer receipt access, statutory disclosures and live tax handling
-remain unverified. The owner approved preparation of the
+The later [checkout, refund and recovery validation](LEMON_SQUEEZY_TEST_MODE_VALIDATION.md)
+passed seller-assisted receipt recovery in the owner's session, unpaid checkout
+abandonment/reopening, required-postcode validation and an insufficient-funds
+decline. Recovered-order back/reload kept one order, but did not test concurrent
+or double-click submissions. One full simulated refund was submitted once;
+Paid persisted after refresh with zero refunds and no matching refund notice.
+That outcome remains **unverified**, not a passed refund or a demonstrated
+provider defect. Hosted ZIP delivery remains **blocked in Test mode**.
+
+Independent-buyer/fresh-session access, successful retry after decline,
+new checkout-confirmation reload/back, concurrent duplicate submission, updates,
+statutory disclosures and live tax handling remain unverified. The owner approved
+preparation of the
 [licence](COMMERCIAL_TERMS_DRAFT.md) and [refund policy](REFUND_POLICY_DRAFT.md),
 not an effective contract or live release. See [release gates](SELLER_DETAILS.md).
 
-A later 22 October read-only review inspected a **prepared Poland Test-mode
+An earlier 22 October read-only review inspected a **prepared Poland Test-mode
 checkout without submitting Pay**, the existing test order and provider Design
 panels. It found provider terms/privacy links but no separate supplier privacy
 link, immediate-delivery consent or withdrawal-loss acknowledgement in that
@@ -32,7 +42,7 @@ preview. Opening it, following the sample confirmation link or viewing screensho
 does not verify a transaction. That local layout is not the separate real
 Test-mode provider checkout described above.
 
-The [later owner settings and purchase follow-up](PRIVACY_SETTINGS_FOLLOWUP.md)
+The [earlier owner settings and purchase follow-up](PRIVACY_SETTINGS_FOLLOWUP.md)
 verified owner-disabled abandoned-cart emails after reload and re-inspected the
 Poland Test-mode checkout with card fields blank and Pay disabled. Provider links
 were visible, but no separate supplier notice or delivery/withdrawal choice was
@@ -62,15 +72,16 @@ Use only a provider-approved test method. Label every record test mode and keep
 payment/customer identifiers, credentials and private URLs out of Git/screenshots.
 An owner-approved live purchase would be a separate, later check.
 
-| Case | Expected behavior | Evidence to retain |
+| Case | Current evidence / remaining expected behavior | Evidence to retain |
 |---|---|---|
 | Successful single payment | Test checkout/order and receipt passed on 22 October; displayed subtotal/total USD 29 with no separate tax line. Live tax and delivery remain unverified | Mode/version and observed total; private account evidence outside Git |
-| Declined or cancelled checkout | Clear next step; no success claim or delivered entitlement for a failed order | Redacted result and retry outcome |
-| Reload/back/duplicate submit | No unintended duplicate purchase; verify actual provider order state | Order count and provider behavior, without IDs |
-| Receipt and fresh session | Receipt reached owner/support Gmail; independent buyer/fresh-session access still untested | Access result; no private download token |
+| Declined checkout | Official insufficient-funds test returned a clear decline after postcode validation; original single order remained. Successful retry with another card is not run | Sanitised result in the [follow-up record](LEMON_SQUEEZY_TEST_MODE_VALIDATION.md); no card fields or account IDs |
+| Unpaid checkout abandonment | Closed without Pay, one order retained; original share link reopened checkout. Not subscription cancellation or a delayed-mail guarantee | Bounded abandonment/reopening result |
+| Reload/back/duplicate submit | Recovered-order back/reload retained the same order. New checkout-confirmation and concurrent/double-click submission behavior remain unverified | Order count and exact tested route, without IDs; do not claim duplicate-submission protection |
+| Receipt and fresh session | Original and one resent receipt reached owner/support Gmail. Receipt link reopened the same order in the owner's session; independent buyer/fresh-session access still untested | Access result; no private download token |
 | Delivery/extraction | Blocked in Test mode; a separately authorised delivery check must verify ZIP hash, extraction and app/demo/report with sandboxing | Artifact hash, browser/OS and actual result; do not count local candidate tests as provider delivery |
-| Lost receipt/download retry | Provider can resend access; retry does not create a new charge | Support/provider recovery steps and observed result |
-| Refund | Provider test mode supports a documented refund test or case is explicitly not run; no claim downloaded copies are remotely revoked | Financial state and refund notice result |
+| Lost receipt/download retry | One seller-assisted resend and receipt-link access passed without another order. Download retry showed the Test-mode restriction; actual retrieval did not pass | Support/provider recovery steps and scoped result |
+| Refund | Full simulated refund attempted once; Paid/zero refunds persisted after seller/buyer reloads and no matching notice was observed. Outcome unverified; establish provider-supported behavior before another attempt | Actual status and notice, not a closed dialog; no claim downloaded copies are remotely revoked |
 | New file version | Existing buyer access and fresh buyer delivery are understood; version, help and terms agree | Old/new version behavior |
 | Purchase privacy | Required purchase data goes only through disclosed seller/provider flows; no catalog data enters them | Field/notice review and redacted observations |
 | Regional disclosures | Buyer sees correct seller/terms, tax-inclusive final amount and any required digital-content consent before ordering | Applicable test region and reviewed copy |

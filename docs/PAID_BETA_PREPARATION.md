@@ -9,6 +9,16 @@ maintenance and a full 14-day voluntary refund. See [current seller/release gate
 The historical preparation statements below describe 21 October; they do not
 override this update. The original ZIP remains not for sale and unchanged.
 
+[Later bounded Test-mode checks on 22 October](LEMON_SQUEEZY_TEST_MODE_VALIDATION.md)
+passed owner-session seller-assisted recovery, unpaid abandonment/reopening and
+required-postcode validation followed by an insufficient-funds decline. Recovered
+order back/reload is limited evidence, not concurrent-submission protection.
+One simulated refund was submitted once but its result remains unverified; no
+provider defect is established. Hosted delivery is still blocked in Test mode.
+Independent-buyer access, successful retry, version delivery, live tax/payment
+and final supplier terms/privacy/consent remain open. This is separate from the
+application's Chrome/Edge regression evidence; live sales remain disabled.
+
 **Internal candidate, not for sale.** The owner selected the recommended defaults
 for preparation. This records the chosen direction; it does not announce a launch.
 The application remains v0.1.0, with local CSV processing and unchanged behavior.
@@ -92,9 +102,11 @@ been configured by this preparation.
    withdrawal rules, update obligations, price/tax presentation and business
    disclosures with the actual seller/provider arrangement. Do not enter identity
    documents or banking details into repository files.
-4. Provider approval and an authorized test-mode checkout/delivery rehearsal using
-   the acceptance plan. Replace every draft placeholder and reconcile the public
-   product page, checkout, receipt, downloadable terms and help.
+4. Provider approval and completion of the remaining checkout/delivery cases in
+   the acceptance plan. The bounded Test-mode checks above do not establish refund
+   success, independent-buyer delivery or concurrent-submission protection.
+   Replace every draft placeholder and reconcile the public product page,
+   checkout, receipt, downloadable terms and help.
 5. An explicitly authorized final release: versioned terms, tested package checksum,
    accurate privacy/support pages, approved public destination and live checkout.
 
@@ -108,5 +120,6 @@ Have an intended user run the packaged synthetic demo without live coaching.
 Use the help and record completion time, misunderstood findings and requests
 for support using the [prepared trial packet](UNASSISTED_BETA_TRIAL.md).
 Preparing it does not grant distribution permission or record a completed trial.
-Prepare provider test-mode setup in parallel once the seller and
-support details are available; no real payment is needed for that rehearsal.
+Continue unresolved provider checks in parallel using the recorded limits;
+do not repeat the inconclusive refund blindly or activate live sales to bypass
+the Test-mode download restriction.

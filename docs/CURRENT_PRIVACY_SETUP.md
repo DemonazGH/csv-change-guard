@@ -16,7 +16,8 @@ the future purchase draft, to describe the existing informational page and Gmail
   registration PDF, address, tax identifiers or recovery details belong in Git
   or the website upload. The current notice uses only the existing public name,
   Poland and `csvchangeguard.support@gmail.com`.
-- Read-only Gmail General inspection: **Always display external images** selected;
+- Earlier read-only Gmail General inspection, before the owner changes below:
+  **Always display external images** selected;
   **smart features in Gmail, Chat and Meet** checked; both **smart features in
   Google Workspace** and **smart features in other Google products** on. The
   latter are labels shown even for this consumer account, not proof Workspace
@@ -31,11 +32,14 @@ the future purchase draft, to describe the existing informational page and Gmail
 - Earlier current-address email delivery and owner security confirmations remain
   historical evidence. They were not rerun or replaced by this settings review.
 
-## Owner-operated optional Gmail choices
+## Owner-operated optional Gmail choices — completed
 
-For a support-only inbox, recommend selecting **Ask before displaying external
-images** and turning off optional smart features in Gmail/Chat/Meet, Workspace
-and other Google products if the owner does not need them. This can reduce
+Later on 22 October, the owner selected **Ask before displaying external images**
+and turned off smart features in Gmail/Chat/Meet, Workspace and other Google
+products, saving each change. The assistant verified the selected/unchecked
+states after returning to General settings and reopening the smart-feature
+panel. See the [owner settings and purchase follow-up](PRIVACY_SETTINGS_FOLLOWUP.md).
+This can reduce
 optional personalisation/content use; it does not stop service/security processing,
 create a DPA or certify the inbox's legal suitability.
 
@@ -43,7 +47,7 @@ The assistant must not toggle these controls. The bundled Computer Use skill
 requires reading its guidance, which prohibits changes to in-app security/privacy
 settings. The owner can change them in Gmail Settings > See all settings >
 General, review **Manage Workspace smart feature settings**, and save their own
-choices. Read-only verification can follow. No broad consent or further account
+choices. The completed changes above were owner-operated. No broad consent or further account
 access is needed just to publish an accurate current notice.
 
 ## Operational handoff and unresolved matters
@@ -69,6 +73,10 @@ validation remain separate live-release gates. This task adds no checkout,
 customer uploads, marketing, analytics, store access or public licence grant.
 
 ## Publication and validation
+
+The following records the original notice deployment. The later owner-settings
+follow-up required no public-copy change or redeployment; its evidence and checks
+are [recorded separately](PRIVACY_SETTINGS_FOLLOWUP.md).
 
 The current notice is published at
 <https://csv-change-guard.pages.dev/privacy>, linked from the product-page footer

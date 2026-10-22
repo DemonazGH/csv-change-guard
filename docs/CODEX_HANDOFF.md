@@ -2,6 +2,15 @@
 
 Prepared: **18 October 2026**. Product remains **v0.1.0**.
 
+**Latest owner settings follow-up, 22 October:** the owner saved Gmail external
+images to Ask first, disabled all three inspected smart-feature controls, and
+disabled Lemon Squeezy abandoned-cart emails. The assistant verified the saved
+states, including a full reload of Recovery. The [follow-up record](PRIVACY_SETTINGS_FOLLOWUP.md)
+also covers a bounded, unsubmitted Poland Test-mode checkout and blank receipt
+customisation fields. No new payment, order, receipt, delivery, privacy-policy
+publication or live activation occurred. Provider answers and purchase gates
+remain open; no assistant privacy/security switches were operated.
+
 **Latest 22 October privacy decision:** domain and paid email are postponed.
 The owner approved a manual monthly review/deletion of routine support emails
 after about three months from closure. Use the [current website/Gmail notice](CURRENT_WEBSITE_GMAIL_PRIVACY.md)
@@ -24,8 +33,9 @@ The [purchase privacy draft](PURCHASE_PRIVACY_DRAFT.md) and
 bounded, unsubmitted Poland Test-mode checkout inspection. Consumer Gmail has
 no DPA/processor role; automatic purchaser subscriber records do not establish
 marketing consent. Production email, retention/transfers, withdrawal controls
-and durable confirmation remain open. No account privacy settings or public
-policy were changed; no live activation is authorised.
+and durable confirmation remain open. That earlier inspection changed no account
+privacy settings or public policy; the later owner actions are recorded above.
+No live activation is authorised.
 
 Production email is now [specified for approval](PRODUCTION_EMAIL_SETUP.md),
 with a [proposed privacy handling procedure](SUPPORT_PRIVACY_OPERATIONS.md).

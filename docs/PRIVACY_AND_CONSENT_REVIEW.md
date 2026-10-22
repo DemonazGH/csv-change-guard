@@ -6,6 +6,13 @@ This is an implementation review, not legal compliance certification. The
 completion fields. No app, ZIP, public website, account privacy setting or live
 payment configuration was changed during this review.
 
+**Later owner-guided follow-up:** Gmail image/smart-feature changes and disabling
+Lemon Squeezy abandoned-cart emails were made and saved by the owner, then
+verified read-only. A fresh Poland checkout inspection left payment details
+blank and Pay disabled. See the [dated follow-up](PRIVACY_SETTINGS_FOLLOWUP.md)
+for exact scope, receipt-editor findings and unresolved gates. The earlier
+no-setting-change statements below describe their original inspection only.
+
 **Latest owner direction:** postpone domain/paid email; use the
 [current website/Gmail notice](CURRENT_WEBSITE_GMAIL_PRIVACY.md) for existing
 activities and the [current setup record](CURRENT_PRIVACY_SETUP.md) for fresh
@@ -40,6 +47,8 @@ activation is established by sending it. Sent copy/evidence stay outside Git.
 | Store/signup configuration | Design > Store preview, read-only | Enable store and Show subscribe form checked in editor; no changes or Publish click. Actual storefront says **This store has not been activated**. The preview is not evidence of a publicly accepting signup form |
 | Subscribers | Official Lemon Squeezy documentation | Purchasers are automatically added to subscriber records. Actual record consent/status and a marketing opt-out configuration were not verified. No list export, campaign, marketing signup or outreach performed |
 | Receipt/delivery | Earlier owner-authorised Test-mode rehearsal | Receipt reached the support Inbox, but provider download is unavailable in Test mode. No new durable-terms/consent confirmation or delivery evidence obtained here |
+| Later recovery follow-up | Owner saved abandoned-cart emails off; assistant verified after full reload | Test mode and activation prompt remained visible. Payment auto-recovery/dunning observed enabled and unchanged; applicability unassessed |
+| Later receipt/checkout follow-up | Read-only product fields and unsubmitted Poland checkout | Receipt/confirmation customisation fields blank; provider notice links visible, no separate delivery/withdrawal acknowledgement observed. Card data blank, Pay disabled; no new transaction or confirmation evidence |
 
 Private screenshots `test-checkout-top.png`, `test-checkout-footer.png` and
 `store-not-activated.png` are retained outside Git in the owner's dated
@@ -130,13 +139,13 @@ Git commit is not proof of what a particular buyer received. Do not add a blanke
 
 | Action | Who / status |
 |---|---|
-| Finalise accurate privacy information for the existing public page and support inbox | Immediate prelaunch follow-up, independent of sales; resolve actual provider/contact/retention details and obtain final public-copy approval |
+| Finalise accurate privacy information for the existing public page and support inbox | Current website/Gmail notice published; owner retention approved and optional Gmail controls subsequently changed/verified. Purchase-specific provider/contact gates remain open |
 | Complete public controller identity/contact from the private seller worksheet | Owner confirmation; do not commit the registration extract, address or tax identifiers here |
-| Choose production email arrangement and applicable processing terms | Owner decision needed; no paid activation, domain purchase or account privacy/security changes authorised by a budget ceiling |
+| Choose production email arrangement and applicable processing terms | Domain/paid email postponed by owner. Current consumer Gmail description and role/transfer assessment remain applicable; a budget ceiling is not purchase authority |
 | Send the prepared seven-question provider inquiry | **Sent after explicit owner approval later on 22 October**, exact approved body; Gmail acknowledgement and sent headers verified. Provider response/answers pending |
 | Confirm role/transfer map and retention for host, email, MoR and supplier | Provider/accountant review pending; complete draft notice and operational schedule afterward |
 | Confirm applicable withdrawal controls, durable evidence and online function | Provider/legal response pending, then a separate bounded Test-mode rehearsal; no new acceptance or payment performed here |
-| Review optional signup/tracking/marketing defaults | Read-only findings above. Owner must make any privacy-setting changes; observe the result afterward |
+| Review optional signup/tracking/marketing defaults | Owner disabled abandoned-cart emails; saved off verified after reload. Other purchaser/signup/consent/retention gates remain open; no marketing campaign or export |
 | Publish final notice and supplier terms / revise paid ZIP | Separate final review and owner publication approval; current beta.1 archive and public prelaunch site unchanged |
 | Activate sales | Explicitly excluded. No live product copy, activation, real charge or payout setup |
 

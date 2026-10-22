@@ -32,6 +32,15 @@ preview. Opening it, following the sample confirmation link or viewing screensho
 does not verify a transaction. That local layout is not the separate real
 Test-mode provider checkout described above.
 
+The [later owner settings and purchase follow-up](PRIVACY_SETTINGS_FOLLOWUP.md)
+verified owner-disabled abandoned-cart emails after reload and re-inspected the
+Poland Test-mode checkout with card fields blank and Pay disabled. Provider links
+were visible, but no separate supplier notice or delivery/withdrawal choice was
+observed in that state. Receipt/confirmation customisation fields were blank.
+No new Pay submission, order, receipt, download, refund or delivery evidence was
+created. This is not a test of controls that might appear after payment details
+or submission, nor an independent-buyer session or final tax check.
+
 ## Proposed provider configuration
 
 - Single-payment digital download named CSV Change Guard paid beta; USD 29 base
@@ -68,7 +77,7 @@ An owner-approved live purchase would be a separate, later check.
 | Express delivery consent / withdrawal acknowledgement | Where relied on for the paid digital-content exception, actual prior choice and required durable confirmation are established separately from generic provider terms or optional Link account creation | Exact wording/version, affirmative action, timestamp and buyer confirmation; not verified by the prepared checkout |
 | Online withdrawal function | If applicable under current law, accessible function, distinct confirmation and durable receipt acknowledgement work | Applicability/provider confirmation first; function not observed on the inspected test-order page |
 | Versioned supplier documents | Approved licence, refund and privacy text available before purchase and delivered through the required durable confirmation | Exact versions received by buyer; not merely links to mutable pages |
-| Marketing separation | Automatic purchaser subscriber record does not cause unauthorised marketing; optional signup/tracking handled deliberately | Provider explanation and actual configuration; no campaign/export/signup to obtain evidence |
+| Marketing separation | Automatic purchaser subscriber record does not cause unauthorised marketing; optional signup/tracking handled deliberately | Owner saved abandoned-cart emails off and assistant verified after reload. Other subscriber/consent/retention questions remain; no campaign/export/signup to obtain evidence |
 
 A downloadable unmetered app cannot erase or disable an existing local copy
 after refund. Any license consequences belong in reviewed terms and provider

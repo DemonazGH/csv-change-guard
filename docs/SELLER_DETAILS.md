@@ -41,10 +41,19 @@ legal contact field may be omitted. A NIP does not establish VAT registration.
   matching paid test order, buyer receipt and seller notification in the owner's
   support Gmail Inbox. Receipt reply-to matched the support address. This is
   neither real revenue nor an independent-buyer or Chrome/Edge app-suite run.
-- Customer-order ZIP listing passed. Download showed **Downloads are not
-  available in test mode**. Hosted retrieval, post-download checksum, extraction
-  of a provider-delivered ZIP, refund/recovery flows and live tax handling remain
-  unverified. Private screenshots/results and signed access URLs stay out of Git.
+- [Later bounded Test-mode checks on 22 October](LEMON_SQUEEZY_TEST_MODE_VALIDATION.md)
+  passed seller-assisted receipt/access recovery in the owner's session and
+  unpaid abandonment/reopening. Required-postcode validation preceded the
+  official insufficient-funds decline: two Pay clicks, one processing attempt,
+  with no new paid order. Back/reload covered only the recovered order page,
+  not concurrent submission or a new checkout confirmation.
+- One full simulated refund was submitted once; the order remained Paid, with
+  zero refunds and no matching refund notice observed. The outcome is unverified,
+  not a demonstrated provider defect; no repeat was submitted. Customer-order
+  ZIP listing passed, but Download again showed **Downloads are not available
+  in test mode**. Hosted retrieval/checksum/extraction, independent-buyer access,
+  successful retry, version updates and live tax/payment remain unverified.
+  Private screenshots/results and signed access URLs stay out of Git.
 - The owner confirmed an original ChatGPT/Codex project with no employer/client
   or copied-asset claims. [The bounded ownership review](OWNERSHIP_REVIEW.md)
   records the evidence without claiming legal title or infringement clearance.
@@ -61,8 +70,10 @@ The [purchase/support/website privacy notice](PURCHASE_PRIVACY_DRAFT.md) is now
 drafted, with an [evidence and implementation review](PRIVACY_AND_CONSENT_REVIEW.md).
 It is not effective: production email terms, specific retention and transfer
 arrangements, and provider withdrawal/confirmation behavior remain unresolved.
-The 22 October read-only Test-mode inspection found no separate delivery/withdrawal
-control in its prepared Poland checkout; no new transaction was submitted.
+The earlier 22 October read-only Test-mode inspection found no separate
+delivery/withdrawal control in its prepared Poland checkout; no new transaction
+was submitted during that inspection. The later bounded checks above do not
+clear supplier terms, privacy, withdrawal or durable-confirmation gates.
 
 The [production email recommendation](PRODUCTION_EMAIL_SETUP.md) proposes
 Workspace Business Starter Flexible plus a domain, within the service budget
@@ -88,9 +99,11 @@ Before effective terms or live sales:
    and accountant's required record categories/periods. Do not treat a draft
    notice, unchecked analytics tags or local CSV processing as privacy clearance.
 4. Verify durable delivery of the exact versioned terms and the included-update
-   channel, plus provider decline/cancel, duplicate submission, refund and recovery
-   cases in [checkout acceptance](CHECKOUT_ACCEPTANCE.md). A mutable webpage
-   and one test order are insufficient evidence.
+   channel. Finish the open cases in [checkout acceptance](CHECKOUT_ACCEPTANCE.md),
+   including concurrent submission, successful retry, refund outcome,
+   independent-buyer recovery and actual ZIP delivery. The bounded observed
+   decline, abandonment and owner-session recovery checks are separate evidence;
+   a mutable webpage and one test order are insufficient evidence.
 5. Deliberately revise the commercial package only after approval: allowlist the
    effective licence/refund/privacy files, align help and version, then obtain a
    fresh checksum and extracted-package verification. Keep the current beta.1

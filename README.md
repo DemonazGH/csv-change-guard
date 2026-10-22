@@ -27,6 +27,12 @@ licence. See [seller details and remaining gates](docs/SELLER_DETAILS.md) and
 [the bounded provenance review](docs/OWNERSHIP_REVIEW.md). Earlier preparation
 records retain their dated scope; they are not evidence of live sales.
 
+The later [Lemon Squeezy Test-mode validation](docs/LEMON_SQUEEZY_TEST_MODE_VALIDATION.md)
+records receipt recovery, unpaid abandonment/reopening and an insufficient-funds
+decline. The one simulated refund attempt remains unverified, hosted ZIP delivery
+is blocked, and independent-buyer/concurrent-submission checks remain open. These
+provider UI observations are separate from the app's browser suites.
+
 Catalog workflow validation now includes reusable synthetic fixtures and targeted
 reporting and file-selection regressions. See [the current validation report](docs/SCENARIO_VALIDATION.md)
 and [cloud setup instructions](docs/CLOUD_DEVELOPMENT.md) for executed checks and

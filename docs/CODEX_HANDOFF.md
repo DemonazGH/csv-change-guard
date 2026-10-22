@@ -2,15 +2,27 @@
 
 Prepared: **18 October 2026**. Product remains **v0.1.0**.
 
-**Latest 22 October preparation while provider answers are pending:** a fresh
+**Latest 22 October Test-mode purchase checks:** the
+[public validation record](LEMON_SQUEEZY_TEST_MODE_VALIDATION.md) records
+seller-assisted receipt recovery, unpaid abandonment/reopening, postcode
+validation and an insufficient-funds decline. There were two Pay clicks and one
+payment-processing attempt; no new paid order appeared. Recovered-order back/reload is
+partial evidence only. One full simulated refund was submitted but remains
+unverified: Paid persisted, zero refunds and no matching refund notice. Hosted
+ZIP delivery remains blocked; independent-buyer access, concurrent submission,
+successful retry, version updates and final privacy/consent gates remain open.
+Private screenshots and raw account records stay outside Git. The app, ZIP,
+product/settings, website and disabled live-sales state are unchanged.
+
+**Earlier 22 October preparation while provider answers were pending:** a fresh
 support-inbox check found only the sent inquiry in the original thread and
 subject search across all folders; a related Lemon Squeezy privacy/consent/
 withdrawal message search found no reply. No follow-up message was sent.
 The [unassisted synthetic trial protocol](UNASSISTED_BETA_TRIAL.md) and separate
 [participant task card](UNASSISTED_BETA_TASK_CARD.md) prepare the next usability
-check. Status is **Prepared; trials Not run**. No participant was contacted,
-package distributed or new test result claimed. App, ZIP, public website,
-repository licensing and disabled live-sales state remain unchanged.
+check. Status is **Prepared; trials Not run**. That preparation did not contact
+participants, distribute a package or claim new test results. App, ZIP, public
+website, repository licensing and disabled live-sales state remain unchanged.
 
 **Latest owner settings follow-up, 22 October:** the owner saved Gmail external
 images to Ask first, disabled all three inspected smart-feature controls, and

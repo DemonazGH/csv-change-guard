@@ -1,5 +1,13 @@
 # Current website and Gmail privacy setup — 22 October 2026
 
+**24 October follow-up:** public site sources are now maintained in `website/`
+in the repository. The owner authorised a fixed-input synthetic demo and trial
+instructions; see [the new publication record](PUBLIC_SYNTHETIC_DEMO.md). The
+current notice now covers that demo and trial requests through the same support
+inbox. The three-file hashes and outside-Git source statements below describe
+the historical 22 October deployment, not the later public bundle. Account
+settings, retention defaults and disabled live sales remain unchanged.
+
 The owner postponed the domain and paid email. No purchase or upgrade is
 authorised by the earlier budget or proposal. Live sales remain disabled.
 Use the [current website/support notice](CURRENT_WEBSITE_GMAIL_PRIVACY.md), not

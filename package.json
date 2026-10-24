@@ -4,10 +4,11 @@
   "private": true,
   "description": "Local, read-only Shopify CSV comparison prototype",
   "scripts": {
-    "test": "node --test tests/engine.test.cjs tests/scenarios.test.cjs tests/release.test.cjs",
+    "test": "node --test tests/engine.test.cjs tests/scenarios.test.cjs tests/release.test.cjs tests/website.test.cjs",
     "build": "node build.cjs",
     "dev": "node server.cjs",
-    "package:beta": "node build.cjs && node scripts/build-release.cjs"
+    "package:beta": "node build.cjs && node scripts/build-release.cjs",
+    "build:website": "node scripts/build-website.cjs"
   },
   "engines": {
     "node": ">=18"

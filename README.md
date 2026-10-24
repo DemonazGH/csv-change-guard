@@ -2,6 +2,14 @@
 
 **Version 0.1.0 · local working prototype · 18 October 2026**
 
+The [public synthetic demo](https://csv-change-guard.pages.dev/demo) runs the
+unchanged comparison engine with fixed fictional inputs. No signup, file
+selection or purchase is needed. [Trial-access instructions](https://csv-change-guard.pages.dev/#trial)
+explain how to request the separately arranged Windows workflow trial. Website
+sources now live in `website/`; `npm run build:website` creates a public-only
+allowlisted bundle. See [publication and validation](docs/PUBLIC_SYNTHETIC_DEMO.md).
+Live sales remain disabled and the internal ZIP is not distributed by the site.
+
 Paid-beta preparation now has an [internal release package](docs/RELEASE_PACKAGE.md),
 [offline customer help](release/help.html), and [local product/checkout drafts](commerce-draft/index.html).
 The selected offer is a USD 29 one-time downloadable utility with local CSV
@@ -202,8 +210,9 @@ Earlier [scenario validation](docs/SCENARIO_VALIDATION.md) and
 [Windows/Chrome evidence](docs/WINDOWS_VALIDATION.md) retain their original
 92-test/14-group results and tested source versions.
 The uploaded historical run had 66 engine tests and 11 in-memory browser checks.
-Other browser/version combinations, representative merchant workflows, public
-HTTPS deployment and Shopify import round trips remain separate release checks.
+Other browser/version combinations, representative merchant workflows and
+Shopify import round trips remain separate release checks. The limited public
+HTTPS synthetic-demo checks are [recorded separately](docs/PUBLIC_SYNTHETIC_DEMO.md).
 
 ## Before a commercial launch
 

@@ -2,6 +2,17 @@
 
 Prepared: **18 October 2026**. Product remains **v0.1.0**.
 
+**24 October public-demo update:** the owner authorised adding a public
+synthetic demo and clear trial-access instructions to the existing Cloudflare
+site. Sources now live in `website/`; use `npm run build:website` to produce the
+allowlisted public bundle, never the surrounding evidence directory. The demo
+reuses unchanged engine/demo assets and accepts no visitor files. See the
+[publication/validation record](PUBLIC_SYNTHETIC_DEMO.md) for actual check status.
+The current privacy notice includes demo and trial-enquiry handling. Independent
+intended-user trials remain Not run; record prior public-demo exposure. App,
+internal ZIP, UNLICENSED status and disabled live sales are preserved. Product
+Hunt publication is separate from this website update.
+
 **Latest 22 October Test-mode purchase checks:** the
 [public validation record](LEMON_SQUEEZY_TEST_MODE_VALIDATION.md) records
 seller-assisted receipt recovery, unpaid abandonment/reopening, postcode

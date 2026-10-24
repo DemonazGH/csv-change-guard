@@ -42,6 +42,11 @@ Do not enable sales or change account settings for this trial.
    has already been coached can help check the packet, but does not replace an
    independent intended-user trial. Aim for several intended users before
    drawing broader conclusions; do not invent a sample size already completed.
+   Ask whether they have already used the public synthetic demo or read its
+   report/walkthrough. Record that exposure without identifying details. The
+   public demo explains the same findings, so later answers cannot establish
+   unaided discovery or first-exposure comprehension. Keep this distinction
+   when interpreting a workflow trial.
 4. Give the participant only the separately authorised candidate and
    [participant task card](UNASSISTED_BETA_TASK_CARD.md). Keep the observer
    criteria below separate until the tasks and questions are finished. The
@@ -118,6 +123,7 @@ anonymous, generic notes; no participant contact details or personal quotations.
 - Trial ID:
 - Date:
 - Role category: intended catalog operator / owner / other
+- Prior public-demo/report exposure: yes / no / unknown
 - Prior app familiarity: none / used before / previously coached
 - Candidate version, actual ZIP SHA-256 and app version:
 - Windows and browser versions:

@@ -22,7 +22,14 @@ HTML/JSON/CSV report downloads can contain sensitive identifiers and before/afte
 
 ## Limits and remaining release work
 
-Input limits reduce accidental resource exhaustion but are not a complete adversarial denial-of-service evaluation. There has been no external penetration test, security certification, public deployment test, or comprehensive browser compatibility test.
+Input limits reduce accidental resource exhaustion but are not a complete adversarial denial-of-service evaluation. There has been no external penetration test, security certification or comprehensive browser compatibility test. The public synthetic demo has a [bounded publication check](PUBLIC_SYNTHETIC_DEMO.md), separate from private-file or full utility compatibility evidence.
+
+The public synthetic demo is separate from the offline utility. It serves the
+unchanged engine with fixed demo strings, no file chooser or pasted input, and
+no connection/form submission capability. Its scripts load from the same static
+site; comparison data is not sent over the network. The site source is in
+`website/`, with a public-only build allowlist. Hosting still receives requests
+for the pages/assets; this does not imply zero technical provider records.
 
 The utility has no payment/account integration, entitlement service, user
 analytics or live-store connection. The separate informational Cloudflare page,

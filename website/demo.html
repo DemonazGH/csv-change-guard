@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Try CSV Change Guard with fixed synthetic Shopify CSVs. Review real comparison findings locally, with no store connection, file upload or payment.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>Try the synthetic demo — CSV Change Guard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="demo.css">
+  <script src="assets/engine.js" defer></script>
+  <script src="assets/demo-data.js" defer></script>
+  <script src="demo.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="brand" href="index.html"><span class="brand-icon" aria-hidden="true">↔</span> CSV Change Guard</a>
+    <nav aria-label="Main navigation"><a href="demo.html" aria-current="page">Demo</a><a href="index.html#trial">Trial access</a><a href="privacy.html">Privacy</a></nav>
+  </header>
+  <main id="main">
+    <section class="demo-intro wrap" aria-labelledby="demo-title">
+      <div>
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Public synthetic demo · no signup</p>
+        <h1 id="demo-title">Try a catalog review.<br><span>With synthetic files.</span></h1>
+        <p class="intro">Run the actual comparison engine on a fictional catalog update. Find a price drop, a cleared description and identifiers that cannot be matched.</p>
+        <p class="demo-local">Everything here uses the supplied examples. This demo cannot open your files, connect to Shopify or perform an import.</p>
+        <div class="demo-actions">
+          <button class="button" id="demo-run" type="button" disabled>Run synthetic comparison <span aria-hidden="true">→</span></button>
+          <button class="demo-secondary" id="demo-reset" type="button" disabled>Reset demo</button>
+        </div>
+        <p id="demo-status" class="quiet" role="status" aria-live="polite">Preparing the local demo. You can also open the example report below.</p>
+        <noscript><p class="demo-fallback">JavaScript is disabled. <a href="demo-report.html">Open the complete synthetic example report</a>; no script is needed to read it.</p></noscript>
+        <p id="demo-error" class="demo-error" role="alert" hidden></p>
+      </div>
+      <aside class="demo-inputs" aria-labelledby="demo-inputs-title">
+        <p class="small-label">The fixed comparison</p>
+        <h2 id="demo-inputs-title">Two fictional catalogs.</h2>
+        <dl class="demo-files">
+          <div><dt>Current catalog</dt><dd><a href="samples/demo-current-catalog.csv" download>demo-current-catalog.csv</a><span>7 variant candidates + 1 image-only record</span></dd></div>
+          <div><dt>Proposed update</dt><dd><a href="samples/demo-proposed-update.csv" download>demo-proposed-update.csv</a><span>8 variant candidates + 1 image-only record</span></dd></div>
+        </dl>
+        <p><strong>Fixed settings:</strong> 30% price threshold; overwrite matching handles assumed enabled. Currency is not inferred.</p>
+        <p>These files are for evaluation. Do not import the sample products into a real store.</p>
+        <a class="demo-report-link" href="demo-report.html">Read the complete example report <span aria-hidden="true">↗</span></a>
+        <p class="quiet">The example report also works without JavaScript.</p>
+      </aside>
+    </section>
+
+    <section class="demo-results wrap" id="demo-results" aria-labelledby="demo-results-title" hidden>
+      <div class="demo-results-heading">
+        <div><p class="eyebrow">Your synthetic review</p><h2 id="demo-results-title" tabindex="-1">Comparison results</h2></div>
+        <button class="demo-secondary" id="demo-save" type="button" disabled>Save HTML report</button>
+      </div>
+      <div class="demo-verdict"><strong id="demo-verdict"></strong><p>Some rows are excluded from comparison. This does not predict that Shopify will reject the file, and it is not approval to import.</p></div>
+      <dl class="demo-metrics">
+        <div><dt>Compared variants</dt><dd><span id="demo-compared">0</span><small>Exact handle + SKU pairs</small></dd></div>
+        <div><dt>Price changes</dt><dd><span id="demo-prices">0</span><small>Within compared variants</small></dd></div>
+        <div><dt>Priority findings</dt><dd><span id="demo-priority">0</span><small>Blocking + high priority</small></dd></div>
+        <div><dt>Unpaired update rows</dt><dd><span id="demo-unpaired">0</span><small>Excluded or unmatched</small></dd></div>
+        <div><dt>Total findings</dt><dd><span id="demo-total">0</span><small>All severity levels</small></dd></div>
+      </dl>
+      <p class="demo-count-note">These counters overlap. One record can have several findings; they are not a count of unique products or a coverage score.</p>
+      <div class="demo-findings-heading">
+        <h3 id="demo-findings-title">Read the findings</h3>
+        <div class="demo-filters" role="group" aria-label="Filter synthetic findings">
+          <button id="demo-filter-all" type="button" aria-pressed="true">All findings <span id="demo-all-count">0</span></button>
+          <button id="demo-filter-priority" type="button" aria-pressed="false">Priority only <span id="demo-priority-count">0</span></button>
+        </div>
+      </div>
+      <p class="quiet demo-shown" id="demo-shown" role="status" aria-live="polite"></p>
+      <ol class="demo-findings" id="demo-findings" aria-labelledby="demo-findings-title"></ol>
+      <p class="quiet">Saving the HTML report includes every finding, even when the priority filter is selected. The downloaded report opens on its own after you close this page.</p>
+      <details class="demo-coverage">
+        <summary>Coverage, matching rules and limitations</summary>
+        <p id="demo-report-files"></p>
+        <ul id="demo-limitations"></ul>
+        <p id="demo-unchecked"></p>
+        <p id="demo-rule-date"></p>
+      </details>
+    </section>
+
+    <section class="demo-learning wrap" aria-labelledby="demo-learning-title">
+      <div class="section-heading"><p class="eyebrow">What to take from the example</p><h2 id="demo-learning-title">Useful findings.<br>Human decisions.</h2></div>
+      <div class="demo-lessons">
+        <article><span class="step-number">01</span><h3>Excluded means incomplete.</h3><p>The proposed update repeats <code>notebook / NOTE-001</code>. The engine cannot choose a reliable match, so it excludes those rows instead of guessing a price comparison.</p></article>
+        <article><span class="step-number">02</span><h3>Different kinds of absence.</h3><p>An absent row is not a predicted deletion. An omitted column is unassessed, rather than treated as an explicitly blank value. Actual import behavior needs separate review.</p></article>
+        <article><span class="step-number">03</span><h3>Read the coverage.</h3><p>Images, inventory, tax, shipping, market prices and metafields are outside this comparison. Zero changes would not mean a complete check or a safe import.</p></article>
+      </div>
+      <p class="boundary">The demo uses the same deterministic comparison engine as the downloadable prototype, with fixed synthetic inputs. It is a demonstration, not an independent user trial or a test of your store.</p>
+      <div class="demo-next"><div><h3>Want to try the full workflow?</h3><p>Read the trial scope and request access to the synthetic Windows trial. There is no purchase or payment.</p></div><a class="button" href="index.html#trial">See trial-access instructions <span aria-hidden="true">→</span></a></div>
+    </section>
+  </main>
+  <footer class="wrap footer"><div><strong>CSV Change Guard</strong><p>Public synthetic demonstration · Prototype v0.1.0 · Live sales disabled</p><p><a href="privacy.html">Website and support privacy</a></p></div><p>Independent software. Not affiliated with or endorsed by Shopify.</p></footer>
+</body>
+</html>

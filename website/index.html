@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Try a synthetic Shopify CSV comparison report in your browser. Review supported changes locally, then request a volunteer workflow trial. Sales are not open.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'none'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>CSV Change Guard — Review the changes before the import</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="brand" href="#main"><span class="brand-icon" aria-hidden="true">↔</span> CSV Change Guard</a>
+    <nav aria-label="Main navigation"><a href="demo.html">Demo</a><a href="#trial">Trial access</a><a href="#coverage">Coverage</a><a href="privacy.html">Privacy</a></nav>
+  </header>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Public synthetic demo · beta in preparation</p>
+        <h1 id="hero-title">Review the changes.<br><span>Before the import.</span></h1>
+        <p class="intro">A second look at your next catalog update. Compare a current Shopify product CSV with a proposed update to spot supported price changes, cleared fields and identifiers that cannot be matched.</p>
+        <div class="hero-actions"><a class="button" href="demo.html">Try the synthetic demo <span aria-hidden="true">→</span></a><a href="#trial">Request a workflow trial</a></div>
+        <p class="quiet">No signup or payment for the demo. Fixed synthetic files only. Nothing to install.</p>
+      </div>
+      <figure class="example">
+        <div class="example-top"><span class="small-label">A change worth a second look</span><span class="example-tag">Synthetic example</span></div>
+        <p class="product-name">Desk lamp</p>
+        <p class="product-key">desk-lamp / LAMP-001</p>
+        <div class="price-line"><del>59.00</del><span class="arrow" aria-hidden="true">→</span><strong>5.90</strong></div>
+        <div class="example-finding"><span class="drop">−90%</span><p>A price drop above the selected 30% threshold.<br><span>Intentional discount—or a misplaced decimal?</span></p></div>
+        <figcaption>Illustrative report finding. Currency is not inferred.</figcaption>
+      </figure>
+    </section>
+    <section class="workflow wrap" aria-labelledby="workflow-title">
+      <div class="section-heading"><p class="eyebrow">A review, before your next step</p><h2 id="workflow-title">Two files. One clearer picture.</h2></div>
+      <ol class="steps">
+        <li><span class="step-number">01</span><h3>Choose the baseline</h3><p>Use the current catalog export from the same store and currency as your proposed update.</p></li>
+        <li><span class="step-number">02</span><h3>Review the findings</h3><p>See supported changes and matching blockers. Missing or duplicate identifiers stay visible as an incomplete comparison.</p></li>
+        <li><span class="step-number">03</span><h3>Keep a report</h3><p>Export a standalone HTML report, or CSV and JSON findings, with the comparison settings and coverage limitations.</p></li>
+      </ol>
+    </section>
+    <section class="trial wrap" id="trial" aria-labelledby="trial-title">
+      <p class="eyebrow">Try a report now. Help test the workflow next.</p>
+      <h2 id="trial-title">How to get trial access</h2>
+      <p class="trial-intro">The <a href="demo.html">public demo</a> is open immediately. It compares a fixed fictional catalog and update, shows the findings, and offers a standalone sample report. It does not accept your files.</p>
+      <ol class="steps">
+        <li><span class="step-number">01</span><h3>Check whether it fits</h3><p>We are looking for a few people who have worked with Shopify product CSVs in the last six months. The volunteer workflow trial uses English instructions and Windows with Chrome or Edge.</p></li>
+        <li><span class="step-number">02</span><h3>Send a short request</h3><p>Email your general catalog role, recent CSV experience and browser. Please leave out store names, merchant files, reports, credentials and payment details.</p></li>
+        <li><span class="step-number">03</span><h3>Arrange a synthetic trial</h3><p>After confirming fit, we supply the prototype package, synthetic files and task instructions individually. Allow up to 45 minutes. Participation is voluntary and unpaid; no purchase or store access is needed.</p></li>
+      </ol>
+      <div class="trial-request"><a class="button" href="mailto:csvchangeguard.support@gmail.com?subject=CSV%20Change%20Guard%20synthetic%20trial%20request">Request a synthetic trial <span aria-hidden="true">→</span></a><p>Or write to <a href="mailto:csvchangeguard.support@gmail.com">csvchangeguard.support@gmail.com</a>. We aim to reply within two business days. Trial access is arranged individually, not an automatic download. You can stop at any time.</p></div>
+      <p class="boundary">The prototype is not for sale. This demonstration does not grant a commercial licence or access to a paid package. Live sales remain disabled.</p>
+    </section>
+    <section class="coverage-band" id="coverage" aria-labelledby="coverage-title">
+      <div class="wrap coverage-grid">
+        <div>
+          <p class="eyebrow">Know what is assessed</p>
+          <h2 id="coverage-title">Useful findings.<br>Explicit boundaries.</h2>
+          <p>The utility compares a documented subset of Shopify product CSV fields. It uses exact, case-sensitive handle + non-empty SKU pairs; it does not guess matches from row order.</p>
+          <ul class="coverage-list">
+            <li>Price changes and a configurable movement threshold</li>
+            <li>Explicitly cleared supported fields</li>
+            <li>Supported option and visibility changes</li>
+            <li>Missing, duplicate and unmatched identifiers</li>
+          </ul>
+          <p class="boundary">Absent rows are not predicted deletions. Omitted columns are not treated as explicit blanks. Zero findings is not approval to import.</p>
+        </div>
+        <aside class="limits" aria-labelledby="limits-title">
+          <p class="small-label">Current input limits</p><h3 id="limits-title">Check the fit first</h3>
+          <dl><div><dt>Data records</dt><dd>Up to 5,000 per file</dd></div><div><dt>File size</dt><dd>Up to 10 MiB per file</dd></div><div><dt>Columns</dt><dd>Up to 200 per file</dd></div><div><dt>Format</dt><dd>UTF-8, comma-delimited CSV</dd></div></dl>
+          <p>Both files need recognized handle, title and SKU columns. Use non-empty SKUs, supported dot-decimal prices, and files from the same store and currency.</p>
+          <p>Images, inventory, taxes, shipping, market-specific prices, metafields and arbitrary supplier formats are outside comparison coverage.</p>
+        </aside>
+      </div>
+    </section>
+    <section class="privacy wrap" id="privacy" aria-labelledby="privacy-title">
+      <p class="eyebrow">Your catalog stays with you</p><h2 id="privacy-title">No store connection. No CSV uploads.</h2>
+      <div class="privacy-grid"><p>The downloadable utility reads selected files in your browser and processes them locally. The public demo runs the same comparison engine with fixed synthetic inputs only. Neither uploads catalog files, calls AI services, tracks usage or asks for Shopify credentials.</p><p>This website has no file upload or contact form. Cloudflare handles technical request data; consumer Gmail handles support and trial correspondence. Read our <a href="privacy.html">website and support privacy notice</a>. Please use synthetic examples and do not send merchant CSVs, reports, passwords or payment details.</p></div>
+      <p class="boundary">This is an independent comparison tool, not a complete Shopify import simulator. Review coverage, keep an appropriate backup and test your actual import workflow separately.</p>
+    </section>
+    <section class="contact wrap" id="contact" aria-labelledby="contact-title">
+      <div><p class="eyebrow">Have a question about the fit?</p><h2 id="contact-title">Talk to support.</h2><p>We aim to reply within two business days. Include your browser, app version if available, and a short description. Synthetic examples only.</p><a class="email" href="mailto:csvchangeguard.support@gmail.com">csvchangeguard.support@gmail.com</a></div>
+      <aside class="beta-note"><h3>Before purchases open</h3><p>The downloadable beta is in preparation. This page does not offer purchases, accept payments or provide a download entitlement.</p><p>Final commercial, purchase privacy and refund terms will be provided before sales open. No launch date is promised.</p></aside>
+    </section>
+  </main>
+  <footer class="wrap footer"><div><strong>CSV Change Guard</strong><p>Business: <span id="business-identity">DZMITRY SALAVEI</span> · Poland</p><p><a href="privacy.html">Website and support privacy</a></p></div><p>Independent software. Not affiliated with or endorsed by Shopify.</p></footer>
+</body>
+</html>

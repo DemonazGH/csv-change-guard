@@ -1,6 +1,6 @@
 # Current website and support privacy notice
 
-Version: **22 October 2026**. This text covers the informational website at
+Version: **24 October 2026**. This text covers the website and synthetic demo at
 <https://csv-change-guard.pages.dev/> and the current support inbox. Live sales
 are disabled. Purchase and payment processing are outside this notice.
 
@@ -14,7 +14,9 @@ privacy questions at **csvchangeguard.support@gmail.com**.
 
 The downloadable utility reads selected CSV files and creates reports in your
 browser. It does not upload catalogues, connect to your store or call AI services.
-The informational website has no file upload or contact form. Please do not
+The public demo uses the same comparison engine with fixed synthetic inputs
+only, processed in your browser. It cannot select or read your files.
+The website has no file upload or contact form. Please do not
 email merchant CSVs, reports, passwords, store credentials or payment details.
 Use a short description and synthetic examples for support.
 
@@ -33,6 +35,12 @@ app/browser details you choose to include to answer the enquiry and troubleshoot
 Contacting support is voluntary, but we need a reply address and enough detail to
 understand your request. We do not use enquiries to create marketing lists or
 advertising audiences, and this website has no newsletter signup.
+
+For a volunteer synthetic-trial request, we also use the general catalog role,
+recent Shopify CSV experience and browser information you choose to provide to
+assess fit and arrange the trial. Requests are handled through the same support
+inbox and routine retention procedure below. There is no separate recruitment
+database or mailing list. Sending a request does not subscribe you to marketing.
 
 Where GDPR applies, our basis for website operation and ordinary enquiries is
 our legitimate interests in providing information about the product, keeping the

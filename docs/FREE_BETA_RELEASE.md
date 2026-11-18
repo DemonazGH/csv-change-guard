@@ -128,6 +128,12 @@ Relevant guide rules: “use `<a>` strictly for URL navigation”, “Use `:focu
 when styling focus indicators”, and “DON'T collect data speculatively”.
 The development CLI is not in the app or public bundle.
 
+The first Linux CI run caught 344 px of page width at a 320 px viewport with
+enlarged text in the new instructions. The layout now lets grid items shrink
+and long file paths wrap, using zero-minimum tracks rather than clipping text.
+The existing reflow assertions remain intact. `css-layout` guidance was also
+retrieved: “fix them at the source”. Follow-up CI results are recorded in the PR.
+
 These are automated localhost/file-navigation checks with scripted extraction,
 not a fresh manual Windows Extract All confirmation, connected in-app-browser
 evidence, independent-user trial or representative merchant-file validation.

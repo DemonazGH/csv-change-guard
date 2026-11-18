@@ -1,7 +1,7 @@
 {
   "status": "passed",
-  "started_at": "2026-11-18T11:36:42.258570+00:00",
-  "artifacts_run": "20261118T113642Z-cbeb7f5c",
+  "started_at": "2026-11-18T11:44:03.776312+00:00",
+  "artifacts_run": "20261118T114403Z-5efd76d0",
   "os": "Windows-11-10.0.26100-SP0",
   "python": "3.14.0",
   "playwright": "1.62.0",
@@ -24,6 +24,6 @@
     "entries": 10,
     "packaged_app_sha256": "585ce2008f2bab0005f2ba2cc9b00c43cae1ffb3fb8d5c954e698a919e35e1b8"
   },
-  "report_sha256": "5cea5b367fc7980e75b632920280b961fe634de0d2e834784ee285a12812eb7b",
-  "finished_at": "2026-11-18T11:36:48.926982+00:00"
+  "report_sha256": "da92e17edd2b9232fc78bb592abd6d878a141a41973ed7004d4b484db62684c4",
+  "finished_at": "2026-11-18T11:44:14.128130+00:00"
 }

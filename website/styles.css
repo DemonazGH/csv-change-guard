@@ -364,6 +364,11 @@ figcaption {
   gap:38px;
 }
 
+.steps > li {
+  min-inline-size:0;
+  overflow-wrap:anywhere;
+}
+
 .step-number {
   display:block;
   font-size:0.875rem;
@@ -670,7 +675,7 @@ figcaption {
     padding-bottom:42px;
   }
   .steps {
-    grid-template-columns:1fr;
+    grid-template-columns:minmax(0,1fr);
     gap:25px;
     margin-top:28px;
   }

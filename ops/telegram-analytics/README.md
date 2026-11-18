@@ -7,9 +7,17 @@ kept as backup. Live sales remain disabled.
 
 ## Status
 
-Prepared and locally tested. Production secrets, private-chat pairing and native
-Cloudflare delivery still require verification. No claim is made that a scheduled
-weekly message has arrived. The native weekly numeric payload is undocumented;
+Prepared and locally tested. On 18 November 2026 the reviewed module was pasted
+into the Cloudflare editor, copied back for exact source comparison and deployed;
+the dashboard showed it Ready at 100%. Compatibility date is `2026-11-18`.
+Persisted Workers Logs and Traces were observed disabled before credential
+entry. The owner saved the bot token; its settings row was observed as Secret /
+Value encrypted, without reading the value. The remaining authentication setup,
+private-chat pairing and native Cloudflare delivery still require verification.
+Public unauthenticated GET checks returned 405 on `/webhook` and `/pair`, and
+404 on `/`; they do not verify authorized calls or Telegram delivery.
+No claim is made that a scheduled weekly message
+has arrived. The native weekly numeric payload is undocumented;
 the initial formatter reports that the weekly report is available without
 inventing figures or forwarding raw account/policy metadata. A verified numeric
 mapping must precede claims that Telegram receives the actual analytics totals.
@@ -89,6 +97,10 @@ remains SHA-256
 No actual Telegram message, private-chat binding, native webhook attachment or
 numeric payload mapping is verified by those local tests. The existing native
 weekly email policy was observed Enabled; it has not been removed or changed.
+CI passed for reviewed revision `4a764c5` in
+[the preparation run](https://github.com/DemonazGH/csv-change-guard/actions/runs/44315021991).
+That Linux CI run does not test actual Cloudflare/Telegram accounts or establish
+fresh Windows browser evidence for this operations-only change.
 
 Primary references:
 

@@ -210,17 +210,29 @@ test('pairing rejects absent, group, duplicated and malformed matches without ex
   }
 });
 
-test('pairing API errors and malformed update data are redacted and not retried', async () => {
-  for (const implementation of [
-    () => Response.json({ ok: true, result: {} }),
-    () => Response.json({ ok: false, description: 'PRIVATE' }),
-    () => { throw new Error('PRIVATE ' + env.TELEGRAM_BOT_TOKEN); },
+test('pairing failure categories expose only fixed labels and validated HTTP status without retries', async () => {
+  const { MAX_TELEGRAM_BYTES } = await worker;
+  for (const [implementation, failure, provider_status] of [
+    [() => Response.json({ ok: true, result: {} }), 'invalid_api_result'],
+    [() => Response.json({ ok: false, description: 'PRIVATE' }), 'invalid_api_result'],
+    [() => Response.json(null), 'invalid_api_result'],
+    [() => { throw new Error('PRIVATE https://api.telegram.org/bot' + env.TELEGRAM_BOT_TOKEN + '/getUpdates'); }, 'network'],
+    [() => new Response('PRIVATE ' + env.TELEGRAM_BOT_TOKEN, { status: 401 }), 'provider_http', 401],
+    [() => new Response('PRIVATE_WEBHOOK_OR_POLL_CONFLICT', { status: 409 }), 'provider_http', 409],
+    [() => new Response('{PRIVATE broken'), 'bounded_json'],
+    [() => new Response(new Uint8Array([0xff, 0xfe])), 'bounded_json'],
+    [() => new Response('PRIVATE' + 'x'.repeat(MAX_TELEGRAM_BYTES)), 'bounded_json'],
+    [() => ({ ok: false, status: 'PRIVATE_UNTRUSTED_STATUS' }), 'provider_http'],
   ]) {
-    const { relay, calls } = await fixture(implementation);
+    const { relay, calls, schemas } = await fixture(implementation);
     const response = await relay.fetch(request({ code }, { path: '/pair' }), pairEnv());
     assert.equal(response.status, 502);
-    assert.equal(await response.text(), JSON.stringify({ ok: false, error: 'Pairing could not be verified' }));
+    const body = await response.text();
+    assert.deepEqual(JSON.parse(body), { ok: false, error: 'Pairing could not be verified', failure,
+      ...(provider_status === undefined ? {} : { provider_status }) });
+    assert.doesNotMatch(body, /PRIVATE|SYNTHETIC|123456789|api\.telegram|\/getUpdates/);
     assert.equal(calls.length, 1);
+    assert.equal(schemas.length, 0);
   }
 });
 

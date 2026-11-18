@@ -13,6 +13,14 @@ class InvalidBody extends Error {
   constructor(status) { super('Invalid body'); this.status = status; }
 }
 
+class TelegramFailure extends Error {
+  constructor(category, status) {
+    super('Telegram request failed');
+    this.category = category;
+    if (Number.isInteger(status) && status >= 100 && status <= 599) this.status = status;
+  }
+}
+
 async function readJsonBounded(message, maximum) {
   const declared = message.headers.get('content-length');
   if (declared !== null && (!/^\d+$/.test(declared) || Number(declared) > maximum)) {
@@ -108,14 +116,19 @@ export function describeSchema(value) {
 export function createRelay({ fetchImpl = globalThis.fetch, cryptoImpl = globalThis.crypto,
   schemaLog = shape => console.info('ccg-weekly-schema', JSON.stringify(shape)) } = {}) {
   async function telegram(method, token, data) {
-    const response = await fetchImpl(`https://api.telegram.org/bot${token}/${method}`, {
-      method: 'POST', redirect: 'error',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(data), signal: AbortSignal.timeout(8000),
-    });
-    if (!response.ok) throw new Error('Telegram request failed');
-    const result = await readJsonBounded(response, MAX_TELEGRAM_BYTES);
-    if (!isRecord(result) || result.ok !== true) throw new Error('Telegram request failed');
+    let response;
+    try {
+      response = await fetchImpl(`https://api.telegram.org/bot${token}/${method}`, {
+        method: 'POST', redirect: 'error',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify(data), signal: AbortSignal.timeout(8000),
+      });
+    } catch { throw new TelegramFailure('network'); }
+    if (!response.ok) throw new TelegramFailure('provider_http', response.status);
+    let result;
+    try { result = await readJsonBounded(response, MAX_TELEGRAM_BYTES); }
+    catch { throw new TelegramFailure('bounded_json'); }
+    if (!isRecord(result) || result.ok !== true) throw new TelegramFailure('invalid_api_result');
     return result;
   }
 
@@ -149,14 +162,21 @@ export function createRelay({ fetchImpl = globalThis.fetch, cryptoImpl = globalT
           // Poll once without advancing an offset or changing the bot webhook.
           // Profiles and unrelated messages remain transient and are not logged.
           const response = await telegram('getUpdates', env.TELEGRAM_BOT_TOKEN, { timeout: 0, limit: 100, allowed_updates: ['message'] });
-          if (!Array.isArray(response.result)) throw new Error('Invalid update response');
+          if (!Array.isArray(response.result)) throw new TelegramFailure('invalid_api_result');
           const matches = response.result.filter(update => update?.message?.chat?.type === 'private' &&
             update.message.text === '/start ' + payload.code);
           if (matches.length !== 1) return reply(409, { ok: false, error: 'A single matching private message is required' });
           const id = matches[0].message.chat.id;
           if (!Number.isSafeInteger(id) || id <= 0 || !validChatId(String(id))) return reply(409, { ok: false, error: 'A valid private chat is required' });
           return reply(200, { ok: true, chat_id: String(id) });
-        } catch { return reply(502, { ok: false, error: 'Pairing could not be verified' }); }
+        } catch (error) {
+          // Only fixed local categories and a validated HTTP status escape this
+          // boundary. Never return provider descriptions, URLs or update data.
+          const failure = error instanceof TelegramFailure ? error.category : 'internal';
+          const detail = error instanceof TelegramFailure && error.status !== undefined
+            ? { provider_status: error.status } : {};
+          return reply(502, { ok: false, error: 'Pairing could not be verified', failure, ...detail });
+        }
       }
 
       if (diagnostics) {

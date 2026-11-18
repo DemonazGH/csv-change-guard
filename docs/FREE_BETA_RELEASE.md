@@ -9,8 +9,9 @@ upload, store connection or runtime dependency was added.
 
 This record covers the source changes and fresh local validation on Windows,
 based on `10501bc` on `codex/free-beta-download`. Merge, exact-head CI and public
-HTTPS publication follow-up are recorded in the release PR linked from this
-branch's history; a local passing test is not evidence of public delivery.
+HTTPS publication follow-up are recorded in
+[PR #20](https://github.com/DemonazGH/csv-change-guard/pull/20); a local passing
+test is not evidence of public delivery.
 
 ## Visitor and licence changes
 
@@ -41,9 +42,9 @@ its separate provider, delivery, privacy and consent gaps.
 
 - Public build: **17 allowlisted files**, including `_headers`; only the new ZIP,
   its checksum file and the canonical terms are added to the 14 prior assets.
-- ZIP: `csv-change-guard-0.1.0-beta.2.zip`, **104,173 bytes**, 10 regular files.
+- ZIP: `csv-change-guard-0.1.0-beta.2.zip`, **104,195 bytes**, 10 regular files.
 - Tested Windows ZIP SHA-256:
-  `76cafb2c6981fc0b4d2c7062846bb6b7c832a027ff417af3009301a6715a62e4`.
+  `beb29a49e8d4c20a399ceade368abae34b53178ba9f3d56b7ffba6462de6007a`.
 - Packaged app SHA-256:
   `585ce2008f2bab0005f2ba2cc9b00c43cae1ffb3fb8d5c954e698a919e35e1b8`.
 - The manifest hashes eight payloads; nine checksum entries cover those payloads
@@ -93,7 +94,7 @@ and do not represent 15 unique products. No excluded identifier was guessed.
 ```powershell
 npm.cmd test
 npm.cmd run build
-npm.cmd run package:beta -- --output .local-test-artifacts/free-beta-release-final
+npm.cmd run package:beta -- --output .local-test-artifacts/free-beta-release-final-wrap
 npm.cmd run build:website
 git diff --exit-code -- src dist
 .local-test-artifacts/website-venv/Scripts/python.exe -m py_compile tests/beta_preview_test.py tests/free_beta_download_test.py
@@ -102,13 +103,13 @@ git diff --exit-code -- src dist
 The three optional Python suites were run separately with each installed
 browser, using the existing ignored virtual environment:
 
-The preview suite used the separately prepared `free-beta-browser-package`
-directory; its ZIP hash matches the final `package:beta` output above.
+The final preview suite used the same `free-beta-release-final-wrap` package.
+Earlier intermediate runs remain separate in ignored local artifacts.
 
 ```powershell
 .local-test-artifacts/website-venv/Scripts/python.exe tests/free_beta_download_test.py --site-dir .local-test-artifacts/public-site --browser-executable 'C:/Program Files/Google/Chrome/Application/chrome.exe' --artifacts-dir .local-test-artifacts/free-beta-download-chrome-2026-11-18
 .local-test-artifacts/website-venv/Scripts/python.exe tests/website_browser_test.py --site-dir .local-test-artifacts/public-site --browser-executable 'C:/Program Files/Google/Chrome/Application/chrome.exe' --artifacts-dir .local-test-artifacts/free-beta-website-chrome-2026-11-18
-.local-test-artifacts/website-venv/Scripts/python.exe tests/beta_preview_test.py --package-dir .local-test-artifacts/free-beta-browser-package/0.1.0-beta.2/CSV-Change-Guard --archive .local-test-artifacts/free-beta-browser-package/0.1.0-beta.2/csv-change-guard-0.1.0-beta.2.zip --browser-executable 'C:/Program Files/Google/Chrome/Application/chrome.exe' --artifacts-dir .local-test-artifacts/free-beta-preview-chrome-2026-11-18
+.local-test-artifacts/website-venv/Scripts/python.exe tests/beta_preview_test.py --package-dir .local-test-artifacts/free-beta-release-final-wrap/0.1.0-beta.2/CSV-Change-Guard --archive .local-test-artifacts/free-beta-release-final-wrap/0.1.0-beta.2/csv-change-guard-0.1.0-beta.2.zip --browser-executable 'C:/Program Files/Google/Chrome/Application/chrome.exe' --artifacts-dir .local-test-artifacts/free-beta-preview-chrome-2026-11-18
 ```
 
 For Edge, the executable was
@@ -133,6 +134,17 @@ enlarged text in the new instructions. The layout now lets grid items shrink
 and long file paths wrap, using zero-minimum tracks rather than clipping text.
 The existing reflow assertions remain intact. `css-layout` guidance was also
 retrieved: “fix them at the source”. Follow-up CI results are recorded in the PR.
+
+A second run reached the terms page and exposed long heading text painting
+outside correctly sized boxes. Terms/help now wrap long headings and links.
+A sandboxed Windows Chrome diagnostic passed 24 combinations of both documents,
+320/390 px, 1×/2× text scale and system-ui/Arial/Verdana fonts, checking text-range
+rectangles as well as document width. Verdana reproduced the terms overflow;
+native system-ui independently exposed the help heading issue before the fix.
+The packaged preview suite now checks both documents at 320 px/2× text scale.
+That regression passes in Chrome and Edge and fails against the pre-fix package
+on the long help heading (453 px document width at a 320 px viewport).
+See [diagnostic metrics](../test-artifacts/free-beta-2026-11-18/document-wrap-diagnostic.json).
 
 These are automated localhost/file-navigation checks with scripted extraction,
 not a fresh manual Windows Extract All confirmation, connected in-app-browser

@@ -37,7 +37,21 @@ def check_layout(page):
             left: Math.round(element.getBoundingClientRect().left),
             right: Math.round(element.getBoundingClientRect().right)
         }));
-        return {viewport: width, page: document.documentElement.scrollWidth, outside};
+        // Text can paint outside an otherwise correctly sized block. Include
+        // ranges in failure diagnostics so font-dependent overflow is visible.
+        const textOutside = [];
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        while (walker.nextNode() && textOutside.length < 8) {
+            const node = walker.currentNode;
+            if (!node.textContent.trim() || node.parentElement.closest('.guide-table-scroll, script, style')) continue;
+            const range = document.createRange();
+            range.selectNodeContents(node);
+            if ([...range.getClientRects()].some(rect => rect.width > 0 && (rect.left < -1 || rect.right > width + 1))) {
+                textOutside.push({tag: node.parentElement.tagName, text: node.textContent.trim().slice(0, 70)});
+            }
+        }
+        return {title: document.title, viewport: width,
+                page: document.documentElement.scrollWidth, outside, textOutside};
     }""")
     assert layout['page'] <= layout['viewport'], 'Horizontal page overflow: ' + repr(layout)
 

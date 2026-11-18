@@ -1,7 +1,7 @@
 {
   "status": "passed",
-  "started_at": "2026-11-18T11:44:03.776312+00:00",
-  "artifacts_run": "20261118T114403Z-5efd76d0",
+  "started_at": "2026-11-18T11:49:40.443380+00:00",
+  "artifacts_run": "20261118T114940Z-da11117b",
   "os": "Windows-11-10.0.26100-SP0",
   "python": "3.14.0",
   "playwright": "1.62.0",
@@ -19,11 +19,11 @@
   "disable_web_security_argument": false,
   "archive": {
     "filename": "csv-change-guard-0.1.0-beta.2.zip",
-    "bytes": 104173,
-    "sha256": "76cafb2c6981fc0b4d2c7062846bb6b7c832a027ff417af3009301a6715a62e4",
+    "bytes": 104195,
+    "sha256": "beb29a49e8d4c20a399ceade368abae34b53178ba9f3d56b7ffba6462de6007a",
     "entries": 10,
     "packaged_app_sha256": "585ce2008f2bab0005f2ba2cc9b00c43cae1ffb3fb8d5c954e698a919e35e1b8"
   },
-  "report_sha256": "da92e17edd2b9232fc78bb592abd6d878a141a41973ed7004d4b484db62684c4",
-  "finished_at": "2026-11-18T11:44:14.128130+00:00"
+  "report_sha256": "1ac9b201661af09864fc9e78cbfbf5f4eb8abee90730f987d506c41ea1d121b0",
+  "finished_at": "2026-11-18T11:49:49.154571+00:00"
 }

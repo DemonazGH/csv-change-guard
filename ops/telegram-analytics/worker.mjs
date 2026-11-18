@@ -62,96 +62,54 @@ async function authenticates(supplied, expected, cryptoImpl) {
   return cryptoImpl.subtle.timingSafeEqual(actual, target);
 }
 
-export function formatNotification(payload) {
+function count(value) {
+  return typeof value === 'string' && /^(0|[1-9][0-9]{0,11})$/.test(value) && Number.isSafeInteger(Number(value)) ? value : null;
+}
+
+function date(value) {
+  if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z)?$/.test(value)) return null;
+  const dateOnly = value.length === 10;
+  const canonical = dateOnly ? value + 'T00:00:00.000Z' : value.length === 20 ? value.slice(0, -1) + '.000Z' : value;
+  const instant = new Date(canonical);
+  if (!Number.isFinite(instant.getTime()) || instant.toISOString() !== canonical) return null;
+  return { text: dateOnly ? value : canonical, time: instant.getTime() };
+}
+
+export function formatNotification(payload, { syntheticTest = false } = {}) {
   if (!isRecord(payload)) return null;
   if (!Object.hasOwn(payload, 'alert_type') && Object.keys(payload).length === 1 && payload.text === CLOUDFLARE_TEST_TEXT) {
     return {
       kind: 'synthetic-test',
-      text: 'CSV Change Guard — Telegram connection test\n\nCloudflare\'s synthetic webhook test reached this private chat. This is not real visitor activity. Weekly email remains the backup.',
+      syntheticTest: true,
+      metricsSupported: { visits: false, views: false, sites: false, period: false },
+      text: 'CSV Change Guard — Telegram connection test\n\nSynthetic provider test — not real traffic\n\nCloudflare\'s synthetic webhook test reached this private chat. This is not real visitor activity. Weekly email remains the backup.',
     };
   }
   if (payload.alert_type !== WEEKLY_ALERT_TYPE) return null;
-  // The provider has not published a weekly-specific data schema. Do not
-  // guess numeric aliases or forward account IDs, raw URLs or arbitrary text.
-  // Add a vetted mapping only after a real native payload has been reviewed.
+  // Exact summary fields were inspected in a native provider Test and compared
+  // with its email. No aliases, deltas, site lists or arbitrary metadata pass.
+  const summary = isRecord(payload.data?.summary) ? payload.data.summary : {};
+  const visits = isRecord(summary.visits) && summary.visits.unit === 'Visits' ? count(summary.visits.value) : null;
+  const views = isRecord(summary.views) && summary.views.unit === 'Views' ? count(summary.views.value) : null;
+  const sites = count(summary.sites);
+  const start = date(summary.startDate);
+  const end = date(summary.endDate);
+  const period = start && end && start.time <= end.time ? start.text + ' to ' + end.text : null;
   return {
     kind: 'weekly',
-    text: 'CSV Change Guard — weekly website analytics\n\nCloudflare\'s weekly report is available. Website-specific figures have not been verified in this notification format. Read the email backup or open Cloudflare Web Analytics:\nhttps://dash.cloudflare.com/\n\nWebsite traffic is not proof of app use or customer demand.',
+    syntheticTest: syntheticTest === true,
+    metricsSupported: { visits: visits !== null, views: views !== null, sites: sites !== null, period: period !== null },
+    text: 'CSV Change Guard — Cloudflare account-wide weekly analytics\n\n' +
+      (syntheticTest === true ? 'Synthetic provider test — not real traffic\n\n' : '') +
+      'Visits: ' + (visits ?? 'unavailable') + '\nViews: ' + (views ?? 'unavailable') +
+      '\nSites: ' + (sites ?? 'unavailable') + '\nPeriod: ' + (period ?? 'unavailable') +
+      '\n\nThese are Cloudflare account-wide figures, not figures specific to CSV Change Guard.\n' +
+      'Website traffic is not proof of app use or customer demand.\n' +
+      'See the weekly email backup for performance and other details.',
   };
 }
 
-// TEMPORARY native-payload discovery. Remove after the weekly mapping is
-// verified. Only these fixed schema labels may appear in diagnostic paths;
-// identifier-shaped account/site keys must remain redacted too. This list is
-// for inspecting shape, not interpreting or guessing numeric metric fields.
-const DIAGNOSTIC_FIELD_NAMES = new Set([
-  'name', 'text', 'data', 'ts', 'account_id', 'policy_id', 'policy_name',
-  'alert_type', 'alert_correlation_id', 'alert_event',
-  'sites', 'hostname', 'visits', 'page_views', 'page_load_time',
-  'account', 'account_name', 'account_tag', 'date', 'date_range', 'start', 'end',
-  'start_date', 'end_date', 'summary', 'totals', 'aggregate', 'total', 'value',
-  'current', 'previous', 'current_value', 'previous_value', 'change',
-  'percent_change', 'percentage_change', 'percent', 'difference', 'unit',
-  'formatted', 'formatted_value', 'pageviews', 'pageViews', 'page_load',
-  'load_time', 'median_page_load_time', 'comparison', 'previous_period',
-  'current_period', 'metrics', 'statistics', 'top_countries', 'top_browsers',
-  'top_devices', 'currentValue', 'previousValue', 'percentageChange',
-  'percentChange', 'formattedValue', 'startDate', 'endDate', 'value_raw',
-  'value_formatted', 'value_previous',
-]);
-
-export function describeSchema(value) {
-  const nodes = [];
-  function visit(current, path, depth) {
-    if (nodes.length >= 150) return;
-    const type = current === null ? 'null' : Array.isArray(current) ? 'array' : typeof current;
-    nodes.push({ path, type });
-    if (depth >= 6) return;
-    if (type === 'array') {
-      if (current.length) visit(current[0], path + '[0]', depth + 1);
-    } else if (type === 'object') {
-      const keys = Object.keys(current).slice(0, 20);
-      for (let index = 0; index < keys.length && nodes.length < 150; index++) {
-        const key = keys[index];
-        const safe = DIAGNOSTIC_FIELD_NAMES.has(key)
-          ? key : '[redacted-key-' + index + ']';
-        visit(current[key], path + '.' + safe, depth + 1);
-      }
-    }
-  }
-  visit(value, '$', 0);
-  return nodes;
-}
-
-// TEMPORARY synthetic native-Test inspection only. These exact summary paths
-// have been observed, but their semantics are not yet verified for delivery.
-export function probeWeeklySummary(payload) {
-  if (!isRecord(payload) || payload.alert_type !== WEEKLY_ALERT_TYPE) return null;
-  const summary = isRecord(payload.data?.summary) ? payload.data.summary : {};
-  const visits = isRecord(summary.visits) ? summary.visits : {};
-  function count(value) {
-    if (typeof value !== 'string' || !/^(0|[1-9][0-9]{0,11})$/.test(value)) return { status: 'unsupported' };
-    const numeric = Number(value);
-    return Number.isSafeInteger(numeric) ? { status: 'valid', value: numeric } : { status: 'unsupported' };
-  }
-  function date(value) {
-    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z)?$/.test(value)) return { status: 'unsupported' };
-    const dateOnly = value.length === 10;
-    const canonical = dateOnly ? value + 'T00:00:00.000Z' : value.length === 20 ? value.slice(0, -1) + '.000Z' : value;
-    const instant = new Date(canonical);
-    if (!Number.isFinite(instant.getTime()) || instant.toISOString() !== canonical) return { status: 'unsupported' };
-    return { status: 'valid', value: dateOnly ? canonical.slice(0, 10) : canonical };
-  }
-  return {
-    visits: count(visits.value),
-    unit: ['count', 'visits', 'number', 'integer'].includes(visits.unit) ? visits.unit : 'unrecognized',
-    sites: count(summary.sites), startDate: date(summary.startDate), endDate: date(summary.endDate),
-  };
-}
-
-export function createRelay({ fetchImpl = globalThis.fetch, cryptoImpl = globalThis.crypto,
-  schemaLog = shape => console.info('ccg-weekly-schema', JSON.stringify(shape)),
-  probeLog = summary => console.info('ccg-weekly-summary-probe', JSON.stringify(summary)) } = {}) {
+export function createRelay({ fetchImpl = globalThis.fetch, cryptoImpl = globalThis.crypto } = {}) {
   async function telegram(method, token, data) {
     let response;
     try {
@@ -174,10 +132,9 @@ export function createRelay({ fetchImpl = globalThis.fetch, cryptoImpl = globalT
   return {
     async fetch(request, env = {}) {
       const url = new URL(request.url);
-      const diagnostics = env.SCHEMA_DIAGNOSTICS === 'true';
       if (!['/webhook', '/pair'].includes(url.pathname) || url.search) return reply(404, { ok: false, error: 'Not found' });
       if (request.method !== 'POST') return reply(405, { ok: false, error: 'POST required' }, { allow: 'POST' });
-      if (!validSecret(env.WEBHOOK_SECRET) || (!diagnostics && !validToken(env.TELEGRAM_BOT_TOKEN)) ||
+      if (!validSecret(env.WEBHOOK_SECRET) || !validToken(env.TELEGRAM_BOT_TOKEN) ||
           typeof cryptoImpl?.subtle?.timingSafeEqual !== 'function') {
         return reply(503, { ok: false, error: 'Relay not configured' });
       }
@@ -185,9 +142,8 @@ export function createRelay({ fetchImpl = globalThis.fetch, cryptoImpl = globalT
       try { authorized = await authenticates(request.headers.get('cf-webhook-auth'), env.WEBHOOK_SECRET, cryptoImpl); }
       catch { return reply(503, { ok: false, error: 'Relay unavailable' }); }
       if (!authorized) return reply(401, { ok: false, error: 'Unauthorized' });
-      if (url.pathname === '/pair' && diagnostics) return reply(409, { ok: false, error: 'Pairing is disabled during diagnostics' });
       if (url.pathname === '/pair' && env.TELEGRAM_CHAT_ID) return reply(409, { ok: false, error: 'Pairing is disabled' });
-      if (url.pathname === '/webhook' && !diagnostics && !validChatId(env.TELEGRAM_CHAT_ID)) return reply(503, { ok: false, error: 'Relay not configured' });
+      if (url.pathname === '/webhook' && !validChatId(env.TELEGRAM_CHAT_ID)) return reply(503, { ok: false, error: 'Relay not configured' });
       if (!/^application\/json(?:\s*;|$)/i.test(request.headers.get('content-type') || '')) return reply(415, { ok: false, error: 'JSON required' });
       let payload;
       try { payload = await readJsonBounded(request, MAX_WEBHOOK_BYTES); }
@@ -218,14 +174,7 @@ export function createRelay({ fetchImpl = globalThis.fetch, cryptoImpl = globalT
         }
       }
 
-      if (diagnostics) {
-        schemaLog(describeSchema(payload));
-        const probe = probeWeeklySummary(payload);
-        if (probe) probeLog(probe);
-        return reply(202, { ok: true, schema_only: true });
-      }
-
-      const notification = formatNotification(payload);
+      const notification = formatNotification(payload, { syntheticTest: env.SYNTHETIC_TEST_MODE === 'true' });
       if (!notification) return reply(422, { ok: false, error: 'Unsupported notification' });
       try {
         // Destination and text are never taken from caller-controlled chat IDs,
@@ -235,7 +184,8 @@ export function createRelay({ fetchImpl = globalThis.fetch, cryptoImpl = globalT
           text: notification.text.slice(0, 4096),
           link_preview_options: { is_disabled: true },
         });
-        return reply(202, { ok: true, kind: notification.kind, metrics_verified: false });
+        return reply(202, { ok: true, kind: notification.kind,
+          metrics_supported: notification.metricsSupported, synthetic_test: notification.syntheticTest });
       } catch {
         // No automatic retry: a timed-out request may already have been sent.
         // Provider retries can still duplicate a message; this is not exactly-once.

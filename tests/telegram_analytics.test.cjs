@@ -30,18 +30,17 @@ function request(payload, options = {}) {
 
 async function fixture(implementation, options = {}) {
   const calls = [];
-  const schemas = [];
-  const probes = [];
   const { createRelay } = await worker;
-  const relay = createRelay({ cryptoImpl, schemaLog: shape => schemas.push(shape), probeLog: summary => probes.push(summary), ...options, fetchImpl: async (url, init) => {
+  const relay = createRelay({ cryptoImpl, ...options, fetchImpl: async (url, init) => {
     const call = { url, init, data: JSON.parse(init.body) };
     calls.push(call);
     return implementation ? implementation(call) : Response.json({ ok: true, result: { message_id: 1 } });
   } });
-  return { calls, relay, schemas, probes };
+  return { calls, relay };
 }
 
 const weekly = { alert_type: 'web_analytics_metrics_update', data: {} };
+const unsupportedMetrics = { visits: false, views: false, sites: false, period: false };
 const pairEnv = () => { const value = { ...env }; delete value.TELEGRAM_CHAT_ID; return value; };
 const code = '0123456789abcdef0123456789abcdef';
 const update = (id, text = '/start ' + code, type = 'private') => ({
@@ -102,7 +101,7 @@ test('generic Cloudflare connectivity tests are labelled synthetic and sent only
   const { CLOUDFLARE_TEST_TEXT } = await worker;
   const response = await relay.fetch(request({ text: CLOUDFLARE_TEST_TEXT }), env);
   assert.equal(response.status, 202);
-  assert.deepEqual(await response.json(), { ok: true, kind: 'synthetic-test', metrics_verified: false });
+  assert.deepEqual(await response.json(), { ok: true, kind: 'synthetic-test', metrics_supported: unsupportedMetrics, synthetic_test: true });
   assert.equal(calls.length, 1);
   const { url, init, data } = calls[0];
   assert.equal(url, `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`);
@@ -128,11 +127,12 @@ test('unknown weekly schema produces a truthful fallback without leaking raw met
     parse_mode: 'HTML', data: { visits: 987654321, page_views: 12345678, site: 'OTHER_SITE', password: 'PRIVATE_PASSWORD' },
   }), env);
   assert.equal(response.status, 202);
-  assert.deepEqual(await response.json(), { ok: true, kind: 'weekly', metrics_verified: false });
+  assert.deepEqual(await response.json(), { ok: true, kind: 'weekly', metrics_supported: unsupportedMetrics, synthetic_test: false });
   assert.equal(calls.length, 1);
   const data = calls[0].data;
   assert.equal(data.chat_id, env.TELEGRAM_CHAT_ID);
-  assert.match(data.text, /figures have not been verified/);
+  for (const label of ['Visits', 'Views', 'Sites', 'Period']) assert.match(data.text, new RegExp(label + ': unavailable'));
+  assert.match(data.text, /Cloudflare account-wide/);
   assert.match(data.text, /email backup/);
   assert.doesNotMatch(data.text, /987654321|12345678|PRIVATE_|OTHER_SITE|evil|Visits: 0|Page views: 0|<\w/);
   assert.deepEqual(Object.keys(data).sort(), ['chat_id', 'link_preview_options', 'text']);
@@ -225,7 +225,7 @@ test('pairing failure categories expose only fixed labels and validated HTTP sta
     [() => new Response('PRIVATE' + 'x'.repeat(MAX_TELEGRAM_BYTES)), 'bounded_json'],
     [() => ({ ok: false, status: 'PRIVATE_UNTRUSTED_STATUS' }), 'provider_http'],
   ]) {
-    const { relay, calls, schemas } = await fixture(implementation);
+    const { relay, calls } = await fixture(implementation);
     const response = await relay.fetch(request({ code }, { path: '/pair' }), pairEnv());
     assert.equal(response.status, 502);
     const body = await response.text();
@@ -233,14 +233,13 @@ test('pairing failure categories expose only fixed labels and validated HTTP sta
       ...(provider_status === undefined ? {} : { provider_status }) });
     assert.doesNotMatch(body, /PRIVATE|SYNTHETIC|123456789|api\.telegram|\/getUpdates/);
     assert.equal(calls.length, 1);
-    assert.equal(schemas.length, 0);
   }
 });
 
 test('Telegram redirects are returned manually and rejected without following Location or forwarding secrets', async () => {
   for (const status of [301, 302, 303, 307, 308]) {
     for (const pairing of [false, true]) {
-      const { relay, calls, schemas } = await fixture(() => new Response('PRIVATE_REDIRECT_BODY', {
+      const { relay, calls } = await fixture(() => new Response('PRIVATE_REDIRECT_BODY', {
         status, headers: { location: 'https://untrusted.example/collect?private=PRIVATE_LOCATION' },
       }));
       const response = await relay.fetch(pairing
@@ -256,107 +255,127 @@ test('Telegram redirects are returned manually and rejected without following Lo
         ? { ok: false, error: 'Pairing could not be verified', failure: 'provider_http', provider_status: status }
         : { ok: false, error: 'Telegram delivery could not be confirmed' });
       assert.equal(response.headers.get('location'), null);
-      assert.equal(schemas.length, 0);
     }
   }
 });
 
-test('temporary schema diagnostics emit bounded paths/types without original values or Telegram requests', async () => {
-  const { relay, calls, schemas } = await fixture();
-  const payload = { ...weekly, account_id: 'PRIVATE_ACCOUNT_VALUE', text: 'PRIVATE_MESSAGE_VALUE',
-    PrivateAccountName: { private_store_alpha: { visits: 456789 } },
-    data: { sites: [{ hostname: 'PRIVATE_SITE_VALUE', visits: 987654321,
-      page_views: { current: { value: 76543210 } }, extra: { private: 'PRIVATE_DEEP_VALUE' } }],
-      'https://private.example/catalog.csv': { email: 'PRIVATE_EMAIL_VALUE' },
-      abcdefabcdefabcdefabcdefabcdefab: true,
-      private_account_name_123: { PrivateStoreAlpha: { page_views: 7654321 } },
-      ['x'.repeat(100)]: 'PRIVATE_LONG_KEY_VALUE',
-    },
-  };
-  const response = await relay.fetch(request(payload), { WEBHOOK_SECRET: env.WEBHOOK_SECRET, SCHEMA_DIAGNOSTICS: 'true' });
+test('weekly mapping forwards only verified summary counters with account-wide scope and unavailable optional fields', async () => {
+  const { relay, calls } = await fixture();
+  const response = await relay.fetch(request({ ...weekly, account_id: 'PRIVATE_ACCOUNT', policy_name: 'PRIVATE_POLICY',
+    text: 'PRIVATE_TEXT https://private.example', data: { summary: {
+      visits: { value: '1234', unit: 'Visits', change: '+78', previous: 'PRIVATE_PREVIOUS' },
+      views: { value: '1234', unit: 'Views', change: '-78' },
+      sites: '', startDate: '', endDate: '', performance: 'PRIVATE_PERFORMANCE',
+    }, sites: [{ hostname: 'PRIVATE_HOST', visits: '5678' }], referrers: ['PRIVATE_REFERRER'] },
+  }), env);
   assert.equal(response.status, 202);
-  assert.deepEqual(await response.json(), { ok: true, schema_only: true });
-  assert.equal(calls.length, 0);
-  assert.equal(schemas.length, 1);
-  const serialized = JSON.stringify(schemas[0]);
-  assert.doesNotMatch(serialized, /PRIVATE_|987654321|456789|7654321|private\.example|abcdefabcdef|x{49}/);
-  assert.doesNotMatch(serialized, /PrivateAccountName|private_store_alpha|private_account_name_123|PrivateStoreAlpha/);
-  assert.ok(schemas[0].some(node => node.path === '$.data.sites[0].visits' && node.type === 'number'));
-  assert.ok(schemas[0].some(node => node.path === '$.data.sites[0].page_views.current.value' && node.type === 'number'));
-  assert.ok(schemas[0].some(node => node.path === '$.data.[redacted-key-3].[redacted-key-0].page_views' && node.type === 'number'));
-  assert.ok(schemas[0].some(node => node.path.includes('[redacted-key-')));
-  assert.ok(schemas[0].length <= 150);
-  for (const node of schemas[0]) assert.deepEqual(Object.keys(node).sort(), ['path', 'type']);
-
-  const { describeSchema } = await worker;
-  const wide = Object.fromEntries(Array.from({ length: 100 }, (_, index) => ['field_' + index,
-    Object.fromEntries(Array.from({ length: 100 }, (_, inner) => ['field_' + inner, { child: { last: 123 } }]))]));
-  const bounded = describeSchema(wide);
-  assert.equal(bounded.length, 150);
-  assert.ok(bounded.every(node => node.path.split('.').length - 1 <= 6));
-  assert.ok(bounded.every(node => node.path.length <= 200));
-  assert.doesNotMatch(JSON.stringify(bounded), /123/);
-  const deep = describeSchema({ data: { sites: [{ metrics: { current: {
-    value: { previous: { value: 123 } },
-  } } }] } });
-  assert.ok(deep.some(node => node.path === '$.data.sites[0].metrics.current.value' && node.type === 'object'));
-  assert.ok(deep.every(node => !node.path.includes('.previous')));
-  const manyKeys = describeSchema(Object.fromEntries(Array.from({ length: 21 }, (_, index) => ['private_' + index, true])));
-  assert.equal(manyKeys.length, 21);
-  assert.equal(manyKeys.at(-1).path, '$.[redacted-key-19]');
-  assert.deepEqual(describeSchema([{ visits: 123 }, { page_views: 456 }]), [
-    { path: '$', type: 'array' }, { path: '$[0]', type: 'object' }, { path: '$[0].visits', type: 'number' },
-  ]);
+  assert.deepEqual(await response.json(), { ok: true, kind: 'weekly',
+    metrics_supported: { visits: true, views: true, sites: false, period: false }, synthetic_test: false });
+  assert.equal(calls.length, 1);
+  const text = calls[0].data.text;
+  assert.match(text, /Cloudflare account-wide weekly analytics/);
+  assert.match(text, /Visits: 1234\nViews: 1234\nSites: unavailable\nPeriod: unavailable/);
+  assert.match(text, /not figures specific to CSV Change Guard/);
+  assert.match(text, /not proof of app use or customer demand/);
+  assert.match(text, /weekly email backup for performance and other details/);
+  assert.doesNotMatch(text, /PRIVATE|private\.example|https:|5678|\+78|-78|Synthetic provider test/);
+  assert.equal(calls[0].data.parse_mode, undefined);
+  assert.ok(text.length <= 4096);
 });
 
-test('diagnostics reject pairing and unauthorized bodies without polling, sending or schema logging', async () => {
-  const { relay, calls, schemas, probes } = await fixture();
-  const settings = { ...pairEnv(), SCHEMA_DIAGNOSTICS: 'true' };
-  assert.equal((await relay.fetch(request({ code }, { path: '/pair' }), settings)).status, 409);
-  assert.equal((await relay.fetch(request(weekly, { noAuth: true }), settings)).status, 401);
-  assert.equal((await relay.fetch(request(null, { body: '{broken' }), settings)).status, 400);
-  assert.equal(calls.length, 0);
-  assert.equal(schemas.length, 0);
-  assert.equal(probes.length, 0);
+test('canonical zero and maximum supported counts remain explicit while valid ISO periods are preserved', async () => {
+  for (const [startDate, endDate, period] of [
+    ['2024-02-29', '2024-03-07', '2024-02-29 to 2024-03-07'],
+    ['2024-02-29T12:34:56Z', '2024-02-29T12:34:56.001Z', '2024-02-29T12:34:56.000Z to 2024-02-29T12:34:56.001Z'],
+    ['2024-02-29', '2024-02-29', '2024-02-29 to 2024-02-29'],
+  ]) {
+    const { relay, calls } = await fixture();
+    const response = await relay.fetch(request({ ...weekly, data: { summary: {
+      visits: { value: '0', unit: 'Visits' }, views: { value: '999999999999', unit: 'Views' },
+      sites: '0', startDate, endDate,
+    } } }), env);
+    assert.deepEqual((await response.json()).metrics_supported, { visits: true, views: true, sites: true, period: true });
+    assert.ok(calls[0].data.text.includes('Visits: 0\nViews: 999999999999\nSites: 0\nPeriod: ' + period));
+  }
 });
 
-test('temporary weekly summary probe emits only exact-path validated counters, ISO dates and enumerated units', async () => {
-  const { relay, calls, probes } = await fixture();
-  const payload = { ...weekly, text: 'PRIVATE_RAW_TEXT', account_id: 'PRIVATE_ACCOUNT', data: {
-    summary: { visits: { value: '123456', unit: 'visits', previous: 'PRIVATE_PREVIOUS' }, sites: '0',
-      startDate: '2024-02-29', endDate: '2024-03-07T12:34:56Z', private: 'PRIVATE_SUMMARY' },
-    visits: '999', sites: [{ hostname: 'PRIVATE_HOST', visits: '888' }],
-  } };
-  const response = await relay.fetch(request(payload), { WEBHOOK_SECRET: env.WEBHOOK_SECRET, SCHEMA_DIAGNOSTICS: 'true' });
+test('malformed, noncanonical and out-of-range counters are unavailable rather than coerced to zero', async () => {
+  for (const value of ['', ' ', '01', '+1', '-1', '1.5', '1e3', '1,000', '1000000000000', 'PRIVATE_COUNT', 123, null, true, {}, []]) {
+    const { relay, calls } = await fixture();
+    const response = await relay.fetch(request({ ...weekly, data: { summary: {
+      visits: { value, unit: 'Visits' }, views: { value, unit: 'Views' }, sites: value,
+    } } }), env);
+    assert.deepEqual((await response.json()).metrics_supported, unsupportedMetrics);
+    assert.match(calls[0].data.text, /Visits: unavailable\nViews: unavailable\nSites: unavailable\nPeriod: unavailable/);
+    assert.doesNotMatch(calls[0].data.text, /PRIVATE|Visits: 0|Views: 0|Sites: 0/);
+  }
+});
+
+test('metric units and paths must match exactly and aliases cannot supply missing summary figures', async () => {
+  for (const [visits, views] of [
+    [{ value: '99', unit: 'visits' }, { value: '88', unit: 'views' }],
+    [{ value: '99', unit: 'Views' }, { value: '88', unit: 'Visits' }],
+    [{ value: '99' }, { value: '88', unit: 'PRIVATE_UNIT' }],
+    ['99', ['88']],
+  ]) {
+    const { relay, calls } = await fixture();
+    const response = await relay.fetch(request({ ...weekly, data: { summary: { visits, views,
+      page_views: '77', pageViews: '66', current: { visits: '55', views: '44' } }, visits: '33' },
+      text: 'Visits: 99; Views: 88',
+    }), env);
+    assert.deepEqual((await response.json()).metrics_supported, unsupportedMetrics);
+    assert.match(calls[0].data.text, /Visits: unavailable\nViews: unavailable/);
+    assert.doesNotMatch(calls[0].data.text, /99|88|77|66|55|44|33|PRIVATE/);
+  }
+  const { relay, calls } = await fixture();
+  const response = await relay.fetch(request({ ...weekly, data: { summary: {
+    visits: { value: '12', unit: 'Visits' }, views: { value: '34', unit: 'visits' },
+  } } }), env);
+  assert.deepEqual((await response.json()).metrics_supported, { ...unsupportedMetrics, visits: true });
+  assert.match(calls[0].data.text, /Visits: 12\nViews: unavailable/);
+});
+
+test('missing, invalid and reversed calendar periods are unavailable without forwarding date text', async () => {
+  for (const [startDate, endDate] of [
+    [undefined, '2026-01-01'], ['2026-01-01', undefined],
+    ['2025-02-29', '2025-03-01'], ['2026-02-30', '2026-03-01'],
+    ['2026-13-01', '2027-01-01'], ['2026-01-01T25:00:00Z', '2026-01-02'],
+    ['2026-01-01T00:00:60Z', '2026-01-02'], ['2026-01-01T00:00:00+01:00', '2026-01-02'],
+    ['2026-01-03', '2026-01-02'], ['2026-01-01T00:00:00.001Z', '2026-01-01T00:00:00Z'],
+    ['PRIVATE_DATE', '2026-01-02'],
+  ]) {
+    const { relay, calls } = await fixture();
+    const response = await relay.fetch(request({ ...weekly, data: { summary: {
+      visits: { value: '0', unit: 'Visits' }, startDate, endDate,
+    } } }), env);
+    assert.deepEqual((await response.json()).metrics_supported, { ...unsupportedMetrics, visits: true });
+    assert.match(calls[0].data.text, /Period: unavailable/);
+    assert.doesNotMatch(calls[0].data.text, /PRIVATE|202[567]-/);
+  }
+});
+
+test('only the exact operator synthetic-mode setting labels weekly tests and payload flags cannot change it', async () => {
+  for (const [setting, expected] of [[undefined, false], ['false', false], [true, false], ['TRUE', false], ['true', true]]) {
+    for (const forgedFlag of [false, true]) {
+      const { relay, calls } = await fixture();
+      const response = await relay.fetch(request({ ...weekly, synthetic_test: forgedFlag, test: forgedFlag,
+        SYNTHETIC_TEST_MODE: forgedFlag ? 'true' : 'false', data: { test: forgedFlag,
+          summary: { visits: { value: '1234', unit: 'Visits' } } },
+      }), { ...env, SYNTHETIC_TEST_MODE: setting });
+      const body = await response.json();
+      assert.equal(body.synthetic_test, expected);
+      assert.equal(calls[0].data.text.includes('Synthetic provider test — not real traffic'), expected);
+    }
+  }
+});
+
+test('removed diagnostics settings cannot bypass required secrets or create a logging-only success', async () => {
+  const { relay, calls } = await fixture();
+  const settings = { WEBHOOK_SECRET: env.WEBHOOK_SECRET, SCHEMA_DIAGNOSTICS: 'true' };
+  assert.equal((await relay.fetch(request(weekly), settings)).status, 503);
+  assert.equal(calls.length, 0);
+  const response = await relay.fetch(request(weekly), { ...env, SCHEMA_DIAGNOSTICS: 'true' });
   assert.equal(response.status, 202);
-  assert.equal(calls.length, 0);
-  assert.deepEqual(probes, [{ visits: { status: 'valid', value: 123456 }, unit: 'visits', sites: { status: 'valid', value: 0 },
-    startDate: { status: 'valid', value: '2024-02-29' }, endDate: { status: 'valid', value: '2024-03-07T12:34:56.000Z' } }]);
-  assert.doesNotMatch(JSON.stringify(probes), /PRIVATE|999|888/);
-  const { probeWeeklySummary } = await worker;
-  for (const unit of ['count', 'visits', 'number', 'integer']) {
-    assert.equal(probeWeeklySummary({ ...weekly, data: { summary: { visits: { value: '0', unit } } } }).unit, unit);
-  }
-});
-
-test('summary probe rejects unknown values, aliases and alert types without exposing them or affecting normal delivery', async () => {
-  const { probeWeeklySummary } = await worker;
-  const unsupported = { status: 'unsupported' };
-  for (const value of ['PRIVATE_VALUE', '01', '-1', '1.5', '1e3', '1,000', '1000000000000', 123, null]) {
-    const probe = probeWeeklySummary({ ...weekly, data: { summary: { visits: { value, unit: 'PRIVATE_UNIT' }, sites: value,
-      startDate: 'PRIVATE_DATE', endDate: '2026-02-30' }, visits: { value: '999' }, current: { visits: '888' } } });
-    assert.deepEqual(probe, { visits: unsupported, unit: 'unrecognized', sites: unsupported, startDate: unsupported, endDate: unsupported });
-  }
-  for (const value of ['2025-02-29', '2026-13-01', '2026-01-01T25:00:00Z', '2026-01-01T00:00:60Z', '2026-01-01T00:00:00+01:00']) {
-    assert.deepEqual(probeWeeklySummary({ ...weekly, data: { summary: { startDate: value } } }).startDate, unsupported);
-  }
-  for (const payload of [null, {}, { alert_type: 'another_alert', data: { summary: { sites: '123' } } }]) {
-    const { relay, calls, probes } = await fixture();
-    assert.equal((await relay.fetch(request(payload), { WEBHOOK_SECRET: env.WEBHOOK_SECRET, SCHEMA_DIAGNOSTICS: 'true' })).status, 202);
-    assert.equal(probes.length, 0);
-    assert.equal(calls.length, 0);
-  }
-  const { relay, probes } = await fixture();
-  assert.equal((await relay.fetch(request({ ...weekly, data: { summary: { visits: { value: '123', unit: 'count' } } } }), env)).status, 202);
-  assert.equal(probes.length, 0);
+  assert.equal(calls.length, 1);
+  assert.equal((await response.json()).schema_only, undefined);
 });

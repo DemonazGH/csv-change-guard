@@ -2,6 +2,14 @@
 
 Prepared: **18 October 2026**. Product remains **v0.1.0**.
 
+**18 November owner Telegram reporting:** an isolated operations Worker now
+relays the native Cloudflare weekly notification to a fixed private owner chat,
+with email retained as backup. Only supported account-wide visits/page views,
+site count and reporting period may be included; unknown fields are unavailable.
+See [setup, executed checks and remaining delivery gaps](../ops/telegram-analytics/README.md).
+This is separate from the website consent loader and local comparison utility.
+No app telemetry, CSV uploads, new paid service or live-sales activation is added.
+
 **18 November website analytics:** the owner authorised free Cloudflare Web
 Analytics and its weekly email report. This exception applies only to three
 informational pages after visitor opt-in, not the demo or downloaded utility.

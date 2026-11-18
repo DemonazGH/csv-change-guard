@@ -1,8 +1,10 @@
 # Self-service synthetic trial preparation
 
-Prepared on **18 November 2026**, Europe/Warsaw. This website update is in the
-local working tree on `codex/simplify-synthetic-trial`, based on `b3a698c`.
-It has not been pushed or publicly deployed. The public
+Prepared on **18 November 2026**, Europe/Warsaw, on
+`codex/simplify-synthetic-trial`, based on `b3a698c`. The owner subsequently
+authorised the PR, merge after review/CI and publication to the existing site.
+Current review and deployment progress is recorded in
+[PR #18](https://github.com/DemonazGH/csv-change-guard/pull/18). The public
 [24 October deployment](PUBLIC_SYNTHETIC_DEMO.md) retains its historical scope.
 Live sales are disabled.
 
@@ -114,9 +116,10 @@ teardown.
 
 ## Remaining work
 
-The next publication step requires the owner's explicit push/deployment
-instruction under `AGENTS.md`. Once published, verify the public links and
-Cloudflare response headers against the reviewed build.
+The owner authorised publication after passing review and CI. Public deployment
+still requires Cloudflare access. Once published, verify the public links and
+Cloudflare response headers against the reviewed build and record the result in
+PR #18. The localhost evidence table above records preparation-time checks.
 
 This work supplies educational and automated evidence. It establishes no
 independent usability result, merchant-file compatibility, paid demand or

@@ -2,17 +2,18 @@
 
 **Version 0.1.0 · local working prototype · 18 October 2026**
 
-**18 November website preparation:** the local website update makes the supplied
+**18 November website update:** the website sources make the supplied
 synthetic browser trial immediate, adds a user-paced one-minute walkthrough and
 a [Shopify CSV price-change guide](website/shopify-csv-price-changes.html).
 Email feedback is optional. See the [fresh validation and screenshots](docs/SELF_SERVICE_TRIAL.md).
-The update is prepared locally and has not been published. Live sales are disabled.
+Publication progress is recorded in [PR #18](https://github.com/DemonazGH/csv-change-guard/pull/18).
+Live sales are disabled.
 
 The [public synthetic demo](https://csv-change-guard.pages.dev/demo) runs the
 unchanged comparison engine with fixed fictional inputs. No signup, file
-selection or purchase is needed. The 24 October
-[trial-access instructions](https://csv-change-guard.pages.dev/#trial) describe
-the separately arranged Windows workflow trial. Website
+selection or purchase is needed. The website's trial path now leads into that
+supplied example with optional feedback. The separately arranged Windows
+file-selection trial has its own protocol. Website
 sources now live in `website/`; `npm run build:website` creates a public-only
 allowlisted bundle. See [publication and validation](docs/PUBLIC_SYNTHETIC_DEMO.md).
 Live sales remain disabled and the internal ZIP is not distributed by the site.

@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Learn how to review Shopify CSV price changes before importing. Compare a baseline and proposed update, inspect price movements and recognize matching gaps with a free synthetic example.">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'none'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <title>How to review Shopify CSV price changes before importing — CSV Change Guard</title>
+  <link rel="canonical" href="https://csv-change-guard.pages.dev/shopify-csv-price-changes">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="guide.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="brand" href="index.html"><span class="brand-icon" aria-hidden="true">↔</span> CSV Change Guard</a>
+    <nav aria-label="Main navigation"><a href="demo.html">Try the demo</a><a href="shopify-csv-price-changes.html" aria-current="page">Price-change guide</a><a href="privacy.html">Privacy</a></nav>
+  </header>
+  <main id="main" class="guide-document wrap">
+    <article aria-labelledby="guide-title">
+      <header class="guide-intro">
+        <p class="eyebrow">Shopify CSV review guide</p>
+        <h1 id="guide-title">Review price changes.<br><span>Before importing.</span></h1>
+        <p class="intro">A proposed price of 5.90 can look reasonable in a spreadsheet. Seeing it beside the current 59.00 makes the 90% drop easier to question. Here is a practical way to review a Shopify product CSV update, including the rows a comparison cannot assess.</p>
+        <a class="button" href="demo.html#demo-tour">Try the one-minute walkthrough <span aria-hidden="true">→</span></a>
+        <p class="quiet">Free synthetic example. The browser trial supplies the files and settings.</p>
+      </header>
+      <div class="guide-layout">
+        <nav class="guide-contents" aria-label="Guide contents">
+          <p class="small-label">In this guide</p>
+          <a href="#baseline">Prepare the two versions</a>
+          <a href="#identity">Check the match</a>
+          <a href="#prices">Read price movements</a>
+          <a href="#gaps">Resolve comparison gaps</a>
+          <a href="#report">Keep the report</a>
+        </nav>
+        <div class="guide-body">
+          <section id="baseline" aria-labelledby="baseline-title">
+            <h2 id="baseline-title">Keep the current export as your baseline</h2>
+            <p>Save a dated, unedited copy of the current catalog. Prepare the proposed update as a separate file. Use files from the same store and currency, and confirm which is the baseline before comparing. CSV Change Guard does not infer currency or check whether your baseline still matches the live store.</p>
+            <p>Keep the variant information and relevant columns together while editing. A price update can also contain an accidental blank description or changed option value. Shopify documents dependencies between CSV columns, including variant option fields, so removing columns needs care. <a href="https://help.shopify.com/en/manual/products/import-export/using-csv">Shopify product CSV format and dependencies</a>.</p>
+            <p>For the downloadable prototype, both files need recognized handle, title and SKU columns. Use UTF-8 comma-delimited CSV and supported non-negative dot-decimal prices without currency symbols. Current limits are 5,000 data records, 10 MiB and 200 columns per file. These are this tool’s limits.</p>
+          </section>
+          <section id="identity" aria-labelledby="identity-title">
+            <h2 id="identity-title">Check which variant is being compared</h2>
+            <p>CSV Change Guard pairs variants using an exact, case-sensitive handle and non-empty SKU. For example, <code>desk-lamp / LAMP-001</code> must identify one eligible variant in each file. This is the tool’s comparison rule. Shopify’s importer has its own rules.</p>
+            <p>A changed SKU, missing identifier or duplicate pair can leave a row unmatched or excluded. Check those findings before interpreting the price count. The tool does not recover a match from row order or a similar product name.</p>
+          </section>
+          <section id="prices" aria-labelledby="prices-title">
+            <h2 id="prices-title">Review the direction and size of each change</h2>
+            <p>The public trial uses a 30% price-movement threshold. Increases and decreases of at least that amount receive high-priority findings. Smaller changes still appear. The downloadable utility lets you choose the threshold.</p>
+            <div class="guide-table-scroll" role="region" aria-label="Synthetic price changes" tabindex="0">
+              <table>
+                <caption>Price changes in the supplied fictional catalog</caption>
+                <thead><tr><th scope="col">Variant SKU</th><th scope="col">Current</th><th scope="col">Proposed</th><th scope="col">Movement</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">LAMP-001</th><td>59.00</td><td>5.90</td><td>−90%</td></tr>
+                  <tr><th scope="row">TEE-S</th><td>20.00</td><td>29.00</td><td>+45%</td></tr>
+                  <tr><th scope="row">TEE-M</th><td>22.00</td><td>20.00</td><td>−9.09%</td></tr>
+                  <tr><th scope="row">BAG-001</th><td>30.00</td><td>0.00</td><td>−100%</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>Ask whether each change matches the intended pricing plan. The lamp’s drop could be deliberate or a misplaced decimal. The zero-priced bag needs a separate check. Percentage movement from an old price of zero is undefined, so inspect the actual values in that case. Displayed percentages are truncated to two decimal places.</p>
+          </section>
+          <section id="gaps" aria-labelledby="gaps-title">
+            <h2 id="gaps-title">Resolve the gaps behind the totals</h2>
+            <p>The synthetic trial compares four variants and finds four price changes. Its verdict is still “Incomplete comparison — blockers need review” because other rows cannot be reliably paired. Four compared variants do not establish complete coverage of either file.</p>
+            <p>Keep three situations distinct. An explicit blank in a supported field can create a clearing finding. An omitted column is unassessed. A baseline row absent from the proposed update is informational and does not predict deletion.</p>
+            <p>Confirm the report’s overwrite assumption too. Shopify explains how its matching-handle overwrite option affects imports and how blank cells and omitted columns can behave differently, with dependencies that need separate review. <a href="https://help.shopify.com/en/manual/products/import-export/import-products">Shopify overwrite and import guidance</a>.</p>
+          </section>
+          <section id="report" aria-labelledby="report-title">
+            <h2 id="report-title">Keep the report with the reviewed versions</h2>
+            <p>Save the standalone HTML report and check its filenames, threshold, overwrite assumption and limitations. It includes all findings, even if the screen is filtered. After editing the proposed CSV, compare again so the saved report describes that version.</p>
+            <p>Images, inventory, taxes, shipping, market-specific prices and metafields remain outside this comparison. Zero findings is not approval to import. Maintain an appropriate backup and test the actual import workflow separately. Shopify also recommends backing up product data before importing. <a href="https://help.shopify.com/en/manual/products/import-export/import-products#before-you-begin">Shopify preparation guidance</a>.</p>
+          </section>
+          <aside class="guide-next" aria-labelledby="guide-next-title">
+            <h2 id="guide-next-title">See the example for yourself</h2>
+            <p>The free browser trial runs the comparison locally with supplied fictional files. Follow the short walkthrough, inspect the findings and save a sample report.</p>
+            <a class="button" href="demo.html#demo-tour">Start the walkthrough <span aria-hidden="true">→</span></a>
+            <p class="quiet">The public trial accepts only its supplied examples. Sales are not open.</p>
+          </aside>
+          <p class="guide-updated">Updated 18 November 2026. Shopify references checked on this date. Comparison scope describes prototype v0.1.0.</p>
+        </div>
+      </div>
+    </article>
+  </main>
+  <footer class="wrap footer"><div><strong>CSV Change Guard</strong><p><a href="index.html">Product overview</a> · <a href="privacy.html">Website and support privacy</a></p></div><p>Independent software. Not affiliated with or endorsed by Shopify.</p></footer>
+</body>
+</html>

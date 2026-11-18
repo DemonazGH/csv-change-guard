@@ -2,6 +2,17 @@
 
 Prepared: **18 October 2026**. Product remains **v0.1.0**.
 
+**18 November self-service trial preparation:** local website sources now lead
+directly to the fixed synthetic browser trial, with optional email feedback,
+a three-step walkthrough and a price-change guide. The
+[validation record](SELF_SERVICE_TRIAL.md) includes fresh sandboxed installed
+Chrome/Edge localhost checks at 1440 and 390 px, report download/reopening and
+fallback evidence. The owner authorised pushing, merging after review/CI and
+publication. Deployment progress is tracked in
+[PR #18](https://github.com/DemonazGH/csv-change-guard/pull/18).
+The downloadable app/ZIP and `UNLICENSED` status are preserved, and live sales
+remain disabled. The public 24 October record retains its historical scope.
+
 **24 October public-demo update:** the owner authorised adding a public
 synthetic demo and clear trial-access instructions to the existing Cloudflare
 site. Sources now live in `website/`; use `npm run build:website` to produce the

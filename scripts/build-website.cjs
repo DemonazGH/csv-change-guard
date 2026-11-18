@@ -4,7 +4,10 @@ const fs = require('node:fs');
 const path = require('node:path');
 const G = require('../src/engine.js');
 const root = path.resolve(__dirname, '..');
-const siteFiles = ['index.html', 'privacy.html', 'styles.css', 'demo.html', 'demo.js', 'demo.css', '_headers'];
+const siteFiles = [
+  'index.html', 'privacy.html', 'styles.css', 'demo.html', 'demo.js', 'demo.css',
+  'shopify-csv-price-changes.html', 'guide.css', '_headers'
+];
 
 function buildWebsite(output) {
   const destination = path.resolve(output);

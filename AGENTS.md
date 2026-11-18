@@ -14,6 +14,13 @@ proposed catalog update. The first business milestone is paid demand for a
 useful report, not a large SaaS platform. Avoid features that require custom
 onboarding, sales calls, or recurring manual report production.
 
+Current validation step: the owner selected a full free beta on 18 November
+2026. Follow `docs/FREE_BETA_RELEASE.md` and the package-specific free-use terms;
+the earlier paid-beta price/support drafts are historical for this release.
+Keep live sales disabled. The source repository remains `UNLICENSED`; the free
+package grant is not an open-source licence. Independent usability/usefulness
+and any later paid demand remain separate validation questions.
+
 ## Modern Web Guidance for the website
 
 For HTML, CSS and client-side JavaScript work in `website/`, use Google's

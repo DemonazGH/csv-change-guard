@@ -7,11 +7,11 @@ const os = require('node:os');
 const path = require('node:path');
 const crypto = require('node:crypto');
 const { spawnSync } = require('node:child_process');
-const { buildRelease } = require('../scripts/build-release.cjs');
+const { buildRelease, getReleaseMetadata } = require('../scripts/build-release.cjs');
 const sha256 = data => crypto.createHash('sha256').update(data).digest('hex');
 const root = 'CSV-Change-Guard/';
 const expected = [
-  'DRAFT-NOT-FOR-SALE.txt', 'SHA256SUMS.txt', 'START_HERE.txt', 'dist/index.html',
+  'FREE_BETA_TERMS.html', 'SHA256SUMS.txt', 'START_HERE.txt', 'dist/index.html',
   'help.html', 'manifest.json', 'samples/current-catalog.csv',
   'samples/proposed-update.csv', 'samples/unchanged-update.csv', 'server.cjs',
 ].sort();
@@ -24,6 +24,7 @@ function fixture(t) {
     'package.json': '{"version":"0.1.0","license":"UNLICENSED"}\n',
     'release/START_HERE.txt': 'Open dist/index.html.\r\nSynthetic samples only.\r\n',
     'release/help.html': '<!doctype html><title>Help</title><p>Local comparison.</p>\n',
+    'release/free-beta-terms.html': '<!doctype html><title>Free beta use terms</title><p>Keep and use the delivered version without a fee.</p>\n',
     'release/DRAFT-NOT-FOR-SALE.txt': 'Internal review. Not for sale.\n',
     'dist/index.html': '<!doctype html>\r\n<title>CSV Change Guard</title><script>const sample="é";</script>\r\n',
     'server.cjs': "'use strict';\nrequire('node:http');\n",
@@ -110,10 +111,16 @@ test('release ZIP independently extracts exact allowed payloads, manifest and ch
   }
   assert.deepEqual(entries.get(root + 'dist/index.html'), Buffer.from(inputs['dist/index.html']), 'application bytes are not rebuilt or normalized');
   assert.deepEqual(fs.readFileSync(path.join(sourceRoot, 'dist/index.html')), Buffer.from(inputs['dist/index.html']), 'source app remains unchanged');
+  assert.deepEqual(entries.get(root + 'FREE_BETA_TERMS.html'), Buffer.from(inputs['release/free-beta-terms.html']), 'exact approved terms accompany the download');
+  assert.equal(entries.has(root + 'DRAFT-NOT-FOR-SALE.txt'), false, 'historical internal marker is not a free-beta payload');
+  assert.deepEqual(fs.readFileSync(path.join(sourceRoot, 'package.json')), Buffer.from(inputs['package.json']), 'source repository licensing remains unchanged');
   const manifest = JSON.parse(entries.get(root + 'manifest.json'));
-  assert.equal(manifest.candidateVersion, '0.1.0-beta.1');
+  assert.equal(manifest.candidateVersion, '0.1.0-beta.2');
   assert.equal(manifest.applicationVersion, '0.1.0');
-  assert.equal(manifest.status, 'internal-preview-not-for-sale');
+  assert.equal(manifest.status, 'free-beta');
+  assert.equal(manifest.termsFile, 'FREE_BETA_TERMS.html');
+  assert.equal(path.basename(result.archivePath), 'csv-change-guard-0.1.0-beta.2.zip');
+  assert.equal(result.termsFile, manifest.termsFile);
   assert.equal(manifest.files.length, 8);
   for (const entry of manifest.files) {
     const data = entries.get(root + entry.path);
@@ -134,6 +141,25 @@ test('release ZIP independently extracts exact allowed payloads, manifest and ch
   assert.equal(result.archiveSha256, sha256(archive));
   assert.equal(archive.includes(Buffer.from('must-not-be-shipped')), false);
   assert.equal(archive.includes(Buffer.from(temporary)), false, 'no runtime path in package');
+});
+
+test('release metadata gives website links the exact free-beta archive name', () => {
+  assert.deepEqual(getReleaseMetadata('0.1.0'), {
+    candidateVersion: '0.1.0-beta.2', applicationVersion: '0.1.0', status: 'free-beta',
+    packageRoot: 'CSV-Change-Guard', archiveFilename: 'csv-change-guard-0.1.0-beta.2.zip',
+    termsFile: 'FREE_BETA_TERMS.html',
+  });
+  for (const version of ['../../unsafe', '0.1.0/../bad', '0.1.0-beta.1', '', undefined]) {
+    assert.throws(() => getReleaseMetadata(version), /plain major.minor.patch/);
+  }
+});
+
+test('free-beta terms are required before creating any release output', t => {
+  const { temporary, sourceRoot } = fixture(t);
+  fs.unlinkSync(path.join(sourceRoot, 'release/free-beta-terms.html'));
+  const output = path.join(temporary, 'without-terms');
+  assert.throws(() => buildRelease(output, { sourceRoot }), /Missing release input: release\/free-beta-terms.html/);
+  assert.equal(fs.existsSync(output), false);
 });
 
 test('release archive is reproducible despite file timestamps and output location', t => {

@@ -37,7 +37,21 @@ def check_layout(page):
             left: Math.round(element.getBoundingClientRect().left),
             right: Math.round(element.getBoundingClientRect().right)
         }));
-        return {viewport: width, page: document.documentElement.scrollWidth, outside};
+        // Text can paint outside an otherwise correctly sized block. Include
+        // ranges in failure diagnostics so font-dependent overflow is visible.
+        const textOutside = [];
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        while (walker.nextNode() && textOutside.length < 8) {
+            const node = walker.currentNode;
+            if (!node.textContent.trim() || node.parentElement.closest('.guide-table-scroll, script, style')) continue;
+            const range = document.createRange();
+            range.selectNodeContents(node);
+            if ([...range.getClientRects()].some(rect => rect.width > 0 && (rect.left < -1 || rect.right > width + 1))) {
+                textOutside.push({tag: node.parentElement.tagName, text: node.textContent.trim().slice(0, 70)});
+            }
+        }
+        return {title: document.title, viewport: width,
+                page: document.documentElement.scrollWidth, outside, textOutside};
     }""")
     assert layout['page'] <= layout['viewport'], 'Horizontal page overflow: ' + repr(layout)
 
@@ -53,7 +67,8 @@ def check_focus_ring(locator):
 
 def check_scaling_and_preferences(browser, base, out):
     pages = [('index.html', 'home'), ('demo.html', 'demo'),
-             ('shopify-csv-price-changes.html', 'guide'), ('privacy.html', 'privacy')]
+             ('shopify-csv-price-changes.html', 'guide'), ('privacy.html', 'privacy'),
+             ('free-beta-terms.html', 'terms')]
     metrics = []
     baseline = {}
     for width in (320, 1440):
@@ -284,7 +299,7 @@ def main():
                 'method': 'CDP Emulation.setEmulatedOSTextScale',
                 'cases': check_scaling_and_preferences(browser, base, out)
             }
-            result['checks'].append('All four pages passed 320/1440px reflow at 1x/2x emulated OS '
+            result['checks'].append('All five pages passed 320/1440px reflow at 1x/2x emulated OS '
                                     'text scale, skip-link focus and visible heading focus rings')
             result['checks'].append('2x text-scale demo run/filter/reset and emulated reduced-motion/'
                                     'forced-colors focus checks passed')

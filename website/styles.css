@@ -41,6 +41,29 @@ a:focus-visible {
   border-radius:3px;
 }
 
+summary:focus-visible {
+  outline:3px solid #c16921;
+  outline-offset:5px;
+}
+
+.download-checksum {
+  margin-top:1.5rem;
+}
+
+.download-checksum summary {
+  cursor:pointer;
+  color:var(--green);
+}
+
+.download-checksum p {
+  margin-top:1rem;
+}
+
+.download-checksum code {
+  overflow-wrap:anywhere;
+  font-size:.875rem;
+}
+
 p {
   margin:0 0 1em;
 }
@@ -339,6 +362,11 @@ figcaption {
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:38px;
+}
+
+.steps > li {
+  min-inline-size:0;
+  overflow-wrap:anywhere;
 }
 
 .step-number {
@@ -647,7 +675,7 @@ figcaption {
     padding-bottom:42px;
   }
   .steps {
-    grid-template-columns:1fr;
+    grid-template-columns:minmax(0,1fr);
     gap:25px;
     margin-top:28px;
   }

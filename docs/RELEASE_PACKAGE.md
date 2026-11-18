@@ -1,9 +1,21 @@
-# Internal beta package
+# Free beta download package
 
-The package is a review candidate, **not for sale**. It keeps CSV processing
-local and contains no payment integration. Version `0.1.0-beta.1` identifies
-the packaging candidate; the bundled app remains v0.1.0. Nothing in the
-package grants an effective commercial license.
+The owner selected free distribution of the full existing utility on
+18 November 2026. Package `0.1.0-beta.2` is the **free beta**, with the unchanged
+v0.1.0 application and explicit [free-use terms](../release/free-beta-terms.html).
+It accepts users' own supported files, processes them locally and contains no
+payment, account, activation or upload integration. Live sales remain disabled.
+
+The terms accompany the package as `FREE_BETA_TERMS.html`. They permit continued
+use of the delivered version without a fee under their stated conditions;
+they do not promise lifetime updates, support or hosted downloads. The grant
+is specific to the official free-beta package. The public repository retains
+its `UNLICENSED` designation; free distribution does not make it open source.
+
+The earlier `0.1.0-beta.1` was an internal preview, not a public free-use release.
+Its [preparation evidence](BETA_PREPARATION_VALIDATION.md), historical marker
+source and paid-commerce drafts retain their dated scope. They do not govern
+the new free-beta download.
 
 ## Build from the repository root
 
@@ -12,7 +24,7 @@ dependencies or install step are required.
 
 ```powershell
 npm.cmd test
-npm.cmd run package:beta -- --output .local-test-artifacts/release
+npm.cmd run package:beta -- --output .local-test-artifacts/free-beta-release
 ```
 
 On other platforms, use `npm` in place of `npm.cmd`. The command rebuilds
@@ -26,7 +38,7 @@ building and investigate unexpected changes.
 
 ```text
 CSV-Change-Guard/
-  DRAFT-NOT-FOR-SALE.txt
+  FREE_BETA_TERMS.html
   START_HERE.txt
   help.html
   dist/index.html
@@ -39,13 +51,15 @@ CSV-Change-Guard/
 ```
 
 The builder reads a fixed allowlist. It never recursively archives the checkout.
-Source history, tests, evidence, credentials, private fixtures, marketing drafts
-and draft contracts are excluded. Inputs must be ordinary files without linked
-path components. Outputs within protected source directories are refused.
+Source history, tests, evidence, credentials, private fixtures, marketing drafts,
+paid-commerce drafts and the old internal-preview marker are excluded. Inputs
+must be ordinary files without linked path components. Outputs within protected
+source directories are refused.
 Do not choose an output destination managed by another process.
 
-The manifest records candidate/app versions, status, payload sizes and SHA-256
-digests. `SHA256SUMS.txt` covers the payload and manifest, but cannot hash itself.
+The manifest records candidate/app versions, `free-beta` status, the terms-file
+path, payload sizes and SHA-256 digests. `SHA256SUMS.txt` covers the payload and
+manifest, but cannot hash itself.
 The archive SHA-256 is printed separately by the builder. Archive entries use
 fixed metadata and no compression for reproducibility. Identical input bytes
 produce identical ZIP bytes; Git line-ending conversion can change input bytes
@@ -55,11 +69,14 @@ comparing inputs. Checksums detect changes, not publisher authenticity or safety
 `release/help.html` is the source template for the packaged help; its app/sample
 links target the package layout. Open the extracted package's `help.html` for a
 working customer preview rather than the template in the source directory.
+The release builder exports `getReleaseMetadata(applicationVersion)` for the
+website builder to use the exact version, archive filename and terms filename.
+Version and archive naming must agree across package, download link and help.
 
-## Verify before sharing an approved release
+## Verify the free download
 
 1. Run tests/build and record source revision, runtime and archive checksum.
-2. Extract the ZIP into a fresh folder using Windows Extract All. Check the
+2. Extract the ZIP into a fresh folder. On Windows, use Extract All. Check the
    manifest/digests and confirm no unexpected files are present.
 3. Follow the packaged start instructions. Verify help links, the demo, sample
    selection, clearing and independent report opening in the intended browser.
@@ -68,19 +85,23 @@ working customer preview rather than the template in the source directory.
    package and stop it afterwards. It binds only to localhost and accepts no uploads.
 5. Compare the bundled app bytes with `dist/index.html`. Customer help changes
    must not silently change the comparison engine.
+6. Follow the website's actual download link, compare the downloaded ZIP hash
+   with the built artifact, and confirm the website and packaged terms match.
+   A localhost test of this route is separate from verifying public HTTPS delivery.
 
-Automated package tests exercise archive integrity, deterministic output,
-allowlisting, checksums and refusal behavior. CI also builds the real candidate.
-Fresh Windows browser results for the extracted candidate are recorded in
-[beta preparation validation](BETA_PREPARATION_VALIDATION.md). These are separate
-from the earlier manual owner confirmations and do not validate payments.
+Automated package tests exercise archive integrity, exact terms delivery,
+free-beta metadata, unchanged application bytes and repository licensing,
+deterministic output, allowlisting, checksums and refusal behavior. CI also
+builds the real package. Earlier Windows evidence for beta.1 is historical;
+record fresh beta.2 checks separately, including how extraction was performed.
+Do not label scripted extraction as a manual Windows Extract All confirmation.
 
-The [unassisted synthetic trial protocol](UNASSISTED_BETA_TRIAL.md) and separate
-[participant task card](UNASSISTED_BETA_TASK_CARD.md) are prepared for a later
-owner-authorised review using this unchanged candidate. No trial has been run
-by preparing the packet. It is not added to the ZIP and grants no new licence
-or distribution permission.
+The [unassisted synthetic trial protocol](UNASSISTED_BETA_TRIAL.md) and
+[participant task card](UNASSISTED_BETA_TASK_CARD.md) remain useful for planned
+independent trials. Preparing or distributing a package does not establish
+that a participant completed a trial or found the report useful.
 
-Before any paid release, finish the [remaining gates](PAID_BETA_PREPARATION.md),
-approve effective terms and contact details, and deliberately update the package
-status/version/content policy. Removing a draft marker alone is insufficient.
+Any later paid offer requires a separate decision, clear applicable terms and
+completion of the [remaining purchase gates](PAID_BETA_PREPARATION.md). A later
+price decision does not retrospectively revoke the free version's granted use
+rights. Do not activate sales or add a payment gate to this free release.

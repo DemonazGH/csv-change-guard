@@ -1,5 +1,12 @@
 # Paid beta preparation — 21 October 2026
 
+**Superseded for the current download on 18 November:** the owner chose the
+[full free beta](FREE_BETA_RELEASE.md), package `0.1.0-beta.2`, with separate
+free-use terms and best-effort assistance. The $29 offer and paid support/refund
+defaults below are historical proposals, not this free package's terms. Paid
+checkout, consent, refund and delivery gates remain relevant to any later paid
+offer. Live sales stay disabled; a free release is not paid-demand evidence.
+
 **22 October update:** the informational prelaunch page is public on Cloudflare
 Pages; support is configured; a separate Lemon Squeezy Test-mode checkout/order/
 receipt passed. Provider downloads are blocked in Test mode. Live activation is

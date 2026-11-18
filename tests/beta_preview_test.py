@@ -20,12 +20,18 @@ from uuid import uuid4
 import zipfile
 
 REPO = Path(__file__).resolve().parents[1]
-PAYLOAD = {'DRAFT-NOT-FOR-SALE.txt', 'START_HERE.txt', 'help.html',
+PAYLOAD = {'FREE_BETA_TERMS.html', 'START_HERE.txt', 'help.html',
            'dist/index.html', 'server.cjs', 'samples/current-catalog.csv',
            'samples/proposed-update.csv', 'samples/unchanged-update.csv'}
 EXPECTED = PAYLOAD | {'manifest.json', 'SHA256SUMS.txt'}
 sha = lambda data: hashlib.sha256(data).hexdigest()
 now = lambda: datetime.now(timezone.utc).isoformat()
+EXTERNAL_LINKS = {
+    'mailto:csvchangeguard.support@gmail.com',
+    'https://csv-change-guard.pages.dev/',
+    'https://csv-change-guard.pages.dev/privacy',
+    'https://csv-change-guard.pages.dev/privacy.html',
+}
 
 
 class Links(HTMLParser):
@@ -45,6 +51,9 @@ def check_links(file, root):
     doc = Links()
     doc.feed(file.read_text(encoding='utf-8'))
     for href in doc.links:
+        # Reviewed contact/privacy navigation is permitted, never followed here.
+        if href in EXTERNAL_LINKS:
+            continue
         url = urlsplit(href)
         assert not url.scheme and not url.netloc and not url.query, 'Nonlocal link'
         target = (file.parent / unquote(url.path)).resolve() if url.path else file
@@ -71,8 +80,8 @@ def check_package(package, archive):
     app_version = json.loads((REPO / 'package.json').read_text(encoding='utf-8'))['version']
     assert manifest['packageRoot'] == 'CSV-Change-Guard', 'Unexpected package root'
     assert manifest['applicationVersion'] == app_version, 'Application version mismatch'
-    assert manifest['candidateVersion'] == app_version + '-beta.1', 'Candidate version mismatch'
-    assert manifest['status'] == 'internal-preview-not-for-sale', 'Expected draft status'
+    assert manifest['candidateVersion'] == app_version + '-beta.2', 'Candidate version mismatch'
+    assert manifest['status'] == 'free-beta', 'Expected free-beta status'
     assert len(manifest['files']) == len(PAYLOAD), 'Incorrect manifest entry count'
     assert {entry['path'] for entry in manifest['files']} == PAYLOAD, 'Incorrect manifest paths'
     for entry in manifest['files']:
@@ -91,6 +100,57 @@ def check_package(package, archive):
     return {'filename': archive.name, 'bytes': archive.stat().st_size,
             'sha256': sha(archive.read_bytes()), 'entries': len(EXPECTED),
             'packaged_app_sha256': sha((package / 'dist/index.html').read_bytes())}
+
+
+def check_scaled_text(page, context, file, out, name):
+    """Catch painted text overflow even when the element's own box still fits."""
+    from playwright.sync_api import expect
+
+    normal_root = page.evaluate('parseFloat(getComputedStyle(document.documentElement).fontSize)')
+    page.set_viewport_size({'width': 320, 'height': 1000})
+    cdp = context.new_cdp_session(page)
+    try:
+        cdp.send('Emulation.setEmulatedOSTextScale', {'scale': 2})
+        page.goto(file.as_uri(), wait_until='load')
+        expect(page.locator('meta[name="text-scale"]')).to_have_attribute('content', 'scale')
+        layout = page.evaluate("""() => {
+            const width = window.innerWidth;
+            const outside = [];
+            let checked = 0;
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+            while (walker.nextNode()) {
+                const node = walker.currentNode;
+                if (!node.textContent.trim() || node.parentElement.closest('script, style, noscript')) continue;
+                const range = document.createRange();
+                range.selectNodeContents(node);
+                for (const rect of range.getClientRects()) {
+                    if (rect.width <= 0 || rect.height <= 0 || rect.bottom <= 0) continue;
+                    checked++;
+                    if (rect.left < -1 || rect.right > width + 1) {
+                        outside.push({text: node.textContent.trim().slice(0, 60),
+                                      left: Math.round(rect.left), right: Math.round(rect.right)});
+                    }
+                }
+            }
+            return {viewport: width, document_width: document.documentElement.scrollWidth,
+                    root_font_px: parseFloat(getComputedStyle(document.documentElement).fontSize),
+                    checked_text_rectangles: checked, outside: outside.slice(0, 8),
+                    root_overflow: getComputedStyle(document.documentElement).overflowX,
+                    body_overflow: getComputedStyle(document.body).overflowX};
+        }""")
+        assert layout['root_font_px'] >= normal_root * 1.99, 'OS text scale did not enlarge the root font'
+        assert layout['document_width'] <= layout['viewport'], 'Scaled document overflows: ' + repr(layout)
+        assert layout['checked_text_rectangles'] > 0, 'No painted text rectangles were checked'
+        assert not layout['outside'], 'Scaled painted text overflows: ' + repr(layout)
+        assert layout['root_overflow'] not in ('hidden', 'clip'), 'Root overflow is clipped'
+        assert layout['body_overflow'] not in ('hidden', 'clip'), 'Body overflow is clipped'
+        page.screenshot(path=str(out / f'{name}-320-text-scale-2.png'), full_page=True)
+        return {'viewport': 320, 'os_text_scale': 2, 'method': 'CDP Emulation.setEmulatedOSTextScale',
+                'root_font_px': layout['root_font_px'],
+                'checked_text_rectangles': layout['checked_text_rectangles'],
+                'document_and_text_fit': True, 'no_root_body_clipping': True}
+    finally:
+        cdp.detach()
 
 
 def main():
@@ -119,7 +179,7 @@ def main():
         result['browser_executable'] = Path(executable).name
         sources = ['commerce-draft/index.html', 'commerce-draft/checkout.html',
                    'commerce-draft/confirmation.html', 'commerce-draft/styles.css',
-                   'release/help.html', 'release/START_HERE.txt', 'release/DRAFT-NOT-FOR-SALE.txt',
+                   'release/help.html', 'release/START_HERE.txt', 'release/free-beta-terms.html',
                    'scripts/build-release.cjs', 'tests/beta_preview_test.py', 'dist/index.html', 'package.json']
         result['source_sha256'] = {name: sha((REPO / name).read_bytes()) for name in sources}
         phase = 'archive, manifest, extracted payloads and application identity'
@@ -128,10 +188,11 @@ def main():
         result['checks'].append('Exact ZIP/extracted membership, CRCs, manifest, nine checksums and unchanged app verified')
         pages = [('product', REPO / 'commerce-draft/index.html'),
                  ('checkout', REPO / 'commerce-draft/checkout.html'),
-                 ('delivery', REPO / 'commerce-draft/confirmation.html'), ('help', package / 'help.html')]
+                 ('delivery', REPO / 'commerce-draft/confirmation.html'), ('help', package / 'help.html'),
+                 ('terms', package / 'FREE_BETA_TERMS.html')]
         phase = 'local links, styles and fragment targets'
         for name, file in pages:
-            check_links(file, package if name == 'help' else REPO / 'commerce-draft')
+            check_links(file, package if name in ('help', 'terms') else REPO / 'commerce-draft')
         result['checks'].append('All help/commerce links, local assets and fragments resolve')
         phase = 'sandboxed installed browser launch'
         with sync_playwright() as p:
@@ -155,8 +216,12 @@ def main():
                 page.goto(file.as_uri(), wait_until='load')
                 assert page.locator('script,form,iframe,input,textarea,select,object,embed').count() == 0, 'Active form/script content'
                 assert page.locator('h1').is_visible(), 'Missing visible title'
-                banner = page.locator('.notice' if name == 'help' else '.draft-banner').first.inner_text().lower()
-                assert re.search(r'not (?:yet )?for sale', banner), 'Missing draft notice'
+                if name in ('help', 'terms'):
+                    assert 'free beta' in page.locator('body').inner_text().lower(), 'Missing free-beta identification'
+                    assert '0.1.0-beta.2' in page.locator('body').inner_text(), 'Missing package version'
+                else:
+                    banner = page.locator('.draft-banner').first.inner_text().lower()
+                    assert re.search(r'not (?:yet )?for sale', banner), 'Missing historical draft notice'
                 assert all(button.is_disabled() for button in page.get_by_role('button').all()), 'Enabled action button'
                 assert page.evaluate('getComputedStyle(document.body).margin') == '0px', 'Local stylesheet did not load'
                 for viewport, width, height in [('desktop', 1440, 1000), ('mobile', 390, 844)]:
@@ -167,9 +232,14 @@ def main():
                         bounds = heading.bounding_box()
                         assert bounds and bounds['x'] >= -1 and bounds['x'] + bounds['width'] <= width + 1, 'Heading outside viewport'
                     page.screenshot(path=str(out / f'{name}-{viewport}.png'), full_page=False)
+                scaled_reflow = None
+                if name in ('help', 'terms'):
+                    phase = name + ' 320px/2x OS text scale, document and painted-text reflow'
+                    scaled_reflow = check_scaled_text(page, context, file, out, name)
                 assert not errors and not http, 'Page/console error or HTTP request'
                 result['pages'].append({'page': name, 'desktop_mobile_fit': True, 'local_styles': True,
-                                        'inert_controls': True, 'http_requests': 0, 'page_console_errors': 0})
+                                        'inert_controls': True, 'http_requests': 0, 'page_console_errors': 0,
+                                        **({'scaled_text_reflow': scaled_reflow} if scaled_reflow else {})})
                 context.close()
             browser.close()
         result['status'] = 'passed'

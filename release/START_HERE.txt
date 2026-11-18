@@ -1,12 +1,14 @@
 CSV CHANGE GUARD — START HERE
-Internal beta candidate · application version 0.1.0
-NOT YET FOR SALE. Commercial terms and a support contact are not finalized.
+Free beta package 0.1.0-beta.2 · application version 0.1.0
+Free use under FREE_BETA_TERMS.html. No account, payment or activation.
+You may keep using this delivered version indefinitely under those terms.
 
 1. On Windows, right-click the downloaded ZIP and choose Extract All.
    Open the extracted CSV-Change-Guard folder. Do not run inside the ZIP preview.
 
 2. Open help.html for the offline guide, supported scope, privacy notes,
-   troubleshooting, and synthetic examples.
+   troubleshooting, and synthetic examples. Read FREE_BETA_TERMS.html for
+   the permission to use this version for personal or own-business catalog work.
 
 3. In the dist folder, right-click index.html, choose Open with, then
    Google Chrome or Microsoft Edge. No installation, account, build, or
@@ -58,6 +60,9 @@ For a problem report, record the application version, Windows/browser version,
 file or localhost launch route, steps, and error text with private values removed.
 Use included synthetic files to reproduce an issue wherever possible.
 
-Support contact is not configured for this internal candidate. The proposed
-email support response target is two business days; this is a draft commitment.
-Do not use this package as a paid release until the owner completes launch review.
+Optional feedback and best-effort assistance:
+csvchangeguard.support@gmail.com
+No response time, custom catalog review, future feature, lifetime updates,
+or permanent download hosting is promised. Keep this ZIP, its terms and manifest.
+This free beta has no purchase or checkout; live sales remain disabled.
+Prepared 18 November 2026.

@@ -1,0 +1,242 @@
+[
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 320,
+    "scale": 1,
+    "font": "system-ui"
+  },
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 320,
+    "scale": 1,
+    "font": "Arial"
+  },
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 320,
+    "scale": 1,
+    "font": "Verdana"
+  },
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 320,
+    "scale": 2,
+    "font": "system-ui"
+  },
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 320,
+    "scale": 2,
+    "font": "Arial"
+  },
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 320,
+    "scale": 2,
+    "font": "Verdana"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 390,
+    "scale": 1,
+    "font": "system-ui"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 390,
+    "scale": 1,
+    "font": "Arial"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 390,
+    "scale": 1,
+    "font": "Verdana"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 390,
+    "scale": 2,
+    "font": "system-ui"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 390,
+    "scale": 2,
+    "font": "Arial"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/free-beta-terms.html",
+    "viewport": 390,
+    "scale": 2,
+    "font": "Verdana"
+  },
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 320,
+    "scale": 1,
+    "font": "system-ui"
+  },
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 320,
+    "scale": 1,
+    "font": "Arial"
+  },
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 320,
+    "scale": 1,
+    "font": "Verdana"
+  },
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 320,
+    "scale": 2,
+    "font": "system-ui"
+  },
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 320,
+    "scale": 2,
+    "font": "Arial"
+  },
+  {
+    "clientWidth": 320,
+    "scrollWidth": 320,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 320,
+    "scale": 2,
+    "font": "Verdana"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 390,
+    "scale": 1,
+    "font": "system-ui"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 390,
+    "scale": 1,
+    "font": "Arial"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "16px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 390,
+    "scale": 1,
+    "font": "Verdana"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 390,
+    "scale": 2,
+    "font": "system-ui"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 390,
+    "scale": 2,
+    "font": "Arial"
+  },
+  {
+    "clientWidth": 390,
+    "scrollWidth": 390,
+    "rootFont": "32px",
+    "textOutside": [],
+    "file": "release/help.html",
+    "viewport": 390,
+    "scale": 2,
+    "font": "Verdana"
+  }
+]

@@ -1,0 +1,99 @@
+{
+  "status": "passed",
+  "started_at": "2026-11-18T11:51:19.464102+00:00",
+  "python": "3.14.0",
+  "os": "Windows",
+  "package_directory": "CSV-Change-Guard",
+  "artifacts_run": "20261118T115119Z-31b1af43",
+  "checks": [
+    "Exact ZIP/extracted membership, CRCs, manifest, nine checksums and unchanged app verified",
+    "All help/commerce links, local assets and fragments resolve"
+  ],
+  "pages": [
+    {
+      "page": "product",
+      "desktop_mobile_fit": true,
+      "local_styles": true,
+      "inert_controls": true,
+      "http_requests": 0,
+      "page_console_errors": 0
+    },
+    {
+      "page": "checkout",
+      "desktop_mobile_fit": true,
+      "local_styles": true,
+      "inert_controls": true,
+      "http_requests": 0,
+      "page_console_errors": 0
+    },
+    {
+      "page": "delivery",
+      "desktop_mobile_fit": true,
+      "local_styles": true,
+      "inert_controls": true,
+      "http_requests": 0,
+      "page_console_errors": 0
+    },
+    {
+      "page": "help",
+      "desktop_mobile_fit": true,
+      "local_styles": true,
+      "inert_controls": true,
+      "http_requests": 0,
+      "page_console_errors": 0,
+      "scaled_text_reflow": {
+        "viewport": 320,
+        "os_text_scale": 2,
+        "method": "CDP Emulation.setEmulatedOSTextScale",
+        "root_font_px": 32,
+        "checked_text_rectangles": 1671,
+        "document_and_text_fit": true,
+        "no_root_body_clipping": true
+      }
+    },
+    {
+      "page": "terms",
+      "desktop_mobile_fit": true,
+      "local_styles": true,
+      "inert_controls": true,
+      "http_requests": 0,
+      "page_console_errors": 0,
+      "scaled_text_reflow": {
+        "viewport": 320,
+        "os_text_scale": 2,
+        "method": "CDP Emulation.setEmulatedOSTextScale",
+        "root_font_px": 32,
+        "checked_text_rectangles": 377,
+        "document_and_text_fit": true,
+        "no_root_body_clipping": true
+      }
+    }
+  ],
+  "source_sha256": {
+    "commerce-draft/index.html": "c39daa8f8d4448e447bd392a2c22cdd5281b1b606f53b50a8e1219026e2d9bd7",
+    "commerce-draft/checkout.html": "9c5bf6c31d646d250bddbf4c97c2c8ca9081128a9076ebd5295cfc3a31cbc8b7",
+    "commerce-draft/confirmation.html": "ba60f7a964552aba27c97d6e5776153fa186ffb013543074f306bac592f506f5",
+    "commerce-draft/styles.css": "ff1678e05dddb3bd3ea6bf79a5a98e7b8889f95fa6aa994518b45f051dd3d5b6",
+    "release/help.html": "d99dcb85f80c1d0f7d159f441cea442cf0c5fb1b9d19a6ef91577d02070b8c5a",
+    "release/START_HERE.txt": "5ab81a8d7903305236090f9b7870546fb3260beb26ca75c14d4c36efa1ec6292",
+    "release/free-beta-terms.html": "c84305b4493267ad7f67e2a4b3274ff2ec90ce8d7f6e0746321df5c5068545db",
+    "scripts/build-release.cjs": "33591aca14e17d2246db595a46220ee4ea37bc9d4bd69baf488702a212b628b2",
+    "tests/beta_preview_test.py": "595e5a693b2f929de76b376a83178b80de6350ec9cdb0060935da89eb8bc7fa7",
+    "dist/index.html": "585ce2008f2bab0005f2ba2cc9b00c43cae1ffb3fb8d5c954e698a919e35e1b8",
+    "package.json": "835d9168aec09a8cdbe7d57c45b7d8763a2d44c182947d082064e61b2947be41"
+  },
+  "playwright": "1.62.0",
+  "browser_executable": "msedge.exe",
+  "archive": {
+    "filename": "csv-change-guard-0.1.0-beta.2.zip",
+    "bytes": 104195,
+    "sha256": "beb29a49e8d4c20a399ceade368abae34b53178ba9f3d56b7ffba6462de6007a",
+    "entries": 10,
+    "packaged_app_sha256": "585ce2008f2bab0005f2ba2cc9b00c43cae1ffb3fb8d5c954e698a919e35e1b8"
+  },
+  "browser_version": "157.0.4341.60",
+  "sandbox_enabled": true,
+  "no_sandbox_argument": false,
+  "disable_web_security_argument": false,
+  "finished_at": "2026-11-18T11:51:25.567879+00:00"
+}

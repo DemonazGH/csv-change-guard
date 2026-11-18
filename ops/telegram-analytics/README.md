@@ -27,11 +27,17 @@ Observed during setup:
   Site count and period were blank or unsupported in the inspected sample.
   These samples are synthetic, not real traffic or tester interest.
 
-**Pending:** deploy the final numeric formatter with the operator's synthetic
-label enabled, run the native policy Test, and confirm that Telegram shows both
-Visits and Views as 1234, with unavailable sites/period. Then restore normal
-mode. The first scheduled weekly Telegram delivery and its agreement with the
-email also remain pending. A generic connection test cannot close those gaps.
+The final native policy Test also arrived in the intended private Telegram
+chat. The owner confirmed all fields and readability, then supplied a cropped
+screenshot showing the explicit synthetic label, Visits 1234, Views 1234,
+unavailable sites/period, account-wide scope and the email-backup note. This is
+owner-confirmed native synthetic evidence, not an independently observed
+scheduled report. The operator flag was then deployed as `false` and observed
+saved; Logs/Traces and public Preview URLs were observed off.
+
+**Pending:** the first scheduled weekly Telegram delivery and its agreement
+with email. Nonempty native site counts and periods still need verification.
+The test's 1234 figures are not real traffic or independent tester interest.
 
 Historical inspection used bounded schema information and strictly selected
 validated summary fields. No raw payload records, private account metadata or
@@ -84,8 +90,11 @@ guessed figures. Nonempty site counts and periods still need native validation.
   path or exposes it in the Cloudflare webhook destination. No local token
   copy is needed.
 - Short-lived owner setup files containing a pairing code, shared secret or
-  chat ID must stay outside Git and be removed after setup. Cleanup remains a
-  setup completion task; do not delete unrelated files.
+  chat ID must stay outside Git and be removed after setup. The three files
+  created for this setup were removed after verification; unrelated files and
+  private account screenshots were retained. A full PR-patch check found none
+  of those real setup values. Final production probes returned 401 for an
+  unauthenticated webhook and confirmed pairing remained locked with 409.
 
 `wrangler.jsonc` disables observability. Dashboard source pasting does not apply
 Wrangler settings; verify the deployed Worker's Logs/Traces controls separately.
@@ -187,8 +196,16 @@ The rebuilt public ZIP is still 104,195 bytes, SHA-256
 `beb29a49e8d4c20a399ceade368abae34b53178ba9f3d56b7ffba6462de6007a`;
 the unchanged standalone app remains SHA-256
 `585ce2008f2bab0005f2ba2cc9b00c43cae1ffb3fb8d5c954e698a919e35e1b8`.
-Public publication and final native delivery must be recorded separately from
-these local checks. Account screens and real routing details remain outside Git.
+Cloudflare reported Success after publishing all 18 allowlisted files. Fresh
+HTTP checks of 17 served files and five clean/root aliases returned 200 and
+matched local bytes exactly (22/22). All checked responses had framing denied
+and nosniff headers; none set a cookie in this bounded check. Connected Edge
+confirmed the live Telegram privacy wording and zero vendor analytics script
+tags before opt-in. Its screenshot remains in ignored
+`.local-test-artifacts/telegram-privacy-live-2026-11-18.jpg`.
+Account screens and real routing details remain outside Git. The owner's
+cropped Telegram screenshot is separate manual evidence, not a browser-suite
+artifact or a record of real visitor counts.
 
 ## Primary references
 

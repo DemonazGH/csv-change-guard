@@ -64,7 +64,50 @@ zero hosting/security records. The standard service has no custom-event or UTM
 support; `#download` is a fragment, not a counted ZIP event. Page views, visits,
 referring sites and performance statistics do not establish unique users,
 completed downloads, usability, repeat use or paid demand. Weekly reports
-contain aggregate website statistics and go only to the existing owner inbox.
+contain aggregate website statistics and continue to reach the existing owner
+inbox. The owner also authorised a private Telegram delivery channel, separate
+from the public website and utility.
+
+### Owner Telegram notifications
+
+An operations-only Cloudflare Worker relays authenticated native notifications
+to a fixed private owner chat. It is not imported into the website, utility,
+demo, downloadable ZIP or reports and has no app routes. The existing weekly
+email remains enabled as backup. The verified connection test is synthetic;
+neither it nor local fake-network tests proves scheduled weekly delivery.
+The first scheduled weekly Telegram delivery remains pending. The formatter
+accepts only reviewed canonical visits and page-view fields, with a supported
+site count and ISO reporting period where available. It always labels the
+statistics account-wide and marks unsupported fields as unavailable. Provider
+Test notifications are explicitly labelled synthetic while test mode is enabled.
+Do not guess field names, forward provider text, raw account metadata, hostnames,
+referrers or performance values, or equate traffic with app/customer validation.
+
+Bot credentials, webhook authentication and the private chat identifier are
+encrypted Cloudflare secrets. The chat identifier routes owner messages; it is
+not a visitor identifier. Pairing transiently reads this dedicated bot's updates
+to locate the owner's matching private message, retaining only the required
+chat identifier. Profiles, message content and unrelated updates are not logged
+or archived. Pairing is disabled once the destination is configured. Keep
+credentials, pairing codes, private identifiers, raw provider records and secret
+input screenshots out of Git and reports.
+
+CSV files, comparison reports, support correspondence and raw visitor records
+are outside this delivery channel. Messages are bounded plaintext with no link
+previews. The bot token necessarily reaches Telegram in its official API path;
+never log outgoing URLs or run pairing/delivery while platform request metadata
+is being captured. Persisted Workers logs and traces must remain disabled.
+Provider retries may duplicate a notification; delivery is not exactly once.
+
+Telegram handles the owner's cloud bot messages and service information under
+its [privacy policy](https://telegram.org/privacy/eu). It describes itself as
+controller for its users' personal data. Do not claim a Telegram DPA, EEA-only
+processing or end-to-end encryption for this bot channel. No automatic Telegram
+history expiry is configured and the relay has no report storage. Telegram's
+retention/deletion processes are separate from the existing manual Gmail review.
+See [relay setup and verification](../ops/telegram-analytics/README.md) for
+operational status, exact native synthetic-test evidence and the remaining
+scheduled-delivery gap.
 
 ### Consent and scope review
 

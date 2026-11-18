@@ -5,6 +5,13 @@ report. This is a website measurement decision, separate from the local utility.
 Live sales remain disabled. No paid service, store access, file upload, activation,
 custom download counter or app telemetry is part of this change.
 
+The later owner-authorised [private Telegram summary](../ops/telegram-analytics/README.md)
+uses an isolated operations Worker and keeps this native email destination.
+Its setup record distinguishes local tests, native synthetic notification checks,
+owner receipt confirmations and the pending first scheduled weekly delivery.
+The original email-only evidence below retains its dated scope. No new website
+tracking, script or app integration is required by Telegram delivery.
+
 ## Integration and privacy boundary
 
 - Only the landing page, price-change guide and privacy notice offer analytics.

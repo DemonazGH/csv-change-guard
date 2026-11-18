@@ -1,0 +1,11 @@
+{
+  // Operations-only Worker; no assets, app routes, cron, queues or storage.
+  "name": "ccg-analytics-telegram",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-11-18",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": false }
+  // Configure WEBHOOK_SECRET, TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID through
+  // Cloudflare secret controls. Never add actual values to this file.
+}

@@ -71,7 +71,11 @@ approach unless a concrete requirement justifies a change.
 Website-only exception authorised 18 November 2026: the informational landing,
 guide and privacy pages may load Cloudflare Web Analytics after explicit opt-in,
 with a per-tab consent preference and native weekly aggregate owner email.
-Follow `docs/WEBSITE_ANALYTICS.md`. Keep automatic site-wide injection disabled,
+The owner also authorised a private Telegram summary through the isolated
+`ops/telegram-analytics/` Worker, retaining email as backup. It may forward only
+reviewed account-wide aggregate fields, never app or merchant data. Follow
+`docs/WEBSITE_ANALYTICS.md` and the relay's setup/validation record.
+Keep automatic site-wide injection disabled,
 preserve the demo/utility/report network restrictions, and never add merchant
 data or app telemetry to this integration. The invariants below still govern
 the local comparison product.

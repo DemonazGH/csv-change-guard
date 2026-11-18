@@ -1,6 +1,6 @@
 # Current website and support privacy notice
 
-Version: **18 November 2026 · optional website analytics update**. This text covers the website,
+Version: **18 November 2026 · website analytics and owner notifications update**. This text covers the website,
 free beta downloads and synthetic trial at
 <https://csv-change-guard.pages.dev/> and the current support inbox. Live sales
 are disabled. Purchase and payment processing are outside this notice.
@@ -71,8 +71,14 @@ count completed ZIP downloads or measure individual or repeat app users. Website
 visits are not proof that someone used the app or found it useful.
 
 Cloudflare's weekly report sends the owner aggregate website visits, page views
-and page-load statistics at the existing support Gmail address. This is an
-operational report to the owner, not a visitor mailing list or marketing email.
+and page-load statistics at the existing support Gmail address. A separate
+Cloudflare relay sends selected aggregate statistics to the owner's private
+Telegram chat: account-wide visits and page views when available, with the
+reporting period and number of websites where supported. Unavailable figures
+are labelled as unavailable. The Telegram summary does not include page paths,
+referrers, performance details, CSV files, saved comparison reports, support
+messages or raw visitor records. These are owner notifications, not a visitor
+mailing list, marketing email or Telegram support channel.
 
 ### Enquiries and feedback
 
@@ -117,6 +123,16 @@ automated service/security features and optional features according to account
 settings. Google states that it does not offer a DPA or act as our processor for
 consumer Gmail. This is the current consumer service, not an activated Workspace
 business mailbox. See [Google's explanation](https://support.google.com/policies/answer/9581826?hl=en).
+
+**Telegram** handles the owner's operational bot messages and related service
+information under its [privacy policy](https://telegram.org/privacy/eu).
+Telegram describes itself as the controller for personal data associated with
+use of its service. Cloudflare stores the bot credentials and the owner's private
+chat identifier as encrypted operational settings to route notifications; this
+identifier does not identify website visitors. The bot channel is ordinary cloud
+messaging, not an end-to-end encrypted Secret Chat. Telegram's policy describes
+its storage, retention and international group-company processing arrangements;
+we do not promise EEA-only processing or a separate Telegram processing agreement.
 
 Provider processing may take place outside Poland and the European Economic
 Area, including in the United States. Google's
@@ -167,6 +183,11 @@ visitor histories. Weekly aggregate report emails use the same monthly review
 procedure: eligible reports are reviewed for deletion about three months after
 receipt, normally within 90–121 days. This is not automatic deletion. Gmail
 Trash and provider deletion/backup processes remain separate.
+
+No automatic expiry is configured for the owner's Telegram bot history. Its
+messages remain in the chat unless deleted; Telegram's service retention and
+deletion processes are separate from the Gmail procedure above. The relay does
+not create a separate report archive.
 
 ## Your rights
 

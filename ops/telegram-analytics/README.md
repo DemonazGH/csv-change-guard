@@ -90,8 +90,8 @@ not contact Telegram or Cloudflare and do not validate real account settings.
 Use synthetic connection/policy tests for production verification; never send
 merchant CSVs, reports or customer correspondence through this relay.
 
-Preparation verification on 18 November 2026: **135 Node tests passed**, including
-15 new relay checks with fake provider/network responses. The standalone app
+Preparation verification on 18 November 2026: **136 Node tests passed**, including
+16 new relay checks with fake provider/network responses. The standalone app
 remains SHA-256
 `585ce2008f2bab0005f2ba2cc9b00c43cae1ffb3fb8d5c954e698a919e35e1b8`.
 No actual Telegram message, private-chat binding, native webhook attachment or
@@ -109,4 +109,5 @@ Primary references:
 - [Webhook payload schema](https://developers.cloudflare.com/notifications/reference/webhook-payload-schema/)
 - [Weekly Web Analytics report](https://developers.cloudflare.com/web-analytics/get-started/notifications/)
 - [Worker secrets](https://developers.cloudflare.com/workers/configuration/secrets/)
+- [Workers request and redirect support](https://developers.cloudflare.com/workers/runtime-apis/request/)
 - [Telegram Bot API](https://core.telegram.org/bots/api)

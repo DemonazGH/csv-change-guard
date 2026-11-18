@@ -106,7 +106,7 @@ test('generic Cloudflare connectivity tests are labelled synthetic and sent only
   const { url, init, data } = calls[0];
   assert.equal(url, `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`);
   assert.equal(init.method, 'POST');
-  assert.equal(init.redirect, 'error');
+  assert.equal(init.redirect, 'manual');
   assert.ok(init.signal instanceof AbortSignal);
   assert.equal(data.chat_id, env.TELEGRAM_CHAT_ID);
   assert.match(data.text, /synthetic webhook test/);
@@ -185,7 +185,7 @@ test('pairing uses a single official poll and returns only the exact private cha
   assert.equal(calls[0].url, `https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/getUpdates`);
   assert.deepEqual(calls[0].data, { timeout: 0, limit: 100, allowed_updates: ['message'] });
   assert.equal(calls[0].data.offset, undefined);
-  assert.equal(calls[0].init.redirect, 'error');
+  assert.equal(calls[0].init.redirect, 'manual');
 });
 
 test('pairing is disabled once any chat ID is configured and invalid nonces never poll Telegram', async () => {
@@ -236,11 +236,36 @@ test('pairing failure categories expose only fixed labels and validated HTTP sta
   }
 });
 
+test('Telegram redirects are returned manually and rejected without following Location or forwarding secrets', async () => {
+  for (const status of [301, 302, 303, 307, 308]) {
+    for (const pairing of [false, true]) {
+      const { relay, calls, schemas } = await fixture(() => new Response('PRIVATE_REDIRECT_BODY', {
+        status, headers: { location: 'https://untrusted.example/collect?private=PRIVATE_LOCATION' },
+      }));
+      const response = await relay.fetch(pairing
+        ? request({ code }, { path: '/pair' }) : request(weekly), pairing ? pairEnv() : env);
+      assert.equal(response.status, 502);
+      assert.equal(calls.length, 1);
+      assert.equal(new URL(calls[0].url).origin, 'https://api.telegram.org');
+      assert.equal(calls[0].init.redirect, 'manual');
+      assert.deepEqual(calls[0].init.headers, { 'content-type': 'application/json' });
+      const body = await response.text();
+      assert.doesNotMatch(body, /PRIVATE|SYNTHETIC|untrusted|123456789|\/start/);
+      assert.deepEqual(JSON.parse(body), pairing
+        ? { ok: false, error: 'Pairing could not be verified', failure: 'provider_http', provider_status: status }
+        : { ok: false, error: 'Telegram delivery could not be confirmed' });
+      assert.equal(response.headers.get('location'), null);
+      assert.equal(schemas.length, 0);
+    }
+  }
+});
+
 test('temporary schema diagnostics emit bounded paths/types without original values or Telegram requests', async () => {
   const { relay, calls, schemas } = await fixture();
   const payload = { ...weekly, account_id: 'PRIVATE_ACCOUNT_VALUE', text: 'PRIVATE_MESSAGE_VALUE',
     PrivateAccountName: { private_store_alpha: { visits: 456789 } },
-    data: { sites: [{ hostname: 'PRIVATE_SITE_VALUE', visits: 987654321, extra: { private: 'PRIVATE_DEEP_VALUE' } }],
+    data: { sites: [{ hostname: 'PRIVATE_SITE_VALUE', visits: 987654321,
+      page_views: { current: { value: 76543210 } }, extra: { private: 'PRIVATE_DEEP_VALUE' } }],
       'https://private.example/catalog.csv': { email: 'PRIVATE_EMAIL_VALUE' },
       abcdefabcdefabcdefabcdefabcdefab: true,
       private_account_name_123: { PrivateStoreAlpha: { page_views: 7654321 } },
@@ -256,19 +281,31 @@ test('temporary schema diagnostics emit bounded paths/types without original val
   assert.doesNotMatch(serialized, /PRIVATE_|987654321|456789|7654321|private\.example|abcdefabcdef|x{49}/);
   assert.doesNotMatch(serialized, /PrivateAccountName|private_store_alpha|private_account_name_123|PrivateStoreAlpha/);
   assert.ok(schemas[0].some(node => node.path === '$.data.sites[0].visits' && node.type === 'number'));
+  assert.ok(schemas[0].some(node => node.path === '$.data.sites[0].page_views.current.value' && node.type === 'number'));
   assert.ok(schemas[0].some(node => node.path === '$.data.[redacted-key-3].[redacted-key-0].page_views' && node.type === 'number'));
   assert.ok(schemas[0].some(node => node.path.includes('[redacted-key-')));
-  assert.ok(schemas[0].length <= 100);
+  assert.ok(schemas[0].length <= 150);
   for (const node of schemas[0]) assert.deepEqual(Object.keys(node).sort(), ['path', 'type']);
 
   const { describeSchema } = await worker;
   const wide = Object.fromEntries(Array.from({ length: 100 }, (_, index) => ['field_' + index,
     Object.fromEntries(Array.from({ length: 100 }, (_, inner) => ['field_' + inner, { child: { last: 123 } }]))]));
   const bounded = describeSchema(wide);
-  assert.equal(bounded.length, 100);
-  assert.ok(bounded.every(node => node.path.split('.').length - 1 <= 4));
+  assert.equal(bounded.length, 150);
+  assert.ok(bounded.every(node => node.path.split('.').length - 1 <= 6));
   assert.ok(bounded.every(node => node.path.length <= 200));
   assert.doesNotMatch(JSON.stringify(bounded), /123/);
+  const deep = describeSchema({ data: { sites: [{ metrics: { current: {
+    value: { previous: { value: 123 } },
+  } } }] } });
+  assert.ok(deep.some(node => node.path === '$.data.sites[0].metrics.current.value' && node.type === 'object'));
+  assert.ok(deep.every(node => !node.path.includes('.previous')));
+  const manyKeys = describeSchema(Object.fromEntries(Array.from({ length: 21 }, (_, index) => ['private_' + index, true])));
+  assert.equal(manyKeys.length, 21);
+  assert.equal(manyKeys.at(-1).path, '$.[redacted-key-19]');
+  assert.deepEqual(describeSchema([{ visits: 123 }, { page_views: 456 }]), [
+    { path: '$', type: 'array' }, { path: '$[0]', type: 'object' }, { path: '$[0].visits', type: 'number' },
+  ]);
 });
 
 test('diagnostics reject pairing and unauthorized bodies without polling, sending or schema logging', async () => {

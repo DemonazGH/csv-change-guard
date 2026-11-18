@@ -88,20 +88,30 @@ const DIAGNOSTIC_FIELD_NAMES = new Set([
   'name', 'text', 'data', 'ts', 'account_id', 'policy_id', 'policy_name',
   'alert_type', 'alert_correlation_id', 'alert_event',
   'sites', 'hostname', 'visits', 'page_views', 'page_load_time',
+  'account', 'account_name', 'account_tag', 'date', 'date_range', 'start', 'end',
+  'start_date', 'end_date', 'summary', 'totals', 'aggregate', 'total', 'value',
+  'current', 'previous', 'current_value', 'previous_value', 'change',
+  'percent_change', 'percentage_change', 'percent', 'difference', 'unit',
+  'formatted', 'formatted_value', 'pageviews', 'pageViews', 'page_load',
+  'load_time', 'median_page_load_time', 'comparison', 'previous_period',
+  'current_period', 'metrics', 'statistics', 'top_countries', 'top_browsers',
+  'top_devices', 'currentValue', 'previousValue', 'percentageChange',
+  'percentChange', 'formattedValue', 'startDate', 'endDate', 'value_raw',
+  'value_formatted', 'value_previous',
 ]);
 
 export function describeSchema(value) {
   const nodes = [];
   function visit(current, path, depth) {
-    if (nodes.length >= 100) return;
+    if (nodes.length >= 150) return;
     const type = current === null ? 'null' : Array.isArray(current) ? 'array' : typeof current;
     nodes.push({ path, type });
-    if (depth >= 4) return;
+    if (depth >= 6) return;
     if (type === 'array') {
       if (current.length) visit(current[0], path + '[0]', depth + 1);
     } else if (type === 'object') {
       const keys = Object.keys(current).slice(0, 20);
-      for (let index = 0; index < keys.length && nodes.length < 100; index++) {
+      for (let index = 0; index < keys.length && nodes.length < 150; index++) {
         const key = keys[index];
         const safe = DIAGNOSTIC_FIELD_NAMES.has(key)
           ? key : '[redacted-key-' + index + ']';
@@ -119,7 +129,9 @@ export function createRelay({ fetchImpl = globalThis.fetch, cryptoImpl = globalT
     let response;
     try {
       response = await fetchImpl(`https://api.telegram.org/bot${token}/${method}`, {
-        method: 'POST', redirect: 'error',
+        // Workers supports manual/follow, not the Fetch standard's error mode.
+        // Reject the returned non-2xx status instead of following any Location.
+        method: 'POST', redirect: 'manual',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify(data), signal: AbortSignal.timeout(8000),
       });

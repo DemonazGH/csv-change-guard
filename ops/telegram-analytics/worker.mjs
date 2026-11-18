@@ -123,8 +123,35 @@ export function describeSchema(value) {
   return nodes;
 }
 
+// TEMPORARY synthetic native-Test inspection only. These exact summary paths
+// have been observed, but their semantics are not yet verified for delivery.
+export function probeWeeklySummary(payload) {
+  if (!isRecord(payload) || payload.alert_type !== WEEKLY_ALERT_TYPE) return null;
+  const summary = isRecord(payload.data?.summary) ? payload.data.summary : {};
+  const visits = isRecord(summary.visits) ? summary.visits : {};
+  function count(value) {
+    if (typeof value !== 'string' || !/^(0|[1-9][0-9]{0,11})$/.test(value)) return { status: 'unsupported' };
+    const numeric = Number(value);
+    return Number.isSafeInteger(numeric) ? { status: 'valid', value: numeric } : { status: 'unsupported' };
+  }
+  function date(value) {
+    if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z)?$/.test(value)) return { status: 'unsupported' };
+    const dateOnly = value.length === 10;
+    const canonical = dateOnly ? value + 'T00:00:00.000Z' : value.length === 20 ? value.slice(0, -1) + '.000Z' : value;
+    const instant = new Date(canonical);
+    if (!Number.isFinite(instant.getTime()) || instant.toISOString() !== canonical) return { status: 'unsupported' };
+    return { status: 'valid', value: dateOnly ? canonical.slice(0, 10) : canonical };
+  }
+  return {
+    visits: count(visits.value),
+    unit: ['count', 'visits', 'number', 'integer'].includes(visits.unit) ? visits.unit : 'unrecognized',
+    sites: count(summary.sites), startDate: date(summary.startDate), endDate: date(summary.endDate),
+  };
+}
+
 export function createRelay({ fetchImpl = globalThis.fetch, cryptoImpl = globalThis.crypto,
-  schemaLog = shape => console.info('ccg-weekly-schema', JSON.stringify(shape)) } = {}) {
+  schemaLog = shape => console.info('ccg-weekly-schema', JSON.stringify(shape)),
+  probeLog = summary => console.info('ccg-weekly-summary-probe', JSON.stringify(summary)) } = {}) {
   async function telegram(method, token, data) {
     let response;
     try {
@@ -193,6 +220,8 @@ export function createRelay({ fetchImpl = globalThis.fetch, cryptoImpl = globalT
 
       if (diagnostics) {
         schemaLog(describeSchema(payload));
+        const probe = probeWeeklySummary(payload);
+        if (probe) probeLog(probe);
         return reply(202, { ok: true, schema_only: true });
       }
 

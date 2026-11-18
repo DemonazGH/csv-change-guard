@@ -12,8 +12,10 @@ into the Cloudflare editor, copied back for exact source comparison and deployed
 the dashboard showed it Ready at 100%. Compatibility date is `2026-11-18`.
 Persisted Workers Logs and Traces were observed disabled before credential
 entry. The owner saved the bot token; its settings row was observed as Secret /
-Value encrypted, without reading the value. The remaining authentication setup,
-private-chat pairing and native Cloudflare delivery still require verification.
+Value encrypted, without reading the value. The webhook authentication secret
+was also observed encrypted. Private-chat pairing and Telegram delivery still
+require verification. Native policy Test requests reached schema-only mode;
+the enabled policy retains its email destination alongside the new relay.
 Public unauthenticated GET checks returned 405 on `/webhook` and `/pair`, and
 404 on `/`; they do not verify authorized calls or Telegram delivery.
 No claim is made that a scheduled weekly message
@@ -68,9 +70,14 @@ mapping must precede claims that Telegram receives the actual analytics totals.
 
 The preparation build includes temporary `SCHEMA_DIAGNOSTICS='true'` support
 for a single native Cloudflare synthetic test. This mode disables pairing and
-Telegram delivery and logs only bounded, sanitized JSON paths/types, never
-payload values. Keep persisted logging disabled and inspect only the custom
-`ccg-weekly-schema` console entry in ephemeral Live logs. Do not run pairing or
+Telegram delivery and logs bounded, sanitized JSON paths/types. A separate
+`ccg-weekly-summary-probe` entry accepts only exact-path canonical counts,
+strict ISO dates and fixed unit labels from a synthetic policy Test. Unsupported
+values produce fixed statuses; arbitrary text, unknown keys, account metadata
+and visitor records are omitted. These selected fields still require comparison
+with the native sample email before numeric delivery. Keep persisted logging
+disabled and inspect only these custom entries in ephemeral Live logs.
+Do not run pairing or
 Telegram calls while tailing: platform event metadata can include request
 headers or subrequest URLs. Stop Live logs, remove the temporary diagnostic
 branch and verify the normal handler before completing production setup.
@@ -90,13 +97,13 @@ not contact Telegram or Cloudflare and do not validate real account settings.
 Use synthetic connection/policy tests for production verification; never send
 merchant CSVs, reports or customer correspondence through this relay.
 
-Preparation verification on 18 November 2026: **136 Node tests passed**, including
-16 new relay checks with fake provider/network responses. The standalone app
+Preparation verification on 18 November 2026: **138 Node tests passed**, including
+18 new relay checks with fake provider/network responses. The standalone app
 remains SHA-256
 `585ce2008f2bab0005f2ba2cc9b00c43cae1ffb3fb8d5c954e698a919e35e1b8`.
 No actual Telegram message, private-chat binding, native webhook attachment or
 numeric payload mapping is verified by those local tests. The existing native
-weekly email policy was observed Enabled; it has not been removed or changed.
+weekly policy was observed Enabled with its original email recipient retained.
 CI passed for reviewed revision `4a764c5` in
 [the preparation run](https://github.com/DemonazGH/csv-change-guard/actions/runs/44315021991).
 That Linux CI run does not test actual Cloudflare/Telegram accounts or establish

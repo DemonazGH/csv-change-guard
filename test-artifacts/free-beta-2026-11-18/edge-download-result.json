@@ -1,0 +1,29 @@
+{
+  "status": "passed",
+  "started_at": "2026-11-18T11:36:42.258570+00:00",
+  "artifacts_run": "20261118T113642Z-cbeb7f5c",
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.14.0",
+  "playwright": "1.62.0",
+  "browser": "msedge.exe",
+  "checks": [
+    "JavaScript-disabled native keyboard ZIP download; displayed/published SHA-256; exact safe ZIP extraction, CRC, manifest, checksums and canonical terms passed",
+    "Homepage and terms fit 1440/390px; website page requests were same-origin GETs only",
+    "Extracted help/terms and unchanged app opened with file navigation; built-in demo, real bundled file selection, clearing and unchanged-data expectations passed",
+    "Extracted app/help/terms observed zero HTTP(S) requests and browser errors",
+    "Filtered-view HTML export retained all 15 findings and expected values/settings/limitations; report reopened after the entire app context closed with zero HTTP(S) requests"
+  ],
+  "browser_version": "157.0.4341.60",
+  "sandbox_enabled": true,
+  "no_sandbox_argument": false,
+  "disable_web_security_argument": false,
+  "archive": {
+    "filename": "csv-change-guard-0.1.0-beta.2.zip",
+    "bytes": 104173,
+    "sha256": "76cafb2c6981fc0b4d2c7062846bb6b7c832a027ff417af3009301a6715a62e4",
+    "entries": 10,
+    "packaged_app_sha256": "585ce2008f2bab0005f2ba2cc9b00c43cae1ffb3fb8d5c954e698a919e35e1b8"
+  },
+  "report_sha256": "5cea5b367fc7980e75b632920280b961fe634de0d2e834784ee285a12812eb7b",
+  "finished_at": "2026-11-18T11:36:48.926982+00:00"
+}

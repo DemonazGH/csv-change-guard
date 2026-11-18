@@ -10,6 +10,13 @@ paid-release gates. Live sales remain disabled; domain/paid email are postponed.
 
 ## Data flow
 
+The free-beta website download serves a reviewed ZIP and checksums through the
+existing static host, without signup, checkout or an email gate. The ZIP contains
+the unchanged local app plus help, terms and synthetic samples; it accepts a
+user's own supported files only after opening the extracted app locally. The
+online synthetic demo still has no file selector. See
+[free-beta validation and publication status](FREE_BETA_RELEASE.md).
+
 A user-selected file is read through the browser File API, decoded strictly as UTF-8, parsed and compared in memory. No file is submitted to a server or model API. The static application has no network requests, analytics, cookies or local-storage persistence. Its content-security policy disables network connections and form submission.
 
 The Clear files action removes source references and rendered report content from the application. JavaScript memory is managed by the browser; this is not guaranteed secure erasure. Browser extensions, the operating system, filesystem backups and downloaded report handling are outside this tool's control.

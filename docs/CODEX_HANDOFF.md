@@ -2,6 +2,16 @@
 
 Prepared: **18 October 2026**. Product remains **v0.1.0**.
 
+**18 November free-beta decision:** the full downloadable utility is now prepared
+as package `0.1.0-beta.2`, with a version-specific free-use licence, direct website
+download and best-effort assistance. The app/engine are unchanged; processing is
+local and live sales stay disabled. This supersedes the earlier $29 paid-beta
+offer for this package. See [the release/validation record](FREE_BETA_RELEASE.md)
+for exact build, Windows/browser evidence and publication status. The official
+package grant does not relicense the public source repository (`UNLICENSED`).
+Do not claim intended-user trials, paid demand or representative merchant
+validation merely because a free download is available.
+
 **18 November Modern Web Guidance update:** the owner requested Google's
 Modern Web Guidance 1.0 for website work. `AGENTS.md` now references the installed,
 pinned v1.0.0 skill. Website sources apply text scaling, responsive typography,

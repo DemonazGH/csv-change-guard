@@ -42,8 +42,10 @@ jobs:
           npm run build
           git diff --exit-code -- dist/index.html
 
-      - name: Build internal beta package
+      - name: Build free beta package and public website
         run: npm run package:beta -- --output .local-test-artifacts/release
+      - name: Build website with matching free download
+        run: npm run build:website
 
       - name: Set up Python
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
@@ -65,13 +67,24 @@ jobs:
       - name: Run browser smoke tests with sandboxing enabled
         run: bash scripts/ci-browser.sh
 
-      - name: Verify internal package and commerce drafts with sandboxing enabled
+      - name: Verify free package and historical commerce drafts with sandboxing enabled
         run: |
-          ccg_candidate_version="$(node -p "require('./package.json').version + '-beta.1'")"
+          ccg_candidate_version="$(node -p "require('./scripts/build-release.cjs').getReleaseMetadata(require('./package.json').version).candidateVersion")"
           python tests/beta_preview_test.py \
             --package-dir ".local-test-artifacts/release/${ccg_candidate_version}/CSV-Change-Guard" \
             --archive ".local-test-artifacts/release/${ccg_candidate_version}/csv-change-guard-${ccg_candidate_version}.zip" \
             --artifacts-dir .local-test-artifacts/ci/beta-preview
+
+      - name: Verify website and free ZIP download with sandboxing enabled
+        run: |
+          python tests/website_browser_test.py \
+            --site-dir .local-test-artifacts/public-site \
+            --browser-executable "$CHROMIUM_PATH" \
+            --artifacts-dir .local-test-artifacts/ci/website
+          python tests/free_beta_download_test.py \
+            --site-dir .local-test-artifacts/public-site \
+            --browser-executable "$CHROMIUM_PATH" \
+            --artifacts-dir .local-test-artifacts/ci/free-beta-download
 
       - name: Save browser results and server log
         if: always()

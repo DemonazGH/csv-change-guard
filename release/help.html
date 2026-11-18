@@ -3,23 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="text-scale" content="scale">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>CSV Change Guard — Offline help</title>
 <style>
 :root{color-scheme:light;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#19313a;background:#f4f8f7;line-height:1.65}
-*{box-sizing:border-box}body{margin:0}a{color:#00665f;text-underline-offset:.16em}a:focus-visible{outline:3px solid #1b7871;outline-offset:4px}main{max-width:62rem;margin:auto;padding:2.5rem 1.5rem 4rem}header{margin-bottom:2rem}h1,h2,h3{line-height:1.2;letter-spacing:-.025em}h1{font-size:clamp(2rem,5vw,3rem);margin:.5rem 0}h2{font-size:1.65rem;margin:0 0 1rem}h3{font-size:1.15rem;margin:1.5rem 0 .5rem}.eyebrow{color:#46666e;font-size:.85rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.intro{max-width:48rem;font-size:1.12rem}.notice{padding:1rem 1.2rem;border-left:4px solid #9a6010;background:#fff3d9;color:#5e3b09;border-radius:.25rem;margin:1.5rem 0}.card{padding:1.5rem;background:#fff;border:1px solid #d5e4e1;border-radius:.65rem;margin:1.5rem 0}.card>:last-child{margin-bottom:0}.button{display:inline-block;background:#006a61;color:#fff;padding:.65rem 1rem;border-radius:.4rem;font-weight:700;text-decoration:none}nav ul{display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;padding:0;list-style:none}li{margin:.5rem 0}li p{margin:.3rem 0}code,pre{font-family:Consolas,"Courier New",monospace;font-size:.95em}code{overflow-wrap:anywhere}pre{padding:1rem;background:#edf4f2;white-space:pre-wrap;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{text-align:left;padding:.7rem;border-bottom:1px solid #d8e5e2;vertical-align:top}th{background:#edf4f2}p,li,td,th{overflow-wrap:anywhere}.small{font-size:.92rem;color:#46616a}.skip{position:absolute;left:1rem;top:-5rem;background:#fff;padding:.6rem}.skip:focus{top:.5rem}footer{border-top:1px solid #d5e4e1;padding-top:1.25rem;margin-top:2rem;color:#46616a}
+*{box-sizing:border-box}body{margin:0}a{color:#00665f;text-underline-offset:.16em}:focus-visible{outline:3px solid #1b7871;outline-offset:4px}main{max-width:62rem;margin:auto;padding:2.5rem 1.5rem 4rem}header{margin-bottom:2rem}h1,h2,h3{line-height:1.2;letter-spacing:-.025em}h1{font-size:clamp(2rem,1.2rem + 3vw,3rem);margin:.5rem 0}h2{font-size:1.65rem;margin:0 0 1rem}h3{font-size:1.15rem;margin:1.5rem 0 .5rem}.eyebrow{color:#46666e;font-size:.85rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase}.intro{max-width:48rem;font-size:1.12rem}.notice{padding:1rem 1.2rem;border-left:4px solid #9a6010;background:#fff3d9;color:#5e3b09;border-radius:.25rem;margin:1.5rem 0}.card{padding:1.5rem;background:#fff;border:1px solid #d5e4e1;border-radius:.65rem;margin:1.5rem 0}.card>:last-child{margin-bottom:0}.button{display:inline-block;background:#006a61;color:#fff;padding:.65rem 1rem;border-radius:.4rem;font-weight:700;text-decoration:none}nav ul{display:flex;flex-wrap:wrap;gap:.6rem 1.5rem;padding:0;list-style:none}li{margin:.5rem 0}li p{margin:.3rem 0}code,pre{font-family:Consolas,"Courier New",monospace;font-size:.95em}code{overflow-wrap:anywhere}pre{padding:1rem;background:#edf4f2;white-space:pre-wrap;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;margin:1rem 0}th,td{text-align:left;padding:.7rem;border-bottom:1px solid #d8e5e2;vertical-align:top}th{background:#edf4f2}p,li,td,th{overflow-wrap:anywhere}.small{font-size:.92rem;color:#46616a}.skip{position:absolute;left:1rem;top:-5rem;background:#fff;padding:.6rem}.skip:focus{top:.5rem}footer{border-top:1px solid #d5e4e1;padding-top:1.25rem;margin-top:2rem;color:#46616a}
 @media(max-width:36rem){main{padding:1.5rem 1rem 3rem}.card{padding:1rem}th,td{padding:.5rem;font-size:.95rem}nav ul{display:block}}
 @media print{:root{background:#fff;color:#000}main{max-width:none;padding:0}.card{border:0;border-radius:0;padding:0;margin:1.5rem 0}.notice{background:#fff;border:1px solid #777;padding:.8rem}nav,.button,.skip{display:none}a{color:#000}h2,h3{break-after:avoid}tr{break-inside:avoid}footer{color:#000}}
 </style>
 </head>
 <body>
-<a class="skip" href="#quick-start">Skip to quick start</a>
+<a class="skip" href="#help-title">Skip to offline help</a>
 <main>
 <header>
-<p class="eyebrow">CSV Change Guard · application version 0.1.0</p>
-<h1>Review the changes before the import.</h1>
+<p class="eyebrow">CSV Change Guard · free beta 0.1.0-beta.2 · application version 0.1.0</p>
+<h1 id="help-title" tabindex="-1">Review the changes before the import.</h1>
 <p class="intro">Compare a current catalog with a proposed CSV update on your own computer. This guide works offline and explains what the report can tell you, and what it leaves unassessed.</p>
-<div class="notice"><strong>Internal beta candidate — not yet for sale.</strong> Commercial terms and the support contact are not finalized. The proposed email response target is two business days; this is a draft commitment, not a live support service.</div>
+<div class="notice"><strong>Free beta — no account, payment or activation.</strong> You may keep using this delivered version indefinitely for personal or own-business catalog work under the <a href="FREE_BETA_TERMS.html">free beta terms</a>. Feedback is optional. Input limits still apply; future updates and permanent download hosting are not promised.</div>
 <p><a class="button" href="dist/index.html">Open CSV Change Guard</a></p>
 <nav aria-label="Help contents"><ul>
 <li><a href="#quick-start">Quick start</a></li><li><a href="#your-files">Choose files and settings</a></li><li><a href="#findings">Understand findings</a></li><li><a href="#exports">Save and clear</a></li><li><a href="#scope">Scope and limits</a></li><li><a href="#privacy">Privacy</a></li><li><a href="#troubleshooting">Troubleshooting</a></li><li><a href="#support">Report a problem</a></li>
@@ -138,18 +139,18 @@
 
 <section class="card" id="support" aria-labelledby="support-title">
 <h2 id="support-title">Record a problem without sending catalog data</h2>
-<p><strong>Support contact is not configured for this internal candidate.</strong> The proposed email response target is two business days; the final address and support terms must be added before sale.</p>
-<p>For owner review, record:</p>
+<p>Email <a href="mailto:csvchangeguard.support@gmail.com">csvchangeguard.support@gmail.com</a> for optional feedback or best-effort assistance with starting the app, supported formats or understanding a report. No response or resolution time is promised. Custom catalog analysis, managed imports and private-file review are outside this beta's support scope.</p>
+<p>For a useful problem report, record:</p>
 <ul>
 <li>The application version and candidate identifier from the package manifest.</li>
 <li>Windows version, browser name/version, and whether you opened the local file or localhost address.</li>
 <li>Steps to reproduce, expected result, actual result, and whether the same problem occurs with the supplied synthetic files.</li>
 <li>Error text with private filenames, identifiers, and business values removed. Include counts and settings if relevant.</li>
 </ul>
-<p>Keep merchant files and reports on your computer. A synthetic example usually communicates the issue without exposing business data. This candidate does not check for or install updates automatically; retain its manifest so later packages can be identified.</p>
+<p>Keep merchant files and reports on your computer. A synthetic example usually communicates the issue without exposing business data. This version does not check for or install updates automatically; retain its manifest so later packages can be identified. No future feature, lifetime updates or permanent download hosting is promised. Read the included <a href="FREE_BETA_TERMS.html">free beta terms</a> for your permission to keep using this version.</p>
 </section>
 
-<footer><p>Working name: CSV Change Guard. Offline help for the internal beta candidate, prepared 21 October 2026. The existing repository license status remains UNLICENSED; this candidate does not grant finalized paid-use terms. Review <strong>DRAFT-NOT-FOR-SALE.txt</strong> and <strong>manifest.json</strong> before distribution.</p></footer>
+<footer><p>CSV Change Guard · free beta package 0.1.0-beta.2 · offline help updated 18 November 2026. The <a href="FREE_BETA_TERMS.html">free beta terms</a> grant use of this official package; the source repository remains UNLICENSED. Keep <strong>manifest.json</strong>, the terms and your downloaded ZIP. This beta has no purchase or checkout; live sales remain disabled.</p></footer>
 </main>
 </body>
 </html>

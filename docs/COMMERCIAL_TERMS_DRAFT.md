@@ -1,5 +1,11 @@
 # CSV Change Guard - commercial licence and support terms
 
+**18 November scope update:** these paid terms remain an inactive historical
+draft. The current `0.1.0-beta.2` download uses the separate
+[free-beta terms](../release/free-beta-terms.html), with no payment or paid
+support/update commitment. Do not include this draft in the free ZIP or website
+bundle. The source repository remains `UNLICENSED`; live sales remain disabled.
+
 **Owner-approved commercial defaults, prepared for review on 22 October 2026.
 Not yet effective; not a present licence grant or live offer.** Final identity,
 legal/privacy and provider checks remain in [seller details](SELLER_DETAILS.md).

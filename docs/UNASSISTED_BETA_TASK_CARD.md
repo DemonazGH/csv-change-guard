@@ -1,24 +1,32 @@
 # Synthetic beta trial participant task card
 
-**Prepared 22 October 2026. Trial not yet run.** This is an internal review
-exercise using the supplied synthetic samples. The candidate is not for sale.
-This card does not grant a commercial licence or permission to redistribute it.
+**Prepared 22 October 2026; updated 18 November 2026. Trial not yet run.** This
+optional exercise uses the supplied synthetic samples in free beta
+`0.1.0-beta.2` (application `0.1.0`). Download it from the
+[official website](https://csv-change-guard.pages.dev/#download); no signup,
+email, payment or coaching session is required. The included
+`FREE_BETA_TERMS.html` gives the permission to use the package. Keep those terms
+with your copy; the earlier beta.1 internal-preview rules do not apply to it.
 
-Use only the supplied ZIP and synthetic files. Do not connect to Shopify,
-make a purchase, import the samples, or choose your own merchant files.
+For this exercise, use only the official ZIP and included synthetic files.
+Do not connect to Shopify, make a purchase, import the samples or choose your own
+merchant files. Outside this exercise, the free utility can compare your own
+supported files locally under its terms.
 Keep browser security and sandboxing enabled. Stop if your device policy blocks
 the app; do not bypass it.
 
 Work at your own pace. You may use the packaged `START_HERE.txt` and `help.html`
-throughout. The observer will stay quiet. You may ask for help or stop at any
-point; we will record where assistance was needed. Do not share your screen
-outside the agreed trial or send files, reports or personal information.
+throughout. If you agreed to an observed trial, the observer will stay quiet;
+you may ask for help or stop, and we will record where assistance was needed.
+If trying it alone, keep your own notes and skip directions about an observer.
+Do not share your screen outside an agreed trial or send files, reports or
+personal information. Feedback is optional and is not required to use the app.
 
 ## Tasks
 
-1. Starting with the ZIP, get CSV Change Guard running in your usual installed
-   Chrome or Edge browser. Use the packaged instructions if helpful. Tell the
-   observer when you reach a report using the built-in demo.
+1. Download and extract the ZIP, then get CSV Change Guard running in your usual
+   installed Chrome or Edge browser. Use the packaged instructions if helpful.
+   Tell the observer, if present, when you reach a report using the built-in demo.
 2. Review that report. Explain in your own words what it tells you, what you
    would investigate first, and what remains uncertain. What does the finding
    about duplicate identifiers mean for the comparison? Save an HTML report,
@@ -46,5 +54,8 @@ outside the agreed trial or send files, reports or personal information.
 - Which step or explanation was hardest to understand? What would you change
   first? If nothing was confusing, say so.
 
-Tell the observer when you are finished. Keep the synthetic exports local;
-there is no need to email or upload them for this exercise.
+Tell the observer, if present, when you are finished. Keep the synthetic exports
+local; there is no need to email or upload them for this exercise. If you choose
+to send feedback to csvchangeguard.support@gmail.com, use a short description,
+app/browser version and synthetic reproduction. Do not attach merchant CSVs,
+reports, credentials or unredacted screenshots.

@@ -20,12 +20,18 @@ from uuid import uuid4
 import zipfile
 
 REPO = Path(__file__).resolve().parents[1]
-PAYLOAD = {'DRAFT-NOT-FOR-SALE.txt', 'START_HERE.txt', 'help.html',
+PAYLOAD = {'FREE_BETA_TERMS.html', 'START_HERE.txt', 'help.html',
            'dist/index.html', 'server.cjs', 'samples/current-catalog.csv',
            'samples/proposed-update.csv', 'samples/unchanged-update.csv'}
 EXPECTED = PAYLOAD | {'manifest.json', 'SHA256SUMS.txt'}
 sha = lambda data: hashlib.sha256(data).hexdigest()
 now = lambda: datetime.now(timezone.utc).isoformat()
+EXTERNAL_LINKS = {
+    'mailto:csvchangeguard.support@gmail.com',
+    'https://csv-change-guard.pages.dev/',
+    'https://csv-change-guard.pages.dev/privacy',
+    'https://csv-change-guard.pages.dev/privacy.html',
+}
 
 
 class Links(HTMLParser):
@@ -45,6 +51,9 @@ def check_links(file, root):
     doc = Links()
     doc.feed(file.read_text(encoding='utf-8'))
     for href in doc.links:
+        # Reviewed contact/privacy navigation is permitted, never followed here.
+        if href in EXTERNAL_LINKS:
+            continue
         url = urlsplit(href)
         assert not url.scheme and not url.netloc and not url.query, 'Nonlocal link'
         target = (file.parent / unquote(url.path)).resolve() if url.path else file
@@ -71,8 +80,8 @@ def check_package(package, archive):
     app_version = json.loads((REPO / 'package.json').read_text(encoding='utf-8'))['version']
     assert manifest['packageRoot'] == 'CSV-Change-Guard', 'Unexpected package root'
     assert manifest['applicationVersion'] == app_version, 'Application version mismatch'
-    assert manifest['candidateVersion'] == app_version + '-beta.1', 'Candidate version mismatch'
-    assert manifest['status'] == 'internal-preview-not-for-sale', 'Expected draft status'
+    assert manifest['candidateVersion'] == app_version + '-beta.2', 'Candidate version mismatch'
+    assert manifest['status'] == 'free-beta', 'Expected free-beta status'
     assert len(manifest['files']) == len(PAYLOAD), 'Incorrect manifest entry count'
     assert {entry['path'] for entry in manifest['files']} == PAYLOAD, 'Incorrect manifest paths'
     for entry in manifest['files']:
@@ -119,7 +128,7 @@ def main():
         result['browser_executable'] = Path(executable).name
         sources = ['commerce-draft/index.html', 'commerce-draft/checkout.html',
                    'commerce-draft/confirmation.html', 'commerce-draft/styles.css',
-                   'release/help.html', 'release/START_HERE.txt', 'release/DRAFT-NOT-FOR-SALE.txt',
+                   'release/help.html', 'release/START_HERE.txt', 'release/free-beta-terms.html',
                    'scripts/build-release.cjs', 'tests/beta_preview_test.py', 'dist/index.html', 'package.json']
         result['source_sha256'] = {name: sha((REPO / name).read_bytes()) for name in sources}
         phase = 'archive, manifest, extracted payloads and application identity'
@@ -128,10 +137,11 @@ def main():
         result['checks'].append('Exact ZIP/extracted membership, CRCs, manifest, nine checksums and unchanged app verified')
         pages = [('product', REPO / 'commerce-draft/index.html'),
                  ('checkout', REPO / 'commerce-draft/checkout.html'),
-                 ('delivery', REPO / 'commerce-draft/confirmation.html'), ('help', package / 'help.html')]
+                 ('delivery', REPO / 'commerce-draft/confirmation.html'), ('help', package / 'help.html'),
+                 ('terms', package / 'FREE_BETA_TERMS.html')]
         phase = 'local links, styles and fragment targets'
         for name, file in pages:
-            check_links(file, package if name == 'help' else REPO / 'commerce-draft')
+            check_links(file, package if name in ('help', 'terms') else REPO / 'commerce-draft')
         result['checks'].append('All help/commerce links, local assets and fragments resolve')
         phase = 'sandboxed installed browser launch'
         with sync_playwright() as p:
@@ -155,8 +165,12 @@ def main():
                 page.goto(file.as_uri(), wait_until='load')
                 assert page.locator('script,form,iframe,input,textarea,select,object,embed').count() == 0, 'Active form/script content'
                 assert page.locator('h1').is_visible(), 'Missing visible title'
-                banner = page.locator('.notice' if name == 'help' else '.draft-banner').first.inner_text().lower()
-                assert re.search(r'not (?:yet )?for sale', banner), 'Missing draft notice'
+                if name in ('help', 'terms'):
+                    assert 'free beta' in page.locator('body').inner_text().lower(), 'Missing free-beta identification'
+                    assert '0.1.0-beta.2' in page.locator('body').inner_text(), 'Missing package version'
+                else:
+                    banner = page.locator('.draft-banner').first.inner_text().lower()
+                    assert re.search(r'not (?:yet )?for sale', banner), 'Missing historical draft notice'
                 assert all(button.is_disabled() for button in page.get_by_role('button').all()), 'Enabled action button'
                 assert page.evaluate('getComputedStyle(document.body).margin') == '0px', 'Local stylesheet did not load'
                 for viewport, width, height in [('desktop', 1440, 1000), ('mobile', 390, 844)]:

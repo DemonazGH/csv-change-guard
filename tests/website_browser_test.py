@@ -53,7 +53,8 @@ def check_focus_ring(locator):
 
 def check_scaling_and_preferences(browser, base, out):
     pages = [('index.html', 'home'), ('demo.html', 'demo'),
-             ('shopify-csv-price-changes.html', 'guide'), ('privacy.html', 'privacy')]
+             ('shopify-csv-price-changes.html', 'guide'), ('privacy.html', 'privacy'),
+             ('free-beta-terms.html', 'terms')]
     metrics = []
     baseline = {}
     for width in (320, 1440):
@@ -284,7 +285,7 @@ def main():
                 'method': 'CDP Emulation.setEmulatedOSTextScale',
                 'cases': check_scaling_and_preferences(browser, base, out)
             }
-            result['checks'].append('All four pages passed 320/1440px reflow at 1x/2x emulated OS '
+            result['checks'].append('All five pages passed 320/1440px reflow at 1x/2x emulated OS '
                                     'text scale, skip-link focus and visible heading focus rings')
             result['checks'].append('2x text-scale demo run/filter/reset and emulated reduced-motion/'
                                     'forced-colors focus checks passed')

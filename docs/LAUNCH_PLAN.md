@@ -1,7 +1,10 @@
 # Launch and validation plan
 
-**Status:** functioning local prototype with internal paid-beta preparation,
-not a public or paid launch. See [the selected offer and prepared artifacts](PAID_BETA_PREPARATION.md).
+**18 November status:** the owner selected a full free downloadable beta,
+`0.1.0-beta.2`, with local processing and separate free-use terms. See
+[fresh validation and publication progress](FREE_BETA_RELEASE.md). The public
+synthetic demo remains available. Live sales are disabled; earlier paid-beta
+preparation below is historical and does not govern the free package.
 
 **22 October update:** an informational prelaunch page is public; support and
 Lemon Squeezy Test-mode checkout/order/receipt are configured and partially
@@ -20,7 +23,12 @@ version updates, live tax/payment or supplier terms/privacy/consent.
 
 ## Goal
 
-Validate a self-service product whose ordinary customer cycle can be automated. Start with paying demand and low support effort; work toward approximately USD 1,000 monthly operating profit before scaling. Personal after-tax income is a separate measure.
+Validate a self-service product with low support effort. The next evidence is
+five independent catalog operators completing an unaided synthetic trial,
+understanding incomplete coverage and saving/reading a report. Record optional
+feedback, support time and actual repeat use. Free usage does not establish
+willingness to pay. A later commercial experiment may pursue the original
+approximately USD 1,000 monthly operating-profit goal; no income is established.
 
 ## Completed technical preparation
 
@@ -67,11 +75,13 @@ Do not import the intentionally risky demo CSV into a real store. No live-store 
 
 ## Gate 3 — Distribution and commercial model
 
-The owner selected a **paid downloadable utility**, with all CSV processing
-local, and a **USD 29 one-time beta** price experiment. Local comparisons remain
-unmetered within the existing scope. This is an offer to validate, not evidence
-of paid demand. Browser source is inspectable; copy protection is not promised.
-Hosted pay-per-report and subscription infrastructure are outside this beta.
+The owner selected a **free downloadable beta**, with all CSV processing local,
+unmetered comparisons within existing technical limits, no account/payment gate
+and best-effort assistance. Users may keep the delivered version under its
+included free-use terms. Future paid versions require a separate decision;
+the prior USD 29 experiment was not activated. Browser source is inspectable;
+copy protection and hosted pay-per-report infrastructure are not part of this
+release. The historical purchase checks below remain open for a later paid offer.
 
 - [x] Select a model and a price experiment for preparation.
 - [x] Prepare an internal allowlisted ZIP, offline help and inert product/checkout drafts.

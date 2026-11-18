@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="text-scale" content="scale">
-  <meta name="description" content="Try CSV Change Guard immediately with supplied synthetic Shopify CSVs. Review price changes locally, take a one-minute tour and save a sample report. Sales are not open.">
+  <meta name="description" content="Download the free CSV Change Guard beta for Windows Chrome and Edge. Compare your Shopify product CSVs locally, review supported changes and save reports. No signup or payment.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'none'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>CSV Change Guard — Review the changes before the import</title>
   <link rel="stylesheet" href="styles.css">
@@ -13,16 +13,16 @@
   <a class="skip" href="#hero-title">Skip to content</a>
   <header class="site-header wrap">
     <a class="brand" href="#main"><span class="brand-icon" aria-hidden="true">↔</span> CSV Change Guard</a>
-    <nav aria-label="Main navigation"><a href="demo.html">Try it</a><a href="shopify-csv-price-changes.html">Price-change guide</a><a href="#coverage">Coverage</a><a href="privacy.html">Privacy</a></nav>
+    <nav aria-label="Main navigation"><a href="#download">Free beta</a><a href="demo.html">Try it</a><a href="shopify-csv-price-changes.html">Price-change guide</a><a href="#coverage">Coverage</a><a href="privacy.html">Privacy</a></nav>
   </header>
   <main id="main">
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Public synthetic demo · beta in preparation</p>
+        <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Free beta · your files stay local</p>
         <h1 id="hero-title" tabindex="-1">Review the changes.<br><span>Before the import.</span></h1>
         <p class="intro">A second look at your next catalog update. Compare a current Shopify product CSV with a proposed update to spot supported price changes, cleared fields and identifiers that cannot be matched.</p>
-        <div class="hero-actions"><a class="button" href="demo.html">Try the synthetic demo <span aria-hidden="true">→</span></a><a href="demo.html#demo-tour">Take the one-minute tour</a></div>
-        <p class="quiet">Open immediately. Synthetic files supplied. No signup, payment or installation.</p>
+        <div class="hero-actions"><a class="button" href="#download">Get the free beta <span aria-hidden="true">→</span></a><a href="demo.html#demo-tour">Take the one-minute tour</a></div>
+        <p class="quiet">No signup or payment. Download, extract and open in your browser.</p>
       </div>
       <figure class="example">
         <div class="example-top"><span class="small-label">A change worth a second look</span><span class="example-tag">Synthetic example</span></div>
@@ -41,6 +41,20 @@
         <li><span class="step-number">03</span><h3>Keep a report</h3><p>Export a standalone HTML report, or CSV and JSON findings, with the comparison settings and coverage limitations.</p></li>
       </ol>
     </section>
+    <section class="trial wrap" id="download" aria-labelledby="download-title">
+      <p class="eyebrow">The full local utility · free beta</p>
+      <h2 id="download-title">Compare your own files. Free.</h2>
+      <p class="trial-intro">Choose your current Shopify catalog and proposed update on your computer. Review supported changes and save HTML, CSV or JSON reports. The app processes your CSVs locally; it does not upload them or connect to your store.</p>
+      <ol class="steps" role="list">
+        <li><span class="step-number">01</span><h3>Download and extract</h3><p>Save the ZIP, then right-click it and choose <strong>Extract All</strong> on Windows. Open the extracted <strong>CSV-Change-Guard</strong> folder.</p></li>
+        <li><span class="step-number">02</span><h3>Open the app</h3><p>Read <strong>START_HERE.txt</strong>, then open <strong>dist/index.html</strong> in Chrome or Edge. Start with the built-in demo or included synthetic samples.</p></li>
+        <li><span class="step-number">03</span><h3>Review your update</h3><p>Check the coverage below, then select two supported files from the same store and currency. Read the findings and limitations before taking any import action separately.</p></li>
+      </ol>
+      <div class="trial-request"><a class="button" id="beta-download" href="{{BETA_DOWNLOAD_PATH}}" download aria-describedby="beta-download-details">Download free beta (ZIP) <span aria-hidden="true">↓</span></a><p id="beta-download-details">Version <strong>{{BETA_VERSION}}</strong> · {{BETA_ARCHIVE_KIB}} KiB.<br>Tested on Windows with Chrome and Edge. Other setups are not yet verified.</p></div>
+      <p>Read the <a href="free-beta-terms.html">free-use terms</a> before using the app; the same terms are included in the ZIP. You may keep using this version without payment or expiry for personal or your own business’s catalog work. There is no signup, automatic charge, report quota or licence activation. Technical limits still apply.</p>
+      <p class="quiet">Support is best effort. Future features, updates and permanent download hosting are not promised. Save your ZIP and terms. Live sales remain disabled.</p>
+      <details class="download-checksum"><summary>Verify the download (optional)</summary><p>Compare the ZIP’s SHA-256 fingerprint with <a href="downloads/SHA256SUMS.txt" download>the checksum file</a>:</p><p><code id="beta-sha256">{{BETA_ARCHIVE_SHA256}}</code></p></details>
+    </section>
     <section class="trial wrap" id="trial" aria-labelledby="trial-title">
       <p class="eyebrow">Start in your browser</p>
       <h2 id="trial-title">Try a report in a few minutes.</h2>
@@ -50,9 +64,9 @@
         <li><span class="step-number">02</span><h3>Read the findings</h3><p>Inspect a 59.00 → 5.90 price drop and the incomplete-comparison verdict. The one-minute tour explains the price warning and excluded identifiers.</p></li>
         <li><span class="step-number">03</span><h3>Keep the report</h3><p>Save the HTML report and open it on its own. The complete example report and both synthetic CSVs are also linked on the demo page.</p></li>
       </ol>
-      <div class="trial-request"><a class="button" href="demo.html">Start the free trial <span aria-hidden="true">→</span></a><p>For the background, read <a href="shopify-csv-price-changes.html">how to review Shopify CSV price changes before importing</a>. The browser trial uses fixed synthetic files. The downloadable utility's file-selection workflow is a separate test.</p></div>
-      <div class="trial-feedback" id="feedback"><h3>Tell us what you thought</h3><p>Feedback is optional. Was the report understandable, and would it help with a price update you do? Email a short answer to <a href="mailto:csvchangeguard.support@gmail.com?subject=CSV%20Change%20Guard%20demo%20feedback">csvchangeguard.support@gmail.com</a>. General role and browser details are useful if you choose to include them. Please use synthetic examples and leave out merchant files, reports, store names, credentials and payment details. We aim to reply within two business days.</p></div>
-      <p class="boundary">The browser trial accepts only the supplied examples. The downloadable beta is in preparation and is not for sale. Live sales remain disabled.</p>
+      <div class="trial-request"><a class="button" href="demo.html">Start the free trial <span aria-hidden="true">→</span></a><p>For the background, read <a href="shopify-csv-price-changes.html">how to review Shopify CSV price changes before importing</a>. This browser trial uses fixed synthetic files. Use the free download above to select your own files locally.</p></div>
+      <div class="trial-feedback" id="feedback"><h3>Tell us what you thought</h3><p>Feedback is optional. Was the report understandable, and would it help with a price update you do? Email a short answer to <a href="mailto:csvchangeguard.support@gmail.com?subject=CSV%20Change%20Guard%20demo%20feedback">csvchangeguard.support@gmail.com</a>. General role and browser details are useful if you choose to include them. Please use synthetic examples and leave out merchant files, reports, store names, credentials and payment details. Assistance is best effort.</p></div>
+      <p class="boundary">The browser trial accepts only the supplied examples. The full free beta selects files locally on your computer. Neither performs an import or guarantees import safety.</p>
     </section>
     <section class="coverage-band" id="coverage" aria-labelledby="coverage-title">
       <div class="wrap coverage-grid">
@@ -82,10 +96,10 @@
       <p class="boundary">This is an independent comparison tool, not a complete Shopify import simulator. Review coverage, keep an appropriate backup and test your actual import workflow separately.</p>
     </section>
     <section class="contact wrap" id="contact" aria-labelledby="contact-title">
-      <div><p class="eyebrow">Have a question about the fit?</p><h2 id="contact-title">Talk to support.</h2><p>We aim to reply within two business days. Include your browser, app version if available, and a short description. Synthetic examples only.</p><a class="email" href="mailto:csvchangeguard.support@gmail.com">csvchangeguard.support@gmail.com</a></div>
-      <aside class="beta-note"><h3>Before purchases open</h3><p>The downloadable beta is in preparation. This page does not offer purchases, accept payments or provide a download entitlement.</p><p>Final commercial, purchase privacy and refund terms will be provided before sales open. No launch date is promised.</p></aside>
+      <div><p class="eyebrow">Have a question about the fit?</p><h2 id="contact-title">Talk to support.</h2><p>Assistance is best effort, with no guaranteed response time. Include your browser, app version and a short description. Synthetic examples only; custom catalog analysis is not included.</p><a class="email" href="mailto:csvchangeguard.support@gmail.com">csvchangeguard.support@gmail.com</a></div>
+      <aside class="beta-note"><h3>A free beta, with clear limits</h3><p>The downloaded version has no payment or expiry. Missing or ambiguous identifiers can make a comparison incomplete; review the report’s coverage.</p><p>See the <a href="free-beta-terms.html">free-use terms</a>. Future products may have separate pricing and terms; they will not automatically charge you or remove this version’s permission.</p></aside>
     </section>
   </main>
-  <footer class="wrap footer"><div><strong>CSV Change Guard</strong><p>Business: <span id="business-identity">DZMITRY SALAVEI</span> · Poland</p><p><a href="privacy.html">Website and support privacy</a></p></div><p>Independent software. Not affiliated with or endorsed by Shopify.</p></footer>
+  <footer class="wrap footer"><div><strong>CSV Change Guard</strong><p>Business: <span id="business-identity">DZMITRY SALAVEI</span> · Poland</p><p><a href="free-beta-terms.html">Free-use terms</a> · <a href="privacy.html">Website and support privacy</a></p></div><p>Independent software. Not affiliated with or endorsed by Shopify.</p></footer>
 </body>
 </html>

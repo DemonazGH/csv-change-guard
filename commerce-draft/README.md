@@ -1,5 +1,11 @@
 # Product-page and checkout drafts
 
+**Current status — 18 November 2026:** these paid-commerce pages are historical,
+inert drafts. They are excluded from the public website and the `0.1.0-beta.2`
+free ZIP. The current offer is the [full free beta](../docs/FREE_BETA_RELEASE.md),
+under its own free-use terms. Do not activate checkout or interpret draft prices
+as an active offer.
+
 These are local, static review pages, updated on 22 October 2026. They are not
 a public offer, payment integration, entitlement system, or deployed website.
 Every page is marked **Draft — not for sale**. Payment and download controls are

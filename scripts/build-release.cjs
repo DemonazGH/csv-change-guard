@@ -1,7 +1,7 @@
 'use strict';
 
-// Builds an internal review candidate from an explicit allowlist. It never
-// rebuilds the app, changes source files, or grants a commercial licence.
+// Builds the free beta from an explicit allowlist, including its use terms.
+// It never rebuilds the app or changes source files.
 const fs = require('node:fs');
 const path = require('node:path');
 const crypto = require('node:crypto');
@@ -11,7 +11,7 @@ const MAX_ZIP32 = 0xfffffffe; // 0xffffffff is the ZIP64 sentinel.
 const INPUTS = Object.freeze([
   ['release/START_HERE.txt', 'START_HERE.txt'],
   ['release/help.html', 'help.html'],
-  ['release/DRAFT-NOT-FOR-SALE.txt', 'DRAFT-NOT-FOR-SALE.txt'],
+  ['release/free-beta-terms.html', 'FREE_BETA_TERMS.html'],
   ['dist/index.html', 'dist/index.html'],
   ['server.cjs', 'server.cjs'],
   ['samples/current-catalog.csv', 'samples/current-catalog.csv'],
@@ -21,6 +21,16 @@ const INPUTS = Object.freeze([
 const PROTECTED_DIRS = ['src', 'dist', 'release', 'samples', 'scripts', 'tests', '.git'];
 const sha256 = data => crypto.createHash('sha256').update(data).digest('hex');
 const pathOrder = (a, b) => a.path < b.path ? -1 : a.path > b.path ? 1 : 0;
+
+function getReleaseMetadata(applicationVersion) {
+  if (!/^\d+\.\d+\.\d+$/.test(applicationVersion)) throw new Error('Application version must be a plain major.minor.patch version.');
+  const candidateVersion = `${applicationVersion}-beta.2`;
+  return {
+    candidateVersion, applicationVersion, status: 'free-beta', packageRoot: PACKAGE_ROOT,
+    archiveFilename: `csv-change-guard-${candidateVersion}.zip`,
+    termsFile: 'FREE_BETA_TERMS.html',
+  };
+}
 
 function isWithin(candidate, directory) {
   const relative = path.relative(directory, candidate);
@@ -141,8 +151,8 @@ function buildRelease(outputDir, { sourceRoot = path.resolve(__dirname, '..') } 
     }
   }
   const pkg = JSON.parse(regularInput(sourceRoot, 'package.json').toString('utf8'));
-  if (!/^\d+\.\d+\.\d+$/.test(pkg.version)) throw new Error('Application version must be a plain major.minor.patch version.');
-  const candidateVersion = `${pkg.version}-beta.1`;
+  const metadata = getReleaseMetadata(pkg.version);
+  const { candidateVersion } = metadata;
   const candidateDir = path.join(outputRoot, candidateVersion);
   if (fs.existsSync(candidateDir)) throw new Error(`Candidate output already exists: ${candidateDir}. Choose a fresh output directory.`);
 
@@ -152,8 +162,9 @@ function buildRelease(outputDir, { sourceRoot = path.resolve(__dirname, '..') } 
     schemaVersion: 1,
     candidateVersion,
     applicationVersion: pkg.version,
-    status: 'internal-preview-not-for-sale',
+    status: metadata.status,
     packageRoot: PACKAGE_ROOT,
+    termsFile: metadata.termsFile,
     files: payload.map(entry => ({ path: entry.path, bytes: entry.data.length, sha256: sha256(entry.data) })),
   };
   const manifestData = Buffer.from(JSON.stringify(manifest, null, 2) + '\n');
@@ -175,10 +186,10 @@ function buildRelease(outputDir, { sourceRoot = path.resolve(__dirname, '..') } 
     fs.mkdirSync(path.dirname(destination), { recursive: true });
     fs.writeFileSync(destination, entry.data, { flag: 'wx' });
   }
-  const archivePath = path.join(candidateDir, `csv-change-guard-${candidateVersion}.zip`);
+  const archivePath = path.join(candidateDir, metadata.archiveFilename);
   fs.writeFileSync(archivePath, archive, { flag: 'wx' });
   return {
-    candidateVersion, applicationVersion: pkg.version, candidateDir, packageDir,
+    ...metadata, candidateDir, packageDir,
     archivePath, manifestPath: path.join(packageDir, 'manifest.json'),
     archiveSha256: sha256(archive),
   };
@@ -191,11 +202,11 @@ if (require.main === module) {
       throw new Error('Usage: node scripts/build-release.cjs --output DIR\nBuild dist/index.html first with npm run build. Use a fresh output directory; existing candidates are not overwritten.');
     }
     const result = buildRelease(args[1]);
-    console.log(`Internal candidate only; not for sale.\n${result.archivePath}\nSHA-256: ${result.archiveSha256}`);
+    console.log(`Free beta; use terms are included in ${result.termsFile}. Live sales remain disabled.\n${result.archivePath}\nSHA-256: ${result.archiveSha256}`);
   } catch (error) {
     console.error(`Release packaging failed: ${error.message}`);
     process.exitCode = 1;
   }
 }
 
-module.exports = { buildRelease };
+module.exports = { buildRelease, getReleaseMetadata };

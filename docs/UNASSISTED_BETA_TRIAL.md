@@ -1,22 +1,30 @@
 # Unassisted synthetic beta trial owner protocol
 
-**Prepared 22 October 2026. Trials: Not run.** This packet prepares an observed,
-uncoached usability trial. It supplies no new participant, browser, payment or
-merchant-validation evidence. Live sales remain disabled. The application,
-help and existing `0.1.0-beta.1` ZIP are unchanged.
+**Prepared 22 October 2026; updated 18 November 2026 for the free beta.
+Trials: Not run.** This packet prepares an optional, uncoached synthetic
+usability trial of package `0.1.0-beta.2`, with the unchanged v0.1.0 application.
+It supplies no new participant, browser, payment or merchant-validation evidence.
+Live sales remain disabled. Earlier beta.1
+[preparation evidence](BETA_PREPARATION_VALIDATION.md) retains its historical
+internal-preview scope; its draft marker and terms do not govern this free beta.
 
 ## Purpose and permissions
 
-Find out whether an intended catalog operator can start from the internal ZIP,
-use its help, understand comparison limits and read a saved report without live
-coaching. This is a small qualitative trial, not a general usability score,
-proof of paid demand, Shopify import test or launch approval.
+Find out whether an intended catalog operator can download the free ZIP, use its
+help, understand comparison limits and read a saved report without live coaching.
+This is a small qualitative trial, not a general usability score, proof of paid
+demand, Shopify import test or launch approval. App access requires no signup,
+email, booking, observer or feedback; this protocol describes an optional
+observed trial for gathering evidence.
 
-Before recruiting anyone or sharing a candidate, the owner must deliberately
-authorise the recipient, review purpose and permission to use the candidate.
-This packet does not send an invitation, authorise distribution, or grant an
-effective commercial licence. Keep the existing `UNLICENSED` status and
-`internal-preview-not-for-sale` package status. Do not remove draft markers.
+The owner authorised public availability of the official free-beta package.
+Direct participants to the [official download](https://csv-change-guard.pages.dev/#download)
+and its [free-use terms](../release/free-beta-terms.html), also supplied as
+`FREE_BETA_TERMS.html` in the ZIP. Those terms grant use of the delivered version;
+the source repository remains `UNLICENSED`. Package status is `free-beta`.
+This packet does not send invitations or authorise an agent to contact people.
+Agree any observation with the participant; downloading the app is not consent
+to being observed, recorded or contacted.
 
 Use only shipped synthetic files. No store access, purchase, catalog upload,
 private merchant files, credentials or customer data are needed. Separate
@@ -25,18 +33,19 @@ Do not enable sales or change account settings for this trial.
 
 ## Prepare the session
 
-1. Identify the candidate using its archive SHA-256 and `manifest.json`:
-   candidate `0.1.0-beta.1`, app `0.1.0`, status
-   `internal-preview-not-for-sale`. Follow the integrity checks in
+1. Identify the candidate using the official ZIP's archive SHA-256 and
+   `manifest.json`: candidate `0.1.0-beta.2`, app `0.1.0`, status `free-beta`.
+   Follow the integrity checks in
    [the release procedure](RELEASE_PACKAGE.md). Verify the actual file selected
    for this trial; a matching name alone is insufficient. Do not rebuild or
    replace the candidate as part of these instructions.
-2. Confirm that the existing ZIP contains `CSV-Change-Guard/START_HERE.txt`,
+2. Confirm that the downloaded ZIP contains `CSV-Change-Guard/START_HERE.txt`,
    `help.html`, `dist/index.html`, `server.cjs`, and the three CSV files under
    `samples/`: `current-catalog.csv`, `proposed-update.csv` and
-   `unchanged-update.csv`. `manifest.json`, `SHA256SUMS.txt` and the draft notice
-   remain with the package. Scenario fixtures elsewhere in this repository are
-   outside this trial.
+   `unchanged-update.csv`. `manifest.json`, `SHA256SUMS.txt` and
+   `FREE_BETA_TERMS.html` remain with the package. The old
+   `DRAFT-NOT-FOR-SALE.txt` must not be in this free-beta ZIP. Scenario fixtures
+   elsewhere in this repository are outside this trial.
 3. Choose an intended user familiar with preparing catalog updates. Record only
    an anonymous trial ID and role category. An owner rehearsal or someone who
    has already been coached can help check the packet, but does not replace an
@@ -47,7 +56,7 @@ Do not enable sales or change account settings for this trial.
    public demo explains the same findings, so later answers cannot establish
    unaided discovery or first-exposure comprehension. Keep this distinction
    when interpreting a workflow trial.
-4. Give the participant only the separately authorised candidate and
+4. Give the participant the official download link and
    [participant task card](UNASSISTED_BETA_TASK_CARD.md). Keep the observer
    criteria below separate until the tasks and questions are finished. The
    ordinary packaged help is allowed and already contains demo answers; record
@@ -68,7 +77,7 @@ security or sandboxing to obtain a successful outcome.
 
 ## Observe without coaching
 
-Start timing when the participant receives the ZIP and card. Record elapsed
+Start timing when the participant receives the download link and card. Record elapsed
 time to the first report and to completion, including pauses or technical
 blocks. Time is descriptive; there is no speed-based pass mark.
 
@@ -163,6 +172,9 @@ Debrief after recording the unaided attempts and answers. Explain any remaining
 misunderstanding, log a small help/interface issue where warranted, and keep the
 trial evidence separate from prior guided owner tests and automated browser
 checks. An agent performing these tasks cannot supply independent-user evidence.
-No marketing, payment, delivery, refund or real-merchant claim follows from this
-synthetic trial. The other [paid-beta release gates](PAID_BETA_PREPARATION.md)
-remain open until separately resolved.
+No paid-demand, payment, refund or real-merchant claim follows from this synthetic
+trial. It may establish the observed download and startup route for that
+participant, not every delivery environment. The
+[remaining paid-offer gates](PAID_BETA_PREPARATION.md) apply to any later paid
+offer and remain open until separately resolved. Optional feedback should be
+generic and use synthetic examples; do not request merchant files or reports.

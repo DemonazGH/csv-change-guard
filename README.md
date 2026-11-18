@@ -2,6 +2,16 @@
 
 **Version 0.1.0 · local working prototype · 18 October 2026**
 
+**18 November free-beta release:** the owner selected free access to the full
+downloadable utility. Package **0.1.0-beta.2** contains the unchanged v0.1.0 app,
+synthetic samples, offline help and [free-use terms](release/free-beta-terms.html).
+The updated website provides a direct ZIP download without signup or checkout;
+the in-browser demo continues to use fixed synthetic inputs. See the
+[release and fresh validation record](docs/FREE_BETA_RELEASE.md) for actual
+publication status, Windows checks and remaining gaps. CSV processing stays
+local and live sales stay disabled. This supersedes the earlier paid-beta offer
+for this package; the public source repository remains `UNLICENSED`.
+
 **18 November Modern Web Guidance:** `AGENTS.md` now uses Google's pinned
 v1.0.0 skill for website changes. The website update adds scalable typography,
 keyboard focus/skip-link improvements and framing protection. See the
@@ -21,11 +31,13 @@ supplied example with optional feedback. The separately arranged Windows
 file-selection trial has its own protocol. Website
 sources now live in `website/`; `npm run build:website` creates a public-only
 allowlisted bundle. See [publication and validation](docs/PUBLIC_SYNTHETIC_DEMO.md).
-Live sales remain disabled and the internal ZIP is not distributed by the site.
+The new full free-beta ZIP has a separate download path and terms. The earlier
+internal preview ZIP remains historical and is not the website download.
 
-Paid-beta preparation now has an [internal release package](docs/RELEASE_PACKAGE.md),
+**Historical paid-beta preparation:** the earlier plan had an internal release
+package (now superseded by the [free release procedure](docs/RELEASE_PACKAGE.md)),
 [offline customer help](release/help.html), and [local product/checkout drafts](commerce-draft/index.html).
-The selected offer is a USD 29 one-time downloadable utility with local CSV
+The then-selected offer was a USD 29 one-time downloadable utility with local CSV
 processing. These are preparation artifacts, **not an active sale**. See
 [decisions and remaining launch gates](docs/PAID_BETA_PREPARATION.md) and the
 [fresh preparation checks](docs/BETA_PREPARATION_VALIDATION.md). The application
@@ -44,7 +56,8 @@ but hosted downloads are blocked in Test mode and live sales remain disabled.
 The owner approved commercial defaults for [licence/support terms](docs/COMMERCIAL_TERMS_DRAFT.md)
 and [a 14-day voluntary refund](docs/REFUND_POLICY_DRAFT.md). Text is still pending
 effective-contract/privacy/provider review; the existing ZIP grants no commercial
-licence. See [seller details and remaining gates](docs/SELLER_DETAILS.md) and
+licence for that historical beta.1 package. The new beta.2 has its own free-use
+grant. See [seller details and remaining paid-release gates](docs/SELLER_DETAILS.md) and
 [the bounded provenance review](docs/OWNERSHIP_REVIEW.md). Earlier preparation
 records retain their dated scope; they are not evidence of live sales.
 
@@ -91,6 +104,13 @@ unchanged; this remains separate from owner usability confirmation.
 A read-only review tool for two Shopify product CSV files: a current catalog and a proposed update. It compares a defined subset of fields using exact identifiers. It does not connect to a store, execute imports, charge customers, or guarantee import safety.
 
 ## Try it
+
+For the customer download, use **Get the free beta** on the
+[product website](https://csv-change-guard.pages.dev/#download), extract the ZIP,
+read `START_HERE.txt` and `FREE_BETA_TERMS.html`, then open `dist/index.html`.
+The release record above distinguishes prepared changes from verified deployment.
+
+For development/source review:
 
 Download the repository with **Code → Download ZIP** on GitHub, then **Extract
 All** on Windows. Start with [START_HERE.txt](START_HERE.txt) or follow
@@ -227,15 +247,23 @@ Other browser/version combinations, representative merchant workflows and
 Shopify import round trips remain separate release checks. The limited public
 HTTPS synthetic-demo checks are [recorded separately](docs/PUBLIC_SYNTHETIC_DEMO.md).
 
-## Before a commercial launch
+## Any later paid offer
 
-The application is deliberately unmetered and has no payment boundary. **A client-side “pay to unlock” button would not securely enforce pay-per-report billing when the full engine is already delivered to the browser.** The owner selected a paid downloadable utility/licence with local CSV processing. The external Test-mode checkout remains separate from the utility; no runtime activation or account backend is added.
+The current offer is the full free beta under its version-specific
+[free-use terms](release/free-beta-terms.html). The application is deliberately
+unmetered and has no payment boundary. **A client-side “pay to unlock” button would
+not securely enforce pay-per-report billing when the full engine is already
+delivered to the browser.** Any later paid offer requires a separate decision
+and terms; it cannot retrospectively charge for or remove the granted use of
+the delivered free version. The external Test-mode checkout remains separate
+from the utility; no runtime activation or account backend is added.
 
 See [the launch plan](docs/LAUNCH_PLAN.md) and [current commercial gates](docs/SELLER_DETAILS.md).
-Source publication, the informational website, the provider test and a paid
-product launch are separate states. Live sales remain disabled; purchase/support
-privacy and effective terms still need completion. Customer CSV processing stays
-local and the app has no file-upload endpoint.
+Source publication, the free-beta download, the provider test and a paid product
+launch are separate states. Live sales remain disabled; any future paid offer
+still needs its purchase privacy, effective terms and provider checks completed.
+The current free-use terms and website/support privacy notice have their own
+scope. Customer CSV processing stays local and the app has no file-upload endpoint.
 
 The [purchase privacy notice draft](docs/PURCHASE_PRIVACY_DRAFT.md) and
 [privacy/withdrawal review](docs/PRIVACY_AND_CONSENT_REVIEW.md) distinguish local
@@ -246,7 +274,9 @@ they are not effective policies or a passed legal-compliance check.
 See the [production email proposal](docs/PRODUCTION_EMAIL_SETUP.md) and
 [proposed support/privacy procedure](docs/SUPPORT_PRIVACY_OPERATIONS.md) for the
 one-mailbox recommendation, verified price references and owner handoffs. The
-new domain/mailbox and retention process are not active; live sales stay disabled.
+new domain/mailbox are not active. The current consumer Gmail procedure is
+described in the [website/support notice](docs/CURRENT_WEBSITE_GMAIL_PRIVACY.md);
+it uses manual retention review. Live sales stay disabled.
 
 ## Rule sources
 

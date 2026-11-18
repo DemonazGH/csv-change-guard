@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Try a synthetic Shopify CSV comparison report in your browser. Review supported changes locally, then request a volunteer workflow trial. Sales are not open.">
+  <meta name="description" content="Try CSV Change Guard immediately with supplied synthetic Shopify CSVs. Review price changes locally, take a one-minute tour and save a sample report. Sales are not open.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'none'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>CSV Change Guard — Review the changes before the import</title>
   <link rel="stylesheet" href="styles.css">
@@ -12,7 +12,7 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header wrap">
     <a class="brand" href="#main"><span class="brand-icon" aria-hidden="true">↔</span> CSV Change Guard</a>
-    <nav aria-label="Main navigation"><a href="demo.html">Demo</a><a href="#trial">Trial access</a><a href="#coverage">Coverage</a><a href="privacy.html">Privacy</a></nav>
+    <nav aria-label="Main navigation"><a href="demo.html">Try it</a><a href="shopify-csv-price-changes.html">Price-change guide</a><a href="#coverage">Coverage</a><a href="privacy.html">Privacy</a></nav>
   </header>
   <main id="main">
     <section class="hero wrap" aria-labelledby="hero-title">
@@ -20,8 +20,8 @@
         <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Public synthetic demo · beta in preparation</p>
         <h1 id="hero-title">Review the changes.<br><span>Before the import.</span></h1>
         <p class="intro">A second look at your next catalog update. Compare a current Shopify product CSV with a proposed update to spot supported price changes, cleared fields and identifiers that cannot be matched.</p>
-        <div class="hero-actions"><a class="button" href="demo.html">Try the synthetic demo <span aria-hidden="true">→</span></a><a href="#trial">Request a workflow trial</a></div>
-        <p class="quiet">No signup or payment for the demo. Fixed synthetic files only. Nothing to install.</p>
+        <div class="hero-actions"><a class="button" href="demo.html">Try the synthetic demo <span aria-hidden="true">→</span></a><a href="demo.html#demo-tour">Take the one-minute tour</a></div>
+        <p class="quiet">Open immediately. Synthetic files supplied. No signup, payment or installation.</p>
       </div>
       <figure class="example">
         <div class="example-top"><span class="small-label">A change worth a second look</span><span class="example-tag">Synthetic example</span></div>
@@ -41,16 +41,17 @@
       </ol>
     </section>
     <section class="trial wrap" id="trial" aria-labelledby="trial-title">
-      <p class="eyebrow">Try a report now. Help test the workflow next.</p>
-      <h2 id="trial-title">How to get trial access</h2>
-      <p class="trial-intro">The <a href="demo.html">public demo</a> is open immediately. It compares a fixed fictional catalog and update, shows the findings, and offers a standalone sample report. It does not accept your files.</p>
+      <p class="eyebrow">Start in your browser</p>
+      <h2 id="trial-title">Try a report in a few minutes.</h2>
+      <p class="trial-intro">Open the <a href="demo.html">free synthetic trial</a> and explore a fictional Shopify catalog update at your own pace. Everything you need is supplied. You can start without emailing us or arranging a session.</p>
       <ol class="steps">
-        <li><span class="step-number">01</span><h3>Check whether it fits</h3><p>We are looking for a few people who have worked with Shopify product CSVs in the last six months. The volunteer workflow trial uses English instructions and Windows with Chrome or Edge.</p></li>
-        <li><span class="step-number">02</span><h3>Send a short request</h3><p>Email your general catalog role, recent CSV experience and browser. Please leave out store names, merchant files, reports, credentials and payment details.</p></li>
-        <li><span class="step-number">03</span><h3>Arrange a synthetic trial</h3><p>After confirming fit, we supply the prototype package, synthetic files and task instructions individually. Allow up to 45 minutes. Participation is voluntary and unpaid; no purchase or store access is needed.</p></li>
+        <li><span class="step-number">01</span><h3>Run the example</h3><p>Click Run synthetic comparison. The supplied baseline and proposed update run locally in your browser, with a 30% threshold and overwrite assumed enabled.</p></li>
+        <li><span class="step-number">02</span><h3>Read the findings</h3><p>Inspect a 59.00 → 5.90 price drop and the incomplete-comparison verdict. The one-minute tour explains the price warning and excluded identifiers.</p></li>
+        <li><span class="step-number">03</span><h3>Keep the report</h3><p>Save the HTML report and open it on its own. The complete example report and both synthetic CSVs are also linked on the demo page.</p></li>
       </ol>
-      <div class="trial-request"><a class="button" href="mailto:csvchangeguard.support@gmail.com?subject=CSV%20Change%20Guard%20synthetic%20trial%20request">Request a synthetic trial <span aria-hidden="true">→</span></a><p>Or write to <a href="mailto:csvchangeguard.support@gmail.com">csvchangeguard.support@gmail.com</a>. We aim to reply within two business days. Trial access is arranged individually, not an automatic download. You can stop at any time.</p></div>
-      <p class="boundary">The prototype is not for sale. This demonstration does not grant a commercial licence or access to a paid package. Live sales remain disabled.</p>
+      <div class="trial-request"><a class="button" href="demo.html">Start the free trial <span aria-hidden="true">→</span></a><p>For the background, read <a href="shopify-csv-price-changes.html">how to review Shopify CSV price changes before importing</a>. The browser trial uses fixed synthetic files. The downloadable utility's file-selection workflow is a separate test.</p></div>
+      <div class="trial-feedback" id="feedback"><h3>Tell us what you thought</h3><p>Feedback is optional. Was the report understandable, and would it help with a price update you do? Email a short answer to <a href="mailto:csvchangeguard.support@gmail.com?subject=CSV%20Change%20Guard%20demo%20feedback">csvchangeguard.support@gmail.com</a>. General role and browser details are useful if you choose to include them. Please use synthetic examples and leave out merchant files, reports, store names, credentials and payment details. We aim to reply within two business days.</p></div>
+      <p class="boundary">The browser trial accepts only the supplied examples. The downloadable beta is in preparation and is not for sale. Live sales remain disabled.</p>
     </section>
     <section class="coverage-band" id="coverage" aria-labelledby="coverage-title">
       <div class="wrap coverage-grid">

@@ -1,6 +1,6 @@
 # Current website and support privacy notice
 
-Version: **24 October 2026**. This text covers the website and synthetic demo at
+Version: **18 November 2026**. This text covers the website and synthetic trial at
 <https://csv-change-guard.pages.dev/> and the current support inbox. Live sales
 are disabled. Purchase and payment processing are outside this notice.
 
@@ -36,11 +36,13 @@ Contacting support is voluntary, but we need a reply address and enough detail t
 understand your request. We do not use enquiries to create marketing lists or
 advertising audiences, and this website has no newsletter signup.
 
-For a volunteer synthetic-trial request, we also use the general catalog role,
-recent Shopify CSV experience and browser information you choose to provide to
-assess fit and arrange the trial. Requests are handled through the same support
-inbox and routine retention procedure below. There is no separate recruitment
-database or mailing list. Sending a request does not subscribe you to marketing.
+The browser trial is available immediately with supplied synthetic examples.
+Email feedback is optional. We use any general catalog role, browser information
+and comments you choose to send to understand the feedback and answer you. If you
+ask about a separately arranged downloadable-workflow test, we use the relevant
+details you provide to arrange it. This correspondence follows the same
+support-inbox retention procedure below. There is no separate recruitment
+database or mailing list, and sending feedback does not subscribe you to marketing.
 
 Where GDPR applies, our basis for website operation and ordinary enquiries is
 our legitimate interests in providing information about the product, keeping the

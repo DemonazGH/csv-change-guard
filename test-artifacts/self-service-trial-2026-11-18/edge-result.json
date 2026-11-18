@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "started_at": "2026-11-17T23:44:58.044095+00:00",
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.14.0",
+  "playwright": "1.62.0",
+  "checks": [
+    "1440px navigation, keyboard tour, report download/reopen, filtering, restart/reset, guide and page overflow passed",
+    "390px navigation, keyboard tour, report download/reopen, filtering, restart/reset, guide and page overflow passed",
+    "JavaScript-disabled and engine-load-failure report fallbacks passed",
+    "Observed trial/guide requests were same-origin GETs; no browser errors"
+  ],
+  "browser": "msedge.exe",
+  "browser_version": "157.0.4341.60",
+  "sandbox_enabled": true,
+  "finished_at": "2026-11-17T23:45:03.988057+00:00"
+}

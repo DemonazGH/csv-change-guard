@@ -16,7 +16,7 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header wrap">
     <a class="brand" href="index.html"><span class="brand-icon" aria-hidden="true">↔</span> CSV Change Guard</a>
-    <nav aria-label="Main navigation"><a href="demo.html" aria-current="page">Demo</a><a href="index.html#trial">Trial access</a><a href="privacy.html">Privacy</a></nav>
+    <nav aria-label="Main navigation"><a href="demo.html" aria-current="page">Try it</a><a href="shopify-csv-price-changes.html">Price-change guide</a><a href="privacy.html">Privacy</a></nav>
   </header>
   <main id="main">
     <section class="demo-intro wrap" aria-labelledby="demo-title">
@@ -29,6 +29,7 @@
           <button class="button" id="demo-run" type="button" disabled>Run synthetic comparison <span aria-hidden="true">→</span></button>
           <button class="demo-secondary" id="demo-reset" type="button" disabled>Reset demo</button>
         </div>
+        <p class="demo-tour-link"><a href="#demo-tour">New here? Take the one-minute walkthrough.</a></p>
         <p id="demo-status" class="quiet" role="status" aria-live="polite">Preparing the local demo. You can also open the example report below.</p>
         <noscript><p class="demo-fallback">JavaScript is disabled. <a href="demo-report.html">Open the complete synthetic example report</a>; no script is needed to read it.</p></noscript>
         <p id="demo-error" class="demo-error" role="alert" hidden></p>
@@ -45,6 +46,28 @@
         <a class="demo-report-link" href="demo-report.html">Read the complete example report <span aria-hidden="true">↗</span></a>
         <p class="quiet">The example report also works without JavaScript.</p>
       </aside>
+    </section>
+
+    <section class="demo-tour wrap" id="demo-tour" aria-labelledby="demo-tour-title">
+      <div class="demo-tour-intro">
+        <div>
+          <p class="eyebrow">About one minute · at your own pace</p>
+          <h2 id="demo-tour-title">See what a report tells you.</h2>
+          <p>Follow a price change, check the matching blocker, then keep the full report. The tour runs the supplied synthetic comparison.</p>
+        </div>
+        <button class="demo-secondary" id="demo-tour-start" type="button" disabled>Start quick tour</button>
+      </div>
+      <p id="demo-tour-status" class="quiet" role="status" aria-live="polite">The complete example report is also available above.</p>
+      <div id="demo-tour-panel" class="demo-tour-panel" hidden>
+        <p id="demo-tour-progress" class="small-label"></p>
+        <h3 id="demo-tour-step-title" tabindex="-1"></h3>
+        <div id="demo-tour-content"></div>
+        <div class="demo-tour-controls">
+          <button class="demo-secondary" id="demo-tour-back" type="button">Back</button>
+          <button class="button" id="demo-tour-next" type="button">Next</button>
+          <a href="#demo-results-title">Read the full findings</a>
+        </div>
+      </div>
     </section>
 
     <section class="demo-results wrap" id="demo-results" aria-labelledby="demo-results-title" hidden>
@@ -88,7 +111,8 @@
         <article><span class="step-number">03</span><h3>Read the coverage.</h3><p>Images, inventory, tax, shipping, market prices and metafields are outside this comparison. Zero changes would not mean a complete check or a safe import.</p></article>
       </div>
       <p class="boundary">The demo uses the same deterministic comparison engine as the downloadable prototype, with fixed synthetic inputs. It is a demonstration, not an independent user trial or a test of your store.</p>
-      <div class="demo-next"><div><h3>Want to try the full workflow?</h3><p>Read the trial scope and request access to the synthetic Windows trial. There is no purchase or payment.</p></div><a class="button" href="index.html#trial">See trial-access instructions <span aria-hidden="true">→</span></a></div>
+      <div class="demo-next"><div><h3>Review a price update step by step.</h3><p>Use the guide to understand thresholds, matching gaps and what to check before your next import.</p></div><a class="button" href="shopify-csv-price-changes.html">Read the price-change guide <span aria-hidden="true">→</span></a></div>
+      <p class="demo-feedback">Optional feedback helps us improve the trial. <a href="mailto:csvchangeguard.support@gmail.com?subject=CSV%20Change%20Guard%20synthetic%20demo%20feedback">Tell us whether the findings were understandable</a> and whether this would help your catalog work. Please leave out merchant files, store names, reports and credentials.</p>
     </section>
   </main>
   <footer class="wrap footer"><div><strong>CSV Change Guard</strong><p>Public synthetic demonstration · Prototype v0.1.0 · Live sales disabled</p><p><a href="privacy.html">Website and support privacy</a></p></div><p>Independent software. Not affiliated with or endorsed by Shopify.</p></footer>

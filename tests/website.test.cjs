@@ -18,8 +18,8 @@ test('public website contains only reviewed assets and fixed synthetic inputs fr
   assert.deepEqual(built.demo, { compared: 4, prices: 4, priority: 6, unpaired: 4, findings: 15 });
   assert.deepEqual(built.files.sort(), [
     '_headers', 'assets/demo-data.js', 'assets/engine.js', 'demo-report.html', 'demo.css', 'demo.html',
-    'demo.js', 'index.html', 'privacy.html', 'samples/demo-current-catalog.csv',
-    'samples/demo-proposed-update.csv', 'styles.css'
+    'demo.js', 'guide.css', 'index.html', 'privacy.html', 'samples/demo-current-catalog.csv',
+    'samples/demo-proposed-update.csv', 'shopify-csv-price-changes.html', 'styles.css'
   ].sort());
   assert.deepEqual(fs.readFileSync(path.join(dir, 'assets/engine.js')), fs.readFileSync(path.join(root, 'src/engine.js')));
   assert.deepEqual(fs.readFileSync(path.join(dir, 'assets/demo-data.js')), fs.readFileSync(path.join(root, 'src/demo.js')));
@@ -28,7 +28,7 @@ test('public website contains only reviewed assets and fixed synthetic inputs fr
   assert.match(report, /Findings \(15\)/);
   assert.match(report, /demo-current-catalog\.csv/);
   assert.match(report, /demo-proposed-update\.csv/);
-  for (const name of ['index.html', 'demo.html', 'privacy.html']) {
+  for (const name of ['index.html', 'demo.html', 'privacy.html', 'shopify-csv-price-changes.html']) {
     const html = fs.readFileSync(path.join(dir, name), 'utf8');
     assert.doesNotMatch(html, /<(?:input|form|iframe)\b/i, name + ': no file entry or submission surface');
     assert.doesNotMatch(html, /(?:src|href)=["']https?:[^"']+["'][^>]*rel=["']stylesheet|src=["']https?:/i);
@@ -36,8 +36,9 @@ test('public website contains only reviewed assets and fixed synthetic inputs fr
     assert.match(html, /form-action 'none'/);
     // Each local navigation or embedded asset must exist in the upload allowlist.
     for (const [, value] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
-      if (/^(?:https?:|mailto:|#)/i.test(value)) continue;
-      const [file, hash] = value.split('#');
+      if (/^(?:https?:|mailto:)/i.test(value)) continue;
+      const [target, hash] = value.split('#');
+      const file = target || name;
       assert.ok(built.files.includes(file), name + ': missing public file ' + value);
       if (hash) assert.match(fs.readFileSync(path.join(dir, file), 'utf8'), new RegExp('id="' + hash + '"'));
     }

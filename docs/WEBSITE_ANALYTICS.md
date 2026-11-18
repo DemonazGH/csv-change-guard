@@ -52,6 +52,11 @@ a weekly aggregate report of visits, page views and median page-load time, on
 all plans. No day/time selector was offered. This is an owner operational email,
 not a newsletter subscription for visitors.
 
+To read the live figures, open Cloudflare's **Observability > Analytics > Web
+analytics** and select `csv-change-guard.pages.dev`. Keep the default bot
+exclusion when assessing interest. Reports arrive at the support Gmail inbox.
+The weekly policy can be reviewed under **Manage account > Notifications**.
+
 A single sample notification was requested through the policy's Test action.
 It arrived in the support Gmail Inbox at **13:46 Warsaw**, from
 `noreply@notify.cloudflare.com`, with subject **Web Analytics weekly summary for**.
@@ -153,8 +158,11 @@ escape; Linux's checkout bytes exposed it. The fixture was corrected to serve
 downloads from a controlled loopback endpoint, DNS-block public hosts and retain
 exact-byte checks. Seven groups passed again in each installed Windows browser,
 including a deliberately different valid ZIP that catches a production fallback.
-Final exact-head PR/main CI and merge status remain pending; initial failure is
-not reported as a passed CI run.
+Final exact-head CI and merge state are recorded on
+[PR #21 and its checks](https://github.com/DemonazGH/csv-change-guard/pull/21/checks);
+post-merge CI is recorded in
+[the main workflow runs](https://github.com/DemonazGH/csv-change-guard/actions?query=branch%3Amain).
+The failed initial run is retained as failed evidence, not reported as a pass.
 
 Statistics cover consenting visits on three information pages only. Ad blockers,
 missing referrers, sampled queries, repeated page visits and owner/test traffic

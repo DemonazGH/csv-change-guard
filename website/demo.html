@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="text-scale" content="scale">
   <meta name="description" content="Try CSV Change Guard with fixed synthetic Shopify CSVs. Review real comparison findings locally, with no store connection, file upload or payment.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>Try the synthetic demo — CSV Change Guard</title>
@@ -13,7 +14,7 @@
   <script src="demo.js" defer></script>
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
+  <a class="skip" href="#demo-title">Skip to content</a>
   <header class="site-header wrap">
     <a class="brand" href="index.html"><span class="brand-icon" aria-hidden="true">↔</span> CSV Change Guard</a>
     <nav aria-label="Main navigation"><a href="demo.html" aria-current="page">Try it</a><a href="shopify-csv-price-changes.html">Price-change guide</a><a href="privacy.html">Privacy</a></nav>
@@ -22,7 +23,7 @@
     <section class="demo-intro wrap" aria-labelledby="demo-title">
       <div>
         <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Public synthetic demo · no signup</p>
-        <h1 id="demo-title">Try a catalog review.<br><span>With synthetic files.</span></h1>
+        <h1 id="demo-title" tabindex="-1">Try a catalog review.<br><span>With synthetic files.</span></h1>
         <p class="intro">Run the actual comparison engine on a fictional catalog update. Find a price drop, a cleared description and identifiers that cannot be matched.</p>
         <p class="demo-local">Everything here uses the supplied examples. This demo cannot open your files, connect to Shopify or perform an import.</p>
         <div class="demo-actions">
@@ -92,7 +93,7 @@
         </div>
       </div>
       <p class="quiet demo-shown" id="demo-shown" role="status" aria-live="polite"></p>
-      <ol class="demo-findings" id="demo-findings" aria-labelledby="demo-findings-title"></ol>
+      <ol class="demo-findings" id="demo-findings" role="list" aria-labelledby="demo-findings-title"></ol>
       <p class="quiet">Saving the HTML report includes every finding, even when the priority filter is selected. The downloaded report opens on its own after you close this page.</p>
       <details class="demo-coverage">
         <summary>Coverage, matching rules and limitations</summary>

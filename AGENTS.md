@@ -14,6 +14,34 @@ proposed catalog update. The first business milestone is paid demand for a
 useful report, not a large SaaS platform. Avoid features that require custom
 onboarding, sales calls, or recurring manual report production.
 
+## Modern Web Guidance for the website
+
+For HTML, CSS and client-side JavaScript work in `website/`, use Google's
+[`modern-web-guidance` skill, v1.0.0](https://github.com/GoogleChrome/modern-web-guidance/tree/v1.0.0/skills/modern-web-guidance),
+reviewed at commit `4dd968349e54ca45a05dd5c818fb035c9054b022`.
+The installed entry point is `~/.codex/skills/modern-web-guidance/SKILL.md`.
+If it is unavailable locally, read the skill and relevant guides from that
+pinned upstream release. Its CLI is development tooling, outside the app and
+the public website bundle.
+
+Read the skill before implementing website changes. Search for each relevant UI
+capability, retrieve the matching guides and applicable disciplines, then check
+the implementation against them. Use the pinned CLI with telemetry disabled
+for the current process. For example, in PowerShell
+
+```powershell
+$env:DISABLE_TELEMETRY='1'
+npx.cmd -y modern-web-guidance@1.0.0 search 'respect text scale' --skill-version 2026_11_09-5bcc021b
+npx.cmd -y modern-web-guidance@1.0.0 retrieve 'respect-os-text-scale'
+```
+
+Apply relevant accessibility, typography, responsive-layout, security and
+performance guidance within this product's scope. Follow each guide's fallback
+advice for features outside Baseline Widely Available. Preserve the existing
+design and prefer focused improvements supported by the review. Record the
+guide IDs, concrete changes, actual browser checks and remaining limitations.
+The product invariants and action permissions in this file still apply.
+
 ## Existing architecture
 
 - `src/engine.js`: deterministic CSV parsing, supported schema handling,

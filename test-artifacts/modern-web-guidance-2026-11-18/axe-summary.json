@@ -1,0 +1,173 @@
+{
+  "meta": {
+    "started_at": "2026-11-18T01:30:08.841332+00:00",
+    "axe_version": "4.14.1",
+    "wcag_tags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21a",
+      "wcag21aa",
+      "wcag22aa"
+    ],
+    "browser": "installed Google Chrome",
+    "scope": "Automated local synthetic website audit at 1440x1000",
+    "browser_version": "157.0.8103.79",
+    "sandbox_enabled": true,
+    "finished_at": "2026-11-18T01:30:11.994263+00:00"
+  },
+  "automated_scope": "axe-core WCAG A/AA-tag checks at1440x1000; no assistive-technology or full-conformance claim",
+  "states": {
+    "index": {
+      "violation_count": 0,
+      "incomplete": [
+        {
+          "rule": "color-contrast",
+          "targets": [
+            [
+              ".hero-actions > .button[href$=\"demo.html\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".arrow"
+            ],
+            [
+              ".trial-request > .button[href$=\"demo.html\"] > span[aria-hidden=\"true\"]"
+            ]
+          ],
+          "reasons": [
+            "Element content contains only non-text characters"
+          ]
+        }
+      ]
+    },
+    "privacy": {
+      "violation_count": 0,
+      "incomplete": [
+        {
+          "rule": "color-contrast",
+          "targets": [
+            [
+              ".notice-return > a[href=\"index.html\"] > span[aria-hidden=\"true\"]"
+            ]
+          ],
+          "reasons": [
+            "Element content contains only non-text characters"
+          ]
+        }
+      ]
+    },
+    "shopify-csv-price-changes": {
+      "violation_count": 0,
+      "incomplete": [
+        {
+          "rule": "color-contrast",
+          "targets": [
+            [
+              ".guide-intro > .button[href$=\"demo.html#demo-tour\"] > span[aria-hidden=\"true\"]"
+            ],
+            [
+              "aside > .button[href$=\"demo.html#demo-tour\"] > span[aria-hidden=\"true\"]"
+            ]
+          ],
+          "reasons": [
+            "Element content contains only non-text characters"
+          ]
+        }
+      ]
+    },
+    "demo": {
+      "violation_count": 0,
+      "incomplete": [
+        {
+          "rule": "color-contrast",
+          "targets": [
+            [
+              "#demo-run > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".button[href=\"shopify-csv-price-changes.html\"] > span[aria-hidden=\"true\"]"
+            ]
+          ],
+          "reasons": [
+            "Element content contains only non-text characters"
+          ]
+        }
+      ]
+    },
+    "demo-results": {
+      "violation_count": 0,
+      "incomplete": [
+        {
+          "rule": "color-contrast",
+          "targets": [
+            [
+              "#demo-run > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".button[href=\"shopify-csv-price-changes.html\"] > span[aria-hidden=\"true\"]"
+            ]
+          ],
+          "reasons": [
+            "Element content contains only non-text characters"
+          ]
+        }
+      ]
+    },
+    "demo-tour-step-1": {
+      "violation_count": 0,
+      "incomplete": [
+        {
+          "rule": "color-contrast",
+          "targets": [
+            [
+              "#demo-run > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".button[href=\"shopify-csv-price-changes.html\"] > span[aria-hidden=\"true\"]"
+            ]
+          ],
+          "reasons": [
+            "Element content contains only non-text characters"
+          ]
+        }
+      ]
+    },
+    "demo-tour-step-2": {
+      "violation_count": 0,
+      "incomplete": [
+        {
+          "rule": "color-contrast",
+          "targets": [
+            [
+              "#demo-run > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".button[href=\"shopify-csv-price-changes.html\"] > span[aria-hidden=\"true\"]"
+            ]
+          ],
+          "reasons": [
+            "Element content contains only non-text characters"
+          ]
+        }
+      ]
+    },
+    "demo-tour-step-3": {
+      "violation_count": 0,
+      "incomplete": [
+        {
+          "rule": "color-contrast",
+          "targets": [
+            [
+              "#demo-run > span[aria-hidden=\"true\"]"
+            ],
+            [
+              ".button[href=\"shopify-csv-price-changes.html\"] > span[aria-hidden=\"true\"]"
+            ]
+          ],
+          "reasons": [
+            "Element content contains only non-text characters"
+          ]
+        }
+      ]
+    }
+  }
+}

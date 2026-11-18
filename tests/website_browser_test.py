@@ -24,9 +24,109 @@ class QuietHandler(SimpleHTTPRequestHandler):
 
 
 def check_layout(page):
-    assert page.evaluate(
-        "document.documentElement.scrollWidth <= window.innerWidth"
-    ), 'Page has horizontal overflow'
+    layout = page.evaluate("""() => {
+        const width = window.innerWidth;
+        const outside = [...document.querySelectorAll('body *')].filter(element => {
+            const rect = element.getBoundingClientRect();
+            const table = element.closest('.guide-table-scroll');
+            return rect.width > 0 && rect.height > 0 && (!table || table === element)
+                && (rect.left < -1 || rect.right > width + 1);
+        }).slice(0, 8).map(element => ({
+            selector: element.tagName.toLowerCase() + (element.id ? '#' + element.id
+                : '.' + [...element.classList].join('.')),
+            left: Math.round(element.getBoundingClientRect().left),
+            right: Math.round(element.getBoundingClientRect().right)
+        }));
+        return {viewport: width, page: document.documentElement.scrollWidth, outside};
+    }""")
+    assert layout['page'] <= layout['viewport'], 'Horizontal page overflow: ' + repr(layout)
+
+
+def check_focus_ring(locator):
+    ring = locator.evaluate("""element => {
+        const style = getComputedStyle(element);
+        return {visible: element.matches(':focus-visible'), style: style.outlineStyle,
+                width: parseFloat(style.outlineWidth), color: style.outlineColor};
+    }""")
+    assert ring['visible'] and ring['style'] != 'none' and ring['width'] >= 1, repr(ring)
+
+
+def check_scaling_and_preferences(browser, base, out):
+    pages = [('index.html', 'home'), ('demo.html', 'demo'),
+             ('shopify-csv-price-changes.html', 'guide'), ('privacy.html', 'privacy')]
+    metrics = []
+    baseline = {}
+    for width in (320, 1440):
+        for scale in (1, 2):
+            context = browser.new_context(viewport={'width': width, 'height': 1000})
+            page = context.new_page()
+            cdp = context.new_cdp_session(page)
+            cdp.send('Emulation.setEmulatedOSTextScale', {'scale': scale})
+            for filename, name in pages:
+                page.goto(base + filename)
+                expect(page.locator('meta[name="text-scale"]')).to_have_attribute('content', 'scale')
+                page.keyboard.press('Tab')
+                expect(page.locator('.skip')).to_be_focused()
+                page.keyboard.press('Enter')
+                heading = page.get_by_role('heading', level=1)
+                expect(heading).to_be_focused()
+                check_focus_ring(heading)
+                fonts = page.evaluate("""() => ({
+                    root: parseFloat(getComputedStyle(document.documentElement).fontSize),
+                    body: parseFloat(getComputedStyle(document.body).fontSize),
+                    heading: parseFloat(getComputedStyle(document.querySelector('h1')).fontSize)
+                })""")
+                if scale == 1:
+                    baseline[(width, name)] = fonts
+                else:
+                    normal = baseline[(width, name)]
+                    detail = repr({'page': filename, 'viewport': width, 'normal': normal, 'scaled': fonts})
+                    assert fonts['root'] >= normal['root'] * 1.99, 'Root text did not scale: ' + detail
+                    # Font-relative breakpoints can also select a smaller rem
+                    # multiplier at 2x. Text must grow while the root doubles.
+                    assert fonts['body'] > normal['body'], 'Body text did not scale: ' + detail
+                    assert fonts['heading'] > normal['heading'], 'Heading text did not scale: ' + detail
+                    page.screenshot(path=str(out / f'{name}-{width}-text-scale-2.png'))
+                metrics.append({'page': filename, 'viewport': width, 'os_text_scale': scale,
+                                'font_px': fonts})
+                check_layout(page)
+                for styled_list in page.locator('.steps, .demo-findings').all():
+                    expect(styled_list).to_have_attribute('role', 'list')
+                if name == 'demo' and scale == 2:
+                    page.locator('#demo-tour-start').focus()
+                    page.keyboard.press('Enter')
+                    expect(page.locator('#demo-tour-step-title')).to_be_focused()
+                    check_focus_ring(page.locator('#demo-tour-step-title'))
+                    expect(page.locator('#demo-findings > li')).to_have_count(15)
+                    check_layout(page)
+                    page.locator('#demo-tour').screenshot(
+                        path=str(out / f'tour-{width}-text-scale-2.png'))
+                    page.locator('#demo-filter-priority').click()
+                    expect(page.locator('#demo-findings > li')).to_have_count(6)
+                    check_layout(page)
+                    page.locator('#demo-reset').click()
+                    expect(page.locator('#demo-results')).to_be_hidden()
+                    expect(page.locator('#demo-run')).to_be_focused()
+                    page.keyboard.press('Enter')
+                    expect(page.locator('#demo-results-title')).to_be_focused()
+                    check_focus_ring(page.locator('#demo-results-title'))
+                    check_layout(page)
+            cdp.detach()
+            context.close()
+
+    context = browser.new_context(viewport={'width': 390, 'height': 1000},
+                                  reduced_motion='reduce', forced_colors='active')
+    page = context.new_page()
+    page.goto(base + 'demo.html')
+    expect(page.locator('html')).to_have_css('scroll-behavior', 'auto')
+    page.locator('#demo-tour-start').focus()
+    page.keyboard.press('Enter')
+    expect(page.locator('#demo-tour-step-title')).to_be_focused()
+    check_focus_ring(page.locator('#demo-tour-step-title'))
+    check_layout(page)
+    page.locator('#demo-tour').screenshot(path=str(out / 'tour-forced-colors-reduced-motion.png'))
+    context.close()
+    return metrics
 
 
 def check_trial(browser, base, out, width, errors, requests):
@@ -180,6 +280,14 @@ def main():
                                         'filtering, restart/reset, guide and page overflow passed')
             check_fallback(browser, base)
             result['checks'].append('JavaScript-disabled and engine-load-failure report fallbacks passed')
+            result['os_text_scale_emulation'] = {
+                'method': 'CDP Emulation.setEmulatedOSTextScale',
+                'cases': check_scaling_and_preferences(browser, base, out)
+            }
+            result['checks'].append('All four pages passed 320/1440px reflow at 1x/2x emulated OS '
+                                    'text scale, skip-link focus and visible heading focus rings')
+            result['checks'].append('2x text-scale demo run/filter/reset and emulated reduced-motion/'
+                                    'forced-colors focus checks passed')
             assert not errors, 'Browser errors: ' + repr(errors)
             unexpected = [(url, method) for url, method in requests
                           if urlsplit(url).netloc != urlsplit(base).netloc or method != 'GET']

@@ -1,5 +1,13 @@
 # Current website and Gmail privacy setup — 22 October 2026
 
+**18 November analytics follow-up:** the owner authorised a separate consented
+Cloudflare Web Analytics setup and native weekly owner email. See
+[the current setup/validation record](WEBSITE_ANALYTICS.md) and revised
+[website/support notice](CURRENT_WEBSITE_GMAIL_PRIVACY.md). The disabled-analytics
+observations below remain historical; they are not the current manual-install
+configuration. Demo, downloaded app and CSV processing remain outside analytics.
+Live sales stay disabled and consumer Gmail's provider description is unchanged.
+
 **24 October follow-up:** public site sources are now maintained in `website/`
 in the repository. The owner authorised a fixed-input synthetic demo and trial
 instructions; see [the new publication record](PUBLIC_SYNTHETIC_DEMO.md). The

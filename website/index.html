@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="text-scale" content="scale">
   <meta name="description" content="Download the free CSV Change Guard beta for Windows Chrome and Edge. Compare your Shopify product CSVs locally, review supported changes and save reports. No signup or payment.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'none'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'sha256-{{ANALYTICS_SHA256}}' 'strict-dynamic'; connect-src https://cloudflareinsights.com/cdn-cgi/rum; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>CSV Change Guard — Review the changes before the import</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -15,6 +15,10 @@
     <a class="brand" href="#main"><span class="brand-icon" aria-hidden="true">↔</span> CSV Change Guard</a>
     <nav aria-label="Main navigation"><a href="#download">Free beta</a><a href="demo.html">Try it</a><a href="shopify-csv-price-changes.html">Price-change guide</a><a href="#coverage">Coverage</a><a href="privacy.html">Privacy</a></nav>
   </header>
+  <aside class="analytics-choice wrap" id="analytics-choice" aria-labelledby="analytics-title">
+    <div><h2 id="analytics-title" tabindex="-1">Optional website analytics</h2><p>May Cloudflare measure visits and page-loading performance on our information pages? CSV files, reports and app activity are excluded. <a href="privacy.html#website-visits-and-enquiries">Details and privacy</a>.</p></div>
+    <div><div class="analytics-actions"><button type="button" id="analytics-allow" disabled>Allow website analytics</button><button type="button" id="analytics-decline" disabled>Decline</button></div><p id="analytics-status" role="status">Analytics is off. Choosing is optional; downloads work without JavaScript.</p></div>
+  </aside>
   <main id="main">
     <section class="hero wrap" aria-labelledby="hero-title">
       <div class="hero-copy">
@@ -92,7 +96,7 @@
     </section>
     <section class="privacy wrap" id="privacy" aria-labelledby="privacy-title">
       <p class="eyebrow">Your catalog stays with you</p><h2 id="privacy-title">No store connection. No CSV uploads.</h2>
-      <div class="privacy-grid"><p>The downloadable utility reads selected files in your browser and processes them locally. The public demo runs the same comparison engine with fixed synthetic inputs only. Neither uploads catalog files, calls AI services, tracks usage or asks for Shopify credentials.</p><p>This website has no file upload or contact form. Cloudflare handles technical request data; consumer Gmail handles support and trial correspondence. Read our <a href="privacy.html">website and support privacy notice</a>. Please use synthetic examples and do not send merchant CSVs, reports, passwords or payment details.</p></div>
+      <div class="privacy-grid"><p>The downloadable utility reads selected files in your browser and processes them locally. The public demo runs the same comparison engine with fixed synthetic inputs only. Neither uploads catalog files, calls AI services, tracks usage or asks for Shopify credentials.</p><p>This website has no file upload or contact form. Its information pages offer optional Cloudflare visit and performance statistics, loaded only after you allow them. Consumer Gmail handles support and trial correspondence. Read our <a href="privacy.html">website and support privacy notice</a>. Please use synthetic examples and do not send merchant CSVs, reports, passwords or payment details.</p></div>
       <p class="boundary">This is an independent comparison tool, not a complete Shopify import simulator. Review coverage, keep an appropriate backup and test your actual import workflow separately.</p>
     </section>
     <section class="contact wrap" id="contact" aria-labelledby="contact-title">
@@ -101,5 +105,7 @@
     </section>
   </main>
   <footer class="wrap footer"><div><strong>CSV Change Guard</strong><p>Business: <span id="business-identity">DZMITRY SALAVEI</span> · Poland</p><p><a href="free-beta-terms.html">Free-use terms</a> · <a href="privacy.html">Website and support privacy</a></p></div><p>Independent software. Not affiliated with or endorsed by Shopify.</p></footer>
+  <div class="wrap analytics-settings"><button type="button" id="analytics-change" hidden>Change analytics choice</button></div>
+  <script defer src="analytics.js" integrity="sha256-{{ANALYTICS_SHA256}}"></script>
 </body>
 </html>

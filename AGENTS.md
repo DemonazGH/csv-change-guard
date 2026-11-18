@@ -68,6 +68,14 @@ approach unless a concrete requirement justifies a change.
 
 ## Product invariants
 
+Website-only exception authorised 18 November 2026: the informational landing,
+guide and privacy pages may load Cloudflare Web Analytics after explicit opt-in,
+with a per-tab consent preference and native weekly aggregate owner email.
+Follow `docs/WEBSITE_ANALYTICS.md`. Keep automatic site-wide injection disabled,
+preserve the demo/utility/report network restrictions, and never add merchant
+data or app telemetry to this integration. The invariants below still govern
+the local comparison product.
+
 - Read-only comparison. No Shopify credentials, store connection, imports,
   autonomous store changes, or suggestions that this tool guarantees safety.
 - Local browser processing by default. No file uploads, telemetry, external

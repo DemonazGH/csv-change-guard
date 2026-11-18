@@ -1,6 +1,6 @@
 # Current website and support privacy notice
 
-Version: **18 November 2026 · free-beta download update**. This text covers the website,
+Version: **18 November 2026 · optional website analytics update**. This text covers the website,
 free beta downloads and synthetic trial at
 <https://csv-change-guard.pages.dev/> and the current support inbox. Live sales
 are disabled. Purchase and payment processing are outside this notice.
@@ -25,11 +25,56 @@ Use a short description and synthetic examples for support.
 
 Cloudflare hosts and protects the website. It receives technical request
 information such as IP addresses, browser/request metadata and traffic data to
-serve the page and protect its network. We have not added analytics or advertising
-scripts, and Cloudflare Web Analytics is disabled for this project. We have not
-implemented a separate visitor database or routine export of visitor logs.
+serve the page and protect its network. We do not use advertising scripts or
+implement a separate visitor database or routine export of visitor logs.
 Hosting still involves technical processing; these statements are not a promise
 that no provider cookies or network records can ever exist.
+
+### Optional website analytics
+
+The home page, Shopify CSV price-change guide and this privacy page offer
+optional Cloudflare Web Analytics. The analytics script does not load until
+you select **Allow website analytics**. Selecting **Decline**, leaving the
+choice unanswered or disabling JavaScript keeps these analytics off. You can
+still read the pages, use the synthetic demo and download the free beta.
+
+If you allow analytics, Cloudflare receives page-view and page-load performance
+measurements and reports aggregate information such as page paths, referring
+sites, country, browser and device type. We use these statistics to understand
+how people find the website and improve its information and performance.
+The beacon uses a fresh page-load reference to relate measurements for the
+current page; it is not a persistent visitor identifier. Cloudflare's
+[beacon documentation](https://developers.cloudflare.com/speed/observatory/rum-beacon/)
+also describes page and referring URLs and in-memory timing and memory metrics.
+Cloudflare says its analytics does not use cookies or localStorage, track people
+across sites, or identify visitors by fingerprinting. It removes IP addresses
+before storing analytics data and says query strings are not logged in Web
+Analytics. Technical requests still reach Cloudflare with IP addresses and
+request metadata as described above. See its
+[analytics explanation](https://blog.cloudflare.com/the-rum-diaries-enabling-web-analytics-by-default),
+[available dimensions](https://developers.cloudflare.com/web-analytics/data-metrics/dimensions/)
+and [analytics FAQ](https://developers.cloudflare.com/web-analytics/faq/).
+
+Our website stores only your analytics choice in the browser tab's
+**sessionStorage**, without a visitor identifier. This remembers the choice
+within that tab's browsing session; browser session-restoration behavior may
+affect how long it remains. Select **Change analytics choice** in the footer
+to change or withdraw your choice. Withdrawal reloads the page with analytics
+disabled; measurements already sent are not recalled. Where GDPR applies,
+optional analytics relies on your consent, which you can withdraw without
+affecting processing before withdrawal.
+
+No analytics runs in the public synthetic demo, downloaded utility, free-use
+terms or saved reports. CSV contents, filenames, findings and offline activity
+are not included in website analytics. We do not collect custom click events,
+count completed ZIP downloads or measure individual or repeat app users. Website
+visits are not proof that someone used the app or found it useful.
+
+Cloudflare's weekly report sends the owner aggregate website visits, page views
+and page-load statistics at the existing support Gmail address. This is an
+operational report to the owner, not a visitor mailing list or marketing email.
+
+### Enquiries and feedback
 
 When you email us, we use your email address, name if supplied, message and any
 app/browser details you choose to include to answer the enquiry and troubleshoot.
@@ -57,7 +102,8 @@ for our legitimate interests in resolving or defending that matter.
 
 ## Providers and international processing
 
-**Cloudflare** processes information to deliver and protect the site. Its roles
+**Cloudflare** processes information to deliver and protect the site and provide
+the optional analytics described above. Its roles
 depend on the purpose: it processes covered customer content/logs on a customer's
 behalf and also processes network-related information for its own purposes. See
 its [privacy policy](https://www.cloudflare.com/privacypolicy/) and
@@ -111,6 +157,16 @@ after removing information that could identify a person or their catalogue.
 Cloudflare applies its purpose-based retention criteria for provider-held
 technical records, described in its privacy policy. We do not set a separate
 fixed deadline for all of Cloudflare's own network or legally required records.
+
+Cloudflare currently makes Web Analytics data available for the previous six
+months. Its FAQ describes seven days of unsampled beacon data followed by a
+sampled, aggregated dataset; dashboard queries can also use sampling. This
+service-access window is not a promise that every provider record is erased
+after six months. We do not routinely export raw analytics or build individual
+visitor histories. Weekly aggregate report emails use the same monthly review
+procedure: eligible reports are reviewed for deletion about three months after
+receipt, normally within 90–121 days. This is not automatic deletion. Gmail
+Trash and provider deletion/backup processes remain separate.
 
 ## Your rights
 

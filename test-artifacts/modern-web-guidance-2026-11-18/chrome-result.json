@@ -1,0 +1,184 @@
+{
+  "status": "passed",
+  "started_at": "2026-11-18T01:32:11.007562+00:00",
+  "os": "Windows-11-10.0.26100-SP0",
+  "python": "3.14.0",
+  "playwright": "1.62.0",
+  "checks": [
+    "1440px navigation, keyboard tour, report download/reopen, filtering, restart/reset, guide and page overflow passed",
+    "390px navigation, keyboard tour, report download/reopen, filtering, restart/reset, guide and page overflow passed",
+    "JavaScript-disabled and engine-load-failure report fallbacks passed",
+    "All four pages passed 320/1440px reflow at 1x/2x emulated OS text scale, skip-link focus and visible heading focus rings",
+    "2x text-scale demo run/filter/reset and emulated reduced-motion/forced-colors focus checks passed",
+    "Observed trial/guide requests were same-origin GETs; no browser errors"
+  ],
+  "browser": "chrome.exe",
+  "browser_version": "157.0.8103.79",
+  "sandbox_enabled": true,
+  "os_text_scale_emulation": {
+    "method": "CDP Emulation.setEmulatedOSTextScale",
+    "cases": [
+      {
+        "page": "index.html",
+        "viewport": 320,
+        "os_text_scale": 1,
+        "font_px": {
+          "root": 16,
+          "body": 16,
+          "heading": 39
+        }
+      },
+      {
+        "page": "demo.html",
+        "viewport": 320,
+        "os_text_scale": 1,
+        "font_px": {
+          "root": 16,
+          "body": 16,
+          "heading": 36
+        }
+      },
+      {
+        "page": "shopify-csv-price-changes.html",
+        "viewport": 320,
+        "os_text_scale": 1,
+        "font_px": {
+          "root": 16,
+          "body": 16,
+          "heading": 39
+        }
+      },
+      {
+        "page": "privacy.html",
+        "viewport": 320,
+        "os_text_scale": 1,
+        "font_px": {
+          "root": 16,
+          "body": 16,
+          "heading": 35.04
+        }
+      },
+      {
+        "page": "index.html",
+        "viewport": 320,
+        "os_text_scale": 2,
+        "font_px": {
+          "root": 32,
+          "body": 32,
+          "heading": 78
+        }
+      },
+      {
+        "page": "demo.html",
+        "viewport": 320,
+        "os_text_scale": 2,
+        "font_px": {
+          "root": 32,
+          "body": 32,
+          "heading": 70
+        }
+      },
+      {
+        "page": "shopify-csv-price-changes.html",
+        "viewport": 320,
+        "os_text_scale": 2,
+        "font_px": {
+          "root": 32,
+          "body": 32,
+          "heading": 78
+        }
+      },
+      {
+        "page": "privacy.html",
+        "viewport": 320,
+        "os_text_scale": 2,
+        "font_px": {
+          "root": 32,
+          "body": 32,
+          "heading": 70
+        }
+      },
+      {
+        "page": "index.html",
+        "viewport": 1440,
+        "os_text_scale": 1,
+        "font_px": {
+          "root": 16,
+          "body": 17,
+          "heading": 63.2
+        }
+      },
+      {
+        "page": "demo.html",
+        "viewport": 1440,
+        "os_text_scale": 1,
+        "font_px": {
+          "root": 16,
+          "body": 17,
+          "heading": 60.32
+        }
+      },
+      {
+        "page": "shopify-csv-price-changes.html",
+        "viewport": 1440,
+        "os_text_scale": 1,
+        "font_px": {
+          "root": 16,
+          "body": 17,
+          "heading": 65
+        }
+      },
+      {
+        "page": "privacy.html",
+        "viewport": 1440,
+        "os_text_scale": 1,
+        "font_px": {
+          "root": 16,
+          "body": 17,
+          "heading": 62
+        }
+      },
+      {
+        "page": "index.html",
+        "viewport": 1440,
+        "os_text_scale": 2,
+        "font_px": {
+          "root": 32,
+          "body": 32,
+          "heading": 108.8
+        }
+      },
+      {
+        "page": "demo.html",
+        "viewport": 1440,
+        "os_text_scale": 2,
+        "font_px": {
+          "root": 32,
+          "body": 32,
+          "heading": 106
+        }
+      },
+      {
+        "page": "shopify-csv-price-changes.html",
+        "viewport": 1440,
+        "os_text_scale": 2,
+        "font_px": {
+          "root": 32,
+          "body": 32,
+          "heading": 86.08
+        }
+      },
+      {
+        "page": "privacy.html",
+        "viewport": 1440,
+        "os_text_scale": 2,
+        "font_px": {
+          "root": 32,
+          "body": 32,
+          "heading": 98
+        }
+      }
+    ]
+  },
+  "finished_at": "2026-11-18T01:32:21.556856+00:00"
+}

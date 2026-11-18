@@ -23,6 +23,9 @@ test('public website contains only reviewed assets and fixed synthetic inputs fr
   ].sort());
   assert.deepEqual(fs.readFileSync(path.join(dir, 'assets/engine.js')), fs.readFileSync(path.join(root, 'src/engine.js')));
   assert.deepEqual(fs.readFileSync(path.join(dir, 'assets/demo-data.js')), fs.readFileSync(path.join(root, 'src/demo.js')));
+  const headers = fs.readFileSync(path.join(dir, '_headers'), 'utf8');
+  assert.match(headers, /X-Frame-Options: DENY/);
+  assert.match(headers, /Content-Security-Policy: frame-ancestors 'none'/);
   const report = fs.readFileSync(path.join(dir, 'demo-report.html'), 'utf8');
   assert.match(report, /Incomplete comparison — blockers need review/);
   assert.match(report, /Findings \(15\)/);

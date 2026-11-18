@@ -2,6 +2,11 @@
 
 **Version 0.1.0 · local working prototype · 18 October 2026**
 
+**18 November Modern Web Guidance:** `AGENTS.md` now uses Google's pinned
+v1.0.0 skill for website changes. The website update adds scalable typography,
+keyboard focus/skip-link improvements and framing protection. See the
+[guidance and browser evidence](docs/MODERN_WEB_GUIDANCE.md).
+
 **18 November website update:** the website sources make the supplied
 synthetic browser trial immediate, adds a user-paced one-minute walkthrough and
 a [Shopify CSV price-change guide](website/shopify-csv-price-changes.html).

@@ -2,6 +2,14 @@
 
 Prepared: **18 October 2026**. Product remains **v0.1.0**.
 
+**18 November Modern Web Guidance update:** the owner requested Google's
+Modern Web Guidance 1.0 for website work. `AGENTS.md` now references the installed,
+pinned v1.0.0 skill. Website sources apply text scaling, responsive typography,
+keyboard focus/skip links, list semantics and HTTP framing protection. See the
+[guidance and validation record](MODERN_WEB_GUIDANCE.md) for fresh Chrome/Edge
+emulation checks, automated accessibility results, scope and remaining limits.
+The downloadable app/engine are preserved and live sales remain disabled.
+
 **18 November self-service trial preparation:** local website sources now lead
 directly to the fixed synthetic browser trial, with optional email feedback,
 a three-step walkthrough and a price-change guide. The

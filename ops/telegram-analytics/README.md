@@ -82,8 +82,6 @@ not contact Telegram or Cloudflare and do not validate real account settings.
 Use synthetic connection/policy tests for production verification; never send
 merchant CSVs, reports or customer correspondence through this relay.
 
-Primary references:
-
 Preparation verification on 18 November 2026: **135 Node tests passed**, including
 15 new relay checks with fake provider/network responses. The standalone app
 remains SHA-256
@@ -91,6 +89,8 @@ remains SHA-256
 No actual Telegram message, private-chat binding, native webhook attachment or
 numeric payload mapping is verified by those local tests. The existing native
 weekly email policy was observed Enabled; it has not been removed or changed.
+
+Primary references:
 
 - [Cloudflare alert destinations](https://developers.cloudflare.com/notifications/)
 - [Generic webhooks](https://developers.cloudflare.com/notifications/get-started/configure-webhooks/)

@@ -73,8 +73,15 @@ export function formatNotification(payload) {
 }
 
 // TEMPORARY native-payload discovery. Remove after the weekly mapping is
-// verified. Field names are bounded/sanitized; original scalar values never
-// enter this output. Dynamic URLs, emails and long identifier keys are redacted.
+// verified. Only these fixed schema labels may appear in diagnostic paths;
+// identifier-shaped account/site keys must remain redacted too. This list is
+// for inspecting shape, not interpreting or guessing numeric metric fields.
+const DIAGNOSTIC_FIELD_NAMES = new Set([
+  'name', 'text', 'data', 'ts', 'account_id', 'policy_id', 'policy_name',
+  'alert_type', 'alert_correlation_id', 'alert_event',
+  'sites', 'hostname', 'visits', 'page_views', 'page_load_time',
+]);
+
 export function describeSchema(value) {
   const nodes = [];
   function visit(current, path, depth) {
@@ -88,7 +95,7 @@ export function describeSchema(value) {
       const keys = Object.keys(current).slice(0, 20);
       for (let index = 0; index < keys.length && nodes.length < 100; index++) {
         const key = keys[index];
-        const safe = /^[A-Za-z][A-Za-z0-9_]{0,47}$/.test(key) && !/^[a-f0-9]{16,}$/i.test(key)
+        const safe = DIAGNOSTIC_FIELD_NAMES.has(key)
           ? key : '[redacted-key-' + index + ']';
         visit(current[key], path + '.' + safe, depth + 1);
       }

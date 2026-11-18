@@ -227,9 +227,11 @@ test('pairing API errors and malformed update data are redacted and not retried'
 test('temporary schema diagnostics emit bounded paths/types without original values or Telegram requests', async () => {
   const { relay, calls, schemas } = await fixture();
   const payload = { ...weekly, account_id: 'PRIVATE_ACCOUNT_VALUE', text: 'PRIVATE_MESSAGE_VALUE',
+    PrivateAccountName: { private_store_alpha: { visits: 456789 } },
     data: { sites: [{ hostname: 'PRIVATE_SITE_VALUE', visits: 987654321, extra: { private: 'PRIVATE_DEEP_VALUE' } }],
       'https://private.example/catalog.csv': { email: 'PRIVATE_EMAIL_VALUE' },
       abcdefabcdefabcdefabcdefabcdefab: true,
+      private_account_name_123: { PrivateStoreAlpha: { page_views: 7654321 } },
       ['x'.repeat(100)]: 'PRIVATE_LONG_KEY_VALUE',
     },
   };
@@ -239,8 +241,10 @@ test('temporary schema diagnostics emit bounded paths/types without original val
   assert.equal(calls.length, 0);
   assert.equal(schemas.length, 1);
   const serialized = JSON.stringify(schemas[0]);
-  assert.doesNotMatch(serialized, /PRIVATE_|987654321|private\.example|abcdefabcdef|x{49}/);
+  assert.doesNotMatch(serialized, /PRIVATE_|987654321|456789|7654321|private\.example|abcdefabcdef|x{49}/);
+  assert.doesNotMatch(serialized, /PrivateAccountName|private_store_alpha|private_account_name_123|PrivateStoreAlpha/);
   assert.ok(schemas[0].some(node => node.path === '$.data.sites[0].visits' && node.type === 'number'));
+  assert.ok(schemas[0].some(node => node.path === '$.data.[redacted-key-3].[redacted-key-0].page_views' && node.type === 'number'));
   assert.ok(schemas[0].some(node => node.path.includes('[redacted-key-')));
   assert.ok(schemas[0].length <= 100);
   for (const node of schemas[0]) assert.deepEqual(Object.keys(node).sort(), ['path', 'type']);

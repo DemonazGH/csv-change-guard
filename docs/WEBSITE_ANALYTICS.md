@@ -75,15 +75,22 @@ virtual environment. Installed browsers:
 | Check | Chrome 157.0.8103.79 | Edge 157.0.4341.60 |
 |---|---|---|
 | Consent default/decline/grant/withdrawal, storage failures | Passed | Passed |
+| Isolated native-download transport and distinct ZIP sentinel | Passed | Passed |
 | Existing website suite, including responsive/text scaling | Passed | Passed |
 | Free download and extracted local app/report | Passed | Passed |
 | History/visibility consent resynchronization | Passed (simulated events) | Passed (simulated events) |
 
 Sandboxing was enabled and launch arguments were checked. The consent harness
-serves the production origin from the local build and substitutes a local vendor
-module and POST response. It verifies actual browser CSP/SRI/consent behavior
-without contaminating production analytics. It does **not** prove Cloudflare
-ingestion. The lifecycle regression is a simulated restored-page event, not a
+serves production-origin renderer content from the local build and substitutes
+a local vendor module and POST response. Public hosts are DNS-blocked in these
+test instances. The ZIP href in this fixture alone points to a controlled
+loopback attachment server because native downloads can bypass renderer routes.
+Exact bytes, destination and a server receipt are checked, including a valid
+ZIP with an intentionally distinct synthetic comment. No application source or
+public ZIP is changed by that fixture adaptation. This verifies actual browser
+CSP/SRI/consent behavior without sending production beacons; it does **not**
+prove vendor ingestion. The unmodified download has separate localhost/public
+checks. The lifecycle regression is a simulated restored-page event, not a
 full browser back/forward-cache compatibility matrix.
 
 The existing website checks retain actual localhost navigation and same-origin
@@ -101,7 +108,11 @@ npm.cmd run build:website
 git diff --check
 ```
 
-Results and public-page screenshots live in ignored `.local-test-artifacts/analytics-*`;
+Final consent results (seven groups per browser) are in ignored
+`.local-test-artifacts/analytics-isolated-{chrome,edge}-2026-11-18/`.
+Earlier `analytics-*` runs remain dated intermediate evidence, including the
+native-download routing limitation found in CI. Public-page screenshots live
+in those ignored folders;
 account/recipient screenshots remain in ignored `website-analytics-2026-11-18`.
 Neither raw account records nor private screenshot content is published in Git.
 
@@ -116,9 +127,34 @@ change. Identical Git-normalized content does not imply identical ZIP bytes.
 
 ## Publication and remaining limits
 
-Website publication, real vendor ingestion and exact-head PR/main CI are pending
-verification at this record's initial preparation. Update this section with the
-observed result; do not promote local test doubles into production evidence.
+Cloudflare reported **Success** after uploading all **18 allowlisted files** to
+the existing production site. Fresh HTTP checks of 17 served files and five
+clean/root URL aliases returned 200 and exactly matched the reviewed local
+bytes. Framing/nosniff headers were present; no Set-Cookie response appeared in
+this bounded set. `_headers` is provider configuration, not a served page.
+The original ZIP/app fingerprints above remain unchanged.
+
+Connected Windows Edge verified the live default-off notice (zero vendor tags),
+explicit opt-in (one vendor tag, no observed console errors), navigation using
+the tab preference, and withdrawal (page reloaded with zero vendor tags).
+Actual Back navigation to the guide retained the declined state and no vendor
+tag. This is a bounded public navigation check, not a claim about every BFCache
+implementation. The Cloudflare Web Analytics overview then showed **2 visits
+and 2 page views**, with bots excluded, confirming real vendor ingestion.
+These are owner/assistant setup visits, **not independent tester interest**.
+The Pages Metrics panel still showed its site-wide automatic injection disabled;
+the separate Web Analytics site correctly showed JS Snippet installation.
+
+[PR #21](https://github.com/DemonazGH/csv-change-guard/pull/21) contains the source,
+privacy changes and validation harness. Its first CI run exposed a test-fixture
+issue: Chromium's native download could bypass the production-origin Playwright
+route and fetch the published ZIP. Windows had matching ZIP bytes, masking that
+escape; Linux's checkout bytes exposed it. The fixture was corrected to serve
+downloads from a controlled loopback endpoint, DNS-block public hosts and retain
+exact-byte checks. Seven groups passed again in each installed Windows browser,
+including a deliberately different valid ZIP that catches a production fallback.
+Final exact-head PR/main CI and merge status remain pending; initial failure is
+not reported as a passed CI run.
 
 Statistics cover consenting visits on three information pages only. Ad blockers,
 missing referrers, sampled queries, repeated page visits and owner/test traffic

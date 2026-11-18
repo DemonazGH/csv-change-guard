@@ -3,12 +3,13 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const os = require('node:os');
+const crypto = require('node:crypto');
 const { buildRelease } = require('./build-release.cjs');
 const G = require('../src/engine.js');
 const root = path.resolve(__dirname, '..');
 const siteFiles = [
   'index.html', 'privacy.html', 'styles.css', 'demo.html', 'demo.js', 'demo.css',
-  'shopify-csv-price-changes.html', 'guide.css', '_headers'
+  'shopify-csv-price-changes.html', 'guide.css', 'analytics.js', '_headers'
 ];
 
 function validateWebsiteDestination(output, checkoutRoot = root) {
@@ -48,6 +49,12 @@ function buildWebsite(output) {
     currentName: 'demo-current-catalog.csv', updateName: 'demo-proposed-update.csv'
   });
   const payload = new Map(siteFiles.map(name => [name, fs.readFileSync(path.join(root, 'website', name))]));
+  // Authorize exactly the reviewed local consent loader, not every same-origin
+  // script. The third-party beacon can load only through that consent gate.
+  const analyticsHash = crypto.createHash('sha256').update(payload.get('analytics.js')).digest('base64');
+  for (const name of ['index.html', 'privacy.html', 'shopify-csv-price-changes.html']) {
+    payload.set(name, Buffer.from(payload.get(name).toString('utf8').replaceAll('{{ANALYTICS_SHA256}}', analyticsHash)));
+  }
   // Build the download from the same reviewed inputs as package:beta. Only the
   // ZIP and its public checksum leave this temporary packaging directory.
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'ccg-public-release-'));

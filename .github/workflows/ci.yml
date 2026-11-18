@@ -81,6 +81,10 @@ jobs:
             --site-dir .local-test-artifacts/public-site \
             --browser-executable "$CHROMIUM_PATH" \
             --artifacts-dir .local-test-artifacts/ci/website
+          python tests/website_analytics_test.py \
+            --site-dir .local-test-artifacts/public-site \
+            --browser-executable "$CHROMIUM_PATH" \
+            --artifacts-dir .local-test-artifacts/ci/website-analytics
           python tests/free_beta_download_test.py \
             --site-dir .local-test-artifacts/public-site \
             --browser-executable "$CHROMIUM_PATH" \

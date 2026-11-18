@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="text-scale" content="scale">
   <meta name="description" content="Learn how to review Shopify CSV price changes before importing. Compare a baseline and proposed update, inspect price movements and recognize matching gaps with a free synthetic example.">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'none'; connect-src 'none'; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; script-src 'sha256-{{ANALYTICS_SHA256}}' 'strict-dynamic'; connect-src https://cloudflareinsights.com/cdn-cgi/rum; img-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <title>How to review Shopify CSV price changes before importing — CSV Change Guard</title>
   <link rel="canonical" href="https://csv-change-guard.pages.dev/shopify-csv-price-changes">
   <link rel="stylesheet" href="styles.css">
@@ -17,6 +17,10 @@
     <a class="brand" href="index.html"><span class="brand-icon" aria-hidden="true">↔</span> CSV Change Guard</a>
     <nav aria-label="Main navigation"><a href="demo.html">Try the demo</a><a href="shopify-csv-price-changes.html" aria-current="page">Price-change guide</a><a href="privacy.html">Privacy</a></nav>
   </header>
+  <aside class="analytics-choice wrap" id="analytics-choice" aria-labelledby="analytics-title">
+    <div><h2 id="analytics-title" tabindex="-1">Optional website analytics</h2><p>May Cloudflare measure visits and page-loading performance on our information pages? CSV files, reports and app activity are excluded. <a href="privacy.html#website-visits-and-enquiries">Details and privacy</a>.</p></div>
+    <div><div class="analytics-actions"><button type="button" id="analytics-allow" disabled>Allow website analytics</button><button type="button" id="analytics-decline" disabled>Decline</button></div><p id="analytics-status" role="status">Analytics is off. Choosing is optional; downloads work without JavaScript.</p></div>
+  </aside>
   <main id="main" class="guide-document wrap">
     <article aria-labelledby="guide-title">
       <header class="guide-intro">
@@ -87,5 +91,7 @@
     </article>
   </main>
   <footer class="wrap footer"><div><strong>CSV Change Guard</strong><p><a href="index.html">Product overview</a> · <a href="privacy.html">Website and support privacy</a></p></div><p>Independent software. Not affiliated with or endorsed by Shopify.</p></footer>
+  <div class="wrap analytics-settings"><button type="button" id="analytics-change" hidden>Change analytics choice</button></div>
+  <script defer src="analytics.js" integrity="sha256-{{ANALYTICS_SHA256}}"></script>
 </body>
 </html>

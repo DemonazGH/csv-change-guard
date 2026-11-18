@@ -41,10 +41,39 @@ a:focus-visible {
   border-radius:3px;
 }
 
-summary:focus-visible {
+summary:focus-visible, button:focus-visible {
   outline:3px solid #c16921;
   outline-offset:5px;
 }
+
+.analytics-choice.wrap {
+  display:flex;
+  flex-wrap:wrap;
+  gap:1rem 2rem;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:1rem 1.25rem;
+  margin-block:1rem;
+  background:var(--white);
+  font-size:.9375rem;
+}
+
+.analytics-choice > div { flex:1 1 20rem; }
+.analytics-choice h2 { font-size:1.125rem; letter-spacing:normal; }
+.analytics-choice p { margin:0; }
+.analytics-actions { display:flex; flex-wrap:wrap; gap:.75rem; margin-bottom:.5rem; }
+.analytics-actions button, .analytics-settings button {
+  font:inherit;
+  color:var(--ink);
+  background:var(--paper);
+  border:1px solid var(--muted);
+  border-radius:6px;
+  padding:.5rem .75rem;
+  cursor:pointer;
+  min-height:44px;
+}
+.analytics-actions button:disabled { cursor:default; border-style:dashed; }
+.analytics-settings.wrap { margin-bottom:2rem; }
 
 .download-checksum {
   margin-top:1.5rem;

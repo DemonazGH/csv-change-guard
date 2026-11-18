@@ -19,7 +19,7 @@ test('public website allowlists the free download and fixed demo from the unchan
   const built = buildWebsite(dir);
   assert.deepEqual(built.demo, { compared: 4, prices: 4, priority: 6, unpaired: 4, findings: 15 });
   assert.deepEqual(built.files.sort(), [
-    '_headers', 'assets/demo-data.js', 'assets/engine.js', 'demo-report.html', 'demo.css', 'demo.html',
+    '_headers', 'analytics.js', 'assets/demo-data.js', 'assets/engine.js', 'demo-report.html', 'demo.css', 'demo.html',
     'demo.js', 'guide.css', 'index.html', 'privacy.html', 'free-beta-terms.html',
     'downloads/csv-change-guard-0.1.0-beta.2.zip', 'downloads/SHA256SUMS.txt', 'samples/demo-current-catalog.csv',
     'samples/demo-proposed-update.csv', 'shopify-csv-price-changes.html', 'styles.css'
@@ -38,7 +38,11 @@ test('public website allowlists the free download and fixed demo from the unchan
     const html = fs.readFileSync(path.join(dir, name), 'utf8');
     assert.doesNotMatch(html, /<(?:input|form|iframe)\b/i, name + ': no file entry or submission surface');
     assert.doesNotMatch(html, /(?:src|href)=["']https?:[^"']+["'][^>]*rel=["']stylesheet|src=["']https?:/i);
-    assert.match(html, /connect-src 'none'/);
+    if (['index.html', 'privacy.html', 'shopify-csv-price-changes.html'].includes(name)) {
+      assert.match(html, /connect-src https:\/\/cloudflareinsights\.com\/cdn-cgi\/rum;/);
+    } else {
+      assert.match(html, /connect-src 'none'/);
+    }
     assert.match(html, /form-action 'none'/);
     // Each local navigation or embedded asset must exist in the upload allowlist.
     for (const [, value] of html.matchAll(/(?:href|src)="([^"]+)"/g)) {
@@ -49,6 +53,40 @@ test('public website allowlists the free download and fixed demo from the unchan
       if (hash) assert.match(fs.readFileSync(path.join(dir, file), 'utf8'), new RegExp('id="' + hash + '"'));
     }
   }
+});
+
+test('only informational pages authorize the reviewed consent loader; demo, terms and app stay isolated', t => {
+  const dir = output(t);
+  buildWebsite(dir);
+  const loader = fs.readFileSync(path.join(dir, 'analytics.js'));
+  assert.deepEqual(loader, fs.readFileSync(path.join(root, 'website/analytics.js')));
+  const integrity = 'sha256-' + crypto.createHash('sha256').update(loader).digest('base64');
+  for (const name of ['index.html', 'privacy.html', 'shopify-csv-price-changes.html']) {
+    const html = fs.readFileSync(path.join(dir, name), 'utf8');
+    const policy = html.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/)[1];
+    assert.ok(policy.includes(`script-src '${integrity}' 'strict-dynamic';`), name + ': exact reviewed loader hash');
+    assert.ok(policy.includes('connect-src https://cloudflareinsights.com/cdn-cgi/rum;'), name + ': exact transport endpoint');
+    assert.doesNotMatch(policy, /(?:unsafe-inline|unsafe-eval|script-src 'self'|script-src https?:)/, name + ': no broad script permission');
+    assert.ok(html.includes(`<script defer src="analytics.js" integrity="${integrity}"></script>`), name + ': loader integrity matches CSP');
+    assert.equal([...html.matchAll(/src="analytics\.js"/g)].length, 1, name + ': one consent loader');
+    assert.doesNotMatch(html, /\{\{ANALYTICS_|src="https?:/, name + ': no unresolved token or pre-consent vendor tag');
+    for (const id of ['analytics-allow', 'analytics-decline']) {
+      assert.match(html, new RegExp(`<button[^>]*id="${id}"[^>]*disabled`), name + ': consent stays off without JavaScript');
+    }
+  }
+  for (const name of ['demo.html', 'demo-report.html', 'free-beta-terms.html']) {
+    const html = fs.readFileSync(path.join(dir, name), 'utf8');
+    const policy = html.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/)[1];
+    const directives = policy.split(';').map(value => value.trim());
+    // Static reports inherit connect-src from default-src rather than repeat it.
+    const connections = directives.find(value => value.startsWith('connect-src ')) ||
+      directives.find(value => value.startsWith('default-src '));
+    assert.match(connections, /^(?:connect-src|default-src) 'none'$/, name + ': effective connection policy remains none');
+    assert.doesNotMatch(html, /analytics\.js|cloudflareinsights|data-cf-beacon|id="analytics-choice"/, name + ': no analytics integration');
+  }
+  const app = fs.readFileSync(path.join(root, 'dist/index.html'), 'utf8');
+  assert.match(app, /connect-src 'none'/, 'standalone utility remains network-isolated');
+  assert.doesNotMatch(app, /analytics\.js|cloudflareinsights|data-cf-beacon/, 'website analytics never enters the utility');
 });
 
 test('website download, displayed fingerprint and terms match the reproducible release', t => {

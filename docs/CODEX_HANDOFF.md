@@ -2,6 +2,13 @@
 
 Prepared: **18 October 2026**. Product remains **v0.1.0**.
 
+**18 November website analytics:** the owner authorised free Cloudflare Web
+Analytics and its weekly email report. This exception applies only to three
+informational pages after visitor opt-in, not the demo or downloaded utility.
+See [scope, setup and fresh validation](WEBSITE_ANALYTICS.md) for actual
+publication, delivery and CI status. CSV processing stays local, the released
+ZIP/app bytes are preserved and live sales remain disabled.
+
 **18 November free-beta decision:** the full downloadable utility is now prepared
 as package `0.1.0-beta.2`, with a version-specific free-use licence, direct website
 download and best-effort assistance. The app/engine are unchanged; processing is
